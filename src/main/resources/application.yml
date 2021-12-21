@@ -1,0 +1,52 @@
+# SERVER
+server:
+  port: 8888
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  # H2 DB
+  h2:
+    console:
+      enabled: ture
+      path: /h2
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/D:/dailywork/daliywork
+    username: sa
+    password:
+
+  #JPA
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      format_sql: true
+
+  #Thymeleaf
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+
+# 파라미터(?) 값을 로그로 확인
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+
+
+
+
+
