@@ -10,7 +10,7 @@
 <br>
 
 <div><img src="https://img.shields.io/badge/개발환경-3DDC84?style=square"/></div><br>
-- Java 1.8
+<p>- Java 1.8</p>
 - Spring Boot(API Sever)
 - Spring Security(Security)
 - Spring Data JPA(ORM)
