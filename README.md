@@ -11,10 +11,10 @@
 
 <div><img src="https://img.shields.io/badge/개발환경-3DDC84?style=square"/></div><br>
 <p>- Java 1.8</p>
-- Spring Boot(API Sever)
-- Spring Security(Security)
-- Spring Data JPA(ORM)
-- H2(RDBMS)
-- OAuth2.0(Login)
-- Junit(Test)
-- Thymeleaf(View)
+<p>- Spring Boot(API Sever)</p>
+<p>- Spring Security(Security)</p>
+<p>- Spring Data JPA(ORM)</p>
+<p>- H2(RDBMS)</p>
+<p>- OAuth2.0(Login)</p>
+<p>- Junit(Test)</p>
+<p>- Thymeleaf(View)</p>
