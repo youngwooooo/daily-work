@@ -6,5 +6,5 @@
 내가 설정한 목표를 눈으로 직접 확인하고 기록할 수 있다면 보다 큰 성취감을 얻을 수 있다고 생각하였습니다.<p>
 <p>1개월동안 학습한 Spring Boot, Spring data JPA, Spring security 등 많은 기술들을 직접 활용하고 경험하며 개발 역량을 키우고자 하였습니다.</p>
 <br>
-<img src="https://img.shields.io/badge/개발환경-3DDC84?style=flat-square"/><br>
+<img src="https://img.shields.io/badge/개발환경-3DDC84?style=flat-square"/>
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"/>
