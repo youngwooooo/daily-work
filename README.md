@@ -9,5 +9,8 @@
 <hr>
 
 <div><img src="https://img.shields.io/badge/개발환경-3DDC84?style=flat-square"/></div>
+<div>
 <img src="https://img.shields.io/badge/Java 1.8-007396?style=flat-square&logo=java&logoColor=white"/>
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"/>
+</div>
+
