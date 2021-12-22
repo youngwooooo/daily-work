@@ -1,0 +1,41 @@
+.join-div {
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 20px;
+}
+
+.join-title {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-control {
+    height: 50px;
+}
+
+.userId-check-div {
+    display: flex;
+}
+
+.userId-check-div input {
+    width: 85%;
+}
+
+.userId-check-div button {
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.join-submit-div {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.join-submit-div button {
+    width: 100%;
+    height: 50px;
+    font-weight: bold;
+}
