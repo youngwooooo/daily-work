@@ -7,3 +7,4 @@
 <p>1개월동안 학습한 Spring Boot, Spring data JPA, Spring security 등 많은 기술들을 직접 활용하고 경험하며 개발 역량을 키우고자 하였습니다.</p>
 <br>
 <img src="https://img.shields.io/badge/개발환경-3DDC84?style=flat-square"/><br>
+<img src="https://img.shields.io/badge/Spring Boot-#6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/>
