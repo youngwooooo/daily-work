@@ -16,7 +16,8 @@ spring:
       path: /h2
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/D:/dailywork/daliywork
+    # url: jdbc:h2:tcp://localhost/D:/dailywork/daliywork # 기존 DB 접속 URL
+    url: jdbc:h2:tcp://localhost/D:/Projects_DB/daily-work # 수정 DB 접속 URL
     username: sa
     password:
 
