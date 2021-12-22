@@ -1,6 +1,6 @@
-package com.work.daily.Access.Controller;
+package com.work.daily.access.controller;
 
-import com.work.daily.Access.Service.AccessService;
+import com.work.daily.access.service.AccessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.work.daily.API;
+package com.work.daily.api;
 
 public class temporary {
 }

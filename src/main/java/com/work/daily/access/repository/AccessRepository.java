@@ -1,4 +1,4 @@
-package com.work.daily.Access.Repository;
+package com.work.daily.access.repository;
 
 import org.springframework.stereotype.Repository;
 

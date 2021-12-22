@@ -1,4 +1,4 @@
-package com.work.daily.Access.Dto;
+package com.work.daily.access.dto;
 
 import lombok.Data;
 

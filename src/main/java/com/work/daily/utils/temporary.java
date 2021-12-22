@@ -1,4 +1,4 @@
-package com.work.daily.Utils;
+package com.work.daily.utils;
 
 /*
 AOP
