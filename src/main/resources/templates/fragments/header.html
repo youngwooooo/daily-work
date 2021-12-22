@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<header th:fragment="headerFragment">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Daily Work</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark">전체 미션</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark">참여 미션</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark">나의 미션</button>
+                    </li>
+                </ul>
+                <div>
+                    <button type="button" class="btn btn-dark" onclick="javascript:location.href='/login'">로그인</button>
+                    <button type="button" class="btn btn-dark" onclick="javascript:location.href='/join'">회원가입</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+</html>
