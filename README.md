@@ -1,5 +1,5 @@
 # daily-work(개인 목표 달성 플랫폼)
-### 자신의 목표를 미션으로 등록하고 개인 또는 여러 사람과 함께 목표를 성취할 수 있는 자기계발 플랫폼
+▶ 자신의 목표를 미션으로 등록하고 개인 또는 여러 사람과 함께 목표를 성취할 수 있는 자기계발 플랫폼
 <br><br>
 <div><img src="https://img.shields.io/badge/개발목적-3DDC84?style=square"/></div><br>
 <p>취업 준비를 하며 일일 또는 기간을 정해 내가 무엇을 할 것인지 목표를 정해두고 실천하는 규칙적인 생활의 필요성을 느꼈고,
@@ -9,9 +9,6 @@
 <hr>
 <br>
 
-<br>
-
-</br>
 <div><img src="https://img.shields.io/badge/개발환경-3DDC84?style=square"/></div><br>
 <p>- Java 1.8</p>
 <p>- Spring Boot(API Sever)</p>
