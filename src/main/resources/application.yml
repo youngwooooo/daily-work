@@ -39,7 +39,7 @@ spring:
   thymeleaf:
     cache: false
     enabled: true
-    prefix: classpath:/templates/
+    prefix: classpath:templates/
     suffix: .html
 
 # 파라미터(?) 값을 로그로 확인

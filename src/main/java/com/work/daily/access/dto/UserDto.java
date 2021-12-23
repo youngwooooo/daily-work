@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString()
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class JoinUserDto {
 
     private String id;

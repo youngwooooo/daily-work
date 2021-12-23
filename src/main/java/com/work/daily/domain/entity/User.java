@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class User extends BaseTime {
+public class User extends BaseTime  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,17 @@ public class User extends BaseTime {
     @Column(nullable = false, length = 320)
     private String email;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 13)
     private String phone;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
+
+    @Column(nullable = true)
+    private String provider;
+
+    @Column(nullable = true)
+    private String providerId;
 
 }

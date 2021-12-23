@@ -1,9 +1,11 @@
 package com.work.daily.access.controller;
 
-import com.work.daily.access.dto.JoinUserDto;
+import com.work.daily.access.dto.UserDto;
 import com.work.daily.access.service.AccessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,9 +19,9 @@ public class AccessApiController {
 
     // 회원 가입
     @PostMapping("/join")
-    public String join(@RequestBody JoinUserDto dto){
+    public ResponseEntity<String> join(@RequestBody UserDto dto){
         accessService.save(dto);
-        return "회원가입 완료";
+        return new ResponseEntity("success", HttpStatus.OK);
 
     }
 }

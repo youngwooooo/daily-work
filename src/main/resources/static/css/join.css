@@ -1,32 +1,35 @@
 .join-div {
-    margin-left: 200px;
-    margin-right: 200px;
-    margin-top: 20px;
+    margin-left: 350px;
+    margin-right: 350px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .join-title {
     margin-bottom: 30px;
+    font-weight: bold;
+}
+
+form label {
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
 .form-group {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .form-control {
     height: 50px;
 }
 
-.userId-check-div {
-    display: flex;
+.id-regExp-description, .password-regExp-description, .name-regExp-description {
+    display: none;
 }
 
-.userId-check-div input {
-    width: 85%;
-}
-
-.userId-check-div button {
-    margin-left: 15px;
-    font-weight: bold;
+.description {
+    color: gray;
+    font-size: 0.8rem;
 }
 
 .join-submit-div {
@@ -36,6 +39,29 @@
 
 .join-submit-div button {
     width: 100%;
-    height: 50px;
+    height: 55px;
     font-weight: bold;
+}
+
+.simple-join-div {
+    text-align: center;
+}
+
+.simple-join-description {
+    color: gray;
+    font-size: 0.8rem;
+}
+
+.simple-join-social {
+    padding-top: 15px;
+}
+
+.simple-join-social a {
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.simple-join-social img {
+    width: 50px;
+    height: 50px;
 }

@@ -1,11 +1,23 @@
 .login-div {
-    margin-left: 200px;
-    margin-right: 200px;
-    margin-top: 20px;
+    margin-left: 350px;
+    margin-right: 350px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.login-div button {
+    width: 100%;
+    height: 55px;
 }
 
 .login-title {
     margin-bottom: 30px;
+    font-weight: bold;
+}
+
+form label {
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
 .form-group {
@@ -22,7 +34,46 @@
 }
 
 .login-submit-div button {
-    width: 100%;
-    height: 50px;
     font-weight: bold;
+}
+
+.login-social-buttons button {
+    margin-bottom: 10px;
+}
+
+.login-social-buttons img {
+    width: 45px;
+    height: 45px;
+}
+
+#login-social-google img {
+    width: 35px;
+    height: 35px;
+}
+
+.login-social-title {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+#login-social-google span {
+    margin-left: 20px;
+}
+
+#login-social-google {
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+}
+
+#login-social-kakao {
+    border: 1px solid #ffeb3b;
+    background-color: #ffeb3b;
+    border-radius: 5px;
+}
+
+#login-social-naver {
+    border: 1px solid #03c75a;
+    background-color: #03c75a;
+    border-radius: 5px;
+    color: white;
 }

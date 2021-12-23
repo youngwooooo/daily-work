@@ -1,6 +1,6 @@
 package com.work.daily.access.service;
 
-import com.work.daily.access.dto.JoinUserDto;
+import com.work.daily.access.dto.UserDto;
 import com.work.daily.domain.UserRole;
 import com.work.daily.domain.entity.User;
 import com.work.daily.domain.repository.UserRepository;
@@ -22,18 +22,20 @@ public class AccessService {
 
     // 회원 가입
     @Transactional
-    public void save(JoinUserDto dto){
-        Optional<User> checkUser = userRepository.findById(dto.getId());
+    public void save(UserDto userDto){
+        Optional<User> findUser = userRepository.findById(userDto.getId());
 
-        if(!checkUser.isPresent()){
-            dto.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
-            dto.setRole(UserRole.USER);
+        if(!findUser.isPresent()){
+            userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+            userDto.setRole(UserRole.USER);
 
-            userRepository.save(dto.toEntity());
+            userRepository.save(userDto.toEntity());
             log.info("save 성공");
         }else {
             throw new IllegalArgumentException("이미 존재하는 회원입니다.");
         }
 
     }
+
+
 }
