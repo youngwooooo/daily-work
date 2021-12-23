@@ -6,7 +6,7 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString
+@ToString()
 @NoArgsConstructor
 public class UserDto {
 
@@ -19,6 +19,11 @@ public class UserDto {
     private String provider;
     private String providerId;
 
+    /*
+    #####   Builder 패턴 사용 이유   #####
+    자바빈즈패턴 : 객체 생성후 상태값을 변경 가능
+    빌더패턴    : 객체 생성 후 상태값을 변경 할수 없게 없게 동결 시키는 패턴
+     */
     @Builder
     public UserDto(String id, String password, String name, String email, String phone, UserRole role, String provider, String providerId) {
         this.id = id;
@@ -43,4 +48,5 @@ public class UserDto {
                 .providerId(providerId)
                 .build();
     }
+
 }
