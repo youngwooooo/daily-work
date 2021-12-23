@@ -1,4 +1,4 @@
-package com.work.daily.access.controller;
+package com.work.daily.apiserver.access;
 
 import com.work.daily.access.dto.UserDto;
 import com.work.daily.access.service.AccessService;
