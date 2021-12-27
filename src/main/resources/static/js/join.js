@@ -7,7 +7,6 @@ $(function(){
                                 , "password" : $("#password").val()
                                 , "name" : $("#name").val()
                                 , "email" : $("#email").val()
-                                , "phone" : $("#phone").val()
                             };
             $.ajax({
                         url : "/join"
@@ -16,10 +15,13 @@ $(function(){
                         , contentType: "application/json; charset=UTF-8"
                         , success: function(result){
                             console.log(result);
-                            location.href="/login";
+                            console.log(result.data);
+                            if(result.data == "SUCCESS"){
+                                location.href="/join/success";
+                            }
                         }
                         , error: function(xhr){
-                            console.log(xhr);
+                            console.log(xhr.responseJSON);
                         }
                     }); // end ajax
 
@@ -81,10 +83,6 @@ function joinSaveValidate(){
     if(!checkRexExp("email", email)){
         return false;
     }
-    // 연락처 유효성 검사
-    if(!checkRexExp("phone", phone)){
-        return false;
-    }
 
     return true;
 }
@@ -102,7 +100,7 @@ function checkRexExp(str, value){
     }
 
     if(str == "password"){
-        rexExp = /^(?=.*[a-z])((?=.*\d)|(?=.*\W)).{10,32}$/;
+        rexExp = /^(?=.*[0-9])(?=.*[a-z])(?=.*\W)(?=\S+$).{10,32}$/;
         if(value == "" || value == null || !rexExp.test(value)){
             alert("비밀번호 형식에 맞게 입력해주세요.");
             return false;
@@ -124,14 +122,6 @@ function checkRexExp(str, value){
             return false;
         }
     }
-
-     if(str == "phone"){
-         rexExp = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
-         if(value == "" || value == null || !rexExp.test(value)){
-             alert("연락처 형식에 맞게 입력해주세요.");
-             return false;
-         }
-     }
 
     return true;
 }
