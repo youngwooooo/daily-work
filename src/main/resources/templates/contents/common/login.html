@@ -5,14 +5,14 @@
 
 <!-- 컨텐츠페이지의 CSS -->
 <th:block layout:fragment="css">
-    <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" href="/css/login.css"/>
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-    <script src="js/login.js"></script>
+    <script src="/js/login.js"></script>
 </th:block>
 
-<div layout:fragment="content" class="container">
+<div layout:fragment="content">
     <div class="login-div">
         <h3 class="login-title">로그인</h3>
         <form method="post" th:action="@{/login}">
