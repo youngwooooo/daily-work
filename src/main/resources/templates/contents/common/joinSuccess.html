@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- 컨텐츠페이지의 CSS -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/joinSuccess.css"/>
+</th:block>
+<!-- 컨텐츠페이지의 JS -->
+<th:block layout:fragment="script">
+    <script src="/js/joinSuccess.js"></script>
+</th:block>
+
+<div layout:fragment="content">
+
+    <div class="modal" id="login-success-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="join-success-img-div">
+                        <img src="/img/join_success.png">
+                    </div>
+                    <div class="join-success-desc-div">
+                        <h3 class="join-success-welcome">환영합니다!</h3>
+                        <p>Daily Work 회원가입이 완료되었습니다.</p>
+                        <p>나의 목표를 위해 달려보세요!</p>
+                    </div>
+                    <div class="join-success-btn-div">
+                        <button type="button" class="btn btn-primary" id="btn-login-form">로그인</button>
+                        <button type="button" class="btn btn-dark" id="btn-main-form">홈으로</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</html>
