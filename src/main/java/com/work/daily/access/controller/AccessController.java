@@ -22,4 +22,9 @@ public class AccessController {
         return "contents/common/join";
     }
 
+    @GetMapping("/join/success")
+    public String joinSuccess(){
+        return "contents/common/joinSuccess";
+    }
+
 }
