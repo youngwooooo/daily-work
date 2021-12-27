@@ -1,8 +1,9 @@
 .join-div {
-    margin-left: 350px;
-    margin-right: 350px;
+    margin-left: auto;
+    margin-right: auto;
     padding-top: 30px;
     padding-bottom: 30px;
+    width: 400px;
 }
 
 .join-title {
