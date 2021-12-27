@@ -25,13 +25,8 @@ public class UserDto {
     @Pattern(regexp = "^[가-힣]{2,6}$", message = "이름 형식에 맞게 입력해주세요.")
     private String name;
 
-    @NotBlank(message = "이메일을 입력해주세요.")
     @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$", message = "이메일 형식에 맞게 입력해주세요.")
     private String email;
-
-    @NotBlank(message = "연락처를 입력해주세요.")
-    @Pattern(regexp = "^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$", message = "연락처 형식에 맞게 입력해주세요.")
-    private String phone;
 
     private UserRole role;
     private String provider;
@@ -43,12 +38,11 @@ public class UserDto {
     빌더패턴    : 객체 생성 후 상태값을 변경 할수 없게 없게 동결 시키는 패턴
      */
     @Builder
-    public UserDto(String id, String password, String name, String email, String phone, UserRole role, String provider, String providerId) {
+    public UserDto(String id, String password, String name, String email, UserRole role, String provider, String providerId) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.email = email;
-        this.phone = phone;
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;
@@ -60,7 +54,6 @@ public class UserDto {
                 .password(password)
                 .name(name)
                 .email(email)
-                .phone(phone)
                 .role(role)
                 .provider(provider)
                 .providerId(providerId)
