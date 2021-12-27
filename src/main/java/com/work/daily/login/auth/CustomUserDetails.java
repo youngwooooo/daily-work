@@ -3,50 +3,67 @@ package com.work.daily.login.auth;
 import com.work.daily.access.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private UserDto userDto;
-
+    private Map<String, Object> attributes;
+    
+    // 일반 form 로그인 생성자
     public CustomUserDetails(UserDto userDto) {
         this.userDto = userDto;
     }
+    
+    // OAuth 로그인 생성자
+    public CustomUserDetails(UserDto userDto, Map<String, Object> attributes) {
+        this.userDto = userDto;
+        this.attributes = attributes;
+    }
 
     // UserDetails 구현 메서드
+    // 비밀번호
     @Override
     public String getPassword() {
         return userDto.getPassword();
     }
 
+    // 아이디
     @Override
     public String getUsername() {
         return userDto.getId();
     }
 
+    // 계정 만료 여부
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    // 계정 잠김 여부
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    // 비밀번호 만료 여부
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    // 계정의 활성화 여부
     @Override
     public boolean isEnabled() {
         return true;
     }
 
     // UserDetails, OAuth2User 공통 구현 메서드
+    // 회원의 권한 목록을 리턴
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
@@ -60,4 +77,16 @@ public class CustomUserDetails implements UserDetails {
         return authorities;
     }
 
+    // OAuth2User 구현 메서드
+    // 각 api 별 회원 정보를 가진 map
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    // override를 받는 것뿐 쓰지 않는다.
+    @Override
+    public String getName() {
+        return null;
+    }
 }
