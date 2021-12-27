@@ -1,34 +1,50 @@
 package com.work.daily.config;
 
 import com.work.daily.domain.UserRole;
+import com.work.daily.login.service.CustomOAuth2UserService;
+import com.work.daily.login.service.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-@EnableWebSecurity
+@RequiredArgsConstructor
+@EnableWebSecurity // 해당 클래스를 Security 필터로 등록함
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomOAuth2UserService customOauth2UserService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    // Security 로그인 시, 요청받은 회원 password를 해쉬화하여 DB에 저장된 회원의 password와 비교를 해준다.
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/user/**").authenticated()
+                .antMatchers("/user/**").hasRole(UserRole.USER.getValue())
                 .antMatchers("/admin/**").hasRole(UserRole.ADMIN.getValue())
                 .anyRequest().permitAll()
-                .and()
+                    .and()
                 .formLogin()
                 .loginPage("/login")
                 .usernameParameter("id")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/");
+                .defaultSuccessUrl("/")
+                    .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(customOauth2UserService);
     }
+
 }
