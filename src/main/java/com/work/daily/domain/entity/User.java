@@ -17,7 +17,7 @@ public class User extends BaseTime  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long no;
 
-    @Column(name = "user_id", nullable = false, length = 30, unique = true)
+    @Column(name = "user_id", nullable = false, length = 50, unique = true)
     private String id;
 
     @Column(nullable = false)
@@ -26,11 +26,8 @@ public class User extends BaseTime  {
     @Column(nullable = false, length = 10)
     private String name;
 
-    @Column(nullable = false, length = 320)
+    @Column(nullable = true, length = 320)
     private String email;
-
-    @Column(nullable = false, length = 13)
-    private String phone;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
