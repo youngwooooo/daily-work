@@ -42,6 +42,61 @@ spring:
     prefix: classpath:templates/
     suffix: .html
 
+  security:
+    ## oauth2 로그인 각각의 API 설정
+    oauth2:
+      client:
+        registration:
+          # Google Login
+          google:
+            clientId: 1082999370852-e1u4timni2qffk881pd64rlgge1cis2u.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
+
+          # Kakao Login
+          kakao:
+            clientId: 59110a3932a7fbe015ad9c9529098745
+            clientSecret: GNMBPgXS6btio08Sy5wf3igriBPONCar
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+            clientName: KAKAO
+            authorizationGrantType: authorization_code
+            clientAuthenticationMethod: POST
+            redirectUri: http://localhost:8888/login/oauth2/code/kakao
+
+          # Naver Login
+          naver:
+            clientId: cZxTezMDNmunknSnyM46
+            clientSecret: i5gQ2AhZRo
+            scope:
+              - name
+              - email
+              - profile_image
+            clientName: NAVER
+            authorizationGrantType: authorization_code
+            redirectUri: http://localhost:8888/login/oauth2/code/naver
+
+        ## Google, Facebook을 제외한 oauth2 로그인 방식은 provider 설정이 필요함
+        ## Google, Facebook은 oauth2 자체적으로 설정되어 있음
+        provider:
+          # Kakao Provider
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
+
+          # Naver Provider
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+            tokenUri: https://nid.naver.com/oauth2.0/token
+            userInfoUri: https://openapi.naver.com/v1/nid/me
+            userNameAttribute: response
+
 # 파라미터(?) 값을 로그로 확인
 logging:
   level:
