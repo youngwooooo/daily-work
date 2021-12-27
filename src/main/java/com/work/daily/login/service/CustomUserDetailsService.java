@@ -20,12 +20,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    // 로그인 시, Security가 해당 Service로 들어오고 해당 함수를 실행시켜 로그인을 해준다.
+    // UserDetails 객체를 리턴하여 Authentication 객체에 넣어주고 Session을 만들어준다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("username : " + username);
+
         Optional<User> findUser = userRepository.findById(username);
         if(!findUser.isPresent()){
-            throw new IllegalArgumentException("존재하지 않는 회원입니다. ID : " + username);
+            throw new UsernameNotFoundException("존재하지 않는 회원입니다. ID : " + username);
         }
 
         UserDto userDto = UserDto.builder()
@@ -33,7 +35,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                             .password(findUser.get().getPassword())
                             .name(findUser.get().getName())
                             .email(findUser.get().getEmail())
-                            .phone(findUser.get().getPhone())
                             .role(findUser.get().getRole())
                             .provider(findUser.get().getProvider())
                             .providerId(findUser.get().getProviderId())
