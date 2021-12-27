@@ -1,5 +1,13 @@
-#layout-content {
-    min-height: 906px;
-    padding-top: 57px;
+html, body {
+    height: 100%;
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+header {
+    height: 56px;
+}
+
+#layout-content {
+    min-height: 850px;
+}
+
