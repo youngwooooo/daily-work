@@ -1,4 +1,30 @@
 $(function(){
+    $("#btn-login").on("click", function(){
+        var loginData = {
+            "id" : $("#id").val()
+            , "password" : $("#password").val()
+        };
+
+        $.ajax({
+            url: "/login"
+            , type: "post"
+            , data: loginData
+            , contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+            , dataType : "json"
+            , success: function(result){
+                if(result.result == "SUCCESS"){
+                    location.href = result.uri
+                }else if(result.result == "FAIL"){
+                    alert(result.message);
+                }
+            }
+           , error: function(xhr){
+                console.log(xhr);
+           }
+        }); // end ajax
+
+    }); // end function
+
     $("#login-social-google").on("click", function(){
         location.href="/oauth2/authorization/google";
     });
