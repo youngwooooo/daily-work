@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
@@ -13,9 +14,10 @@
 </th:block>
 
 <div layout:fragment="content">
+
     <div class="login-div">
         <h3 class="login-title">로그인</h3>
-        <form method="post" th:action="@{/login}">
+        <form>
             <div class="form-group">
                 <label for="id">아이디</label>
                 <input type="text" class="form-control" id="id" th:name="id" autocomplete="off">
@@ -25,10 +27,12 @@
                 <input type="password" class="form-control" id="password" th:name="password" autocomplete="off">
             </div>
             <div class="login-submit-div">
-                <button type="submit" id="btn-login" class="btn btn-primary" th:text="로그인"></button>
+                <button type="button" id="btn-login" class="btn btn-primary" th:text="로그인"></button>
             </div>
         </form>
+
         <hr/>
+
         <div class="login-social-buttons">
             <button type="button" id="login-social-google" class="btn">
                 <img src="/img/google_icon.png"><span class="login-social-title">구글 로그인</span>
@@ -41,6 +45,7 @@
             </button>
         </div>
     </div>
+
 </div>
 
 </html>
