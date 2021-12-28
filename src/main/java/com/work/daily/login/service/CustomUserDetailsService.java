@@ -24,10 +24,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     // UserDetails 객체를 리턴하여 Authentication 객체에 넣어주고 Session을 만들어준다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("loadUserByUsername 호출 - ID : " + username);
 
         Optional<User> findUser = userRepository.findById(username);
         if(!findUser.isPresent()){
-            throw new UsernameNotFoundException("존재하지 않는 회원입니다. ID : " + username);
+            throw new UsernameNotFoundException("존재하지 않는 회원입니다.ㅣㅐ");
         }
 
         UserDto userDto = UserDto.builder()
