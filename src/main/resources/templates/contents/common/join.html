@@ -55,13 +55,26 @@
         <div class="join-submit-div">
             <button type="submit" id="btn-join-save" class="btn btn-primary">가입하기</button>
         </div>
-        <hr/>
-        <div class="simple-join-div">
-            <span class="simple-join-description">간편 회원가입</span>
-            <div class="simple-join-social">
-                <a href="#"><img src="/img/google_icon.png"></a>
-                <a href="#"><img src="/img/kakao_icon.png"></a>
-                <a href="#"><img src="/img/naver_icon.png"></a>
+
+    </div>
+
+    <!-- 회원가입 실패 시 모달 -->
+    <div class="modal" id="login-fail-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="join-fail-img-div">
+                        <img src="/img/fail_icon.png">
+                    </div>
+                    <div class="join-fail-desc-div">
+                        <h3>회원가입에 실패하였습니다.</h3>
+                        <p></p>
+                    </div>
+                    <div class="join-fail-btn-div">
+                        <button type="button" class="btn btn-primary" id="btn-close-modal">확인</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
