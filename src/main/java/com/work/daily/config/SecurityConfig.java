@@ -1,10 +1,10 @@
 package com.work.daily.config;
 
-import com.work.daily.domain.UserRole;
+import com.work.daily.login.service.CustomLoginFailHandler;
+import com.work.daily.login.service.CustomLoginSuccessHandler;
 import com.work.daily.login.service.CustomOAuth2UserService;
 import com.work.daily.login.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,20 +31,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/user/**").hasRole(UserRole.USER.getValue())
-                .antMatchers("/admin/**").hasRole(UserRole.ADMIN.getValue())
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
-                    .and()
+                .and()
+                .logout()
+                    .logoutSuccessUrl("/")
+                .and()
                 .formLogin()
-                .loginPage("/login")
-                .usernameParameter("id")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/")
-                    .and()
+                    .loginPage("/login")
+                    .usernameParameter("id")
+                    .loginProcessingUrl("/login")
+                    .failureHandler(new CustomLoginFailHandler())
+                    .successHandler(new CustomLoginSuccessHandler())
+                .and()
                 .oauth2Login()
-                .loginPage("/login")
-                .userInfoEndpoint()
-                .userService(customOauth2UserService);
+                    .loginPage("/login")
+                    .userInfoEndpoint()
+                    .userService(customOauth2UserService);
     }
 
 }
