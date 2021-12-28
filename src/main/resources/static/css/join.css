@@ -66,3 +66,35 @@ form label {
     width: 50px;
     height: 50px;
 }
+
+#login-fail-modal {
+    background-color:rgba(0,0,0,.3);
+}
+
+.modal-body {
+    padding: 30px;
+    text-align: center;
+}
+
+.join-fail-desc-div {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.join-fail-desc-div h3 {
+    font-weight: bold;
+}
+
+.join-fail-desc-div p {
+    color: red;
+    margin: 0px;
+}
+
+.join-fail-img-div img {
+    width: 100px;
+}
+
+.join-fail-btn-div button {
+    width: 150px;
+    height: 45px;
+}
