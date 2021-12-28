@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AccessController {
 
-    @GetMapping("/")
+    @GetMapping({"","/"})
     public String index(){
         return "contents/common/index";
     }
