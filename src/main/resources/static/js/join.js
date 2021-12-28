@@ -13,15 +13,25 @@ $(function(){
                         , type: "post"
                         , data: JSON.stringify(joinData)
                         , contentType: "application/json; charset=UTF-8"
+                        , dataType : "json"
                         , success: function(result){
                             console.log(result);
-                            console.log(result.data);
-                            if(result.data == "SUCCESS"){
-                                location.href="/join/success";
+                            if(result.status == 201){
+                               location.href="/join/success";
                             }
                         }
                         , error: function(xhr){
                             console.log(xhr.responseJSON);
+                            var errorStatus = xhr.responseJSON.status;
+                            var errorMsg = xhr.responseJSON.message;
+                            if(errorStatus == 409){
+                                $("#login-fail-modal .join-fail-desc-div p").text(errorMsg);
+                                $("#login-fail-modal").show();
+                            }else if(errorStatus == 400){
+                                $("#login-fail-modal").show();
+                                $("#login-fail-modal .join-fail-desc-div p").text(errorMsg);
+                                $("#login-fail-modal").show();
+                            }
                         }
                     }); // end ajax
 
@@ -49,6 +59,11 @@ $(function(){
     });
     $("#name").blur(function(){
         $(".name-regExp-description").css("display", "none");
+    });
+
+    // 회원가입 실패 시 모달 창 닫기
+    $("#btn-close-modal").on("click", function(){
+        $("#login-fail-modal").hide();
     });
 
 }); // end jquery
