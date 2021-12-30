@@ -1,9 +1,9 @@
 package com.work.daily.login.service;
 
-import com.work.daily.access.dto.UserDto;
 import com.work.daily.domain.entity.User;
 import com.work.daily.domain.repository.UserRepository;
 import com.work.daily.login.auth.CustomUserDetails;
+import com.work.daily.login.dto.LoginUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,17 +31,18 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("존재하지 않는 회원입니다.ㅣㅐ");
         }
 
-        UserDto userDto = UserDto.builder()
+        LoginUserDto loginUserDto = LoginUserDto.builder()
+                            .no(findUser.get().getNo())
                             .id(findUser.get().getId())
                             .password(findUser.get().getPassword())
                             .name(findUser.get().getName())
                             .email(findUser.get().getEmail())
                             .role(findUser.get().getRole())
                             .provider(findUser.get().getProvider())
-                            .providerId(findUser.get().getProviderId())
                             .build();
 
+        log.info(loginUserDto.toString());
 
-        return new CustomUserDetails(userDto);
+        return new CustomUserDetails(loginUserDto);
     }
 }

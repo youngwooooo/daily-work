@@ -1,6 +1,9 @@
 package com.work.daily.login.auth;
 
-import com.work.daily.access.dto.UserDto;
+import com.work.daily.access.dto.JoinUserDto;
+import com.work.daily.login.dto.LoginUserDto;
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -9,19 +12,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+@ToString
+@Getter
 public class CustomUserDetails implements UserDetails, OAuth2User {
 
-    private UserDto userDto;
+    private LoginUserDto loginUserDto;
     private Map<String, Object> attributes;
     
     // 일반 form 로그인 생성자
-    public CustomUserDetails(UserDto userDto) {
-        this.userDto = userDto;
+    public CustomUserDetails(LoginUserDto loginUserDto) {
+        this.loginUserDto = loginUserDto;
     }
     
     // OAuth 로그인 생성자
-    public CustomUserDetails(UserDto userDto, Map<String, Object> attributes) {
-        this.userDto = userDto;
+    public CustomUserDetails(LoginUserDto loginUserDto, Map<String, Object> attributes) {
+        this.loginUserDto = loginUserDto;
         this.attributes = attributes;
     }
 
@@ -29,13 +34,13 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     // 비밀번호
     @Override
     public String getPassword() {
-        return userDto.getPassword();
+        return loginUserDto.getPassword();
     }
 
     // 아이디
     @Override
     public String getUsername() {
-        return userDto.getId();
+        return loginUserDto.getId();
     }
 
     // 계정 만료 여부
@@ -70,7 +75,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
         authorities.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return userDto.getRole().getValue();
+                return loginUserDto.getRole().getValue();
             }
         });
 
