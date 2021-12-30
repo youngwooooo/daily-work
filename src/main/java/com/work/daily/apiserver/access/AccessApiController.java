@@ -2,7 +2,7 @@ package com.work.daily.apiserver.access;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.JoinResponseDto;
-import com.work.daily.access.dto.UserDto;
+import com.work.daily.access.dto.JoinUserDto;
 import com.work.daily.access.service.AccessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,12 +27,12 @@ public class AccessApiController {
 
     /**
      * 회원가입
-     * @param userDto
+     * @param joinUserDto
      * @param bindingResult
      * @return JoinResponseDto(HttpStatus.value(), String message, Object data)
      */
     @PostMapping("/join")
-    public ResponseEntity<JoinResponseDto> join(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) {
+    public ResponseEntity<JoinResponseDto> join(@RequestBody @Valid JoinUserDto joinUserDto, BindingResult bindingResult) {
         // 유효성 검사 후 에러가 발생한 경우
         if(bindingResult.hasErrors()){
             Map<String, Object> errorMap = new HashMap<>();
@@ -43,7 +43,7 @@ public class AccessApiController {
                                         , HttpStatus.BAD_REQUEST);
         }
         // result = SUCCESS / FAIL
-        String result = accessService.save(userDto);
+        String result = accessService.save(joinUserDto);
         if(result.equals(ReturnResult.FAIL.getValue())){
             return new ResponseEntity<>(JoinResponseDto.builder().status(HttpStatus.CONFLICT.value()).message("이미 존재하는 회원입니다.").data(result).build()
                                         , HttpStatus.CONFLICT);

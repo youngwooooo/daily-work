@@ -1,7 +1,7 @@
 package com.work.daily.access.service;
 
 import com.work.daily.access.ReturnResult;
-import com.work.daily.access.dto.UserDto;
+import com.work.daily.access.dto.JoinUserDto;
 import com.work.daily.domain.UserRole;
 import com.work.daily.domain.entity.User;
 import com.work.daily.domain.repository.UserRepository;
@@ -23,22 +23,22 @@ public class AccessService {
 
     /**
      * 회원가입
-     * @param userDto
+     * @param joinUserDto
      * @return SUCCESS, FAIL
      */
     @Transactional
-    public String save(UserDto userDto){
+    public String save(JoinUserDto joinUserDto){
         // userDto.getId()로 회원 찾기
-        Optional<User> findUser = userRepository.findById(userDto.getId());
+        Optional<User> findUser = userRepository.findById(joinUserDto.getId());
         // 회원이 존재할 때
         if(findUser.isPresent()){
             return ReturnResult.FAIL.getValue();
         }
 
-        userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-        userDto.setRole(UserRole.USER);
+        joinUserDto.setPassword(bCryptPasswordEncoder.encode(joinUserDto.getPassword()));
+        joinUserDto.setRole(UserRole.USER);
 
-        userRepository.save(userDto.toEntity());
+        userRepository.save(joinUserDto.toEntity());
         log.info("save() : 회원가입 성공");
 
         return ReturnResult.SUCCESS.getValue();
