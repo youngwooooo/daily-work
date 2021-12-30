@@ -1,6 +1,6 @@
 package com.work.daily.login.service;
 
-import com.work.daily.access.dto.UserDto;
+import com.work.daily.access.dto.JoinUserDto;
 import com.work.daily.domain.UserRole;
 import com.work.daily.domain.entity.User;
 import com.work.daily.domain.repository.UserRepository;
@@ -9,6 +9,7 @@ import com.work.daily.login.auth.provider.GoogleUserInfo;
 import com.work.daily.login.auth.provider.KakaoUserInfo;
 import com.work.daily.login.auth.provider.NaverUserInfo;
 import com.work.daily.login.auth.provider.OAuth2UserInfo;
+import com.work.daily.login.dto.LoginUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -67,7 +68,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Optional<User> findUser = userRepository.findById(providerId);
         // 존재하지 않을 때 회원가입 처리
         if(!findUser.isPresent()){
-            UserDto userDto = UserDto.builder()
+            JoinUserDto joinUserDto = JoinUserDto.builder()
                     .id(providerId)
                     .password(password)
                     .name(name)
@@ -77,21 +78,34 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .providerId(providerId)
                     .build();
 
-            userRepository.save(userDto.toEntity());
-            return new CustomUserDetails(userDto, oAuth2User.getAttributes());
+            User savedUser = userRepository.save(joinUserDto.toEntity());
+
+            // 회원가입 된 회원정보로 LoginUserDto 객체 생성
+            LoginUserDto savedUserToLoginUserDto = LoginUserDto.builder()
+                                                    .no(savedUser.getNo())
+                                                    .id(savedUser.getId())
+                                                    .password(savedUser.getPassword())
+                                                    .name(savedUser.getName())
+                                                    .email(savedUser.getEmail())
+                                                    .role(savedUser.getRole())
+                                                    .provider(savedUser.getProvider())
+                                                    .build();
+
+
+            return new CustomUserDetails(savedUserToLoginUserDto, oAuth2User.getAttributes());
         }
 
         // 존재한다면 User 객체를 UserDto로 변환하여 리턴
-        UserDto toUserDto =  UserDto.builder()
+        LoginUserDto toLoginUserDto =  LoginUserDto.builder()
+                .no(findUser.get().getNo())
                 .id(findUser.get().getId())
-                .password(findUser.get().getPassword())
                 .name(findUser.get().getName())
+                .password(findUser.get().getPassword())
                 .email(findUser.get().getEmail())
                 .role(findUser.get().getRole())
                 .provider(findUser.get().getProvider())
-                .providerId(findUser.get().getProviderId())
                 .build();
 
-        return new CustomUserDetails(toUserDto, oAuth2User.getAttributes());
+        return new CustomUserDetails(toLoginUserDto, oAuth2User.getAttributes());
     }
 }
