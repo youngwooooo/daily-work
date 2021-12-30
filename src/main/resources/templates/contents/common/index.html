@@ -1,19 +1,132 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout}">
 
 <!-- 컨텐츠페이지의 CSS -->
 <th:block layout:fragment="css">
-
+  <link rel="stylesheet" href="css/index.css"/>
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-
+  <script src="js/index.js"></script>
 </th:block>
 
 <div layout:fragment="content" class="container">
-  <h1>메인 페이지</h1>
-</div>
+  <div class="index-div">
 
+    <div class="row authentication-user" sec:authorize="hasRole('ROLE_USER')">
+
+      <div class="col-sm-4 user-info-card-div">
+
+        <div class="card">
+          <img class="card-img-top" src="/img/common/basic_profile.png" alt="profile_image">
+          <div class="card-body">
+            <div class="user-simple-info">
+              <h5 class="card-title" th:text="${#authentication.principal.LoginUserDto.name}"></h5>
+              <p class="card-text" th:text="${#authentication.principal.LoginUserDto.email}"></p>
+            </div>
+            <div class="user-info-management">
+              <input type="hidden" id="no" th:value="${#authentication.principal.LoginUserDto.no}">
+              <button type="button" class="btn btn-dark" id="btn-move-mypage-form">계정 관리</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="mission-rate-info">
+              <h4 class="card-title">MISSION 달성률</h4>
+              <span><span th:text="${#authentication.principal.LoginUserDto.name}"></span>님의 미션 달성률을 확인할 수 있어요!</span>
+            </div>
+            <div class="mission-rating-character-div">
+              <img class="mission-rating-character" src="/img/common/mission_rating_character.png" alt="mission_rating_character">
+            </div>
+            <div class="mission-rate-count">
+              <h4>50%</h4>
+              <div class="mission-all-rating">
+                <div class="mission-complete-rating"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- .user-info-card-div end -->
+
+      <div class="col-sm-8 mission-info-card-div">
+
+        <div class="card">
+          <div class="card-body">
+            <div class="mission-info">
+              <div class="mission-title justify-content-between">
+                <h4 class="card-title">참여 MISSION</h4>
+                <h4 class="mission-count">5</h4>
+              </div>
+              <span><span th:text="${#authentication.principal.LoginUserDto.name}"></span>님이 참여중인 미션을 확인할 수 있어요!</span>
+            </div>
+            <div class="move-mission-list-div">
+              <a href="#">참여중인 미션 보러가기</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="mission-info">
+              <div class="mission-title justify-content-between">
+                <h4 class="card-title">나의 MISSION</h4>
+                <h4 class="mission-count">5</h4>
+              </div>
+              <span><span th:text="${#authentication.principal.LoginUserDto.name}"></span>님이 등록한 미션을 확인할 수 있어요!</span>
+            </div>
+            <div class="move-mission-list-div">
+              <a href="#">내가 만든 미션 보러가기</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="mission-info">
+              <div class="mission-title justify-content-between">
+                <h4 class="card-title">달성 MISSION</h4>
+                <h4 class="mission-count">5</h4>
+              </div>
+              <span><span th:text="${#authentication.principal.LoginUserDto.name}"></span>님이 달성한 미션을 확인할 수 있어요!</span>
+            </div>
+            <div class="move-mission-list-div">
+              <a href="#">달성한 미션 보러가기</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="mission-info">
+              <div class="mission-title justify-content-between">
+                <h4 class="card-title">마감 MISSION</h4>
+                <h4 class="mission-count">5</h4>
+              </div>
+              <span><span th:text="${#authentication.principal.LoginUserDto.name}"></span>님이 참여했던 미션을 확인할 수 있어요!</span>
+            </div>
+            <div class="move-mission-list-div">
+              <a href="#">마감된 미션 보러가기</a>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- .mission-info-card-div end -->
+
+    </div>
+    <!-- .authentication-user end -->
+
+  </div>
+  <!-- .index-div end-->
+
+</div>
+<!-- container end -->
 </html>
