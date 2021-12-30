@@ -11,3 +11,7 @@ header {
     min-height: 850px;
 }
 
+#collapsibleNavbar {
+    justify-content: right;
+}
+
