@@ -11,23 +11,29 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
                     <li class="nav-item">
-                        <button type="button" class="btn btn-dark">전체 미션</button>
+                        <button type="button" class="btn btn-dark">전체 MISSION</button>
                     </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <button type="button" class="btn btn-dark">참여 미션</button>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark">참여 MISSION</button>
                     </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <button type="button" class="btn btn-dark">나의 미션</button>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark">나의 MISSION</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark">달성 MISSION</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-dark">마감 MISSION</button>
                     </li>
                 </ul>
                 <div sec:authorize="isAnonymous()">
-                    <button type="button" class="btn btn-dark" onclick="javascript:location.href='/login'">로그인</button>
-                    <button type="button" class="btn btn-dark" onclick="javascript:location.href='/join'">회원가입</button>
+                    <button type="button" class="btn btn-dark" id="btn-move-login-form">로그인</button>
+                    <button type="button" class="btn btn-dark" id="btn-move-join-form">회원가입</button>
                 </div>
                 <div sec:authorize="isAuthenticated()">
-                    <button type="button" class="btn btn-dark" onclick="javascript:location.href='/logout'">로그아웃</button>
+                    <button type="button" class="btn btn-dark" id="btn-move-logout">로그아웃</button>
                 </div>
             </div>
         </div>
