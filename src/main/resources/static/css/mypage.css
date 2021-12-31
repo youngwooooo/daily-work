@@ -1,0 +1,82 @@
+.user-info-div {
+    padding: 20px;
+}
+
+.profile-image-div, .user-info-table-div {
+    padding: 20px;
+    display: flex;
+}
+
+.profile-image-div img {
+    width: 20%;
+    border-radius: 50%;
+    margin: auto;
+    cursor: pointer;
+}
+
+#fileUpload {
+    display: none;
+}
+
+.user-info-table-div .table {
+    width: 50%;
+}
+
+.user-info-table-div .table tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.user-info-table-div .table th, .user-info-table-div .table td {
+    padding: 20px;
+    vertical-align: middle;
+}
+
+.user-info-modify-buttons {
+    display: flex;
+    margin-top: 30px;
+}
+
+.user-info-modify-buttons button {
+    width: 10%;
+}
+
+.user-info-modify-buttons #btn-cancel {
+    border: 1px solid #dddddd;
+    margin-left: 10px;
+}
+
+#modify-password-modal .modal-content {
+    padding: 20px;
+}
+
+#modify-password-modal .modal-body h3 {
+    margin: 0px;
+    font-weight: bold;
+}
+
+#modify-password-modal .modal-body span {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+#modify-password-modal .modal-body #password {
+    margin-top: 20px;
+}
+
+#modify-password-modal .modal-body .errorMsg {
+    color: red;
+}
+
+#modify-password-modal .modal-body .modal-buttons {
+    margin-top: 40px;
+    display: flex;
+}
+
+#modify-password-modal .modal-body .modal-buttons button {
+    width: 25%;
+}
+
+#modify-password-modal .modal-body .modal-buttons #btn-cancel-modal {
+    border: 1px solid #dddddd;
+    margin-left: 10px;
+}
