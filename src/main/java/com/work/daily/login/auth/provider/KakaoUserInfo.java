@@ -33,4 +33,9 @@ public class KakaoUserInfo implements OAuth2UserInfo {
     public String getName() {
         return (String) kakaoProfile.get("nickname");
     }
+
+    @Override
+    public String getProfileImage() {
+        return (String) kakaoProfile.get("profile_image_url");
+    }
 }
