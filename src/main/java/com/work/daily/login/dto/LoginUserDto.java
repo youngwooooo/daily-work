@@ -17,9 +17,10 @@ public class LoginUserDto {
     private String email;
     private UserRole role;
     private String provider;
+    private String profileImage;
 
     @Builder
-    public LoginUserDto(long no, String id, String password, String name, String email, UserRole role, String provider) {
+    public LoginUserDto(long no, String id, String password, String name, String email, UserRole role, String provider, String profileImage) {
         this.no = no;
         this.id = id;
         this.password = password;
@@ -27,6 +28,7 @@ public class LoginUserDto {
         this.email = email;
         this.role = role;
         this.provider = provider;
+        this.profileImage = profileImage;
     }
 
     public User toEntity(){
@@ -38,6 +40,7 @@ public class LoginUserDto {
                 .email(email)
                 .role(role)
                 .provider(provider)
+                .profileImage(profileImage)
                 .build();
     }
 }

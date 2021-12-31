@@ -31,6 +31,7 @@ public class JoinUserDto {
     private UserRole role;
     private String provider;
     private String providerId;
+    private String profileImage;
 
     /*
     #####   Builder 패턴 사용 이유   #####
@@ -38,7 +39,7 @@ public class JoinUserDto {
     빌더패턴    : 객체 생성 후 상태값을 변경 할수 없게 없게 동결 시키는 패턴
      */
     @Builder
-    public JoinUserDto(String id, String password, String name, String email, UserRole role, String provider, String providerId) {
+    public JoinUserDto(String id, String password, String name, String email, UserRole role, String provider, String providerId, String profileImage) {
         this.id = id;
         this.password = password;
         this.name = name;
@@ -46,6 +47,7 @@ public class JoinUserDto {
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;
+        this.profileImage = profileImage;
     }
 
     public User toEntity(){
@@ -57,6 +59,7 @@ public class JoinUserDto {
                 .role(role)
                 .provider(provider)
                 .providerId(providerId)
+                .profileImage(profileImage)
                 .build();
     }
 

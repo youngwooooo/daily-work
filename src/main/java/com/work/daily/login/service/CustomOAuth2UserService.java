@@ -63,6 +63,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String email = oAuth2UserInfo.getEmail();
         String provider = oAuth2UserInfo.getProvider();
         String providerId = oAuth2UserInfo.getProviderId();
+        String profileImage = oAuth2UserInfo.getProfileImage();
 
         // 회원 존재 여부 확인
         Optional<User> findUser = userRepository.findById(providerId);
@@ -76,6 +77,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .role(UserRole.USER)
                     .provider(provider)
                     .providerId(providerId)
+                    .profileImage(profileImage)
                     .build();
 
             User savedUser = userRepository.save(joinUserDto.toEntity());
@@ -89,6 +91,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                                                     .email(savedUser.getEmail())
                                                     .role(savedUser.getRole())
                                                     .provider(savedUser.getProvider())
+                                                    .profileImage(savedUser.getProfileImage())
                                                     .build();
 
 
@@ -104,6 +107,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .email(findUser.get().getEmail())
                 .role(findUser.get().getRole())
                 .provider(findUser.get().getProvider())
+                .profileImage(findUser.get().getProfileImage())
                 .build();
 
         return new CustomUserDetails(toLoginUserDto, oAuth2User.getAttributes());

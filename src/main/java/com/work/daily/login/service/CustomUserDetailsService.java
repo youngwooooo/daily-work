@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Optional<User> findUser = userRepository.findById(username);
         if(!findUser.isPresent()){
-            throw new UsernameNotFoundException("존재하지 않는 회원입니다.ㅣㅐ");
+            throw new UsernameNotFoundException("존재하지 않는 회원입니다.");
         }
 
         LoginUserDto loginUserDto = LoginUserDto.builder()
@@ -39,6 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                             .email(findUser.get().getEmail())
                             .role(findUser.get().getRole())
                             .provider(findUser.get().getProvider())
+                            .profileImage(findUser.get().getProfileImage())
                             .build();
 
         log.info(loginUserDto.toString());
