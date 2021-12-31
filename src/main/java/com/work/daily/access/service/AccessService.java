@@ -37,6 +37,7 @@ public class AccessService {
 
         joinUserDto.setPassword(bCryptPasswordEncoder.encode(joinUserDto.getPassword()));
         joinUserDto.setRole(UserRole.USER);
+        joinUserDto.setProfileImage("/img/common/basic_profile.png");
 
         userRepository.save(joinUserDto.toEntity());
         log.info("save() : 회원가입 성공");
