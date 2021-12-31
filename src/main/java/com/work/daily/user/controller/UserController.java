@@ -11,8 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class UserController {
 
-    @GetMapping("/user/mypage/{no}")
-    public String mypageForm(@PathVariable long no){
+    @GetMapping("/user/mypage")
+    public String mypageForm(){
         return "contents/user/mypage";
     }
+
+    @GetMapping("/user/mypage/password")
+    public String modifyPasswordForm(){
+        return "contents/user/password";
+    }
+
 }
