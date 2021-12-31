@@ -24,7 +24,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("CustomLoginSuccessHandler 호출");
+        log.info("CustomLoginSuccessHandler::onAuthenticationSuccess called");
 
         ObjectMapper om = new ObjectMapper();
         Map<String, String> map = new HashMap<>();

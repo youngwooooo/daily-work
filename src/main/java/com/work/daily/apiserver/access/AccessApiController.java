@@ -33,6 +33,7 @@ public class AccessApiController {
      */
     @PostMapping("/join")
     public ResponseEntity<JoinResponseDto> join(@RequestBody @Valid JoinUserDto joinUserDto, BindingResult bindingResult) {
+        log.info("AccessApiController::join called");
         // 유효성 검사 후 에러가 발생한 경우
         if(bindingResult.hasErrors()){
             Map<String, Object> errorMap = new HashMap<>();

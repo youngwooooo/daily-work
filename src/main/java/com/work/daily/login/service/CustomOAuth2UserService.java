@@ -67,6 +67,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         // 회원 존재 여부 확인
         Optional<User> findUser = userRepository.findById(providerId);
+
         // 존재하지 않을 때 회원가입 처리
         if(!findUser.isPresent()){
             JoinUserDto joinUserDto = JoinUserDto.builder()

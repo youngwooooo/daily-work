@@ -28,19 +28,20 @@ public class AccessService {
      */
     @Transactional
     public String save(JoinUserDto joinUserDto){
+        log.info("AccessService::save called");
+
         // userDto.getId()로 회원 찾기
         Optional<User> findUser = userRepository.findById(joinUserDto.getId());
+
         // 회원이 존재할 때
-        if(findUser.isPresent()){
+        if(findUser.isPresent())
             return ReturnResult.FAIL.getValue();
-        }
 
         joinUserDto.setPassword(bCryptPasswordEncoder.encode(joinUserDto.getPassword()));
         joinUserDto.setRole(UserRole.USER);
         joinUserDto.setProfileImage("/img/common/basic_profile.png");
 
         userRepository.save(joinUserDto.toEntity());
-        log.info("save() : 회원가입 성공");
 
         return ReturnResult.SUCCESS.getValue();
     }
