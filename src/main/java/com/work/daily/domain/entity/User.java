@@ -39,4 +39,7 @@ public class User extends BaseTime  {
     @Column(nullable = true)
     private String providerId;
 
+    @Column(nullable = true)
+    private String profileImage;
+
 }
