@@ -21,14 +21,13 @@
       <div class="col-sm-4 user-info-card-div">
 
         <div class="card">
-          <img class="card-img-top" src="/img/common/basic_profile.png" alt="profile_image">
+          <img class="card-img-top" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="profile_image">
           <div class="card-body">
             <div class="user-simple-info">
               <h5 class="card-title" th:text="${#authentication.principal.LoginUserDto.name}"></h5>
               <p class="card-text" th:text="${#authentication.principal.LoginUserDto.email}"></p>
             </div>
             <div class="user-info-management">
-              <input type="hidden" id="no" th:value="${#authentication.principal.LoginUserDto.no}">
               <button type="button" class="btn btn-dark" id="btn-move-mypage-form">계정 관리</button>
             </div>
           </div>
