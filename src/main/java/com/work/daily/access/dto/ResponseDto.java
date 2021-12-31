@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @Builder
-public class JoinResponseDto {
+public class ResponseDto {
 
     private int status;
     private String message;
