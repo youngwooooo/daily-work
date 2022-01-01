@@ -2,7 +2,7 @@ body {
     overflow: hidden;
 }
 
-#login-success-modal {
+#response-modal {
     background-color:rgba(0,0,0,.3);
 }
 
@@ -11,20 +11,24 @@ body {
     text-align: center;
 }
 
-.join-success-desc-div {
+.response-modal-img-div #check-icon {
+    width: 15%;
+}
+
+.response-modal-desc-div {
     margin-top: 20px;
     margin-bottom: 30px;
 }
 
-.join-success-welcome {
+.response-modal-desc-div h3 {
     font-weight: bold;
 }
 
-.join-success-desc-div p {
+.response-modal-desc-div p {
     margin: 0px;
 }
 
-.join-success-btn-div button {
+.response-modal-btn-div button {
     width: 150px;
     height: 45px;
 }
