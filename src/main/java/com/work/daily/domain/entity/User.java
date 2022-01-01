@@ -42,4 +42,15 @@ public class User extends BaseTime  {
     @Column(nullable = true)
     private String profileImage;
 
+    // 비밀번호 변경을 위함
+    public void modifyPassword(String password){
+        this.password = password;
+    }
+
+    // 회원 정보(이름, 이메일) 변경을 위함
+    public void modifyUserInfo(String name, String email){
+        this.name = name;
+        this.email = email;
+    }
+
 }
