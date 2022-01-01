@@ -31,6 +31,15 @@
     vertical-align: middle;
 }
 
+.name-regExp-description {
+    display: none;
+}
+
+.name-regExp-description .description {
+    color: gray;
+    font-size: 0.8rem;
+}
+
 .user-info-modify-buttons {
     display: flex;
     margin-top: 30px;
