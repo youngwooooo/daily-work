@@ -5,7 +5,9 @@ import com.work.daily.login.service.CustomLoginSuccessHandler;
 import com.work.daily.login.service.CustomOAuth2UserService;
 import com.work.daily.login.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,6 +22,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOauth2UserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
     // Security 로그인 시, 요청받은 회원 password를 해쉬화하여 DB에 저장된 회원의 password와 비교를 해준다.
     @Override
