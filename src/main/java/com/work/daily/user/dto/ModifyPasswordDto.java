@@ -21,14 +21,4 @@ public class ModifyPasswordDto {
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\W)(?=\\S+$).{10,32}", message = "비밀번호 형식에 맞게 입력해주세요.")
     private String password;
 
-    @Builder
-    public ModifyPasswordDto(String id, String password) {
-        this.id = id;
-        this.password = password;
-    }
-
-    public User toEntity = User.builder()
-                            .id(id)
-                            .password(password)
-                            .build();
 }
