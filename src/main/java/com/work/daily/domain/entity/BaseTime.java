@@ -20,6 +20,5 @@ public class BaseTime {
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(updatable = false)
     private LocalDateTime modifiedDate;
 }
