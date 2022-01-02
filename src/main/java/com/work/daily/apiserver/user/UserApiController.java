@@ -16,10 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -40,7 +37,7 @@ public class UserApiController {
      * @param bindingResult
      * @return
      */
-    @PutMapping("/user/mypage")
+    @PatchMapping("/user/mypage")
     public ResponseEntity<ResponseDto> modifyUserInfo(@RequestBody @Valid ModifyUserInfoDto modifyUserInfoDto, BindingResult bindingResult){
         log.info("UserApiController :: modifyUserInfo called");
 
@@ -115,7 +112,7 @@ public class UserApiController {
      * @param bindingResult
      * @return
      */
-    @PutMapping("/user/mypage/password")
+    @PatchMapping("/user/mypage/password")
     public ResponseEntity<ResponseDto> modifyPassword(@RequestBody @Valid ModifyPasswordDto modifyPasswordDto, BindingResult bindingResult){
         log.info("UserApiController :: modifyPassword called");
 
