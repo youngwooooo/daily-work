@@ -3,10 +3,10 @@ $(function(){
     $("#btn-join-save").on("click", function(){
         if(joinSaveValidate()){
             var joinData = {
-                                "id" : $("#id").val()
-                                , "password" : $("#password").val()
-                                , "name" : $("#name").val()
-                                , "email" : $("#email").val()
+                                "userId" : $("#userId").val()
+                                , "userPw" : $("#userPw").val()
+                                , "userNm" : $("#userNm").val()
+                                , "userEmail" : $("#userEmail").val()
                             };
             $.ajax({
                         url : "/join"
@@ -40,24 +40,24 @@ $(function(){
     }); // end function
 
     // 아이디 규칙 보여주기/숨기기
-    $("#id").focus(function(){
+    $("#userId").focus(function(){
         $(".id-regExp-description").css("display", "block");
     });
-    $("#id").blur(function(){
+    $("#userId").blur(function(){
         $(".id-regExp-description").css("display", "none");
     });
     // 비밀번호 규칙 보여주기/숨기기
-    $("#password").focus(function(){
+    $("#userPw").focus(function(){
         $(".password-regExp-description").css("display", "block");
     });
-    $("#password").blur(function(){
+    $("#userPw").blur(function(){
         $(".password-regExp-description").css("display", "none");
     });
     // 이름 규칙 보여주기/숨기기
-    $("#name").focus(function(){
+    $("#userNm").focus(function(){
         $(".name-regExp-description").css("display", "block");
     });
-    $("#name").blur(function(){
+    $("#userNm").blur(function(){
         $(".name-regExp-description").css("display", "none");
     });
 
@@ -70,32 +70,32 @@ $(function(){
 
 // 회원가입 validate 체크
 function joinSaveValidate(){
-    var id = $("#id").val();
-    var password = $("#password").val();
-    var CheckedPassword = $("#password-check").val();
-    var name = $("#name").val();
-    var email = $("#email").val();
-    var phone = $("#phone").val();
+    var userId = $("#userId").val();
+    var userPw = $("#userPw").val();
+    var checkUserPw = $("#check-userPw").val();
+    var userNm = $("#userNm").val();
+    var userEmail = $("#userEmail").val();
+    var userTel = $("#userTel").val();
 
     // 아이디 유효성 검사
-    if(!checkRexExp("id", id)){
+    if(!checkRexExp("userId", userId)){
         return false;
     }
     // 비밀번호 유효성 검사
-    if(!checkRexExp("password", password)){
+    if(!checkRexExp("userPw", userPw)){
         return false;
     }
     // 비밀번호, 비밀번호 확인 일치 여부 확인
-    if(password != CheckedPassword){
+    if(userPw != checkUserPw){
         alert("비밀번호가 일치하지 않습니다.");
         return false;
     }
     // 이름 유효성 검사
-    if(!checkRexExp("name", name)){
+    if(!checkRexExp("userNm", userNm)){
         return false;
     }
     // 이메일 유효성 검사
-    if(!checkRexExp("email", email)){
+    if(!checkRexExp("userEmail", userEmail)){
         return false;
     }
 
@@ -106,7 +106,7 @@ function joinSaveValidate(){
 function checkRexExp(str, value){
     var rexExp = "";
 
-    if(str == "id"){
+    if(str == "userId"){
         rexExp = /^(?=.*[a-z])[A-Za-z0-9]{4,20}$/;
         if(value == "" || value == null || !rexExp.test(value)){
             alert("아이디 형식에 맞게 입력해주세요.");
@@ -114,7 +114,7 @@ function checkRexExp(str, value){
         }
     }
 
-    if(str == "password"){
+    if(str == "userPw"){
         rexExp = /^(?=.*[0-9])(?=.*[a-z])(?=.*\W)(?=\S+$).{10,32}$/;
         if(value == "" || value == null || !rexExp.test(value)){
             alert("비밀번호 형식에 맞게 입력해주세요.");
@@ -122,7 +122,7 @@ function checkRexExp(str, value){
         }
     }
 
-     if(str == "name"){
+     if(str == "userNm"){
          rexExp = /^[가-힣]{2,6}$/;
          if(value == "" || value == null || !rexExp.test(value)){
              alert("이름 형식에 맞게 입력해주세요.");
@@ -130,7 +130,7 @@ function checkRexExp(str, value){
          }
      }
 
-    if(str == "email"){
+    if(str == "userEmail"){
         rexExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if(value == "" || value == null || !rexExp.test(value)){
             alert("이메일 형식에 맞게 입력해주세요.");

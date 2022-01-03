@@ -30,8 +30,8 @@
                 <tbody>
                 <tr>
                     <th>이름</th>
-                    <td><input type="text" class="form-control" id="name" name="name"
-                               th:value="${#authentication.principal.LoginUserDto.name}" maxlength="6">
+                    <td><input type="text" class="form-control" id="userNm" name="userNm"
+                               th:value="${#authentication.principal.LoginUserDto.userNm}" maxlength="6">
                         <span class="errorMsg"></span>
                         <div class="name-regExp-description">
                             <span class="description">&nbsp;* 2자 이상 6자 이하 한글 입력</span><br/>
@@ -48,8 +48,8 @@
                 </tr>
                 <tr>
                     <th>이메일</th>
-                    <td><input type="email" class="form-control" id="email" name="email"
-                               th:value="${#authentication.principal.LoginUserDto.email}">
+                    <td><input type="email" class="form-control" id="userEmail" name="userEmail"
+                               th:value="${#authentication.principal.LoginUserDto.userEmail}">
                         <span class="errorMsg"></span>
                     </td>
                 </tr>
@@ -57,7 +57,7 @@
             </table>
         </div>
         <div class="user-info-modify-buttons justify-content-center">
-            <input type="hidden" id="id" name="id" th:value="${#authentication.principal.LoginUserDto.id}">
+            <input type="hidden" id="userId" name="userId" th:value="${#authentication.principal.LoginUserDto.userId}">
             <button type="button" class="btn btn-dark" id="btn-user-info-modify-save">적용</button>
             <button type="button" class="btn btn-light" id="btn-cancel">취소</button>
         </div>
@@ -74,7 +74,7 @@
                     <div>
                         <h3>비밀번호 확인</h3>
                         <span>비밀번호 변경을 위해 현재 계정 비밀번호를 확인합니다.</span>
-                        <input type="password" class="form-control" id="check-password" name="check-password" maxlength="32">
+                        <input type="password" class="form-control" id="check-userPw" name="check-userPw" maxlength="32">
                         <span class="errorMsg"></span>
                     </div>
                     <div class="modal-buttons justify-content-center">

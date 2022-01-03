@@ -26,17 +26,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("loadUserByUsername 호출 - ID : " + username);
 
-        Optional<User> findUser = userRepository.findById(username);
+        Optional<User> findUser = userRepository.findByUserId(username);
         if(!findUser.isPresent()){
             throw new UsernameNotFoundException("존재하지 않는 회원입니다.");
         }
 
         LoginUserDto loginUserDto = LoginUserDto.builder()
-                            .no(findUser.get().getNo())
-                            .id(findUser.get().getId())
-                            .password(findUser.get().getPassword())
-                            .name(findUser.get().getName())
-                            .email(findUser.get().getEmail())
+                            .userSeq(findUser.get().getUserSeq())
+                            .userId(findUser.get().getUserId())
+                            .userPw(findUser.get().getUserPw())
+                            .userNm(findUser.get().getUserNm())
+                            .userEmail(findUser.get().getUserEmail())
                             .role(findUser.get().getRole())
                             .provider(findUser.get().getProvider())
                             .profileImage(findUser.get().getProfileImage())

@@ -10,21 +10,21 @@ $(function(){
     $("#btn-user-info-modify-save").on("click", function(){
         if(modifyUserInfoValidate()){
             var data = {
-                "id" : $("#id").val()
-                , "name" : $("#name").val()
-                , "email" : $("#email").val()
+                "userId" : $("#userId").val()
+                , "userNm" : $("#userNm").val()
+                , "userEmail" : $("#userEmail").val()
             };
 
             $.ajax({
                 url : "/user/mypage"
-                , type : "put"
+                , type : "patch"
                 , data : JSON.stringify(data)
                 , contentType : "application/json; charset=UTF-8"
                 , dataType : "json"
                 , success : function(result){
                     console.log(result);
                     if(result.status == 200){
-
+                        alert(result.message);
                     }
                 }
                 , error : function(xhr){
@@ -41,10 +41,10 @@ $(function(){
     });
 
      // 이름 규칙 보여주기/숨기기
-    $("#name").focus(function(){
+    $("#userNm").focus(function(){
         $(".name-regExp-description").css("display", "block");
     });
-    $("#name").blur(function(){
+    $("#userNm").blur(function(){
         $(".name-regExp-description").css("display", "none");
     });
 
@@ -53,8 +53,8 @@ $(function(){
     // 비밀번호 확인 modal - [확인] 클릭 시
     $("#btn-move-modify-password-form").on("click", function(){
         var data = {
-            "id" : $("#id").val()
-            , "password" : $("#check-password").val()
+            "userId" : $("#userId").val()
+            , "userPw" : $("#check-userPw").val()
         };
 
         $.ajax({
@@ -79,22 +79,22 @@ $(function(){
 
     // 모달 띄운 후 password input focus
     $("#modify-password-modal").on("shown.bs.modal", function(){
-        $("#password").focus();
+        $("#check-userPw").focus();
     });
 
 });
 
 // name, email validate 체크
 function modifyUserInfoValidate(){
-    var name = $("#name").val();
-    var email = $("#email").val();
+    var userNm = $("#userNm").val();
+    var userEmail = $("#userEmail").val();
 
     // 이름 유효성 검사
-    if(!checkRexExp("name", name)){
+    if(!checkRexExp("userNm", userNm)){
         return false;
     }
     // 이메일 유효성 검사
-    if(!checkRexExp("email", email)){
+    if(!checkRexExp("userEmail", userEmail)){
         return false;
     }
 
@@ -105,7 +105,7 @@ function modifyUserInfoValidate(){
 function checkRexExp(str, value){
     var rexExp = "";
 
-     if(str == "name"){
+     if(str == "userNm"){
          rexExp = /^[가-힣]{2,6}$/;
          if(value == "" || value == null || !rexExp.test(value)){
              alert("이름 형식에 맞게 입력해주세요.");
@@ -113,7 +113,7 @@ function checkRexExp(str, value){
          }
      }
 
-    if(str == "email"){
+    if(str == "userEmail"){
         rexExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         if(value == "" || value == null || !rexExp.test(value)){
             alert("이메일 형식에 맞게 입력해주세요.");

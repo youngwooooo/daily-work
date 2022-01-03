@@ -34,13 +34,13 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     // 비밀번호
     @Override
     public String getPassword() {
-        return loginUserDto.getPassword();
+        return loginUserDto.getUserPw();
     }
 
     // 아이디
     @Override
     public String getUsername() {
-        return loginUserDto.getId();
+        return loginUserDto.getUserId();
     }
 
     // 계정 만료 여부

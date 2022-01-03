@@ -68,7 +68,7 @@
     color: gray;
 }
 
-#modify-password-modal .modal-body #password {
+#modify-password-modal .modal-body #check-userPw {
     margin-top: 20px;
 }
 

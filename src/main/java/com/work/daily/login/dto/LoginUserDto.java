@@ -10,22 +10,22 @@ import lombok.*;
 @NoArgsConstructor
 public class LoginUserDto {
 
-    private long no;
-    private String id;
-    private String password;
-    private String name;
-    private String email;
+    private long userSeq;
+    private String userId;
+    private String userPw;
+    private String userNm;
+    private String userEmail;
     private UserRole role;
     private String provider;
     private String profileImage;
 
     @Builder
-    public LoginUserDto(long no, String id, String password, String name, String email, UserRole role, String provider, String profileImage) {
-        this.no = no;
-        this.id = id;
-        this.password = password;
-        this.name = name;
-        this.email = email;
+    public LoginUserDto(long userSeq, String userId, String userPw, String userNm, String userEmail, UserRole role, String provider, String profileImage) {
+        this.userSeq = userSeq;
+        this.userId = userId;
+        this.userPw = userPw;
+        this.userNm = userNm;
+        this.userEmail = userEmail;
         this.role = role;
         this.provider = provider;
         this.profileImage = profileImage;
@@ -33,11 +33,11 @@ public class LoginUserDto {
 
     public User toEntity(){
         return User.builder()
-                .no(no)
-                .id(id)
-                .password(password)
-                .name(name)
-                .email(email)
+                .userSeq(userSeq)
+                .userId(userId)
+                .userPw(userPw)
+                .userNm(userNm)
+                .userEmail(userEmail)
                 .role(role)
                 .provider(provider)
                 .profileImage(profileImage)

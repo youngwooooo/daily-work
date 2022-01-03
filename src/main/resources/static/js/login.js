@@ -1,8 +1,8 @@
 $(function(){
     $("#btn-login").on("click", function(){
         var loginData = {
-            "id" : $("#id").val()
-            , "password" : $("#password").val()
+            "userId" : $("#userId").val()
+            , "userPw" : $("#userPw").val()
         };
 
         $.ajax({

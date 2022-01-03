@@ -58,23 +58,23 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
            - 비밀번호를 따로 받지 않기 때문에 uuid로 랜덤 문자를 생성하여 해쉬 암호화 한다.
            - 나머지는 oAuth2UserInfo 객체의 구현 메서드를 활용한다.
          */
-        String password = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
-        String name = oAuth2UserInfo.getName();
-        String email = oAuth2UserInfo.getEmail();
+        String userPw = bCryptPasswordEncoder.encode(UUID.randomUUID().toString());
+        String userNm = oAuth2UserInfo.getName();
+        String userEmail = oAuth2UserInfo.getEmail();
         String provider = oAuth2UserInfo.getProvider();
         String providerId = oAuth2UserInfo.getProviderId();
         String profileImage = oAuth2UserInfo.getProfileImage();
 
         // 회원 존재 여부 확인
-        Optional<User> findUser = userRepository.findById(providerId);
+        Optional<User> findUser = userRepository.findByUserId(providerId);
 
         // 존재하지 않을 때 회원가입 처리
         if(!findUser.isPresent()){
             JoinUserDto joinUserDto = JoinUserDto.builder()
-                    .id(providerId)
-                    .password(password)
-                    .name(name)
-                    .email(email)
+                    .userId(providerId)
+                    .userPw(userPw)
+                    .userNm(userNm)
+                    .userEmail(userEmail)
                     .role(UserRole.USER)
                     .provider(provider)
                     .providerId(providerId)
@@ -85,11 +85,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             // 회원가입 된 회원정보로 LoginUserDto 객체 생성
             LoginUserDto savedUserToLoginUserDto = LoginUserDto.builder()
-                                                    .no(savedUser.getNo())
-                                                    .id(savedUser.getId())
-                                                    .password(savedUser.getPassword())
-                                                    .name(savedUser.getName())
-                                                    .email(savedUser.getEmail())
+                                                    .userSeq(savedUser.getUserSeq())
+                                                    .userId(savedUser.getUserId())
+                                                    .userPw(savedUser.getUserPw())
+                                                    .userNm(savedUser.getUserNm())
+                                                    .userEmail(savedUser.getUserEmail())
                                                     .role(savedUser.getRole())
                                                     .provider(savedUser.getProvider())
                                                     .profileImage(savedUser.getProfileImage())
@@ -101,11 +101,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         // 존재한다면 User 객체를 UserDto로 변환하여 리턴
         LoginUserDto toLoginUserDto =  LoginUserDto.builder()
-                .no(findUser.get().getNo())
-                .id(findUser.get().getId())
-                .name(findUser.get().getName())
-                .password(findUser.get().getPassword())
-                .email(findUser.get().getEmail())
+                .userSeq(findUser.get().getUserSeq())
+                .userId(findUser.get().getUserId())
+                .userPw(findUser.get().getUserPw())
+                .userNm(findUser.get().getUserNm())
+                .userEmail(findUser.get().getUserEmail())
                 .role(findUser.get().getRole())
                 .provider(findUser.get().getProvider())
                 .profileImage(findUser.get().getProfileImage())

@@ -31,13 +31,13 @@ public class AccessService {
         log.info("AccessService::save called");
 
         // userDto.getId()로 회원 찾기
-        Optional<User> findUser = userRepository.findById(joinUserDto.getId());
+        Optional<User> findUser = userRepository.findByUserId(joinUserDto.getUserId());
 
         // 회원이 존재할 때
         if(findUser.isPresent())
             return ReturnResult.FAIL.getValue();
 
-        joinUserDto.setPassword(bCryptPasswordEncoder.encode(joinUserDto.getPassword()));
+        joinUserDto.setUserPw(bCryptPasswordEncoder.encode(joinUserDto.getUserPw()));
         joinUserDto.setRole(UserRole.USER);
         joinUserDto.setProfileImage("/img/common/basic_profile.png");
 
