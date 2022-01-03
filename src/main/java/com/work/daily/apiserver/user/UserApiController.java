@@ -13,11 +13,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class UserApiController {
      * @return
      */
     @PatchMapping("/user/mypage")
-    public ResponseEntity<ResponseDto> modifyUserInfo(@RequestBody @Valid ModifyUserInfoDto modifyUserInfoDto, BindingResult bindingResult){
+    public ResponseEntity<ResponseDto> modifyUserInfo(@RequestBody @Valid ModifyUserInfoDto modifyUserInfoDto, BindingResult bindingResult, HttpSession session){
         log.info("UserApiController :: modifyUserInfo called");
 
         // 유효성 검사 오류 발생 시
@@ -53,16 +55,17 @@ public class UserApiController {
                     , HttpStatus.BAD_REQUEST);
         }
 
-        String result = userService.modifyUserInfo(modifyUserInfoDto);
+        // 회원정보 변경한 UserDetails 객체
+        UserDetails modifyUserDetails = userService.modifyUserInfo(modifyUserInfoDto);
 
-        // ERROR
-        if(result.equals(ReturnResult.ERROR.getValue())){
-            throw new UsernameNotFoundException("UserApiController :: modifyPassword :: 존재하는 회원이 아닙니다. ID = " + modifyUserInfoDto.getId());
-        }
-
-        // 세션 수정
-        Authentication newAuthentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(modifyUserInfoDto.getId(), null));
+        // 세션 초기화
+        SecurityContextHolder.clearContext();
+        // 새로운 Authentication 객체 생성
+        Authentication newAuthentication = new UsernamePasswordAuthenticationToken(modifyUserDetails, null, modifyUserDetails.getAuthorities());
+        // Spring security 세션에 newAuthentication 저장
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+        // 세션에 저장
+        session.setAttribute("SPRING_SECURITY_CONTEXT", newAuthentication);
 
         // SUCCESS
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(ReturnResult.SUCCESS.getValue()).message("회원 정보 변경이 완료되었습니다.").build(), HttpStatus.OK);
@@ -98,7 +101,7 @@ public class UserApiController {
             return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(ReturnResult.FAIL.getValue()).message("비밀번호가 일치하지 않습니다.").build()
                     , HttpStatus.BAD_REQUEST);
         }else if(result.equals(ReturnResult.ERROR.getValue())){
-            throw new UsernameNotFoundException("UserApiController :: passwordModifyForm :: 존재하는 회원이 아닙니다. ID = " + modifyPasswordDto.getId());
+            throw new UsernameNotFoundException("UserApiController :: passwordModifyForm :: 존재하는 회원이 아닙니다. ID = " + modifyPasswordDto.getUserId());
         }
 
         // SUCCESS
@@ -133,7 +136,7 @@ public class UserApiController {
 
         // ERROR
         if(result.equals(ReturnResult.ERROR.getValue())){
-            throw new UsernameNotFoundException("UserApiController :: modifyPassword :: 존재하는 회원이 아닙니다. ID = " + modifyPasswordDto.getId());
+            throw new UsernameNotFoundException("UserApiController :: modifyPassword :: 존재하는 회원이 아닙니다. ID = " + modifyPasswordDto.getUserId());
         }
 
         // SUCCESS
