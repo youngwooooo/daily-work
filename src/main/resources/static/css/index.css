@@ -13,8 +13,10 @@
 
 .authentication-user .user-info-card-div .card-img-top {
     width: 65%;
+    height: 200px;
     margin: auto;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .authentication-user .user-info-card-div .user-simple-info {
