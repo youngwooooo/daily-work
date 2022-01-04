@@ -1,7 +1,5 @@
 package com.work.daily.user.dto;
 
-import com.work.daily.domain.entity.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
