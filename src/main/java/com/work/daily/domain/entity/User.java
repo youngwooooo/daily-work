@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@IdClass(User.UserPK.class)
+@IdClass(value = User.UserPK.class)
 @Entity
 @Table(name = "TB_USER_INFO")
 public class User extends BaseTime  {
@@ -56,7 +56,8 @@ public class User extends BaseTime  {
         this.profileImage = profileImage;
     }
 
-    public class UserPK implements Serializable {
+    @NoArgsConstructor
+    public static class UserPK implements Serializable {
 
         @Id
         @Column(columnDefinition = "varchar(30) comment '회원번호'")
@@ -65,5 +66,6 @@ public class User extends BaseTime  {
         @Id
         @Column(columnDefinition = "varchar(60) comment '회원ID'")
         private String userId;
+
     }
 }
