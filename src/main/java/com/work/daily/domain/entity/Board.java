@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * 게시판 정보
+ */
+
 @Getter
 @ToString
 @NoArgsConstructor
