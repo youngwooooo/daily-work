@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Entity
-@NoArgsConstructor
-@Builder
+
 public class TbIobdOrdReq {
 
     @Id

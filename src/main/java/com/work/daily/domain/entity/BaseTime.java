@@ -16,14 +16,17 @@ import java.time.LocalDateTime;
 public class BaseTime {
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "TEXT COMMENT '생성일시'")
     private LocalDateTime insDtm;
 
-    private LocalDateTime insUser;
+    @Column(columnDefinition = "TEXT COMMENT '생성자'")
+    private String insUser;
 
     @LastModifiedDate
+    @Column(columnDefinition = "TEXT COMMENT '수정일시'")
     private String updDtm;
 
+    @Column(columnDefinition = "TEXT COMMENT '수정자'")
     private String updUser;
 
 }

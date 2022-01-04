@@ -8,12 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@IdClass(TbAsrsWrkInfo.TbAsrsWrkInfoId.class)
+
 public class TbAsrsWrkInfo {
 
     @Id

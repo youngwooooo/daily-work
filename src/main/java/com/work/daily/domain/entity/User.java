@@ -18,12 +18,10 @@ import java.io.Serializable;
 public class User extends BaseTime  {
 
     @Id
-    @Column(columnDefinition = "varchar(20) comment '회원번호'")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userSeq;
 
     @Id
-    @Column(columnDefinition = "varchar(20) comment '회원ID'")
     @NotNull
     private String userId;
 
@@ -61,9 +59,11 @@ public class User extends BaseTime  {
     public class UserPK implements Serializable {
 
         @Id
+        @Column(columnDefinition = "varchar(30) comment '회원번호'")
         private long userSeq;
 
         @Id
+        @Column(columnDefinition = "varchar(60) comment '회원ID'")
         private String userId;
     }
 }
