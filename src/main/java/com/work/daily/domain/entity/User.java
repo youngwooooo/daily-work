@@ -49,10 +49,11 @@ public class User extends BaseTime  {
         this.userPw = password;
     }
 
-    // 회원 정보(이름, 이메일) 변경을 위함
-    public void modifyUserInfo(String name, String email){
+    // 회원 정보(이름, 이메일, 프로필 사진) 변경을 위함
+    public void modifyUserInfo(String name, String email, String profileImage){
         this.userNm = name;
         this.userEmail = email;
+        this.profileImage = profileImage;
     }
 
 }
