@@ -12,13 +12,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@IdClass(value = User.UserPK.class)
+@IdClass(value = UserPK.class)
 @Entity
 @Table(name = "TB_USER_INFO")
 public class User extends BaseTime  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ_INCREASE")
     private long userSeq;
 
     @Id
@@ -55,17 +55,24 @@ public class User extends BaseTime  {
         this.userEmail = email;
         this.profileImage = profileImage;
     }
+}
 
-    @NoArgsConstructor
-    public static class UserPK implements Serializable {
+@NoArgsConstructor
+@SequenceGenerator(
+        name = "USER_SEQ_INCREASE",
+        sequenceName = "USER_SEQ_INCREASE", // 시퀸스 명
+        initialValue = 1, // 초기 값
+        allocationSize = 1 // 미리 할당 받을 시퀸스 수
+)
+class UserPK implements Serializable {
 
-        @Id
-        @Column(columnDefinition = "varchar(30) comment '회원번호'")
-        private long userSeq;
+    @Id
+    @Column(columnDefinition = "varchar(30) comment '회원번호'")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ_INCREASE")
+    private long userSeq;
 
-        @Id
-        @Column(columnDefinition = "varchar(60) comment '회원ID'")
-        private String userId;
+    @Id
+    @Column(columnDefinition = "varchar(60) comment '회원ID'")
+    private String userId;
 
-    }
 }
