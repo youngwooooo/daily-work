@@ -3,7 +3,23 @@ $(function(){
 
     // 프로필 사진 클릭 시
     $("#profile-image").on("click", function(){
-        $("#fileUpload").click();
+        $("#file").click();
+    });
+
+    // 프로필 사진 변경 시 미리보기
+    $("#file").on("change", function(){
+        var changeImg = $(this)[0].files[0];
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+           if(changeImg.type.match("image/*")){
+             $('#profile-image').attr('src', e.target.result);
+           }else {
+             alert("이미지 형식의 파일만 가능합니다.");
+           }
+
+        }
+        reader.readAsDataURL(changeImg);
     });
 
     // [적용] 클릭 시
@@ -15,12 +31,19 @@ $(function(){
                 , "userEmail" : $("#userEmail").val()
             };
 
+            var file = $("#file")[0].files[0];
+
+            var formData = new FormData();
+            formData.append("file", file);
+            formData.append("modifyUserInfoDto", new Blob([JSON.stringify(data)] , {type: "application/json"}));
+
             $.ajax({
                 url : "/user/mypage"
                 , type : "patch"
-                , data : JSON.stringify(data)
-                , contentType : "application/json; charset=UTF-8"
-                , dataType : "json"
+                , data : formData
+                , processData: false
+                , contentType: false
+                , enctype: "multipart/form-data"
                 , success : function(result){
                     console.log(result);
                     if(result.status == 200){
