@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +17,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,17 +31,20 @@ import java.util.Map;
 public class UserApiController {
 
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
-
 
     /**
-     * 계정관리(마이페이지) - 회원 정보(이름, 이메일) 변경
+     * 계정관리(마이페이지) - 회원 정보(이름, 이메일, 프로필 사진) 변경
+     * @RequestPart : multipart/form-data를 받기 위함
      * @param modifyUserInfoDto
      * @param bindingResult
      * @return
      */
     @PatchMapping("/user/mypage")
-    public ResponseEntity<ResponseDto> modifyUserInfo(@RequestBody @Valid ModifyUserInfoDto modifyUserInfoDto, BindingResult bindingResult, HttpSession session){
+    public ResponseEntity<ResponseDto> modifyUserInfo(@Valid @RequestPart(value = "modifyUserInfoDto") ModifyUserInfoDto modifyUserInfoDto
+                                                        , @RequestPart(value = "file", required = false) MultipartFile file
+                                                        , BindingResult bindingResult
+                                                        , HttpSession session) throws IOException {
+
         log.info("UserApiController :: modifyUserInfo called");
 
         // 유효성 검사 오류 발생 시
@@ -55,16 +59,17 @@ public class UserApiController {
                     , HttpStatus.BAD_REQUEST);
         }
 
-        // 회원정보 변경한 UserDetails 객체
-        UserDetails modifyUserDetails = userService.modifyUserInfo(modifyUserInfoDto);
+
+        // modifyUserDetails : 회원정보 변경한 UserDetails 객체
+        UserDetails modifyUserDetails = userService.modifyUserInfo(modifyUserInfoDto, file);
 
         // 세션 초기화
         SecurityContextHolder.clearContext();
         // 새로운 Authentication 객체 생성
         Authentication newAuthentication = new UsernamePasswordAuthenticationToken(modifyUserDetails, null, modifyUserDetails.getAuthorities());
-        // Spring security 세션에 newAuthentication 저장
+        // security 세션에 새로운 Authentication 객체 저장
         SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-        // 세션에 저장
+        // security 세션을 HttpSession에 저장
         session.setAttribute("SPRING_SECURITY_CONTEXT", newAuthentication);
 
         // SUCCESS
