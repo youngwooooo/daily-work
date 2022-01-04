@@ -15,49 +15,50 @@
 <div layout:fragment="content" class="container">
 
     <div class="user-info-div">
-        <div class="profile-image-div">
-            <img id="profile-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="profile_image">
-        </div>
-        <form>
-            <input type="file" id="fileUpload" accept="image/*">
-        </form>
-        <div class="user-info-table-div justify-content-center">
-            <table class="table">
-                <colgroup>
-                    <col width="30%">
-                    <col width="auto">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <th>이름</th>
-                    <td><input type="text" class="form-control" id="userNm" name="userNm"
-                               th:value="${#authentication.principal.LoginUserDto.userNm}" maxlength="6">
-                        <span class="errorMsg"></span>
-                        <div class="name-regExp-description">
-                            <span class="description">&nbsp;* 2자 이상 6자 이하 한글 입력</span><br/>
-                        </div>
-                    </td>
-                </tr>
-                <tr th:if="${#authentication.principal.LoginUserDto.provider == null}">
-                    <th>비밀번호</th>
-                    <td>
-                        <button type="button" class="btn btn-primary" id="btn-modify-password" data-toggle="modal"
-                                data-target="#modify-password-modal">비밀번호 변경
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <th>이메일</th>
-                    <td><input type="email" class="form-control" id="userEmail" name="userEmail"
-                               th:value="${#authentication.principal.LoginUserDto.userEmail}">
-                        <span class="errorMsg"></span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="user-info-modify-buttons justify-content-center">
+        <form id="userInfo-Form">
             <input type="hidden" id="userId" name="userId" th:value="${#authentication.principal.LoginUserDto.userId}">
+            <div class="profile-image-div">
+                <img id="profile-image" th:src="${#authentication.principal.LoginUserDto.profileImage}"
+                     alt="profile_image">
+                <input type="file" id="file" name="file" accept="image/*">
+            </div>
+            <div class="user-info-table-div justify-content-center">
+                <table class="table">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="auto">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>이름</th>
+                        <td><input type="text" class="form-control" id="userNm" name="userNm"
+                                   th:value="${#authentication.principal.LoginUserDto.userNm}" maxlength="6">
+                            <span class="errorMsg"></span>
+                            <div class="name-regExp-description">
+                                <span class="description">&nbsp;* 2자 이상 6자 이하 한글 입력</span><br/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#authentication.principal.LoginUserDto.provider == null}">
+                        <th>비밀번호</th>
+                        <td>
+                            <button type="button" class="btn btn-primary" id="btn-modify-password" data-toggle="modal"
+                                    data-target="#modify-password-modal">비밀번호 변경
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td><input type="email" class="form-control" id="userEmail" name="userEmail"
+                                   th:value="${#authentication.principal.LoginUserDto.userEmail}">
+                            <span class="errorMsg"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <div class="user-info-modify-buttons justify-content-center">
             <button type="button" class="btn btn-dark" id="btn-user-info-modify-save">적용</button>
             <button type="button" class="btn btn-light" id="btn-cancel">취소</button>
         </div>
@@ -74,7 +75,8 @@
                     <div>
                         <h3>비밀번호 확인</h3>
                         <span>비밀번호 변경을 위해 현재 계정 비밀번호를 확인합니다.</span>
-                        <input type="password" class="form-control" id="check-userPw" name="check-userPw" maxlength="32">
+                        <input type="password" class="form-control" id="check-userPw" name="check-userPw"
+                               maxlength="32">
                         <span class="errorMsg"></span>
                     </div>
                     <div class="modal-buttons justify-content-center">
