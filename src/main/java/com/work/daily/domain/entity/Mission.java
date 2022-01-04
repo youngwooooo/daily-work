@@ -1,54 +1,58 @@
-//package com.work.daily.domain.entity;
-//
-//import lombok.*;
-//
-//import javax.persistence.*;
-//import java.io.Serializable;
-//
-//@Getter
-//@ToString
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
-//@Entity
-//@Table(name = "TB_MISSION")
-//public class Mission {
-//
-//    @Id
-//    private String missionSeq;
-//
-//    @MapsId("userSeq") // User.userSeq 매핑
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumns({
-//            @JoinColumn(name = "USER_SEQ")
-//    })
-//    private User user1;
-//
-//    @MapsId("userId") // User.userId 매핑
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumns({
-//            @JoinColumn(name = "USER_ID")
-//    })
-//    private User user2;
-//
-//    private String missionNm;
-//    private String missionDesc;
-//    private String missionStDt;
-//    private String missionEndDt;
-//    private String releaseYn;
-//    private String autoAccessYn;
-//    private String masterYn;    /* 방장여부 */
-//    private String delYn;       /* 삭제여부 */
-//
-//    @Column(columnDefinition = "varchar(10) not null comment '임시여부'")
-//    private String temporaryYn; /* 임시여부 */
-//
-//    @Column(columnDefinition = "varchar(10) not null comment '미션만족도'")
-//    private String reviewGrade; /* 미션만족도 */
-//
-//    private String insDtm;
-//    private String insUser;
-//    private String updDtm;
-//    private String updUser;
-//
-//}
+package com.work.daily.domain.entity;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "TB_MISSION_INFO")
+public class Mission extends BaseTime {
+
+    @Id
+    @Column(columnDefinition = "varchar(20) comment '미션번호'")
+    private String missionSeq;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "USER_SEQ"),
+            @JoinColumn(name = "USER_ID")
+    })
+    private User user;
+
+    @Column(columnDefinition = "varchar(60) comment '미션명'")
+    private String missionNm;
+
+    @Column(columnDefinition = "varchar(60) comment '미션설명'")
+    private String missionDesc;
+
+    @Column(columnDefinition = "varchar(60) comment '미션시작일'")
+    private String missionStDt;
+
+    @Column(columnDefinition = "varchar(60) comment '미션종료일'")
+    private String missionEndDt;
+
+    @Column(columnDefinition = "varchar(10) comment '공개여부'")
+    private String releaseYn;
+
+    @Column(columnDefinition = "varchar(10) comment '자동참여여부'")
+    private String autoAccessYn;
+
+    @Column(columnDefinition = "varchar(10) comment '방장여부'")
+    private String masterYn;
+
+    @Column(columnDefinition = "varchar(10) comment '삭제여부'")
+    private String delYn;
+
+    @Column(columnDefinition = "varchar(10) comment '임시여부'")
+    private String temporaryYn;
+
+    @Column(columnDefinition = "varchar(60) comment '미션만족도'")
+    private String reviewGrade;
+
+}

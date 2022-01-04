@@ -1,47 +1,49 @@
 package com.work.daily.domain.entity;
 
 import com.work.daily.domain.UserRole;
-import com.work.daily.domain.embedded.UserPK;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@IdClass(UserPK.class)
+@IdClass(User.UserPK.class)
 @Entity
+@Table(name = "TB_USER_INFO")
 public class User extends BaseTime  {
 
     @Id
+    @Column(columnDefinition = "varchar(20) comment '회원번호'")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userSeq;
 
     @Id
+    @Column(columnDefinition = "varchar(20) comment '회원ID'")
+    @NotNull
     private String userId;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
+    @NotNull
     private String userPw;
 
-    @Column(nullable = false, length = 10)
+    @NotNull
     private String userNm;
 
-    @Column(nullable = true, length = 320)
     private String userEmail;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @NotNull
     private UserRole role;
 
-    @Column(nullable = true)
     private String provider;
 
-    @Column(nullable = true)
     private String providerId;
 
-    @Column(nullable = true)
     private String profileImage;
 
     // 비밀번호 변경을 위함
@@ -56,4 +58,12 @@ public class User extends BaseTime  {
         this.profileImage = profileImage;
     }
 
+    public class UserPK implements Serializable {
+
+        @Id
+        private long userSeq;
+
+        @Id
+        private String userId;
+    }
 }

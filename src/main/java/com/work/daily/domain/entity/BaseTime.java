@@ -17,8 +17,13 @@ public class BaseTime {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdDate;
+    private LocalDateTime insDtm;
+
+    private LocalDateTime insUser;
 
     @LastModifiedDate
-    private LocalDateTime modifiedDate;
+    private String updDtm;
+
+    private String updUser;
+
 }
