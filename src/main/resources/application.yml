@@ -7,6 +7,15 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# 서버에 저장된 파일의 경로를 직접 설정(@Value를 활용하여 사용)
+custom:
+  path:
+    root-image: D:\daily-work\src\main\image\
+    profile-image: D:\daily-work\src\main\image\profile\
 
 spring:
   devtools:
@@ -32,7 +41,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       format_sql: true
 
   #Thymeleaf
