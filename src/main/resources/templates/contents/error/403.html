@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- 컨텐츠페이지의 CSS -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/error.css"/>
+</th:block>
+
+<div layout:fragment="content" class="container-fluid">
+    <div class="error-desc-div">
+        <img src="/img/error/403.jpg" alt="403">
+        <h1>접근 가능한 페이지가 아닙니다.</h1>
+        <span>현재 입력하신 주소에 접근할 수 있는 권한이 없습니다.</span></br>
+        <span>문제가 있는 경우 관리자에게 문의해주세요.</span></br>
+        <button type="button" class="btn btn-dark" onclick="javascript:location.href='/'">돌아가기</button>
+    </div>
+</div>
+<!-- container end -->
+</html>

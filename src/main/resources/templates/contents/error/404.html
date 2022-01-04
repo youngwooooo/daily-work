@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- 컨텐츠페이지의 CSS -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/error.css"/>
+</th:block>
+
+<div layout:fragment="content" class="container-fluid">
+    <div class="error-desc-div">
+        <img src="/img/error/404.jpg" alt="403">
+        <h1>페이지를 찾을 수 없습니다.</h1>
+        <span>주소가 잘못 입력되었거나 변경 또는 삭제되어</span></br>
+        <span>요청하신 페이지를 찾을 수 없습니다.</span></br>
+        <span>입력하신 주소를 다시 한 번 확인해주세요.</span></br>
+        <button type="button" class="btn btn-dark" onclick="javascript:location.href='/'">돌아가기</button>
+    </div>
+</div>
+<!-- container end -->
+</html>

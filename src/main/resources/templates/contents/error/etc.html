@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- 컨텐츠페이지의 CSS -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/error.css"/>
+</th:block>
+
+<div layout:fragment="content" class="container-fluid" style="background-color: white;">
+    <div class="error-desc-div">
+        <img src="/img/error/etc.jpg" alt="403">
+        <h1>시스템 에러가 발생하였습니다.</h1>
+        <span>서비스 이용에 불편을 드려 죄송합니다.</span></br>
+        <span>관리자에게 문의하거나 잠시 후 다시 시도해주세요.</span></br>
+        <button type="button" class="btn btn-dark" onclick="javascript:location.href='/'">돌아가기</button>
+    </div>
+</div>
+<!-- container end -->
+</html>
