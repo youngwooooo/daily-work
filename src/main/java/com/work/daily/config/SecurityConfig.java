@@ -23,12 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOauth2UserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
-
     // Security 로그인 시, 요청받은 회원 password를 해쉬화하여 DB에 저장된 회원의 password와 비교를 해준다.
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
