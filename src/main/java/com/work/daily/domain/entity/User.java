@@ -55,6 +55,13 @@ public class User extends BaseTime  {
         this.userEmail = email;
         this.profileImage = profileImage;
     }
+
+    @PrePersist
+    public void setInsAndUpdUser(){
+        this.setInsUser(userId);
+        this.setUpdUser(userId);
+    }
+
 }
 
 @NoArgsConstructor
