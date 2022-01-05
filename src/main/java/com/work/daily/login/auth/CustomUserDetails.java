@@ -2,6 +2,7 @@ package com.work.daily.login.auth;
 
 import com.work.daily.access.dto.JoinUserDto;
 import com.work.daily.login.dto.LoginUserDto;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,11 +15,12 @@ import java.util.Map;
 
 @ToString
 @Getter
+@EqualsAndHashCode(of = {"loginUserDto.getUserId()"}) // 중복 로그인 방지를 위한 equal, hashcode 메서드
 public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private LoginUserDto loginUserDto;
     private Map<String, Object> attributes;
-    
+
     // 일반 form 로그인 생성자
     public CustomUserDetails(LoginUserDto loginUserDto) {
         this.loginUserDto = loginUserDto;
