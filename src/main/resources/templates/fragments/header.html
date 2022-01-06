@@ -6,14 +6,15 @@
 <header th:fragment="headerFragment">
     <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">Daily Work</a>
+            <a sec:authorize="isAuthenticated()" class="navbar-brand" href="/">Daily Work</a>
+            <a sec:authorize="!isAuthenticated()" class="navbar-brand" href="/missions">Daily Work</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">
                     <li class="nav-item">
-                        <button type="button" class="btn btn-dark">전체 MISSION</button>
+                        <button type="button" class="btn btn-dark" id="btn-move-all-mission">전체 MISSION</button>
                     </li>
                     <li class="nav-item">
                         <button type="button" class="btn btn-dark">참여 MISSION</button>
