@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- 컨텐츠페이지의 CSS -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/mission/mission.css"/>
+</th:block>
+<!-- 컨텐츠페이지의 JS -->
+<th:block layout:fragment="script">
+    <script src="/js/mission/mission.js"></script>
+</th:block>
+
+<div layout:fragment="content" class="container">
+    <div class="create-mission-wrapper-div">
+        <div class="create-mission-form-div">
+            <table class="table">
+                <colgroup>
+                    <col width="150px;">
+                    <col width="auto">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td colspan="2" class="mission-title"><input type="text" class="form-control" id="missionNm"
+                                                                 placeholder="미션 제목을 입력하세요."></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="mission-desc"><textarea id="missionDesc"
+                                                                   placeholder="미션에 대한 설명 또는 소개를 작성하세요."></textarea>
+                    </td>
+                    <!-- CKEditor 생성 및 설정 -->
+                    <script>
+                        ClassicEditor
+                            .create(document.querySelector('#missionDesc'), {
+                                language: 'ko'
+                            })
+                            .catch( error => {
+                                console.error( error );
+                            } );
+
+                    </script>
+                </tr>
+                <tr>
+                    <th>대표 이미지</th>
+                    <td>
+                        <div class="mission-image-div">
+                            <p>미션 목록에서 보이는 대표 이미지를 설정할 수 있습니다.</p>
+                            <p>설정하지 않을 경우 기본 이미지로 설정됩니다.</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>미션 종료일</th>
+                    <td>
+                        <div class="mission-date-div">
+                            <input type="datetime-local" class="form-control">
+                            <p>* 미션 시작일은 해당 미션 등록 시간으로 설정됩니다.</p>
+                            <p>* 미션 종료일 이후 미션은 자동적으로 마감됩니다.</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>공개 여부</th>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="releaseY" checked>
+                            <label class="form-check-label" for="releaseY">
+                                공개
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="releaseN">
+                            <label class="form-check-label" for="releaseN">
+                                비공개
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>자동참여 여부</th>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="autoAccessY" checked>
+                            <label class="form-check-label" for="autoAccessY">
+                                자동참여
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="autoAccessN">
+                            <label class="form-check-label" for="autoAccessN">
+                                직접수락
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mission-button-div justify-content-center">
+            <button type="button" class="btn btn-dark" id="btn-temporary-mission">임시저장</button>
+            <button type="button" class="btn btn-primary" id="btn-save-mission">등록</button>
+            <button type="button" class="btn btn-light" id="btn-cancel">취소</button>
+        </div>
+    </div>
+    <!-- .create-mission-wrapper-div end -->
+
+</div>
+<!-- container end -->
+
+</html>

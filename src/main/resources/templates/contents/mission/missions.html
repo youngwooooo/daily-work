@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout}">
+
+<!-- 컨텐츠페이지의 CSS -->
+<th:block layout:fragment="css">
+  <link rel="stylesheet" href="/css/mission/mission.css"/>
+</th:block>
+<!-- 컨텐츠페이지의 JS -->
+<th:block layout:fragment="script">
+  <script src="/js/mission/mission.js"></script>
+</th:block>
+
+<div layout:fragment="content" class="container">
+  <div class="all-mission-wrapper-div">
+
+    <div class="row all-mission-div">
+      <div class="col-sm-12 search-div">
+        <div class="input-group search-input-div">
+          <input type="search" class="form-control" id="search" placeholder="참여하고 싶은 미션을 검색해보세요!">
+          <div class="input-group-append">
+            <button type="button" class="btn btn-dark" id="btn-search"><i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 create-mission-div" sec:authorize="hasRole('ROLE_USER')">
+        <button type="button" class="btn btn-dark" id="btn-create-mission">미션 만들기</button>
+      </div>
+
+      <div class="col-sm-4 mission-div">
+        <div class="card mission">
+          <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
+          <div class="card-body">
+            <h4 class="card-title">미션 제목</h4>
+            <p class="card-text">미션 작성자</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- .all-mission-wrapper-div end-->
+
+</div>
+<!-- container end -->
+
+</html>
