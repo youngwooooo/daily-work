@@ -55,4 +55,7 @@ public class Mission extends BaseTime {
     @Column(columnDefinition = "varchar(60) comment '미션만족도'")
     private String reviewGrade;
 
+    @Column(columnDefinition = "varchar(60) comment '미션이미지'")
+    private String missionImage;
+
 }
