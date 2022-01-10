@@ -16,6 +16,7 @@ custom:
   path:
     root-image: D:\daily-work\src\main\image\
     profile-image: D:\daily-work\src\main\image\profile\
+    mission-image: D:\daily-work\src\main\image\mission\
 
 spring:
   devtools:
@@ -39,10 +40,12 @@ spring:
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
     hibernate:
       ddl-auto: create-drop
-      format_sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
 
   #Thymeleaf
   thymeleaf:
