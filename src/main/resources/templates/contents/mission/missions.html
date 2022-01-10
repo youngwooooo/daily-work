@@ -31,11 +31,11 @@
         <button type="button" class="btn btn-dark" id="btn-create-mission">미션 만들기</button>
       </div>
 
-      <div class="col-sm-4 mission-div">
+      <div class="col-sm-4 mission-div" th:each="mission : ${missions}">
         <div class="card mission">
-          <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
+          <img class="card-img-top" th:src="${mission.missionImage}" alt="mission-image">
           <div class="card-body">
-            <h4 class="card-title">미션 제목</h4>
+            <h4 class="card-title" th:text="${mission.missionNm}">미션 제목</h4>
             <p class="card-text">미션 작성자</p>
           </div>
         </div>
