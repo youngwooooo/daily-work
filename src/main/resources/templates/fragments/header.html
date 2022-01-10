@@ -39,6 +39,12 @@
             </div>
         </div>
     </nav>
+    <!-- 모든 곳에서 활용할 수 있도록 회원 번호, 회원 아이디 header에 저장-->
+    <div sec:authorize="isAuthenticated()">
+        <input type="hidden" id="userSeq" th:value="${#authentication.principal.LoginUserDto.userSeq}">
+        <input type="hidden" id="userId" th:value="${#authentication.principal.LoginUserDto.userId}">
+    </div>
+
 </header>
 
 </html>
