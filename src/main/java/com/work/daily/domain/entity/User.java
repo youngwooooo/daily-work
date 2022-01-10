@@ -71,6 +71,8 @@ public class User extends BaseTime  {
         initialValue = 1, // 초기 값
         allocationSize = 1 // 미리 할당 받을 시퀸스 수
 )
+
+@EqualsAndHashCode
 class UserPK implements Serializable {
 
     @Id
