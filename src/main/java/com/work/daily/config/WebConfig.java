@@ -14,6 +14,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${custom.path.profile-image}")
     private String profileUploadPath;
 
+    @Value("${custom.path.mission-image}")
+    private String missionUploadPath;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /*
@@ -23,5 +26,8 @@ public class WebConfig implements WebMvcConfigurer {
          */
         registry.addResourceHandler("/profile/**")
                 .addResourceLocations("file:///" + profileUploadPath);
+
+        registry.addResourceHandler("/mission/**")
+                .addResourceLocations("file:///" + missionUploadPath);
     }
 }
