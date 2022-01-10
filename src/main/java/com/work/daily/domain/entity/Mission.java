@@ -3,7 +3,7 @@ package com.work.daily.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @ToString
@@ -15,8 +15,9 @@ import java.io.Serializable;
 public class Mission extends BaseTime {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(columnDefinition = "varchar(20) comment '미션번호'")
-    private String missionSeq;
+    private Long missionSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
@@ -32,10 +33,10 @@ public class Mission extends BaseTime {
     private String missionDesc;
 
     @Column(columnDefinition = "varchar(60) comment '미션시작일'")
-    private String missionStDt;
+    private LocalDateTime missionStDt;
 
     @Column(columnDefinition = "varchar(60) comment '미션종료일'")
-    private String missionEndDt;
+    private LocalDateTime missionEndDt;
 
     @Column(columnDefinition = "varchar(10) comment '공개여부'")
     private String releaseYn;
@@ -57,5 +58,10 @@ public class Mission extends BaseTime {
 
     @Column(columnDefinition = "varchar(60) comment '미션이미지'")
     private String missionImage;
+
+    // 미션 대표 이미지 추가 및 수정
+    public void modifyMissionImage(String missionImagePath){
+        this.missionImage = missionImagePath;
+    }
 
 }
