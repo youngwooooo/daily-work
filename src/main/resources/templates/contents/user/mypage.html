@@ -16,7 +16,6 @@
 
     <div class="user-info-div">
         <form id="userInfo-Form">
-            <input type="hidden" id="userId" name="userId" th:value="${#authentication.principal.LoginUserDto.userId}">
             <div class="profile-image-div">
                 <img id="profile-image" th:src="${#authentication.principal.LoginUserDto.profileImage}"
                      alt="profile_image">
