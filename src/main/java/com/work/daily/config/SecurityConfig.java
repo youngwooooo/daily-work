@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll() /* 모두 접근할 수 있도록 함 */
                 .and()
                 .logout()/* 로그아웃 설정 */
-                    .logoutSuccessUrl("/") /* 로그아웃 url */
+                    .logoutSuccessUrl("/missions") /* 로그아웃 url */
                     .invalidateHttpSession(true) /* 로그아웃 시 세션 제거 */
                     .deleteCookies("JSESSIONID") /* 로그아웃 시 쿠키 제거 */
                     .clearAuthentication(true) /* 로그아웃 시 권한 제거 */
