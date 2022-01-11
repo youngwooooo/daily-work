@@ -1,45 +1,3 @@
-/* 전체 MISSION CSS */
-.all-mission-wrapper-div {
-    padding-top: 45px;
-    padding-bottom: 20px;
-}
-
-.all-mission-div .mission-div {
-    margin-bottom: 20px;
-}
-
-.all-mission-div .search-div, .all-mission-div .create-mission-div {
-    margin-bottom: 40px;
-}
-
-.all-mission-div .search-div .search-input-div {
-    width: 50%;
-    margin: auto;
-}
-
-.all-mission-div .search-div #search {
-    height: 50px;
-}
-
-.all-mission-div .search-div #btn-search {
-    width: 55px;
-}
-
-.all-mission-div .create-mission-div #btn-create-mission {
-    width: 20%;
-    height: 60px;
-}
-
-.all-mission-div .mission-div .mission {
-    cursor: pointer;
-}
-
-.all-mission-div .mission-div .mission .card-img-top {
-    border-bottom: 1px solid #dfdfdf;
-    max-height: 200px;
-    min-height: 200px;
-}
-
 /* 미션 만들기 CSS */
 .create-mission-wrapper-div {
     padding-top: 45px;
@@ -143,3 +101,5 @@
 .mission-button-div #btn-cancel {
     border: 1px solid #dddddd;
 }
+
+/* 미션 상세 조회 CSS */

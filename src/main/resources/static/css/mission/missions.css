@@ -1,0 +1,161 @@
+/* 전체 MISSION CSS */
+.all-mission-wrapper-div {
+    padding-top: 45px;
+    padding-bottom: 20px;
+}
+
+.all-mission-div .mission-div {
+    margin-bottom: 20px;
+}
+
+.all-mission-div .search-div, .all-mission-div .create-mission-div {
+    margin-bottom: 40px;
+}
+
+.all-mission-div .search-div .search-input-div {
+    width: 50%;
+    margin: auto;
+}
+
+.all-mission-div .search-div #search {
+    height: 50px;
+}
+
+.all-mission-div .search-div #btn-search {
+    width: 55px;
+}
+
+.all-mission-div .create-mission-div #btn-create-mission {
+    width: 20%;
+    height: 60px;
+}
+
+.all-mission-div .mission-div .mission {
+    cursor: pointer;
+}
+
+.all-mission-div .mission-div .mission .card-img-top {
+    border-bottom: 1px solid #dfdfdf;
+    max-height: 200px;
+    min-height: 200px;
+}
+
+.all-mission-div .mission-div .mission .mission-writer-image-div {
+    display: flex;
+}
+
+.all-mission-div .mission-div .mission .mission-writer-image-div .mission-writer-image {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.all-mission-div .mission-div .mission .mission-writer-image-div .mission-writer {
+    padding-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+/* 미션 만들기 CSS */
+.create-mission-wrapper-div {
+    padding-top: 45px;
+    padding-bottom: 45px;
+}
+.create-mission-wrapper-div h3 {
+    margin-bottom: 30px;
+}
+
+.create-mission-form-div .table th {
+    vertical-align: middle;
+}
+
+.create-mission-form-div .table tr:last-child {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.create-mission-form-div .table .mission-title,
+.create-mission-form-div .table .mission-desc {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.create-mission-form-div .table .mission-title {
+    border-top: none;
+}
+
+.create-mission-form-div .table #missionNm {
+    border: none;
+    font-size: 1.5rem;
+    height: 50px;
+}
+
+.ck-editor__editable {
+    min-height: 500px;
+}
+
+.create-mission-form-div .table .mission-image-td {
+    display: flex;
+}
+
+.create-mission-form-div .table .mission-image-div {
+    width: 50%;
+    border: 1px dashed #dddddd;
+    height: 200px;
+}
+
+.create-mission-form-div .table .mission-image-div:hover {
+    cursor: pointer;
+    background-color: #efefef;
+}
+
+.create-mission-form-div .table .mission-image-div #mission-image {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.create-mission-form-div .table .mission-image-desc-div {
+    margin: auto;
+}
+
+.create-mission-form-div .table #file {
+    display: none;
+}
+
+.create-mission-form-div .table .mission-image-desc-div p,
+.create-mission-form-div .table .mission-date-div p {
+    margin-bottom: 0px;
+    color: gray;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.create-mission-form-div .table .mission-image-desc-div p:first-child {
+    color: #007bff;
+}
+
+.create-mission-form-div .table .form-check {
+    display: inline;
+    margin-right: 20px;
+}
+
+.create-mission-form-div .table .form-check .form-check-label {
+    cursor: pointer;
+}
+
+.mission-button-div {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.mission-button-div button {
+    height: 50px;
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 150px;
+}
+
+.mission-button-div #btn-cancel {
+    border: 1px solid #dddddd;
+}
