@@ -6,45 +6,50 @@
 
 <!-- 컨텐츠페이지의 CSS -->
 <th:block layout:fragment="css">
-  <link rel="stylesheet" href="/css/mission/mission.css"/>
+    <link rel="stylesheet" href="/css/mission/missions.css"/>
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-  <script src="/js/mission/mission.js"></script>
+    <script src="/js/mission/missions.js"></script>
 </th:block>
 
 <div layout:fragment="content" class="container">
-  <div class="all-mission-wrapper-div">
+    <div class="all-mission-wrapper-div">
 
-    <div class="row all-mission-div">
-      <div class="col-sm-12 search-div">
-        <div class="input-group search-input-div">
-          <input type="search" class="form-control" id="search" placeholder="참여하고 싶은 미션을 검색해보세요!">
-          <div class="input-group-append">
-            <button type="button" class="btn btn-dark" id="btn-search"><i class="fas fa-search"></i>
-            </button>
-          </div>
+        <div class="row all-mission-div">
+
+            <div class="col-sm-12 search-div">
+                <div class="input-group search-input-div">
+                    <input type="search" class="form-control" id="search" placeholder="참여하고 싶은 미션을 검색해보세요!">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-dark" id="btn-search"><i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 create-mission-div" sec:authorize="hasRole('ROLE_USER')">
+                <button type="button" class="btn btn-dark" id="btn-create-mission">미션 만들기</button>
+            </div>
+
+            <div class="col-sm-4 mission-div" th:each="mission : ${missions}">
+                <input type="hidden" name="missionSeq" th:value="${mission.missionSeq}">
+                <div class="card mission">
+                    <img class="card-img-top" th:src="${mission.missionImage}" alt="mission-image">
+                    <div class="card-body">
+                        <h4 class="card-title" th:text="${mission.missionNm}">미션 제목</h4>
+                        <div class="mission-writer-image-div">
+                            <img class="mission-writer-image" th:src="${mission.user.profileImage}" alt="mission-writer-image">
+                            <p class="mission-writer" th:text="${mission.user.userNm}">미션 작성자</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
-
-      <div class="col-sm-12 create-mission-div" sec:authorize="hasRole('ROLE_USER')">
-        <button type="button" class="btn btn-dark" id="btn-create-mission">미션 만들기</button>
-      </div>
-
-      <div class="col-sm-4 mission-div" th:each="mission : ${missions}">
-        <div class="card mission">
-          <img class="card-img-top" th:src="${mission.missionImage}" alt="mission-image">
-          <div class="card-body">
-            <h4 class="card-title" th:text="${mission.missionNm}">미션 제목</h4>
-            <p class="card-text">미션 작성자</p>
-          </div>
-        </div>
-      </div>
 
     </div>
-
-  </div>
-  <!-- .all-mission-wrapper-div end-->
+    <!-- .all-mission-wrapper-div end-->
 
 </div>
 <!-- container end -->
