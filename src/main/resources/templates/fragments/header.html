@@ -43,6 +43,8 @@
     <div sec:authorize="isAuthenticated()">
         <input type="hidden" id="userSeq" th:value="${#authentication.principal.LoginUserDto.userSeq}">
         <input type="hidden" id="userId" th:value="${#authentication.principal.LoginUserDto.userId}">
+        <input type="hidden" id="userNm" th:value="${#authentication.principal.LoginUserDto.userNm}">
+        <input type="hidden" id="profileImage" th:value="${#authentication.principal.LoginUserDto.profileImage}">
     </div>
 
 </header>
