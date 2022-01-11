@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -28,13 +29,56 @@ public class MissionService {
     @Value("${custom.path.mission-image}")
     private String missionUploadPath;
 
-    @Transactional
+    /**
+     * 전체 Mission 조회
+     * @return 전체 Mission List
+     */
+    @Transactional(readOnly = true)
     public List<ResponseMissionDto> findAllMissions(){
-        List<Mission> entityMissions = missionRepository.findAll();
-        List<ResponseMissionDto> dtoMissions = entityMissions.stream().map(ResponseMissionDto::new).collect(Collectors.toList());
-        return null;
+        // 전체 Mission 조회
+        List<Mission> findAllMission = missionRepository.findAllMission();
+        // Mission -> ResponseMissionDto 타입으로 변경하여 List 생성
+        return findAllMission.stream().map(ResponseMissionDto::new).collect(Collectors.toList());
     }
 
+    /**
+     * Mission 단건 조회
+     * @param missionSeq
+     * @return findMissionToDto
+     */
+    @Transactional(readOnly = true)
+    public ResponseMissionDto detailMission(Long missionSeq){
+        Optional<Mission> findMission = missionRepository.findById(missionSeq);
+        if(!findMission.isPresent()){
+            throw new IllegalArgumentException("해당 미션이 존재하지 않습니다. 미션 번호 : " + missionSeq);
+        }
+
+        ResponseMissionDto findMissionToDto = ResponseMissionDto.builder()
+                                                .missionSeq(findMission.get().getMissionSeq())
+                                                .user(findMission.get().getUser())
+                                                .missionNm(findMission.get().getMissionNm())
+                                                .missionDesc(findMission.get().getMissionDesc())
+                                                .missionStDt(findMission.get().getMissionStDt())
+                                                .missionEndDt(findMission.get().getMissionEndDt())
+                                                .releaseYn(findMission.get().getReleaseYn())
+                                                .autoAccessYn(findMission.get().getAutoAccessYn())
+                                                .masterYn(findMission.get().getMasterYn())
+                                                .delYn(findMission.get().getDelYn())
+                                                .temporaryYn(findMission.get().getTemporaryYn())
+                                                .reviewGrade(findMission.get().getReviewGrade())
+                                                .missionImage(findMission.get().getMissionImage())
+                                                .build();
+
+        return findMissionToDto;
+    }
+
+    /**
+     * 미션 만들기 - [등록]
+     * @param requestMissionDto
+     * @param file
+     * @return
+     * @throws IOException
+     */
     @Transactional
     public String save(RequestMissionDto requestMissionDto, MultipartFile file) throws IOException {
         // 대표 이미지가 존재하지 않을 때
