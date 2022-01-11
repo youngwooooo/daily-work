@@ -5,6 +5,12 @@ $(function(){
        location.href = "/mission";
     });
 
+    // 미션 클릭 시
+    $(".mission-div").on("click", function(){
+        var missionSeq = $(this).find("input[name='missionSeq']").val();
+        location.href = "/mission/" + missionSeq;
+    });
+
     /* 미션 만들기 */
     // 미션시작일 현재 시간으로 세팅(yyyy-MM-dd HH:mm)
     $("#missionStDt").val(new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16));
@@ -96,13 +102,15 @@ function validatingMission(){
 function savingMission(temporaryValue){
     var userSeq = $("#userSeq").val();
     var userId = $("#userId").val();
+    var userNm = $("#userNm").val();
+    var profileImage = $("#profileImage").val();
     var missionNm = $("#missionNm").val();  // 미션명
     var missionDesc = CKEDITOR.instances.missionDesc.getData();  // 미션 설명
     var missionImage = $("#file")[0].files[0];  // 대표 이미지
     var missionStDt = $("#missionStDt").val();   // 미션 시작일
     var missionEndDt = $("#missionEndDt").val();    // 미션 종료일
-    var releaseYn = $("input[name='releaseYn']").val()  // 공개 여부
-    var autoAccessYn = $("input[name='autoAccessYn']").val();   // 자동참여 여부
+    var releaseYn = $("input[name='releaseYn']:checked").val()  // 공개 여부
+    var autoAccessYn = $("input[name='autoAccessYn']:checked").val();   // 자동참여 여부
     var masterYn = "Y"; // 방장 여부
     var delYn = "N";    // 삭제 여부
     var temporaryYn = temporaryValue   // 임시 여부
@@ -111,6 +119,8 @@ function savingMission(temporaryValue){
                     "user" : {
                         "userSeq" : userSeq
                         , "userId" : userId
+                        , "userNm" : userNm
+                        , "profileImage" : profileImage
                     }
                     , "missionNm" : missionNm
                     , "missionDesc" : missionDesc
@@ -135,9 +145,9 @@ function savingMission(temporaryValue){
         , contentType: false
         , enctype: "multipart/form-data"
         , success : function(result){
-            console.log(result);
-            if(result.status == 200){
+            if(result.status == 201){
                 alert(result.message);
+                location.href = "/missions";
             }
         }
         , error : function(xhr){
