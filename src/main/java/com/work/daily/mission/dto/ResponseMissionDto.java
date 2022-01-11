@@ -3,6 +3,7 @@ package com.work.daily.mission.dto;
 import com.work.daily.domain.entity.Mission;
 import com.work.daily.domain.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ResponseMissionDto {
 
     private Long missionSeq;
