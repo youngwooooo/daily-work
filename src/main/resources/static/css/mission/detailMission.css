@@ -40,12 +40,8 @@
     height: 50px;
 }
 
-.mission-state-div {
-    margin-top: 20px;
-}
-
-.mission-state-div .mission-participants-div .mission-participants-info {
-    margin-top: 15px;
+.mission-state-div .mission-participants-div {
+    margin-top: 30px;
 }
 
 .mission-state-div .mission-participants-div .mission-participants-info img {
@@ -65,4 +61,55 @@
     margin-bottom: 10px;
     width: auto;
     display: inline-block;
+}
+
+.mission-state-div .aaa {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.mission-state-div .aaa .nav-tabs {
+    text-align: center;
+}
+
+.mission-state-div .aaa .nav-item {
+    width: 20%;
+}
+
+.mission-state-div .aaa .nav-item a {
+    color: black;
+}
+
+.mission-state-div .aaa .nav-item .nav-link.active {
+   border-color: #dee2e6 #dee2e6 #dee2e6;
+   color: #0069d9;
+   font-weight: bold;
+}
+
+.mission-state-div .aaa .tab-content {
+    min-height: 500px;
+}
+
+.mission-state-div .bbb h4 {
+    display: inline-block;
+}
+
+.mission-state-div .bbb .ccc {
+    float: right;
+}
+
+.mission-state-div .bbb .ccc span {
+    margin-left: 15px;
+}
+
+.tab-content .table thead th {
+    text-align: center;
+    border: none;
+}
+
+.tab-content .table tbody td {
+    border: none;
+}
+.tab-content .table tbody td:nth-child(n+2) {
+    border: 1px solid #dee2e6;
 }
