@@ -3,7 +3,6 @@ package com.work.daily.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,11 +17,9 @@ public class MissionState {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(columnDefinition = "varchar(20) comment '미션현황번호'")
     private long missionStateSeq;
 
     @Id
-    @Column(columnDefinition = "varchar(20) comment '미션주차'")
     private long missionStateWeek;
 
     @ManyToOne
