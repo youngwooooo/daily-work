@@ -1,4 +1,4 @@
-package com.work.daily.domain.repository;
+package com.work.daily.domain.repository.custom;
 
 import com.work.daily.domain.entity.Mission;
 

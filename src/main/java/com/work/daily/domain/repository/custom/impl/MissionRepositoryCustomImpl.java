@@ -1,10 +1,10 @@
-package com.work.daily.domain.repository.impl;
+package com.work.daily.domain.repository.custom.impl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.work.daily.domain.entity.Mission;
 import com.work.daily.domain.entity.QMission;
 import com.work.daily.domain.entity.QUser;
-import com.work.daily.domain.repository.MissionRepositoryCustom;
+import com.work.daily.domain.repository.custom.MissionRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
