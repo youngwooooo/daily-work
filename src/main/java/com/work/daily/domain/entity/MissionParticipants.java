@@ -3,7 +3,6 @@ package com.work.daily.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -30,22 +29,4 @@ public class MissionParticipants {
 
     @Column(columnDefinition = "varchar(60) comment '참여승인일'")
     private LocalDateTime missionJoinApprovalDt;
-}
-
-@EqualsAndHashCode
-class MissionParticipantsPK implements Serializable {
-
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MISSION_SEQ")
-    private Mission missionSeq;
-
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns(value = {
-            @JoinColumn(name = "USER_SEQ"),
-            @JoinColumn(name = "USER_ID")
-    })
-    private User user;
-
 }
