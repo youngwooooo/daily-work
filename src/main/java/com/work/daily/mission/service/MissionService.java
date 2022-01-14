@@ -2,8 +2,10 @@ package com.work.daily.mission.service;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.domain.entity.Mission;
+import com.work.daily.domain.repository.MissionParticipantsRepository;
 import com.work.daily.domain.repository.MissionRepository;
 import com.work.daily.mission.dto.RequestMissionDto;
+import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import com.work.daily.mission.dto.ResponseMissionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class MissionService {
 
     private final MissionRepository missionRepository;
+    private final MissionParticipantsRepository missionParticipantsRepository;
 
     @Value("${custom.path.mission-image}")
     private String missionUploadPath;
@@ -84,7 +87,22 @@ public class MissionService {
         // 대표 이미지가 존재하지 않을 때
         if(file == null){
             requestMissionDto.setMissionImage("/img/common/basic_mission.jpg");
-            missionRepository.save(requestMissionDto.toEntity());
+            Mission savedMission = missionRepository.save(requestMissionDto.toEntity());
+
+            // 미션 참여자 생성(미션 생성자는 미션 참여자에 자동으로 추가됨)
+            if(savedMission != null){
+                RequestMissionParticipantsDto requestMissionParticipantsDto = RequestMissionParticipantsDto.builder()
+                        .missionSeq(savedMission.getMissionSeq())
+                        .userSeq(savedMission.getUser().getUserSeq())
+                        .userId(savedMission.getUser().getUserId())
+                        .missionJoinDt(savedMission.getInsDtm())
+                        .missionJoinYn("Y")
+                        .missionJoinApprovalDt(savedMission.getInsDtm())
+                        .build();
+
+                missionParticipantsRepository.save(requestMissionParticipantsDto.toEntity());
+            }
+
             return ReturnResult.SUCCESS.getValue();
         }
 
@@ -112,6 +130,20 @@ public class MissionService {
 
         // 생성된 미션의 missionImage 값 수정
         savedMission.modifyMissionImage(missionImagePath);
+
+        // 미션 참여자 생성(미션 생성자는 미션 참여자에 자동으로 추가됨)
+        if(savedMission != null){
+            RequestMissionParticipantsDto requestMissionParticipantsDto = RequestMissionParticipantsDto.builder()
+                    .missionSeq(savedMission.getMissionSeq())
+                    .userSeq(savedMission.getUser().getUserSeq())
+                    .userId(savedMission.getUser().getUserId())
+                    .missionJoinDt(savedMission.getInsDtm())
+                    .missionJoinYn("Y")
+                    .missionJoinApprovalDt(savedMission.getInsDtm())
+                    .build();
+
+            missionParticipantsRepository.save(requestMissionParticipantsDto.toEntity());
+        }
 
         return ReturnResult.SUCCESS.getValue();
     }
