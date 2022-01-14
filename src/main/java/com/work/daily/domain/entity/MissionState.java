@@ -47,14 +47,3 @@ public class MissionState {
 
 
 }
-
-@EqualsAndHashCode
-class MissionStatePK implements Serializable {
-
-    @Id
-    private long missionStateSeq;
-
-    @Id
-    private long missionStateWeek;
-
-}
