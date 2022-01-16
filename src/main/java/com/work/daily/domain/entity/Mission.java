@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @ToString
@@ -58,6 +59,9 @@ public class Mission extends BaseTime {
 
     @Column(columnDefinition = "varchar(200) comment '미션이미지'")
     private String missionImage;
+
+    @OneToMany(mappedBy = "mission")
+    private List<MissionParticipants> MissionParticipants;
 
     // 미션 대표 이미지 추가 및 수정
     public void modifyMissionImage(String missionImagePath){
