@@ -1,7 +1,6 @@
 package com.work.daily.domain.repository.custom;
 
 import com.work.daily.domain.entity.Mission;
-import com.work.daily.domain.entity.MissionParticipants;
 
 import java.util.List;
 import java.util.Optional;
