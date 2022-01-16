@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -80,7 +81,8 @@ public class DbBoardInsert {
     @Bean("boardCommentInsert")
     @DependsOn(value = {"boardInfoInsert"})
     public void boardCommentInsert() {
-        List<BoardCommentDto> boardCommentDtoList = new ArrayList<>();
+        List<BoardComment> boardCommentList = new ArrayList<>();
+
         List<Board> boardList = boardRepository.findAll();
 
         for (int i = 0; i < boardList.size(); i++) {
@@ -88,11 +90,28 @@ public class DbBoardInsert {
 
             for (int j = 4; j < 6; j++) {
                 BoardCommentDto boardCommentDto = new BoardCommentDto();
-                String commentUser = userProvider + "User" + j;
-//                boardCommentDto.setBoard(Board.builder()
-//                        .boardSeq());
+                String userId = userProvider + "User" + j;
+
+                Optional<User> byUserId = userRepository.findByUserId(userId);
+                Optional<Board> byUserSeq = boardRepository.findByUser(boardList.get(i).getUser());
+
+                boardCommentDto.setUser(User.builder()
+                        .userSeq(byUserId.get().getUserSeq())
+                        .userId(userId)
+                        .build());
+                boardCommentDto.setBoard(Board.builder()
+                        .boardSeq(byUserSeq.get().getBoardSeq())
+                        .build());
+                boardCommentDto.setDelYn("N");
+                boardCommentDto.setCommentDesc(userId+"가 댓글 테스트합니다");
+
+                boardCommentList.add(boardCommentDto.toEntity());
             }
         }
+
+        // save시 에러 발생
+        // boardCommentRepository.saveAll(boardCommentList);
+
     }
 
 
