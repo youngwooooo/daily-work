@@ -1,5 +1,6 @@
 package com.work.daily.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.work.daily.domain.pk.MissionParticipantsPK;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class MissionParticipants {
 
     @ManyToOne
     @JoinColumn(name = "missionSeq", insertable = false, updatable = false)
+    @JsonBackReference
     private Mission mission;
 
     @Id

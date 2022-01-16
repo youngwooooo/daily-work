@@ -1,5 +1,6 @@
 package com.work.daily.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -61,6 +62,7 @@ public class Mission extends BaseTime {
     private String missionImage;
 
     @OneToMany(mappedBy = "mission")
+    @JsonManagedReference
     private List<MissionParticipants> MissionParticipants;
 
     // 미션 대표 이미지 추가 및 수정
