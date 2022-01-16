@@ -1,9 +1,7 @@
 package com.work.daily.init;
 
-import com.work.daily.access.dto.JoinUserDto;
 import com.work.daily.board.dto.BoardCommentDto;
 import com.work.daily.board.dto.BoardDto;
-import com.work.daily.domain.UserRole;
 import com.work.daily.domain.entity.Board;
 import com.work.daily.domain.entity.BoardComment;
 import com.work.daily.domain.entity.User;
@@ -15,12 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
