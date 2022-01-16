@@ -1,14 +1,13 @@
 package com.work.daily.domain.repository.custom.impl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.work.daily.domain.entity.Mission;
-import com.work.daily.domain.entity.QMission;
-import com.work.daily.domain.entity.QUser;
+import com.work.daily.domain.entity.*;
 import com.work.daily.domain.repository.custom.MissionRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * MissionRepositoryCustom에 정의된 메서드를 Overriding하여 실제로 구현하는 class
@@ -23,6 +22,7 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
     // Mission, User(Entity)의 쿼리 타입 클래스
     QMission qMission = QMission.mission;
     QUser qUser = QUser.user;
+    QMissionParticipants qMissionParticipants = QMissionParticipants.missionParticipants;
 
     /**
      * 전체 Mission 조회
@@ -41,5 +41,16 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
                 .where(qMission.releaseYn.eq("Y").and(qMission.delYn.eq("N")).and(qMission.temporaryYn.eq("N")))
                 .orderBy(qMission.insDtm.desc())
                 .fetch();
+    }
+
+    @Override
+    public Optional<Mission> findMission(long missionSeq) {
+        return Optional.ofNullable(jpaQueryFactory
+                .selectFrom(qMission)
+                .innerJoin(qMission.user, qUser)
+                .innerJoin(qMission.MissionParticipants, qMissionParticipants)
+                .fetchJoin()
+                .where(qMission.missionSeq.eq(missionSeq))
+                .fetchOne());
     }
 }

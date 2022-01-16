@@ -51,7 +51,7 @@ public class MissionService {
      */
     @Transactional(readOnly = true)
     public ResponseMissionDto detailMission(Long missionSeq){
-        Optional<Mission> findMission = missionRepository.findById(missionSeq);
+        Optional<Mission> findMission = missionRepository.findMission(missionSeq);
         if(!findMission.isPresent()){
             throw new IllegalArgumentException("해당 미션이 존재하지 않습니다. 미션 번호 : " + missionSeq);
         }
@@ -70,6 +70,7 @@ public class MissionService {
                                                 .temporaryYn(findMission.get().getTemporaryYn())
                                                 .reviewGrade(findMission.get().getReviewGrade())
                                                 .missionImage(findMission.get().getMissionImage())
+                                                .MissionParticipants(findMission.get().getMissionParticipants())
                                                 .build();
 
         return findMissionToDto;
