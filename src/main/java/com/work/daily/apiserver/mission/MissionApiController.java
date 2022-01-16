@@ -2,7 +2,9 @@ package com.work.daily.apiserver.mission;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
+import com.work.daily.domain.entity.MissionParticipants;
 import com.work.daily.mission.dto.RequestMissionDto;
+import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import com.work.daily.mission.service.MissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -27,6 +27,14 @@ public class MissionApiController {
 
     private final MissionService missionService;
 
+    /**
+     * 미션 생성
+     * @param requestMissionDto
+     * @param file
+     * @param bindingResult
+     * @return
+     * @throws IOException
+     */
     @PostMapping("/mission")
     public ResponseEntity<ResponseDto> createMission(@Valid @RequestPart(value = "requestMissionDto") RequestMissionDto requestMissionDto
                                 , @RequestPart(value = "file", required = false) MultipartFile file
@@ -52,5 +60,21 @@ public class MissionApiController {
         }
 
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 등록이 완료되었습니다.").build(), HttpStatus.CREATED);
+    }
+
+    /**
+     * 미션 참여자 추가
+     * @param missionSeq
+     * @param requestMissionParticipantsDto
+     * @return
+     */
+    @PostMapping("/mission/{missionSeq}/join")
+    public ResponseEntity<ResponseDto> joinMission(@PathVariable(name = "missionSeq") long missionSeq, @RequestBody RequestMissionParticipantsDto requestMissionParticipantsDto){
+        log.info("미션 참여자 REQUEST 정보 : " + requestMissionParticipantsDto.toString());
+
+        MissionParticipants missionParticipants = missionService.joinMission(requestMissionParticipantsDto);
+        log.info("미션 참여자 SAVE 정보 : " + missionParticipants.toString());
+
+        return null;
     }
 }

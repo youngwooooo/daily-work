@@ -2,6 +2,7 @@ package com.work.daily.mission.service;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.domain.entity.Mission;
+import com.work.daily.domain.entity.MissionParticipants;
 import com.work.daily.domain.repository.MissionParticipantsRepository;
 import com.work.daily.domain.repository.MissionRepository;
 import com.work.daily.mission.dto.RequestMissionDto;
@@ -147,5 +148,18 @@ public class MissionService {
         }
 
         return ReturnResult.SUCCESS.getValue();
+    }
+
+    @Transactional
+    public MissionParticipants joinMission(RequestMissionParticipantsDto requestMissionParticipantsDto){
+
+        Optional<Mission> findMission = missionRepository.findMission(requestMissionParticipantsDto.getMissionSeq());
+        if(!findMission.isPresent()){
+            throw new IllegalArgumentException("존재하지 않는 미션입니다. 미션번호 : " + requestMissionParticipantsDto.getMissionSeq());
+        }
+
+        MissionParticipants missionParticipants = missionParticipantsRepository.save(requestMissionParticipantsDto.toEntity());
+
+        return missionParticipants;
     }
 }
