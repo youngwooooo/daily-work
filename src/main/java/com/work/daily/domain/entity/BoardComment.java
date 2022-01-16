@@ -19,7 +19,7 @@ public class BoardComment extends BaseTime {
 
     @Id
     @Column(columnDefinition = "varchar(20) comment '댓글번호'")
-    private String commentSeq;
+    private long commentSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
@@ -35,7 +35,7 @@ public class BoardComment extends BaseTime {
     private Board board;
 
     @Column(columnDefinition = "varchar(60) comment '부모댓글번호'")
-    private String parentCommentSeq;
+    private long parentCommentSeq;
 
     @Column(columnDefinition = "varchar(300) comment '댓글내용'")
     private String commentDesc;

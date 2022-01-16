@@ -1,5 +1,6 @@
 package com.work.daily.domain.entity;
 
+import com.work.daily.domain.pk.MissionStatePK;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package com.work.daily.domain.entity;
+package com.work.daily.domain.pk;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

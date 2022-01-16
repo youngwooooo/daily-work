@@ -18,8 +18,9 @@ import javax.persistence.*;
 public class Board extends BaseTime{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_SEQ_INCREASE")
     @Column(columnDefinition = "varchar(20) comment '게시글번호'")
-    private String boardSeq;
+    private long boardSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
