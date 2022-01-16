@@ -1,13 +1,12 @@
 package com.work.daily.mission.dto;
 
 import com.work.daily.domain.entity.Mission;
+import com.work.daily.domain.entity.MissionParticipants;
 import com.work.daily.domain.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -28,6 +27,7 @@ public class ResponseMissionDto {
     private String temporaryYn;
     private String reviewGrade;
     private String missionImage;
+    private List<MissionParticipants> MissionParticipants;
 
     public ResponseMissionDto(Mission mission){
         this.missionSeq = mission.getMissionSeq();
