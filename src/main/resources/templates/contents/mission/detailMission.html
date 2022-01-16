@@ -15,6 +15,7 @@
 <div layout:fragment="content" class="container-fluid">
 
     <div class="row justify-content-center mission-info-wrapper">
+        <input type="hidden" id="missionSeq" th:value="${mission.missionSeq}">
 
         <div class="col-sm-3">
             <img id="mission-image" th:src="${mission.missionImage}">
@@ -38,10 +39,10 @@
         <div class="mission-participants-div">
             <h4>미션 참여자</h4>
             <br/>
-            <div class="mission-participants-info">
-                <div class="mission-participants-info-result">
-                    <img th:src="${#authentication.principal.LoginUserDto.profileImage}">
-                    <span th:text="${#authentication.principal.LoginUserDto.userNm}"></span>
+            <div class="mission-participants-info" th:if="${mission.missionParticipants != null}">
+                <div class="mission-participants-info-result" th:each="participants : ${mission.missionParticipants}">
+                    <img th:src="${participants.user.profileImage}">
+                    <span th:text="${participants.user.userNm}"></span>
                 </div>
             </div>
         </div>
