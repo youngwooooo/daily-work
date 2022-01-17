@@ -69,5 +69,9 @@ public class Mission extends BaseTime {
     public void modifyMissionImage(String missionImagePath){
         this.missionImage = missionImagePath;
     }
+    // 삭제여부 수정
+    public void deleteMission(String delYn){
+        this.delYn = delYn;
+    }
 
 }
