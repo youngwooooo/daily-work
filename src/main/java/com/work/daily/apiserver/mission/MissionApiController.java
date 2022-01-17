@@ -2,7 +2,6 @@ package com.work.daily.apiserver.mission;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
-import com.work.daily.domain.entity.MissionParticipants;
 import com.work.daily.mission.dto.RequestMissionDto;
 import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import com.work.daily.mission.service.MissionService;
@@ -28,7 +27,7 @@ public class MissionApiController {
     private final MissionService missionService;
 
     /**
-     * 미션 생성
+     * 전체 MISSION - 미션 만들기 - [등록]
      * @param requestMissionDto
      * @param file
      * @param bindingResult
@@ -63,18 +62,81 @@ public class MissionApiController {
     }
 
     /**
-     * 미션 참여자 추가
+     * 미션 상세 조회 - [미션 삭제하기]
+     * @param missionSeq
+     * @param delYn
+     * @return
+     */
+    @DeleteMapping("/mission/{missionSeq}")
+    public ResponseEntity<ResponseDto> deleteMission(@PathVariable(name = "missionSeq") long missionSeq, @RequestParam(name = "delYn") String delYn){
+
+        String result = missionService.delete(missionSeq, delYn);
+        if(ReturnResult.ERROR.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("해당 미션은 존재하지 않습니다. 미션번호 : " + missionSeq).build(), HttpStatus.BAD_REQUEST);
+        }
+
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 삭제를 완료하였습니다.").build(), HttpStatus.CREATED);
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 참여하기]
      * @param missionSeq
      * @param requestMissionParticipantsDto
      * @return
      */
     @PostMapping("/mission/{missionSeq}/join")
-    public ResponseEntity<ResponseDto> joinMission(@PathVariable(name = "missionSeq") long missionSeq, @RequestBody RequestMissionParticipantsDto requestMissionParticipantsDto){
-        log.info("미션 참여자 REQUEST 정보 : " + requestMissionParticipantsDto.toString());
+    public ResponseEntity<ResponseDto> joinMission(@PathVariable(name = "missionSeq") long missionSeq
+                                                    , @Valid @RequestBody RequestMissionParticipantsDto requestMissionParticipantsDto
+                                                    , BindingResult bindingResult){
+        // 유효성 검사 오류 발생 시
+        if(bindingResult.hasErrors()){
+            log.info("MissionApiController :: joinMission :: 유효성 검사 오류 = " + bindingResult.getFieldErrors());
+            Map<String, Object> errorMap = new HashMap<>();
+            for(FieldError error : bindingResult.getFieldErrors()){
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            }
 
-        MissionParticipants missionParticipants = missionService.joinMission(requestMissionParticipantsDto);
-        log.info("미션 참여자 SAVE 정보 : " + missionParticipants.toString());
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(errorMap).message("입력된 값이 올바르지 않습니다.").build()
+                    , HttpStatus.BAD_REQUEST);
+        }
 
-        return null;
+        String result = missionService.joinMission(requestMissionParticipantsDto);
+
+        if(ReturnResult.ERROR.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("이미 참여한 미션입니다.").build(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 참여가 완료 되었습니다.").build(), HttpStatus.CREATED);
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 탈퇴하기]
+     * @param missionSeq
+     * @param requestMissionParticipantsDto
+     * @return
+     */
+    @DeleteMapping("/mission/{missionSeq}/secession")
+    public ResponseEntity<ResponseDto> secessionMission(@PathVariable(name = "missionSeq") long missionSeq
+                                                        , @Valid @RequestBody RequestMissionParticipantsDto requestMissionParticipantsDto
+                                                        , BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            log.info("MissionApiController :: joinMission :: 유효성 검사 오류 = " + bindingResult.getFieldErrors());
+            Map<String, Object> errorMap = new HashMap<>();
+            for(FieldError error : bindingResult.getFieldErrors()){
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            }
+
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(errorMap).message("입력된 값이 올바르지 않습니다.").build()
+                    , HttpStatus.BAD_REQUEST);
+        }
+
+        String result = missionService.secessionMission(requestMissionParticipantsDto);
+
+        if(ReturnResult.ERROR.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("미션 참여자가 아닙니다.").build(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("미션 탈퇴가 완료되었습니다.").build(), HttpStatus.OK);
     }
 }
