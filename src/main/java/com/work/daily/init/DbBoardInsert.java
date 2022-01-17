@@ -104,8 +104,7 @@ public class DbBoardInsert {
             }
         }
 
-        // save시 에러 발생
-        // boardCommentRepository.saveAll(boardCommentList);
+        boardCommentRepository.saveAll(boardCommentList);
 
     }
 

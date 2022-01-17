@@ -18,6 +18,7 @@ import javax.persistence.*;
 public class BoardComment extends BaseTime {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(columnDefinition = "varchar(20) comment '댓글번호'")
     private long commentSeq;
 
