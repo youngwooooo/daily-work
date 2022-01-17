@@ -1,5 +1,7 @@
 package com.work.daily.domain.pk;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +10,8 @@ import java.io.Serializable;
 
 @EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MissionParticipantsPK implements Serializable {
 
     @Id
