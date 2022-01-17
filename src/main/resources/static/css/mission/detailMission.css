@@ -35,9 +35,22 @@
     margin-bottom: 0px;
 }
 
-.mission-info-wrapper .mission-info-div #btn-join-mission {
+.mission-info-wrapper .mission-info-div #btn-join-mission
+, .mission-info-wrapper .mission-info-div #btn-secession-mission {
     width: 100%;
     height: 50px;
+    display: none;
+}
+
+.mission-info-wrapper .mission-info-div #btn-modify-mission
+, .mission-info-wrapper .mission-info-div #btn-delete-mission {
+    width: 45%;
+    height: 50px;
+    display: none;
+}
+
+.mission-info-wrapper .mission-info-div #btn-modify-mission {
+    margin-right: 15px;
 }
 
 .mission-state-div .mission-participants-div {

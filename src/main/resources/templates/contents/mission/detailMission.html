@@ -16,6 +16,8 @@
 
     <div class="row justify-content-center mission-info-wrapper">
         <input type="hidden" id="missionSeq" th:value="${mission.missionSeq}">
+        <input type="hidden" id="autoAccessYn" th:value="${mission.autoAccessYn}">
+        <input type="hidden" id="missionCreatedUserId" th:value="${mission.user.userId}">
 
         <div class="col-sm-3">
             <img id="mission-image" th:src="${mission.missionImage}">
@@ -28,7 +30,13 @@
                 ~
                 <span class="mission-end-date" th:text="${mission.missionEndDt}"></span>
                 <div class="mission-desc-div" th:utext="${mission.missionDesc}"></div>
+                <th:block th:each="participants : ${mission.missionParticipants}">
+                   <input type="hidden" name="participantsId" th:value="${participants.userId}">
+                </th:block>
                 <button type="button" class="btn btn-primary" id="btn-join-mission">미션 참여하기</button>
+                <button type="button" class="btn btn-success" id="btn-secession-mission">미션 탈퇴하기</button>
+                <button type="button" class="btn btn-primary" id="btn-modify-mission">미션 수정하기</button>
+                <button type="button" class="btn btn-danger" id="btn-delete-mission">미션 삭제하기</button>
             </div>
         </div>
 
@@ -40,9 +48,10 @@
             <h4>미션 참여자</h4>
             <br/>
             <div class="mission-participants-info" th:if="${mission.missionParticipants != null}">
-                <div class="mission-participants-info-result" th:each="participants : ${mission.missionParticipants}">
+                <div class="mission-participants-info-result" th:each="participants : ${mission.missionParticipants}"
+                     th:object="${participants}" th:if="${participants.missionJoinYn != 'N'}">
                     <img th:src="${participants.user.profileImage}">
-                    <span th:text="${participants.user.userNm}"></span>
+                    <span class="" th:text="${participants.user.userNm}"></span>
                 </div>
             </div>
         </div>
