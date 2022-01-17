@@ -3,6 +3,7 @@ package com.work.daily.mission.service;
 import com.work.daily.access.ReturnResult;
 import com.work.daily.domain.entity.Mission;
 import com.work.daily.domain.entity.MissionParticipants;
+import com.work.daily.domain.pk.MissionParticipantsPK;
 import com.work.daily.domain.repository.MissionParticipantsRepository;
 import com.work.daily.domain.repository.MissionRepository;
 import com.work.daily.mission.dto.RequestMissionDto;
@@ -46,7 +47,7 @@ public class MissionService {
     }
 
     /**
-     * Mission 단건 조회
+     * Mission 단건 조회(상세 조회)
      * @param missionSeq
      * @return findMissionToDto
      */
@@ -78,7 +79,7 @@ public class MissionService {
     }
 
     /**
-     * 미션 만들기 - [등록]
+     * 전체 MISSION - 미션 만들기 - [등록]
      * @param requestMissionDto
      * @param file
      * @return
@@ -150,16 +151,68 @@ public class MissionService {
         return ReturnResult.SUCCESS.getValue();
     }
 
+    /**
+     * 미션 상세 조회 - [미션 삭제하기]
+     * @param missionSeq
+     * @param delYn
+     * @return
+     */
     @Transactional
-    public MissionParticipants joinMission(RequestMissionParticipantsDto requestMissionParticipantsDto){
+    public String delete(long missionSeq, String delYn){
 
-        Optional<Mission> findMission = missionRepository.findMission(requestMissionParticipantsDto.getMissionSeq());
+        Optional<Mission> findMission = missionRepository.findById(missionSeq);
         if(!findMission.isPresent()){
-            throw new IllegalArgumentException("존재하지 않는 미션입니다. 미션번호 : " + requestMissionParticipantsDto.getMissionSeq());
+            return ReturnResult.ERROR.getValue();
+        }
+
+        findMission.get().deleteMission(delYn);
+
+        return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 참여하기]
+     * @param requestMissionParticipantsDto
+     * @return
+     */
+    @Transactional
+    public String joinMission(RequestMissionParticipantsDto requestMissionParticipantsDto){
+
+        MissionParticipantsPK missionParticipantsPK = MissionParticipantsPK.builder()
+                                                        .missionSeq(requestMissionParticipantsDto.getMissionSeq())
+                                                        .userSeq(requestMissionParticipantsDto.getUserSeq())
+                                                        .userId(requestMissionParticipantsDto.getUserId()).build();
+
+        Optional<MissionParticipants> findMissionParticipants = missionParticipantsRepository.findById(missionParticipantsPK);
+        if(findMissionParticipants.isPresent()){
+            return ReturnResult.ERROR.getValue();
         }
 
         MissionParticipants missionParticipants = missionParticipantsRepository.save(requestMissionParticipantsDto.toEntity());
 
-        return missionParticipants;
+        return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 탈퇴하기]
+     * @param requestMissionParticipantsDto
+     * @return
+     */
+    @Transactional
+    public String secessionMission(RequestMissionParticipantsDto requestMissionParticipantsDto){
+
+        MissionParticipantsPK missionParticipantsPK = MissionParticipantsPK.builder()
+                                                        .missionSeq(requestMissionParticipantsDto.getMissionSeq())
+                                                        .userSeq(requestMissionParticipantsDto.getUserSeq())
+                                                        .userId(requestMissionParticipantsDto.getUserId()).build();
+
+        Optional<MissionParticipants> findMissionParticipants = missionParticipantsRepository.findById(missionParticipantsPK);
+        if(!findMissionParticipants.isPresent()){
+            return ReturnResult.ERROR.getValue();
+        }
+
+        missionParticipantsRepository.delete(requestMissionParticipantsDto.toEntity());
+
+        return ReturnResult.SUCCESS.getValue();
     }
 }
