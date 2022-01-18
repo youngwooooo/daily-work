@@ -43,16 +43,30 @@ public class MissionController {
     }
 
     /**
+     * 미션 수정 페이지
+     * @param missionSeq
+     * @param model
+     * @return 미션 수정 페이지 VIEW
+     */
+    @GetMapping("/mission/{missionSeq}/modify")
+    public String modifyMission(@PathVariable("missionSeq") long missionSeq, Model model){
+        ResponseMissionDto responseMissionDto = missionService.findMission(missionSeq);
+        model.addAttribute("mission", responseMissionDto);
+
+        return "contents/mission/modifyMission";
+    }
+
+    /**
      * 미션 상세 조회 페이지
      * @param missionSeq
      * @param model
      * @return 미션 상세 조회 페이지 VIEW
      */
     @GetMapping("/mission/{missionSeq}")
-    public String detailMission(@PathVariable("missionSeq") Long missionSeq, Model model){
+    public String detailMission(@PathVariable("missionSeq") long missionSeq, Model model){
         log.info("MissionController :: detailMission called");
 
-        ResponseMissionDto findMission = missionService.detailMission(missionSeq);
+        ResponseMissionDto findMission = missionService.findMission(missionSeq);
         model.addAttribute("mission", findMission);
 
         return "contents/mission/detailMission";
