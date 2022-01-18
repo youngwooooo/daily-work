@@ -34,6 +34,9 @@ public class MissionService {
     @Value("${custom.path.mission-image}")
     private String missionUploadPath;
 
+    @Value("${custom.path.root-image}")
+    private String rootImagePath;
+
     /**
      * 전체 Mission 조회
      * @return 전체 Mission List
@@ -52,7 +55,7 @@ public class MissionService {
      * @return findMissionToDto
      */
     @Transactional(readOnly = true)
-    public ResponseMissionDto detailMission(Long missionSeq){
+    public ResponseMissionDto findMission(Long missionSeq){
         Optional<Mission> findMission = missionRepository.findMission(missionSeq);
         if(!findMission.isPresent()){
             throw new IllegalArgumentException("해당 미션이 존재하지 않습니다. 미션 번호 : " + missionSeq);
@@ -147,6 +150,57 @@ public class MissionService {
 
             missionParticipantsRepository.save(requestMissionParticipantsDto.toEntity());
         }
+
+        return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 수정하기]
+     * @param requestMissionDto
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @Transactional
+    public String modify(RequestMissionDto requestMissionDto, MultipartFile file) throws IOException {
+
+        // 미션 조회(영속화)
+        Optional<Mission> findMission = missionRepository.findById(requestMissionDto.getMissionSeq());
+        if(!findMission.isPresent()){
+            return ReturnResult.ERROR.getValue();
+        }
+
+        // 대표 이미지가 존재하지 않을 때
+        if(file == null){
+            findMission.get().modifyMission(requestMissionDto);
+            return ReturnResult.SUCCESS.getValue();
+        }
+
+        // 이미지 변경 시
+        // 업로드될 폴더 생성
+        File uploadFolder = new File(missionUploadPath + requestMissionDto.getMissionSeq());
+        if(!uploadFolder.exists()){
+            uploadFolder.mkdir();
+        }
+
+        File beforeMissionImage = new File(rootImagePath + findMission.get().getMissionImage());
+        if(beforeMissionImage.exists()){
+            beforeMissionImage.delete();
+        }
+
+        // 대표 이미지 이름
+        String fileOriginalName = URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
+        // 대표 이미지 생성
+        File missionImage = new File(uploadFolder, fileOriginalName);
+        file.transferTo(missionImage);
+
+        // DB에 저장할 대표 이미지 경로
+        String missionImagePath = "/mission/" + requestMissionDto.getMissionSeq() + "/" + fileOriginalName;
+
+        // requestMissionDto의 missionImage 값 수정
+        requestMissionDto.setMissionImage(missionImagePath);
+
+        findMission.get().modifyMission(requestMissionDto);
 
         return ReturnResult.SUCCESS.getValue();
     }
