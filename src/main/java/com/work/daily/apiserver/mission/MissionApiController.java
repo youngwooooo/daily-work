@@ -36,8 +36,8 @@ public class MissionApiController {
      */
     @PostMapping("/mission")
     public ResponseEntity<ResponseDto> createMission(@Valid @RequestPart(value = "requestMissionDto") RequestMissionDto requestMissionDto
-                                , @RequestPart(value = "file", required = false) MultipartFile file
-                                , BindingResult bindingResult) throws IOException {
+                                                    , @RequestPart(value = "file", required = false) MultipartFile file
+                                                    , BindingResult bindingResult) throws IOException {
 
         // 유효성 검사 오류 발생 시
         if(bindingResult.hasErrors()){
@@ -59,6 +59,41 @@ public class MissionApiController {
         }
 
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 등록이 완료되었습니다.").build(), HttpStatus.CREATED);
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 수정하기]
+     * @param missionSeq
+     * @param requestMissionDto
+     * @param file
+     * @param bindingResult
+     * @return
+     * @throws IOException
+     */
+    @PatchMapping("/mission/{missionSeq}")
+    public ResponseEntity<ResponseDto> modifyMission(@PathVariable("missionSeq") long missionSeq
+                                                    , @Valid @RequestPart(value = "requestMissionDto") RequestMissionDto requestMissionDto
+                                                    , @RequestPart(value = "file", required = false) MultipartFile file
+                                                    , BindingResult bindingResult) throws IOException{
+        log.info("미션 수정 데이터 : " + requestMissionDto.toString());
+        // 유효성 검사 오류 발생 시
+        if(bindingResult.hasErrors()){
+            log.info("MissionApiController :: createMission :: 유효성 검사 오류 = " + bindingResult.getFieldErrors());
+            Map<String, Object> errorMap = new HashMap<>();
+            for(FieldError error : bindingResult.getFieldErrors()){
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            }
+
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(errorMap).message("입력된 값이 올바르지 않습니다.").build()
+                    , HttpStatus.BAD_REQUEST);
+        }
+
+        String result = missionService.modify(requestMissionDto, file);
+        if(ReturnResult.ERROR.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("미션이 존재하지 않습니다. 미션번호 : " + requestMissionDto.getMissionSeq()).build(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("미션 수정이 완료되었습니다.").build(), HttpStatus.OK);
     }
 
     /**
