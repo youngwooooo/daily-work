@@ -9,8 +9,8 @@ $(function(){
     // 미션 참여자 존재 여부에 따른 [미션 참여하기], [미션 탈퇴하기] 버튼 보이기
     // 미션 생성자와 로그인 한 회원이 같을 경우
     if($("#missionCreatedUserId").val() == $("#userId").val()){
-        $("#btn-modify-mission").css("display", "inline-block");
-        $("#btn-delete-mission").css("display", "inline-block");
+        $("#btn-modify-mission-form").css("display", "inline-block");
+        $("#btn-delete-mission-modal").css("display", "inline-block");
     }else {
 
         var participantsIdInput = $("input[name='participantsId']");
@@ -19,22 +19,53 @@ $(function(){
             var participantsId = participantsIdInput[i].value;
             // 미션 참여자가 로그인 한 회원과 같을 경우
             if(participantsId == $("#userId").val()){
-                $("#btn-join-mission").css("display", "none");
-                $("#btn-secession-mission").css("display", "inline-block");
+                $("#btn-join-mission-modal").css("display", "none");
+                $("#btn-secession-mission-modal").css("display", "inline-block");
             }else {
-                $("#btn-join-mission").css("display", "inline-block");
-                $("#btn-secession-mission").css("display", "none");
+                $("#btn-join-mission-modal").css("display", "inline-block");
+                $("#btn-secession-mission-modal").css("display", "none");
             }
         }
     }
+    /* 모달이 띄워질 때 */
+    /* 모달 버튼들을 보이지 않도록 함 */
+    $(".response-modal-btn-div").css("display", "none");
+
+    /* 비로그인 사용자 - [미션 참여하기] - [로그인] */
+    $("#btn-login-form").on("click", function(){
+        location.href = "/login";
+    });
+    /* 비로그인 사용자 - [미션 참여하기] - [회원가입] */
+    $("#btn-join-form").on("click", function(){
+        location.href = "/join";
+    });
+    /* 비로그인 사용자 - [미션 참여하기] - [홈으로] */
+    $("#btn-main-form").on("click", function(){
+        location.href = "/missions";
+    });
+
+    /* [취소](공통) */
+    $("button[name='btn-cancel']").on("click", function(){
+        $("#response-modal").hide();
+    });
 
     /* 미션 상세 조회 - [미션 수정하기] */
-     $("#btn-modify-mission").on("click", function(){
+     $("#btn-modify-mission-form").on("click", function(){
         var missionSeq = $("#missionSeq").val();
         location.href = "/mission/" + missionSeq + "/modify";
      });
 
     /* 미션 상세 조회 - [미션 삭제하기] */
+    $("#btn-delete-mission-modal").on("click", function(){
+        $("#response-modal .modal-body h3").text("미션을 삭제하시겠습니까?");
+        $("#response-modal .modal-body p").text("모든 미션 정보가 삭제됩니다. 삭제된 미션은 복구할 수 없습니다.");
+        $("#delete-mission-btn-div").css("display", "block")
+
+        $("#response-modal").show();
+
+    });
+
+    /* 미션 상세 조회 - [미션 삭제하기] - [삭제] */
     $("#btn-delete-mission").on("click", function(){
         var missionSeq = $("#missionSeq").val();
         var delYn = "Y";
@@ -52,7 +83,6 @@ $(function(){
             , dataType : "json"
             , success : function(result){
                 if(result.status == "201"){
-                    alert(result.message);
                     location.href = "/missions";
                 }
             }
@@ -64,12 +94,35 @@ $(function(){
 
 
     /* 미션 상세 조회 - [미션 참여하기] */
-    $("#btn-join-mission").on("click", function(){
+    $("#btn-join-mission-modal").on("click", function(){
+        // 비로그인 사용자가 [미션 참여하기] 클릭 시
         if($("#userId").val() == null){
-            alert("로그인이 필요합니다.");
-            return;
+            $("#response-modal .modal-body h3").text("로그인이 필요해요!");
+            $("#response-modal .modal-body p").text("아이디가 없다면 회원가입을 해보세요.");
+            $("#no-login-btn-div").css("display", "block")
+
+            $("#response-modal").show();
+        }else {
+            // 자동참여 여부가 Y 일 때
+            if($("#autoAccessYn").val() == "Y"){
+                $("#response-modal .modal-body h3").text("미션에 바로 참여할 수 있어요!");
+                $("#response-modal .modal-body p").text("미션에 참여해 목표를 달성해볼까요?");
+                $("#join-mission-btn-div").css("display", "block")
+
+                $("#response-modal").show();
+            }else {
+                $("#response-modal .modal-body h3").text("참여 승인이 필요해요!");
+                $("#response-modal .modal-body p").text("미션 작성자의 승인 후 미션에 참여할 수 있어요.");
+                $("#join-mission-btn-div").css("display", "block")
+
+                $("#response-modal").show();
+            }
         }
 
+    });
+
+    /* 미션 상세 조회 - [미션 참여하기] - [참여] */
+    $("#btn-join-mission").on("click", function(){
         var missionSeq = $("#missionSeq").val(); // 미션번호
         var userSeq = $("#userSeq").val();       // 회원번호
         var userId = $("#userId").val();         // 회원ID
@@ -104,7 +157,6 @@ $(function(){
             , dataType : "json"
             , success : function(result){
                 if(result.status == "201"){
-                    alert(result.message);
                     location.reload();
                 }
             }
@@ -118,6 +170,16 @@ $(function(){
     });
 
     /* 미션 상세 조회 - [미션 탈퇴하기] */
+    $("#btn-secession-mission-modal").on("click", function(){
+        $("#response-modal .modal-body h3").text("정말 미션을 탈퇴하시겠어요?");
+        $("#response-modal .modal-body p").text("기존에 제출한 미션들은 복구할 수 없습니다.");
+        $("#secession-mission-btn-div").css("display", "block")
+
+        $("#response-modal").show();
+
+    });
+
+    /* 미션 상세 조회 - [미션 탈퇴하기] - [탈퇴] */
     $("#btn-secession-mission").on("click", function(){
         var missionSeq = $("#missionSeq").val();
         var userSeq = $("#userSeq").val();
@@ -137,7 +199,6 @@ $(function(){
             , dataType : "json"
             , success : function(result){
                 if(result.status == "200"){
-                    alert(result.message);
                     location.href = "/missions";
                 }
             }
@@ -147,7 +208,6 @@ $(function(){
                 }
             }
         });
-
     });
 
 });
