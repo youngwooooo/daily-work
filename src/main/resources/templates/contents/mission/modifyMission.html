@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- 컨텐츠페이지의 CSS -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/mission/createAndModifyMission.css"/>
+</th:block>
+<!-- 컨텐츠페이지의 JS -->
+<th:block layout:fragment="script">
+    <script th:src="@{/js/mission/modifyMission.js}"></script>
+</th:block>
+
+<div layout:fragment="content" class="container">
+    <div class="create-mission-wrapper-div">
+        <th:block>
+            <input type="hidden" id="missionSeq" th:value="${mission.missionSeq}">
+            <input type="hidden" id="find-missionDesc" th:value="${mission.missionDesc}">
+            <input type="hidden" id="find-releaseYn" th:value="${mission.releaseYn}">
+            <input type="hidden" id="find-autoAccessYn" th:value="${mission.autoAccessYn}">
+            <input type="hidden" id="find-masterYn" th:value="${mission.masterYn}">
+            <input type="hidden" id="find-delYn" th:value="${mission.delYn}">
+            <input type="hidden" id="find-temporaryYn" th:value="${mission.temporaryYn}">
+            <input type="hidden" id="find-missionImage" th:value="${mission.missionImage}">
+        </th:block>
+
+        <div class="create-mission-form-div">
+            <table class="table">
+                <colgroup>
+                    <col width="150px;">
+                    <col width="auto">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td colspan="2" class="mission-title">
+                        <input type="text" class="form-control" id="missionNm" placeholder="미션 제목을 입력하세요." th:value="${mission.missionNm}">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="mission-desc">
+                        <textarea id="missionDesc" placeholder="미션에 대한 설명 또는 소개를 작성하세요."></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>대표 이미지</th>
+                    <td class="mission-image-td">
+                        <div class="mission-image-div">
+                            <img id="mission-image" th:src="${mission.missionImage}" alt="mission-image">
+                        </div>
+                        <div class="mission-image-desc-div">
+                            <p>* 미션 목록에서 보이는 대표 이미지를 설정할 수 있습니다.</p>
+                            <p>* 왼쪽 박스를 클릭하여 이미지를 업로드 할 수 있습니다.</p>
+                            <p>* 설정하지 않을 경우 기본 이미지로 설정됩니다.</p>
+                        </div>
+                        <input type="file" id="file" name="file" accept="image/*">
+                    </td>
+                </tr>
+                <tr>
+                    <th>미션 종료일</th>
+                    <td>
+                        <div class="mission-date-div">
+                            <input type="hidden" id="missionStDt" th:value="${mission.missionStDt}">
+                            <input type="datetime-local" class="form-control" id="missionEndDt" th:value="${mission.missionEndDt}">
+                            <p>* 미션 종료일은 미션 시작일 이후로 설정되야 합니다.</p>
+                            <p>* 미션 종료일 이후 미션은 자동으로 마감됩니다.</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>공개 여부</th>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="releaseY" name="releaseYn" value="Y" checked>
+                            <label class="form-check-label" for="releaseY">
+                                공개
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="releaseN" name="releaseYn" value="N">
+                            <label class="form-check-label" for="releaseN">
+                                비공개
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>자동참여 여부</th>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="autoAccessY" name="autoAccessYn" value="Y" checked>
+                            <label class="form-check-label" for="autoAccessY">
+                                자동참여
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="autoAccessN" name="autoAccessYn" value="N">
+                            <label class="form-check-label" for="autoAccessN">
+                                직접수락
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mission-button-div justify-content-center">
+            <button type="button" class="btn btn-primary" id="btn-modify-mission">수정</button>
+            <button type="button" class="btn btn-light" id="btn-cancel">취소</button>
+        </div>
+    </div>
+    <!-- .create-mission-wrapper-div end -->
+
+</div>
+<!-- container end -->
+
+</html>
