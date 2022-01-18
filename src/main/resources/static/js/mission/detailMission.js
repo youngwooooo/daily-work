@@ -11,6 +11,7 @@ $(function(){
     if($("#missionCreatedUserId").val() == $("#userId").val()){
         $("#btn-modify-mission-form").css("display", "inline-block");
         $("#btn-delete-mission-modal").css("display", "inline-block");
+        $("#btn-participants-management-modal").css("display", "inline-block");
     }else {
 
         var participantsIdInput = $("input[name='participantsId']");
@@ -44,15 +45,25 @@ $(function(){
         location.href = "/missions";
     });
 
-    /* [취소](공통) */
-    $("button[name='btn-cancel']").on("click", function(){
-        $("#response-modal").hide();
+    /* [미션 참여자 관리] */
+    $("#btn-participants-management-modal").on("click", function(){
+        $("#mission-participants-management-modal").show();
+    });
+
+    /*[미션 참여자 관리] - [취소] */
+    $("button[name='btn-cancel-mission-participants-management-modal']").on("click", function(){
+       location.reload();
     });
 
     /* 미션 상세 조회 - [미션 수정하기] */
      $("#btn-modify-mission-form").on("click", function(){
         var missionSeq = $("#missionSeq").val();
         location.href = "/mission/" + missionSeq + "/modify";
+     });
+
+     /* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] - [취소] */
+     $("button[name='btn-cancel-response-modal']").on("click", function(){
+         $("#response-modal").hide();
      });
 
     /* 미션 상세 조회 - [미션 삭제하기] */
