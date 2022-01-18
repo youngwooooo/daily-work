@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 @Builder
 public class RequestMissionDto {
 
+    private long missionSeq;
+
     @NotNull(message = "회원 정보가 존재하지 않습니다.")
     private User user;
 
