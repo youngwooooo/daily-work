@@ -43,13 +43,15 @@
 }
 
 .mission-info-wrapper .mission-info-div #btn-modify-mission-form
-, .mission-info-wrapper .mission-info-div #btn-delete-mission-modal {
-    width: 45%;
+, .mission-info-wrapper .mission-info-div #btn-delete-mission-modal
+, .mission-info-wrapper .mission-info-div #btn-participants-management-modal{
+    width: auto;
     height: 50px;
     display: none;
 }
 
-.mission-info-wrapper .mission-info-div #btn-modify-mission-form {
+.mission-info-wrapper .mission-info-div #btn-participants-management-modal
+, .mission-info-wrapper .mission-info-div #btn-modify-mission-form {
     margin-right: 15px;
 }
 
@@ -127,8 +129,8 @@
     border: 1px solid #dee2e6;
 }
 
-/* 모달 */
-#response-modal {
+/* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기 모달] */
+#response-modal, #mission-participants-management-modal {
     background-color:rgba(0,0,0,.3);
 }
 
@@ -162,4 +164,47 @@
 .response-modal-btn-div #btn-main-form
 , .response-modal-btn-div button[name="btn-cancel"] {
     border-color: #dae0e5;
+}
+
+/* 미션 참여자 관리 모달 */
+#mission-participants-management-modal .modal-body {
+    padding: 20px;
+    max-height: 770px;
+    overflow-y: auto;
+}
+
+#mission-participants-management-modal .modal-body::-webkit-scrollbar {
+    width: 10px;
+}
+
+#mission-participants-management-modal .modal-body::-webkit-scrollbar-thumb {
+    background-color: #dddddd;
+}
+
+#mission-participants-management-modal .modal-body::-webkit-scrollbar-track {
+    background-color: white;
+}
+
+#mission-participants-management-modal .mission-participants-management-div {
+    display: flex;
+    margin: 10px;
+}
+
+#mission-participants-management-modal .mission-participants-management-div .mission-participants-management-info-div {
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    padding: 10px;
+    display: inline-block;
+    width: auto;
+}
+
+#mission-participants-management-modal .mission-participants-management-div .mission-participants-management-info-div img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+#mission-participants-management-modal .mission-participants-management-div .mission-participants-management-btn-div button {
+    height: 50px;
+    width: 70px;
+    margin-top: 6px;
 }
