@@ -31,12 +31,12 @@
                 <span class="mission-end-date" th:text="${mission.missionEndDt}"></span>
                 <div class="mission-desc-div" th:utext="${mission.missionDesc}"></div>
                 <th:block th:each="participants : ${mission.missionParticipants}">
-                   <input type="hidden" name="participantsId" th:value="${participants.userId}">
+                    <input type="hidden" name="participantsId" th:value="${participants.userId}">
                 </th:block>
-                <button type="button" class="btn btn-primary" id="btn-join-mission">미션 참여하기</button>
-                <button type="button" class="btn btn-success" id="btn-secession-mission">미션 탈퇴하기</button>
-                <button type="button" class="btn btn-primary" id="btn-modify-mission">미션 수정하기</button>
-                <button type="button" class="btn btn-danger" id="btn-delete-mission">미션 삭제하기</button>
+                <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
+                <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
+                <button type="button" class="btn btn-primary" id="btn-modify-mission-form">미션 수정하기</button>
+                <button type="button" class="btn btn-danger" id="btn-delete-mission-modal">미션 삭제하기</button>
             </div>
         </div>
 
@@ -187,6 +187,36 @@
 
     </div>
 
+    <div class="modal" id="response-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="response-modal-desc-div">
+                        <h3></h3>
+                        <p></p>
+                    </div>
+                    <div class="response-modal-btn-div" id="delete-mission-btn-div">
+                        <button type="button" class="btn btn-danger" id="btn-delete-mission">삭제</button>
+                        <button type="button" class="btn btn-light" name="btn-cancel">취소</button>
+                    </div>
+                    <div class="response-modal-btn-div" id="no-login-btn-div">
+                        <button type="button" class="btn btn-primary" id="btn-login-form">로그인</button>
+                        <button type="button" class="btn btn-dark" id="btn-join-form">회원가입</button>
+                        <button type="button" class="btn btn-light" id="btn-main-form">홈으로</button>
+                    </div>
+                    <div class="response-modal-btn-div" id="join-mission-btn-div">
+                        <button type="button" class="btn btn-primary" id="btn-join-mission">참여</button>
+                        <button type="button" class="btn btn-light" name="btn-cancel">취소</button>
+                    </div>
+                    <div class="response-modal-btn-div" id="secession-mission-btn-div">
+                        <button type="button" class="btn btn-success" id="btn-secession-mission">탈퇴</button>
+                        <button type="button" class="btn btn-light" name="btn-cancel">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <!-- container end -->
