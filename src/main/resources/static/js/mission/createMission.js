@@ -96,8 +96,6 @@ function validatingMission(){
 function savingMission(temporaryValue){
     var userSeq = $("#userSeq").val();
     var userId = $("#userId").val();
-    var userNm = $("#userNm").val();
-    var profileImage = $("#profileImage").val();
     var missionNm = $("#missionNm").val();  // 미션명
     var missionDesc = CKEDITOR.instances.missionDesc.getData();  // 미션 설명
     var missionImage = $("#file")[0].files[0];  // 대표 이미지
@@ -113,8 +111,6 @@ function savingMission(temporaryValue){
                     "user" : {
                         "userSeq" : userSeq
                         , "userId" : userId
-                        , "userNm" : userNm
-                        , "profileImage" : profileImage
                     }
                     , "missionNm" : missionNm
                     , "missionDesc" : missionDesc
