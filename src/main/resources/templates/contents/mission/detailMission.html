@@ -33,10 +33,13 @@
                 <th:block th:each="participants : ${mission.missionParticipants}">
                     <input type="hidden" name="participantsId" th:value="${participants.userId}">
                 </th:block>
-                <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
-                <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
-                <button type="button" class="btn btn-primary" id="btn-modify-mission-form">미션 수정하기</button>
-                <button type="button" class="btn btn-danger" id="btn-delete-mission-modal">미션 삭제하기</button>
+                <div style="display: flex">
+                    <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
+                    <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
+                    <button type="button" class="btn btn-success" id="btn-participants-management-modal">미션 참여자 관리</button>
+                    <button type="button" class="btn btn-primary" id="btn-modify-mission-form">미션 수정하기</button>
+                    <button type="button" class="btn btn-danger" id="btn-delete-mission-modal">미션 삭제하기</button>
+                </div>
             </div>
         </div>
 
@@ -198,7 +201,7 @@
                     </div>
                     <div class="response-modal-btn-div" id="delete-mission-btn-div">
                         <button type="button" class="btn btn-danger" id="btn-delete-mission">삭제</button>
-                        <button type="button" class="btn btn-light" name="btn-cancel">취소</button>
+                        <button type="button" class="btn btn-light" name="btn-cancel-response-modal">취소</button>
                     </div>
                     <div class="response-modal-btn-div" id="no-login-btn-div">
                         <button type="button" class="btn btn-primary" id="btn-login-form">로그인</button>
@@ -207,12 +210,43 @@
                     </div>
                     <div class="response-modal-btn-div" id="join-mission-btn-div">
                         <button type="button" class="btn btn-primary" id="btn-join-mission">참여</button>
-                        <button type="button" class="btn btn-light" name="btn-cancel">취소</button>
+                        <button type="button" class="btn btn-light" name="btn-cancel-response-modal">취소</button>
                     </div>
                     <div class="response-modal-btn-div" id="secession-mission-btn-div">
                         <button type="button" class="btn btn-success" id="btn-secession-mission">탈퇴</button>
-                        <button type="button" class="btn btn-light" name="btn-cancel">취소</button>
+                        <button type="button" class="btn btn-light" name="btn-cancel-response-modal">취소</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="mission-participants-management-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">미션 참여자 관리</h5>
+                    <button type="button" class="close" name="btn-cancel-mission-participants-management-modal">&times;</button>
+                </div>
+                <div class="modal-body" th:if="${mission.missionParticipants != null}">
+
+                    <div class="mission-participants-management-div justify-content-between" th:each="participants : ${mission.missionParticipants}">
+                        <div class="mission-participants-management-info-div">
+                            <img th:src="${participants.user.profileImage}">
+                            <span th:text="${participants.user.userNm}"></span>
+                        </div>
+                        <div class="mission-participants-management-btn-div" th:if="${participants.missionJoinYn == 'N'}">
+                            <button type="button" class="btn btn-primary">
+                                승인
+                            </button>
+                        </div>
+                        <div class="mission-participants-management-btn-div" th:if="${participants.missionJoinYn == 'Y'}">
+                            <button type="button" class="btn btn-danger">
+                                강퇴
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
