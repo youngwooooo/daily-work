@@ -1,6 +1,7 @@
 package com.work.daily.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.work.daily.mission.dto.RequestMissionDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -68,6 +69,17 @@ public class Mission extends BaseTime {
     // 미션 대표 이미지 추가 및 수정
     public void modifyMissionImage(String missionImagePath){
         this.missionImage = missionImagePath;
+    }
+    // 미션 수정
+    public void modifyMission(RequestMissionDto requestMissionDto){
+        this.missionNm = requestMissionDto.getMissionNm();
+        this.missionDesc = requestMissionDto.getMissionDesc();
+        this.missionStDt = requestMissionDto.getMissionStDt();
+        this.missionEndDt = requestMissionDto.getMissionEndDt();
+        this.releaseYn = requestMissionDto.getReleaseYn();
+        this.autoAccessYn = requestMissionDto.getAutoAccessYn();
+        this.temporaryYn = requestMissionDto.getTemporaryYn();
+        this.missionImage = requestMissionDto.getMissionImage();
     }
     // 삭제여부 수정
     public void deleteMission(String delYn){
