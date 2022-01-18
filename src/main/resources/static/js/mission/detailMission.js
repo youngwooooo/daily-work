@@ -28,6 +28,12 @@ $(function(){
         }
     }
 
+    /* 미션 상세 조회 - [미션 수정하기] */
+     $("#btn-modify-mission").on("click", function(){
+        var missionSeq = $("#missionSeq").val();
+        location.href = "/mission/" + missionSeq + "/modify";
+     });
+
     /* 미션 상세 조회 - [미션 삭제하기] */
     $("#btn-delete-mission").on("click", function(){
         var missionSeq = $("#missionSeq").val();
