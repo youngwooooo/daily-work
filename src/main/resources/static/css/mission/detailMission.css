@@ -35,21 +35,21 @@
     margin-bottom: 0px;
 }
 
-.mission-info-wrapper .mission-info-div #btn-join-mission
-, .mission-info-wrapper .mission-info-div #btn-secession-mission {
+.mission-info-wrapper .mission-info-div #btn-join-mission-modal
+, .mission-info-wrapper .mission-info-div #btn-secession-mission-modal {
     width: 100%;
     height: 50px;
     display: none;
 }
 
-.mission-info-wrapper .mission-info-div #btn-modify-mission
-, .mission-info-wrapper .mission-info-div #btn-delete-mission {
+.mission-info-wrapper .mission-info-div #btn-modify-mission-form
+, .mission-info-wrapper .mission-info-div #btn-delete-mission-modal {
     width: 45%;
     height: 50px;
     display: none;
 }
 
-.mission-info-wrapper .mission-info-div #btn-modify-mission {
+.mission-info-wrapper .mission-info-div #btn-modify-mission-form {
     margin-right: 15px;
 }
 
@@ -125,4 +125,41 @@
 }
 .tab-content .table tbody td:nth-child(n+2) {
     border: 1px solid #dee2e6;
+}
+
+/* 모달 */
+#response-modal {
+    background-color:rgba(0,0,0,.3);
+}
+
+.modal-body {
+    padding: 30px;
+    text-align: center;
+}
+
+.response-modal-img-div #check-icon {
+    width: 15%;
+}
+
+.response-modal-desc-div {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.response-modal-desc-div h3 {
+    font-weight: bold;
+}
+
+.response-modal-desc-div p {
+    margin: 0px;
+}
+
+.response-modal-btn-div button {
+    width: 100px;
+    height: 45px;
+}
+
+.response-modal-btn-div #btn-main-form
+, .response-modal-btn-div button[name="btn-cancel"] {
+    border-color: #dae0e5;
 }
