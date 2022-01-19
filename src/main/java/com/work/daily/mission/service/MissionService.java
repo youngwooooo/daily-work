@@ -9,6 +9,7 @@ import com.work.daily.domain.repository.MissionRepository;
 import com.work.daily.mission.dto.RequestMissionDto;
 import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import com.work.daily.mission.dto.ResponseMissionDto;
+import com.work.daily.mission.dto.ResponseMissionParticipants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -268,5 +269,55 @@ public class MissionService {
         missionParticipantsRepository.delete(requestMissionParticipantsDto.toEntity());
 
         return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 참여자 관리] - [승인]
+     * @param requestMissionParticipantsDto
+     * @return
+     */
+    @Transactional
+    public ResponseMissionParticipants approveParticipants(RequestMissionParticipantsDto requestMissionParticipantsDto){
+
+        Optional<MissionParticipants> findMissionParticipants = missionParticipantsRepository.findOneMissionParticipant(requestMissionParticipantsDto.getMissionSeq(), requestMissionParticipantsDto.getUserSeq(), requestMissionParticipantsDto.getUserId());
+        if(!findMissionParticipants.isPresent()){
+            throw new IllegalArgumentException("미션 참여자가 아닙니다. 미션참여자 ID : " + requestMissionParticipantsDto.getUserId());
+        }
+
+        findMissionParticipants.get().approveParticipants(requestMissionParticipantsDto);
+
+        ResponseMissionParticipants responseMissionParticipants = ResponseMissionParticipants.builder()
+                                                                    .missionSeq(findMissionParticipants.get().getMissionSeq())
+                                                                    .userSeq(findMissionParticipants.get().getUserSeq())
+                                                                    .userId(findMissionParticipants.get().getUserId())
+                                                                    .user(findMissionParticipants.get().getUser())
+                                                                    .build();
+
+        return responseMissionParticipants;
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 참여자 관리] - [강퇴]
+     * @param requestMissionParticipantsDto
+     * @return
+     */
+    @Transactional
+    public ResponseMissionParticipants expulsionParticipants(RequestMissionParticipantsDto requestMissionParticipantsDto) {
+
+        Optional<MissionParticipants> findMissionParticipants = missionParticipantsRepository.findOneMissionParticipant(requestMissionParticipantsDto.getMissionSeq(), requestMissionParticipantsDto.getUserSeq(), requestMissionParticipantsDto.getUserId());
+        if(!findMissionParticipants.isPresent()){
+            throw new IllegalArgumentException("미션 참여자가 아닙니다. 미션참여자 ID : " + requestMissionParticipantsDto.getUserId());
+        }
+
+        ResponseMissionParticipants responseMissionParticipants = ResponseMissionParticipants.builder()
+                                                                    .missionSeq(findMissionParticipants.get().getMissionSeq())
+                                                                    .userSeq(findMissionParticipants.get().getUserSeq())
+                                                                    .userId(findMissionParticipants.get().getUserId())
+                                                                    .user(findMissionParticipants.get().getUser())
+                                                                    .build();
+
+        missionParticipantsRepository.delete(requestMissionParticipantsDto.toEntity());
+
+        return responseMissionParticipants;
     }
 }

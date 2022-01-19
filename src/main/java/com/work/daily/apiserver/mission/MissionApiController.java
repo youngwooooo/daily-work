@@ -4,6 +4,7 @@ import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
 import com.work.daily.mission.dto.RequestMissionDto;
 import com.work.daily.mission.dto.RequestMissionParticipantsDto;
+import com.work.daily.mission.dto.ResponseMissionParticipants;
 import com.work.daily.mission.service.MissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ public class MissionApiController {
 
     /**
      * 전체 MISSION - 미션 만들기 - [등록]
+     * @description 미션 생성
      * @param requestMissionDto
      * @param file
      * @param bindingResult
@@ -63,6 +65,7 @@ public class MissionApiController {
 
     /**
      * 미션 상세 조회 - [미션 수정하기]
+     * @description 미션 전체 및 일부 수정(미션명, 미션설명, 대표이미지, 미션종료일, 공개여부, 자동참여 여부)
      * @param missionSeq
      * @param requestMissionDto
      * @param file
@@ -97,7 +100,8 @@ public class MissionApiController {
     }
 
     /**
-     * 미션 상세 조회 - [미션 삭제하기]
+     * 미션 상세 조회 - [미션 삭제하기] - [삭제]
+     * @description 미션의 삭제여부(delYn)를 N으로 수정
      * @param missionSeq
      * @param delYn
      * @return
@@ -110,12 +114,12 @@ public class MissionApiController {
             return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("해당 미션은 존재하지 않습니다. 미션번호 : " + missionSeq).build(), HttpStatus.BAD_REQUEST);
         }
 
-
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 삭제를 완료하였습니다.").build(), HttpStatus.CREATED);
     }
 
     /**
-     * 미션 상세 조회 - [미션 참여하기]
+     * 미션 상세 조회 - [미션 참여하기] - [참여]
+     * @description 미션의 자동참여 여부(autoAccessYn)가 N일 경우, 미션 참여자 자동 추가
      * @param missionSeq
      * @param requestMissionParticipantsDto
      * @return
@@ -146,7 +150,8 @@ public class MissionApiController {
     }
 
     /**
-     * 미션 상세 조회 - [미션 탈퇴하기]
+     * 미션 상세 조회 - [미션 탈퇴하기] - [탈퇴]
+     * @description 미션의 자동참여 여부(autoAccessYn)가 N일 경우, 미션 참여자 자동 삭제
      * @param missionSeq
      * @param requestMissionParticipantsDto
      * @return
@@ -156,7 +161,7 @@ public class MissionApiController {
                                                         , @Valid @RequestBody RequestMissionParticipantsDto requestMissionParticipantsDto
                                                         , BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            log.info("MissionApiController :: joinMission :: 유효성 검사 오류 = " + bindingResult.getFieldErrors());
+            log.info("MissionApiController :: secessionMission :: 유효성 검사 오류 = " + bindingResult.getFieldErrors());
             Map<String, Object> errorMap = new HashMap<>();
             for(FieldError error : bindingResult.getFieldErrors()){
                 errorMap.put(error.getField(), error.getDefaultMessage());
@@ -174,4 +179,63 @@ public class MissionApiController {
 
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("미션 탈퇴가 완료되었습니다.").build(), HttpStatus.OK);
     }
+
+    /**
+     * 미션 상세 조회 - [미션 참여자 관리] - [승인]
+     * @description 미션의 자동참여 여부(autoAccessYn)가 Y일 경우, 미션 생성자가 승인하여 미션 참여자 추가
+     * @param missionSeq
+     * @param requestMissionParticipantsDto
+     * @param bindingResult
+     * @return
+     */
+    @PatchMapping("/mission/{missionSeq}/approve-participants")
+    public ResponseEntity<ResponseDto> approveParticipants(@PathVariable(name = "missionSeq") long missionSeq
+                                                            , @Valid @RequestBody RequestMissionParticipantsDto requestMissionParticipantsDto
+                                                            , BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            log.info("MissionApiController :: approveParticipants :: 유효성 검사 오류 = " + bindingResult.getFieldErrors());
+            Map<String, Object> errorMap = new HashMap<>();
+            for(FieldError error : bindingResult.getFieldErrors()){
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            }
+
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(errorMap).message("입력된 값이 올바르지 않습니다.").build()
+                    , HttpStatus.BAD_REQUEST);
+        }
+
+        ResponseMissionParticipants approveParticipantsInfo = missionService.approveParticipants(requestMissionParticipantsDto);
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(approveParticipantsInfo).message("미션 참여자 승인이 완료되었습니다.").build(), HttpStatus.OK);
+    }
+
+    /**
+     * 미션 상세 조회 - [미션 참여자 관리] - [강퇴]
+     * @description 미션의 자동참여 여부(autoAccessYn)가 Y일 경우, 미션 생성자가 강퇴하여 미션 참여자 삭제
+     * @param missionSeq
+     * @param requestMissionParticipantsDto
+     * @param bindingResult
+     * @return
+     */
+    @DeleteMapping("/mission/{missionSeq}/expulsion-participants")
+    public ResponseEntity<ResponseDto> expulsionParticipants(@PathVariable(name = "missionSeq") long missionSeq
+                                                                , @Valid @RequestBody RequestMissionParticipantsDto requestMissionParticipantsDto
+                                                                , BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            log.info("MissionApiController :: approveParticipants :: 유효성 검사 오류 = " + bindingResult.getFieldErrors());
+            Map<String, Object> errorMap = new HashMap<>();
+            for(FieldError error : bindingResult.getFieldErrors()){
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            }
+
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(errorMap).message("입력된 값이 올바르지 않습니다.").build()
+                    , HttpStatus.BAD_REQUEST);
+        }
+
+        ResponseMissionParticipants expulsionParticipantsInfo = missionService.expulsionParticipants(requestMissionParticipantsDto);
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(expulsionParticipantsInfo).message("미션 참여자 강퇴가 완료되었습니다.").build(), HttpStatus.OK);
+    }
+
 }
