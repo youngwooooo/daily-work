@@ -2,6 +2,7 @@ package com.work.daily.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.work.daily.domain.pk.MissionParticipantsPK;
+import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -46,4 +47,10 @@ public class MissionParticipants {
 
     @Column(columnDefinition = "varchar(60) comment '참여승인일'")
     private LocalDateTime missionJoinApprovalDt;
+
+    // 참여여부, 참여승인일 수정
+    public void approveParticipants(RequestMissionParticipantsDto requestMissionParticipantsDto){
+        this.missionJoinYn = requestMissionParticipantsDto.getMissionJoinYn();
+        this.missionJoinApprovalDt = requestMissionParticipantsDto.getMissionJoinApprovalDt();
+    }
 }
