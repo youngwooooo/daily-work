@@ -50,7 +50,99 @@ $(function(){
         $("#mission-participants-management-modal").show();
     });
 
-    /*[미션 참여자 관리] - [취소] */
+    /* [미션 참여자 관리] - [승인] */
+    $("button[name='btn-approve-participants']").on("click", function(){
+        var thisButton = $(this);
+        var thisParent = $(this).parent();
+
+        var missionSeq = $("#missionSeq").val();
+        var userSeq = $(this).parents(".mission-participants-management-div").find("input[name='participantsSeq']").val();
+        var userId = $(this).parents(".mission-participants-management-div").find("input[name='participantsId']").val();
+        var missionJoinYn = "Y";
+        var missionJoinApprovalDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+
+        var data = {
+            "missionSeq" : missionSeq
+            , "userSeq" : userSeq
+            , "userId" : userId
+            , "missionJoinYn" : missionJoinYn
+            , "missionJoinApprovalDt" : missionJoinApprovalDt
+        };
+
+        $.ajax({
+            url : "/mission/" + missionSeq + "/approve-participants"
+            , type : "patch"
+            , data : JSON.stringify(data)
+            , contentType: "application/json; charset=UTF-8"
+            , dataType : "json"
+            , success : function(result){
+                console.log(result);
+                var createdParticipantsSeq = result.data.user.userSeq;
+                var createdParticipantsId = result.data.user.userId;
+                var createdParticipantsProfileImage = result.data.user.profileImage;
+                var createdParticipantsName = result.data.user.userNm;
+
+                var addData = '<div class="mission-participants-info-result">'
+                              + '<input type="hidden" name="participantsSeq" value="' + createdParticipantsSeq + '">'
+                              + '<input type="hidden" name="participantsId" value="'+ createdParticipantsId +'">'
+                              +     '<img src="' + createdParticipantsProfileImage + '">'
+                              +     '<span> ' + createdParticipantsName + '</span>'
+                              + '</div>';
+
+                $(".mission-participants-info").append(addData);
+
+                thisParent.append('<button type="button" class="btn btn-danger" name="btn-expulsion-participants">강퇴</button>');
+                thisButton.remove();
+            }
+            , error : function(xhr){
+                console.log(xhr);
+            }
+        });
+    });
+
+    /*
+        [미션 참여자 관리] - [강퇴]
+        승인 처리 후(ajax success 후), 바로 강퇴 할 수도 있으므로 $(document)를 사용하여 처리할 수 있게함.
+    */
+    $(document).on("click", "button[name='btn-expulsion-participants']", function(){
+        var thisParent = $(this).parents().find(".mission-participants-management-div");
+        var participantsInfoResultDiv = $(".mission-participants-info-result");
+
+        var missionSeq = $("#missionSeq").val();
+        var userSeq = $(this).parents(".mission-participants-management-div").find("input[name='participantsSeq']").val();
+        var userId = $(this).parents(".mission-participants-management-div").find("input[name='participantsId']").val();
+
+        var data = {
+                    "missionSeq" : missionSeq
+                    , "userSeq" : userSeq
+                    , "userId" : userId
+                };
+
+        $.ajax({
+            url : "/mission/" + missionSeq + "/expulsion-participants"
+            , type : "delete"
+            , data : JSON.stringify(data)
+            , contentType: "application/json; charset=UTF-8"
+            , dataType : "json"
+            , success : function(result){
+                console.log(result);
+                var deletedParticipantsId = result.data.user.userId;
+
+                for(var i=0; i<participantsInfoResultDiv.length; i++){
+                    if(participantsInfoResultDiv[i].children["participantsId"].value == deletedParticipantsId){
+                        participantsInfoResultDiv[i].remove();
+                        thisParent.remove();
+                    }
+                }
+
+            }
+            , error : function(xhr){
+                console.log(xhr);
+            }
+        });
+    });
+
+    /*[미션 참여자 관리] - [X] */
     $("button[name='btn-cancel-mission-participants-management-modal']").on("click", function(){
        location.reload();
     });

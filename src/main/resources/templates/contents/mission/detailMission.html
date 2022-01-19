@@ -30,9 +30,6 @@
                 ~
                 <span class="mission-end-date" th:text="${mission.missionEndDt}"></span>
                 <div class="mission-desc-div" th:utext="${mission.missionDesc}"></div>
-                <th:block th:each="participants : ${mission.missionParticipants}">
-                    <input type="hidden" name="participantsId" th:value="${participants.userId}">
-                </th:block>
                 <div style="display: flex">
                     <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
                     <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
@@ -51,11 +48,14 @@
             <h4>미션 참여자</h4>
             <br/>
             <div class="mission-participants-info" th:if="${mission.missionParticipants != null}">
+
                 <div class="mission-participants-info-result" th:each="participants : ${mission.missionParticipants}"
                      th:object="${participants}" th:if="${participants.missionJoinYn != 'N'}">
+                    <input type="hidden" name="participantsId" th:value="${participants.userId}">
                     <img th:src="${participants.user.profileImage}">
-                    <span class="" th:text="${participants.user.userNm}"></span>
+                    <span th:text="${participants.user.userNm}"></span>
                 </div>
+
             </div>
         </div>
 
@@ -230,18 +230,20 @@
                 </div>
                 <div class="modal-body" th:if="${mission.missionParticipants != null}">
 
-                    <div class="mission-participants-management-div justify-content-between" th:each="participants : ${mission.missionParticipants}">
+                    <div class="mission-participants-management-div justify-content-between" th:each="participants : ${mission.missionParticipants}" th:object="${participants}" th:if="${participants.userId != mission.user.userId}">
                         <div class="mission-participants-management-info-div">
+                            <input type="hidden" name="participantsSeq" th:value="${participants.userSeq}">
+                            <input type="hidden" name="participantsId" th:value="${participants.userId}">
                             <img th:src="${participants.user.profileImage}">
                             <span th:text="${participants.user.userNm}"></span>
                         </div>
                         <div class="mission-participants-management-btn-div" th:if="${participants.missionJoinYn == 'N'}">
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" name="btn-approve-participants">
                                 승인
                             </button>
                         </div>
                         <div class="mission-participants-management-btn-div" th:if="${participants.missionJoinYn == 'Y'}">
-                            <button type="button" class="btn btn-danger">
+                            <button type="button" class="btn btn-danger" name="btn-expulsion-participants">
                                 강퇴
                             </button>
                         </div>
