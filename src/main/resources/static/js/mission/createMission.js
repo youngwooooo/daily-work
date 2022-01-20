@@ -1,7 +1,19 @@
 $(function(){
     /* 미션 만들기 */
-    // 미션시작일 현재 시간으로 세팅(yyyy-MM-dd HH:mm)
-    $("#missionStDt").val(new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16));
+
+    /* 미션시작일, 미션종료일 설정 */
+    // 현재날짜
+    var now = new Date();
+    // 현재날짜 포맷팅
+    var nowFormat = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+    // 1. 미션시작일 현재 날짜로 설정
+    $("#missionStDt").val(nowFormat);
+    // 2. 미션종료일을 현재날짜 보다 이전을 선택할 수 없게 함
+    $("#missionEndDt").attr("min", nowFormat);
+    // 3. 미션종료일은 미션시작일로부터 최대 30일로 설정
+    // 30일 뒤 날짜 포맷팅
+    var oneMonthLaterFormat = new Date(now.setMonth(now.getMonth() + 1)).toISOString().slice(0, 16);
+    $("#missionEndDt").attr("max", oneMonthLaterFormat);
 
     // 미션 설명(textarea) CKEditor4 적용
     CKEDITOR.replace("missionDesc", {
@@ -51,12 +63,6 @@ $(function(){
         location.href = "/missions";
     });
 
-    /* 미션 상세 조회 */
-    var formatMissionStDt = $("#sp-missionStDt").text().replace("T", " ");
-    var formatMissionEndDt = $("#sp-missionEndDt").text().replace("T", " ");
-    $("#sp-missionStDt").text(formatMissionStDt);
-    $("#sp-missionEndDt").text(formatMissionEndDt);
-
 });
 
 // 미션 만들기 - 유효성 검사
@@ -81,10 +87,8 @@ function validatingMission(){
         return false;
     }
 
-    var missionStDtForCompare = new Date(missionStDt);
-    var missionEndDtForCompare = new Date(missionEndDt);
-
-    if(missionEndDtForCompare <= missionStDtForCompare){
+    var missionDateDifference = new Date(missionEndDt) - new Date(missionStDt);
+    if(missionDateDifference <  "86400000"){
         alert("미션 종료일을 확인해주세요.");
         return false;
     }
