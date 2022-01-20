@@ -26,9 +26,9 @@
         <div class="col-sm-3">
             <div class="mission-info-div">
                 <h3 class="mission-name" th:text="${mission.missionNm}">미션 제목</h3>
-                <span class="mission-start-date" th:text="${mission.missionStDt}"></span>
+                <span class="mission-start-date" th:text="${#temporals.format(mission.missionStDt, 'yyyy-MM-dd HH:mm')}"></span>
                 ~
-                <span class="mission-end-date" th:text="${mission.missionEndDt}"></span>
+                <span class="mission-end-date" th:text="${#temporals.format(mission.missionEndDt, 'yyyy-MM-dd HH:mm')}"></span>
                 <div class="mission-desc-div" th:utext="${mission.missionDesc}"></div>
                 <div style="display: flex">
                     <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>

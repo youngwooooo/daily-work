@@ -1,11 +1,5 @@
+/* 미션 상세 조회 js*/
 $(function(){
-    /* 미션 상세 조회 */
-    // 미션 시작일, 미션 종료일 날짜 포맷팅
-    var formatMissionStDt = $(".mission-start-date").text().replace("T", " ");
-    var formatMissionEndDt = $(".mission-end-date").text().replace("T", " ");
-    $(".mission-start-date").text(formatMissionStDt);
-    $(".mission-end-date").text(formatMissionEndDt);
-
     // 미션 참여자 존재 여부에 따른 [미션 참여하기], [미션 탈퇴하기] 버튼 보이기
     // 미션 생성자와 로그인 한 회원이 같을 경우
     if($("#missionCreatedUserId").val() == $("#userId").val()){
