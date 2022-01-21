@@ -1,50 +1,53 @@
 /* 미션 상세 조회 js*/
 $(function(){
-    // 미션 참여자 존재 여부에 따른 [미션 참여하기], [미션 탈퇴하기] 버튼 보이기
-    // 미션 생성자와 로그인 한 회원이 같을 경우
+    /* 미션 권한 관련 함수 */
+
+    // 1. 미션 생성자와 로그인 한 회원이 같을 경우 : [미션 수정하기], [미션 삭제하기], [미션 참여자 관리] 버튼 보이기
     if($("#missionCreatedUserId").val() == $("#userId").val()){
         $("#btn-modify-mission-form").css("display", "inline-block");
         $("#btn-delete-mission-modal").css("display", "inline-block");
         $("#btn-participants-management-modal").css("display", "inline-block");
     }else {
-
+    // 2. 미션 생성자와 로그인 한 회원이 다를 경우
         var participantsIdInput = $("input[name='participantsId']");
         for(var i=0; i<participantsIdInput.length; i++){
-            // 미션 참여자
-            var participantsId = participantsIdInput[i].value;
-            // 미션 참여자가 로그인 한 회원과 같을 경우
+            var participantsId = participantsIdInput[i].value;  // 미션 참여자 ID
+            // 2-1. 로그인한 회원이 미션 참여자인 경우 : [미션 탈퇴하기] 버튼 보이기, [미션 참여하기] 버튼 숨기기
             if(participantsId == $("#userId").val()){
                 $("#btn-join-mission-modal").css("display", "none");
                 $("#btn-secession-mission-modal").css("display", "inline-block");
             }else {
+            // 2-2. 로그인한 회원이 미션 참여자가 아닌 경우 : [미션 참여하기] 버튼 보이기, [미션 탈퇴하기] 버튼 숨기기
                 $("#btn-join-mission-modal").css("display", "inline-block");
                 $("#btn-secession-mission-modal").css("display", "none");
             }
         }
     }
-    /* 모달이 띄워질 때 */
-    /* 모달 버튼들을 보이지 않도록 함 */
-    $(".response-modal-btn-div").css("display", "none");
 
-    /* 비로그인 사용자 - [미션 참여하기] - [로그인] */
+    // 3. 비로그인 사용자일 때, [미션 참여하기] 클릭 시
+    // 3-1. [미션 참여하기] - [로그인] 클릭 시, 로그인 페이지로 이동
     $("#btn-login-form").on("click", function(){
         location.href = "/login";
     });
-    /* 비로그인 사용자 - [미션 참여하기] - [회원가입] */
+    // 3-2. [미션 참여하기] - [회원가입] 클릭 시, 회원가입 페이지로 이동
     $("#btn-join-form").on("click", function(){
         location.href = "/join";
     });
-    /* 비로그인 사용자 - [미션 참여하기] - [홈으로] */
+    // 3-3. [미션 참여하기] - [홈으로] 클릭 시, 메인 페이지로 이동
     $("#btn-main-form").on("click", function(){
         location.href = "/missions";
     });
 
-    /* [미션 참여자 관리] */
+    /************************************************************************************************/
+
+    /* 미션 생성자 - [미션 참여자 관리] 관련 함수 */
+
+    // [미션 참여자 관리] 클릭 시, 모달 띄우기
     $("#btn-participants-management-modal").on("click", function(){
         $("#mission-participants-management-modal").show();
     });
 
-    /* [미션 참여자 관리] - [승인] */
+    // [미션 참여자 관리] - [승인] 클릭 시, 미션 참여자 추가 로직
     $("button[name='btn-approve-participants']").on("click", function(){
         var thisButton = $(this);
         var thisParent = $(this).parent();
@@ -94,12 +97,10 @@ $(function(){
         });
     });
 
-    /*
-        [미션 참여자 관리] - [강퇴]
-        승인 처리 후(ajax success 후), 바로 강퇴 할 수도 있으므로 $(document)를 사용하여 처리할 수 있게함.
-    */
+    // [미션 참여자 관리] - [강퇴] 클릭 시, 미션 참여자 강퇴 로직
+    // 승인 처리 후(ajax success 후), 바로 강퇴 할 수도 있으므로 $(document)를 사용하여 처리할 수 있게함.
     $(document).on("click", "button[name='btn-expulsion-participants']", function(){
-        var thisParent = $(this).parents().find(".mission-participants-management-div");
+        var thisParent = $(this).parent().parent();
         var participantsInfoResultDiv = $(".mission-participants-info-result");
 
         var missionSeq = $("#missionSeq").val();
@@ -136,23 +137,40 @@ $(function(){
         });
     });
 
-    /*[미션 참여자 관리] - [X] */
+    // [미션 참여자 관리] - [X] 클릭 시, 모달 창이 닫히면서 새로고침
     $("button[name='btn-cancel-mission-participants-management-modal']").on("click", function(){
        location.reload();
     });
 
-    /* 미션 상세 조회 - [미션 수정하기] */
+    /************************************************************************************************/
+
+    /* 미션 생성자 - [미션 수정하기] 관련 함수 */
+
+    // [미션 수정하기] 클릭 시, 미션 수정 페이지로 이동
      $("#btn-modify-mission-form").on("click", function(){
         var missionSeq = $("#missionSeq").val();
         location.href = "/mission/" + missionSeq + "/modify";
      });
 
-     /* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] - [취소] */
+    /************************************************************************************************/
+
+     /*
+        미션 생성자 - [미션 삭제하기] / 미션 미참여자(회원) - [미션 참여하기] / 미션 참여자(회원) - [미션 탈퇴하기] 관련 함수
+        1, 2 : 공통
+        3 : 미션 삭제
+        4 : 미션 참여
+        5 : 미션 탈퇴
+     */
+
+     // 1. 공통 - [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] 클릭 시 띄워지는 모달 창 버튼들을 기본적으로 모두 보이지 않도록 함
+     $(".response-modal-btn-div").css("display", "none");
+
+     // 2. [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] - [취소] 클릭 시, 모달 숨기기
      $("button[name='btn-cancel-response-modal']").on("click", function(){
          $("#response-modal").hide();
      });
 
-    /* 미션 상세 조회 - [미션 삭제하기] */
+    // 3-1. 미션 생성자 - [미션 삭제하기] 클릭 시, 모달 내용 변경 / 버튼 보이기 / 모달 보이기
     $("#btn-delete-mission-modal").on("click", function(){
         $("#response-modal .modal-body h3").text("미션을 삭제하시겠습니까?");
         $("#response-modal .modal-body p").text("모든 미션 정보가 삭제됩니다. 삭제된 미션은 복구할 수 없습니다.");
@@ -162,7 +180,7 @@ $(function(){
 
     });
 
-    /* 미션 상세 조회 - [미션 삭제하기] - [삭제] */
+    // 3-2. 미션 생성자 - [미션 삭제하기] - [삭제] 클릭 시, 미션 삭제여부 = N 수정 로직
     $("#btn-delete-mission").on("click", function(){
         var missionSeq = $("#missionSeq").val();
         var delYn = "Y";
@@ -189,10 +207,9 @@ $(function(){
         });
     });
 
-
-    /* 미션 상세 조회 - [미션 참여하기] */
+    // 4-1. 비로그인 사용자 or 미션 미참여자 - [미션 참여하기] 클릭 시
     $("#btn-join-mission-modal").on("click", function(){
-        // 비로그인 사용자가 [미션 참여하기] 클릭 시
+        // 비로그인 사용자일 때, [미션 참여하기] 클릭 시, 모달 내용 변경 / 버튼 보이기 / 모달 보이기
         if($("#userId").val() == null){
             $("#response-modal .modal-body h3").text("로그인이 필요해요!");
             $("#response-modal .modal-body p").text("아이디가 없다면 회원가입을 해보세요.");
@@ -200,7 +217,8 @@ $(function(){
 
             $("#response-modal").show();
         }else {
-            // 자동참여 여부가 Y 일 때
+        // 미션 미참여자(회원)일 때
+            // 미션의 자동참여 여부가 Y 일 때, 모달 내용 변경 / 버튼 보이기 / 모달 보이기
             if($("#autoAccessYn").val() == "Y"){
                 $("#response-modal .modal-body h3").text("미션에 바로 참여할 수 있어요!");
                 $("#response-modal .modal-body p").text("미션에 참여해 목표를 달성해볼까요?");
@@ -208,6 +226,7 @@ $(function(){
 
                 $("#response-modal").show();
             }else {
+            // 미션의 자동참여 여부가 N 일 때, 모달 내용 변경 / 버튼 보이기 / 모달 보이기
                 $("#response-modal .modal-body h3").text("참여 승인이 필요해요!");
                 $("#response-modal .modal-body p").text("미션 작성자의 승인 후 미션에 참여할 수 있어요.");
                 $("#join-mission-btn-div").css("display", "block")
@@ -218,7 +237,7 @@ $(function(){
 
     });
 
-    /* 미션 상세 조회 - [미션 참여하기] - [참여] */
+    // 4-2. 미션 미참여자(회원) - [미션 참여하기] - [참여] 클릭 시, 미션 참여자 추가 로직
     $("#btn-join-mission").on("click", function(){
         var missionSeq = $("#missionSeq").val(); // 미션번호
         var userSeq = $("#userSeq").val();       // 회원번호
@@ -266,7 +285,7 @@ $(function(){
 
     });
 
-    /* 미션 상세 조회 - [미션 탈퇴하기] */
+    // 5-1. 미션 참여자(회원) - [미션 탈퇴하기] 클릭 시, 모달 내용 변경 / 버튼 보이기 / 모달 보이기
     $("#btn-secession-mission-modal").on("click", function(){
         $("#response-modal .modal-body h3").text("정말 미션을 탈퇴하시겠어요?");
         $("#response-modal .modal-body p").text("기존에 제출한 미션들은 복구할 수 없습니다.");
@@ -276,7 +295,7 @@ $(function(){
 
     });
 
-    /* 미션 상세 조회 - [미션 탈퇴하기] - [탈퇴] */
+    // 5-2. 미션 참여자(회원) - [미션 탈퇴하기] - [탈퇴] 클릭 시, 미션 참여자 삭제 로직
     $("#btn-secession-mission").on("click", function(){
         var missionSeq = $("#missionSeq").val();
         var userSeq = $("#userSeq").val();
@@ -307,4 +326,46 @@ $(function(){
         });
     });
 
-});
+    /************************************************************************************************/
+
+    /* 미션 현황 관련 함수 */
+    // 미션 상세 조회 시, 1주차 클릭 및 1주차 미션현황 보이기
+    $(".nav li:first-child a").addClass("active");
+    $("#weeks-info div:first-child").addClass("active");
+
+
+    if($("input[name='participantsId']").val() == $("#userId").val()){
+        $(".table td:nth-child(n+2)").hover(function(){
+            if($(this).parent().attr("class") == $("#userId").val()){
+                $(this).css("box-shadow", "0 0 0 0.2rem #dee2e6").css("cursor", "pointer");
+                $(this).on("click", function(){
+                    alert("good");
+                });
+            }
+        }
+        ,function(){
+            $(this).css("box-shadow", "none");
+        });
+    }
+    /************************************************************************************************/
+
+}); // end $(function(){});
+
+/************************************************************************************************/
+
+// 미션시작일 ~ 미션종료일 사이의 날짜 + 요일의 값을 구하는 함수
+function getDatesStartToLast(missionStDt, missionEndDt) {
+	var result = [];
+	var weekArray = ["일", "월", "화", "수", "목", "금", "토"];
+	while(missionStDt <= missionEndDt) {
+	    if(missionStDt.toISOString().slice(5,7) < 10){
+	        result.push(missionStDt.toISOString().slice(6).replace("-", ".").split("T")[0] + "(" + weekArray[missionStDt.getDay()] + ")");
+	    }else {
+		    result.push(missionStDt.toISOString().slice(5).replace("-", ".").split("T")[0] + "(" + weekArray[missionStDt.getDay()] + ")");
+	    }
+		missionStDt.setDate(missionStDt.getDate() + 1);
+	}
+	return result;
+}
+
+/************************************************************************************************/
