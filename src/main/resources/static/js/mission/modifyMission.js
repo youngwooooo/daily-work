@@ -1,5 +1,10 @@
 /* 미션 수정 페이지 js */
 $(function(){
+    var missionStDt = $("#missionStDt").val();
+    $("#missionEndDt").attr("min", missionStDt);
+    var oneMonthLaterFormat = new Date(Date.parse(missionStDt) + 30 * 1000 * 60 * 60 * 24).toISOString().slice(0, 16);
+    $("#missionEndDt").attr("max", oneMonthLaterFormat);
+
     // 미션 설명(textarea) CKEditor4 적용
     CKEDITOR.replace("missionDesc", {
         height: 400
@@ -7,6 +12,7 @@ $(function(){
     // 미션 설명 데이터 넣기
     CKEDITOR.instances.missionDesc.setData($("#find-missionDesc").val());
 
+    // 대표 이미지 보이기
     $("#mission-image").css("display", "inline");
 
     // 대표 이미지 div 클릭 시
