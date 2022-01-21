@@ -43,7 +43,6 @@
     </div>
 
     <div class="container mission-state-div">
-
         <div class="mission-participants-div">
             <h4>미션 참여자</h4>
             <br/>
@@ -55,7 +54,6 @@
                     <img th:src="${participants.user.profileImage}">
                     <span th:text="${participants.user.userNm}"></span>
                 </div>
-
             </div>
         </div>
 
@@ -68,123 +66,40 @@
                     <span><i class="fas fa-square" style="color: green;"></i>&nbsp;승인</span>
                 </div>
             </div>
+
             <br/>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#week1">1주차</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#week2">2주차</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#week3">3주차</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#week4">4주차</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#week5">5주차</a>
+
+            <!-- 주차 -->
+            <ul class="nav nav-tabs" id="weeks" th:with="id = '#week', weekName = '주차'">
+                <li class="nav-item" th:each="week : ${dateOfWeek}">
+                    <a class="nav-link" data-toggle="tab" th:href="${id + weekStat.count}" th:text="${weekStat.count + weekName}"></a>
                 </li>
             </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane container active" id="week1">
+            <!-- 주차별 미션현황 -->
+            <div class="tab-content" id="weeks-info" th:with="id = 'week'">
+                <th:block th:each="week : ${dateOfWeek}">
+                <div class="tab-pane container" th:id="${id + weekStat.count}">
                     <table class="table">
                         <colgroup>
-                            <col width="220px;">
+                            <col width="19.3%">
                         </colgroup>
                         <thead>
                         <tr>
                             <th></th>
-                            <th>1.17(월)</th>
-                            <th>1.18(화)</th>
-                            <th>1.19(수)</th>
-                            <th>1.20(목)</th>
-                            <th>1.21(금)</th>
-                            <th>1.22(토)</th>
-                            <th>1.23(일)</th>
+                            <th th:text="${date}" th:each="date : ${dateOfWeek.get(weekStat.index)}"></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>이영우</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>이영우</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>이영우</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>이영우</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tbody th:if="${mission.missionParticipants != null}">
+                        <tr th:class="${participants.user.userId}" th:each="participants : ${mission.missionParticipants}" th:object="${participants}" th:if="${participants.missionJoinYn != 'N'}">
+                            <td th:text="${participants.user.userNm}"></td>
+                            <td th:each="date : ${dateOfWeek.get(weekStat.index)}"></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane container fade" id="week2">
-                    <table class="table">
-                        <colgroup>
-                            <col width="220px;">
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>1.17(월)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>이영우</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>이영우</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>이영우</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>이영우</td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane container fade" id="week3">3주차</div>
-                <div class="tab-pane container fade" id="week4">4주차</div>
-                <div class="tab-pane container fade" id="week5">5주차</div>
+                </th:block>
+
             </div>
         </div>
 
@@ -199,19 +114,23 @@
                         <h3></h3>
                         <p></p>
                     </div>
+                    <!-- 미션 생성자 - [미션 삭제하기] 클릭 시 보이는 버튼-->
                     <div class="response-modal-btn-div" id="delete-mission-btn-div">
                         <button type="button" class="btn btn-danger" id="btn-delete-mission">삭제</button>
                         <button type="button" class="btn btn-light" name="btn-cancel-response-modal">취소</button>
                     </div>
+                    <!-- 비회원 - [미션 참여하기] 클릭 시 보이는 버튼 -->
                     <div class="response-modal-btn-div" id="no-login-btn-div">
                         <button type="button" class="btn btn-primary" id="btn-login-form">로그인</button>
                         <button type="button" class="btn btn-dark" id="btn-join-form">회원가입</button>
                         <button type="button" class="btn btn-light" id="btn-main-form">홈으로</button>
                     </div>
+                    <!-- 회원 - [미션 참여하기] 클릭 시 보이는 버튼 -->
                     <div class="response-modal-btn-div" id="join-mission-btn-div">
                         <button type="button" class="btn btn-primary" id="btn-join-mission">참여</button>
                         <button type="button" class="btn btn-light" name="btn-cancel-response-modal">취소</button>
                     </div>
+                    <!-- 회원 - [미션 참여하기] 클릭 시 보이는 버튼 -->
                     <div class="response-modal-btn-div" id="secession-mission-btn-div">
                         <button type="button" class="btn btn-success" id="btn-secession-mission">탈퇴</button>
                         <button type="button" class="btn btn-light" name="btn-cancel-response-modal">취소</button>
@@ -222,7 +141,7 @@
     </div>
 
     <div class="modal" id="mission-participants-management-modal">
-        <div class="modal-dialog">
+        <xdiv class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">미션 참여자 관리</h5>
@@ -251,7 +170,7 @@
 
                 </div>
             </div>
-        </div>
+        </xdiv>
     </div>
 
 </div>
