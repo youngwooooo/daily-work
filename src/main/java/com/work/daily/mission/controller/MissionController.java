@@ -67,7 +67,9 @@ public class MissionController {
         log.info("MissionController :: detailMission called");
 
         ResponseMissionDto findMission = missionService.findMission(missionSeq);
+        List<List<String>> dateOfWeek = missionService.getDateOfWeek(findMission.getMissionSeq());
         model.addAttribute("mission", findMission);
+        model.addAttribute("dateOfWeek", dateOfWeek);
 
         return "contents/mission/detailMission";
     }
