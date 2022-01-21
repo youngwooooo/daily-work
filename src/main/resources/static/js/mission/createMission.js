@@ -10,9 +10,9 @@ $(function(){
     $("#missionStDt").val(nowFormat);
     // 2. 미션종료일을 현재날짜 보다 이전을 선택할 수 없게 함
     $("#missionEndDt").attr("min", nowFormat);
-    // 3. 미션종료일은 미션시작일로부터 최대 30일로 설정
-    // 30일 뒤 날짜 포맷팅
-    var oneMonthLaterFormat = new Date(now.setMonth(now.getMonth() + 1)).toISOString().slice(0, 16);
+    // 3. 미션종료일은 미션시작일로부터 최대 한달로 설정
+    // 한달 후 날짜 포맷팅
+    var oneMonthLaterFormat = new Date(Date.parse(now) + 30 * 1000 * 60 * 60 * 24).toISOString().slice(0, 16);
     $("#missionEndDt").attr("max", oneMonthLaterFormat);
 
     // 미션 설명(textarea) CKEditor4 적용
