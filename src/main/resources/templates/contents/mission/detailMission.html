@@ -26,14 +26,17 @@
         <div class="col-sm-3">
             <div class="mission-info-div">
                 <h3 class="mission-name" th:text="${mission.missionNm}">미션 제목</h3>
-                <span class="mission-start-date" th:text="${#temporals.format(mission.missionStDt, 'yyyy-MM-dd HH:mm')}"></span>
+                <span class="mission-start-date"
+                      th:text="${#temporals.format(mission.missionStDt, 'yyyy-MM-dd HH:mm')}"></span>
                 ~
-                <span class="mission-end-date" th:text="${#temporals.format(mission.missionEndDt, 'yyyy-MM-dd HH:mm')}"></span>
+                <span class="mission-end-date"
+                      th:text="${#temporals.format(mission.missionEndDt, 'yyyy-MM-dd HH:mm')}"></span>
                 <div class="mission-desc-div" th:utext="${mission.missionDesc}"></div>
                 <div style="display: flex">
                     <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
                     <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
-                    <button type="button" class="btn btn-success" id="btn-participants-management-modal">미션 참여자 관리</button>
+                    <button type="button" class="btn btn-success" id="btn-participants-management-modal">미션 참여자 관리
+                    </button>
                     <button type="button" class="btn btn-primary" id="btn-modify-mission-form">미션 수정하기</button>
                     <button type="button" class="btn btn-danger" id="btn-delete-mission-modal">미션 삭제하기</button>
                 </div>
@@ -42,7 +45,7 @@
 
     </div>
 
-    <div class="container mission-state-div">
+    <div class="container mission-state-wrapper">
         <div class="mission-participants-div">
             <h4>미션 참여자</h4>
             <br/>
@@ -57,13 +60,17 @@
             </div>
         </div>
 
-        <div class="aaa">
-            <div class="bbb">
-                <h4>미션 현황</h4>
-                <div class="ccc">
+        <div class="mission-state-div">
+
+            <div class="mission-submit-info-div">
+                <div class="mission-submit-info-color">
                     <span><i class="fas fa-square" style="color: red;"></i>&nbsp;미제출</span>
                     <span><i class="fas fa-square" style="color: blue;"></i>&nbsp;제출</span>
                     <span><i class="fas fa-square" style="color: green;"></i>&nbsp;승인</span>
+                </div>
+                <h4>미션 현황</h4>
+                <div class="mission-submit-btn-div">
+                    <button type="button" class="btn btn-primary" id="btn-mission-submit-modal">미션 제출</button>
                 </div>
             </div>
 
@@ -72,32 +79,41 @@
             <!-- 주차 -->
             <ul class="nav nav-tabs" id="weeks" th:with="id = '#week', weekName = '주차'">
                 <li class="nav-item" th:each="week : ${dateOfWeek}">
-                    <a class="nav-link" data-toggle="tab" th:href="${id + weekStat.count}" th:text="${weekStat.count + weekName}"></a>
+                    <a class="nav-link" data-toggle="tab" th:href="${id + weekStat.count}"
+                       th:text="${weekStat.count + weekName}"></a>
                 </li>
             </ul>
 
             <!-- 주차별 미션현황 -->
             <div class="tab-content" id="weeks-info" th:with="id = 'week'">
                 <th:block th:each="week : ${dateOfWeek}">
-                <div class="tab-pane container" th:id="${id + weekStat.count}">
-                    <table class="table">
-                        <colgroup>
-                            <col width="19.3%">
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th th:text="${date}" th:each="date : ${dateOfWeek.get(weekStat.index)}"></th>
-                        </tr>
-                        </thead>
-                        <tbody th:if="${mission.missionParticipants != null}">
-                        <tr th:class="${participants.user.userId}" th:each="participants : ${mission.missionParticipants}" th:object="${participants}" th:if="${participants.missionJoinYn != 'N'}">
-                            <td th:text="${participants.user.userNm}"></td>
-                            <td th:each="date : ${dateOfWeek.get(weekStat.index)}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="tab-pane container" th:id="${id + weekStat.count}">
+                        <input type="hidden" name="missionStateWeek" th:value="${weekStat.count}">
+                        <table class="table">
+                            <colgroup>
+                                <col width="19.3%">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th th:text="${date}" th:each="date : ${dateOfWeek.get(weekStat.index)}"></th>
+                            </tr>
+                            </thead>
+                            <tbody th:if="${mission.missionParticipants != null}">
+                            <tr th:class="${participants.user.userId}"
+                                th:each="participants : ${mission.missionParticipants}" th:object="${participants}"
+                                th:if="${participants.missionJoinYn != 'N'}">
+                                <td>
+                                    <div>
+                                        <img th:src="${participants.user.profileImage}" alt="profile-Image">
+                                        <span th:text="${participants.user.userNm}"></span>
+                                    </div>
+                                </td>
+                                <td th:each="date : ${dateOfWeek.get(weekStat.index)}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </th:block>
 
             </div>
@@ -105,6 +121,7 @@
 
     </div>
 
+    <!-- [미션 참여하기], [미션 탈퇴하기], [미션 삭제하기] Modal -->
     <div class="modal" id="response-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -130,7 +147,7 @@
                         <button type="button" class="btn btn-primary" id="btn-join-mission">참여</button>
                         <button type="button" class="btn btn-light" name="btn-cancel-response-modal">취소</button>
                     </div>
-                    <!-- 회원 - [미션 참여하기] 클릭 시 보이는 버튼 -->
+                    <!-- 회원 - [미션 탈퇴하기] 클릭 시 보이는 버튼 -->
                     <div class="response-modal-btn-div" id="secession-mission-btn-div">
                         <button type="button" class="btn btn-success" id="btn-secession-mission">탈퇴</button>
                         <button type="button" class="btn btn-light" name="btn-cancel-response-modal">취소</button>
@@ -140,28 +157,35 @@
         </div>
     </div>
 
+    <!-- [미션 참여자 관리] Modal -->
     <div class="modal" id="mission-participants-management-modal">
         <xdiv class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">미션 참여자 관리</h5>
-                    <button type="button" class="close" name="btn-cancel-mission-participants-management-modal">&times;</button>
+                    <button type="button" class="close" name="btn-cancel-mission-participants-management-modal">
+                        &times;
+                    </button>
                 </div>
                 <div class="modal-body" th:if="${mission.missionParticipants != null}">
 
-                    <div class="mission-participants-management-div justify-content-between" th:each="participants : ${mission.missionParticipants}" th:object="${participants}" th:if="${participants.userId != mission.user.userId}">
+                    <div class="mission-participants-management-div justify-content-between"
+                         th:each="participants : ${mission.missionParticipants}" th:object="${participants}"
+                         th:if="${participants.userId != mission.user.userId}">
                         <div class="mission-participants-management-info-div">
                             <input type="hidden" name="participantsSeq" th:value="${participants.userSeq}">
                             <input type="hidden" name="participantsId" th:value="${participants.userId}">
                             <img th:src="${participants.user.profileImage}">
                             <span th:text="${participants.user.userNm}"></span>
                         </div>
-                        <div class="mission-participants-management-btn-div" th:if="${participants.missionJoinYn == 'N'}">
+                        <div class="mission-participants-management-btn-div"
+                             th:if="${participants.missionJoinYn == 'N'}">
                             <button type="button" class="btn btn-primary" name="btn-approve-participants">
                                 승인
                             </button>
                         </div>
-                        <div class="mission-participants-management-btn-div" th:if="${participants.missionJoinYn == 'Y'}">
+                        <div class="mission-participants-management-btn-div"
+                             th:if="${participants.missionJoinYn == 'Y'}">
                             <button type="button" class="btn btn-danger" name="btn-expulsion-participants">
                                 강퇴
                             </button>
@@ -171,6 +195,35 @@
                 </div>
             </div>
         </xdiv>
+    </div>
+
+    <!-- 미션 제출 Modal -->
+    <div class="modal" id="mission-submit-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <input type="text" id="submittedMissionNm" class="form-control" placeholder="제목을 입력하세요.">
+                    <hr/>
+                    <textarea id="submittedMissionDesc" class="form-control" rows="10" placeholder="완료한 미션에 대한 간단한 설명을 적어주세요."></textarea>
+                    <hr/>
+                    <div class="submit-mission-image-info-div">
+                        <div class="submit-mission-image-div">
+                            <img id="submit-mission-image" src="" alt="mission-image">
+                            <div class="submit-mission-image-desc">
+                                <i class="fas fa-cloud-upload-alt fa-3x"></i>
+                                <p>미션을 완료한 이미지를 올려주세요!</p>
+                            </div>
+                        </div>
+                        <input type="file" id="file" accept="image/*">
+                    </div>
+                    <hr/>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="btn-create-submit-mission">제출</button>
+                        <button type="button" class="btn btn-light" id="btn-cancel-submit-mission">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

@@ -55,20 +55,20 @@
     margin-right: 15px;
 }
 
-.mission-state-div .mission-participants-div {
+.mission-state-wrapper .mission-participants-div {
     margin-top: 30px;
 }
 
-.mission-state-div .mission-participants-div .mission-participants-info img {
+.mission-state-wrapper .mission-participants-div .mission-participants-info img {
     width: 40px;
     border-radius: 50%;
 }
 
-.mission-state-div .mission-participants-div .mission-participants-info span {
+.mission-state-wrapper .mission-participants-div .mission-participants-info span {
     vertical-align: middle;
 }
 
-.mission-state-div .mission-participants-div .mission-participants-info .mission-participants-info-result {
+.mission-state-wrapper .mission-participants-div .mission-participants-info .mission-participants-info-result {
     border: 1px solid #dddddd;
     border-radius: 10px;
     padding: 10px;
@@ -78,43 +78,52 @@
     display: inline-block;
 }
 
-.mission-state-div .aaa {
+.mission-state-wrapper .mission-state-div {
     margin-top: 30px;
     margin-bottom: 30px;
 }
 
-.mission-state-div .aaa .nav-tabs {
+.mission-state-wrapper .mission-state-div .nav-tabs {
     text-align: center;
 }
 
-.mission-state-div .aaa .nav-item {
+.mission-state-wrapper .mission-state-div .nav-item {
     width: 20%;
 }
 
-.mission-state-div .aaa .nav-item a {
+.mission-state-wrapper .mission-state-div .nav-item a {
     color: black;
 }
 
-.mission-state-div .aaa .nav-item .nav-link.active {
+.mission-state-wrapper .mission-state-div .nav-item .nav-link.active {
    border-color: #dee2e6 #dee2e6 #dee2e6;
    color: #0069d9;
    font-weight: bold;
 }
 
-.mission-state-div .aaa .tab-content {
+.mission-state-wrapper .mission-state-div .tab-content {
     min-height: 500px;
 }
 
-.mission-state-div .bbb h4 {
+.mission-state-wrapper .mission-submit-info-div h4 {
     display: inline-block;
 }
 
-.mission-state-div .bbb .ccc {
+.mission-state-wrapper .mission-submit-info-div .mission-submit-info-color {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.mission-state-wrapper .mission-submit-info-div .mission-submit-info-color span {
+    margin-left: 15px;
+}
+
+.mission-state-wrapper .mission-submit-info-div .mission-submit-btn-div {
     float: right;
 }
 
-.mission-state-div .bbb .ccc span {
-    margin-left: 15px;
+.mission-state-wrapper .mission-submit-info-div .mission-submit-btn-div button {
+    width: 200px;
 }
 
 .tab-content .table thead th {
@@ -125,12 +134,32 @@
 .tab-content .table tbody td {
     border: none;
 }
+
+.tab-content .table tbody td:first-child {
+    padding: 0px;
+}
+
+.tab-content .table tbody td:first-child > div {
+    display: inline-block;
+    width: auto;
+    padding: 10px;
+}
+
+.tab-content .table tbody td:first-child > div img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.tab-content .table tbody td:first-child > div span {
+    vertical-align: middle;
+}
+
 .tab-content .table tbody td:nth-child(n+2) {
     border: 1px solid #dee2e6;
 }
 
-/* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기 모달] */
-#response-modal, #mission-participants-management-modal {
+/* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] Modal */
+#response-modal, #mission-participants-management-modal, #mission-submit-modal {
     background-color:rgba(0,0,0,.3);
 }
 
@@ -166,7 +195,7 @@
     border-color: #dae0e5;
 }
 
-/* 미션 참여자 관리 모달 */
+/* 미션 참여자 관리 Modal */
 #mission-participants-management-modal .modal-body {
     padding: 20px;
     max-height: 770px;
@@ -208,3 +237,57 @@
     width: 70px;
     margin-top: 6px;
 }
+
+/* 미션 제출 Modal */
+#mission-submit-modal input, #mission-submit-modal textarea {
+    border: none;
+}
+
+#mission-submit-modal .submit-mission-image-div {
+    border: 1px dashed #dddddd;
+    height: 200px;
+}
+
+#mission-submit-modal .submit-mission-image-div:hover {
+    cursor: pointer;
+}
+
+#mission-submit-modal .submit-mission-image-div img {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+#mission-submit-modal .submit-mission-image-div .submit-mission-image-desc {
+    position: relative;
+    top: 55px
+}
+
+#mission-submit-modal .submit-mission-image-div .submit-mission-image-desc i
+, #mission-submit-modal .submit-mission-image-div .submit-mission-image-desc p {
+    color: #cfcfcf;
+}
+
+#mission-submit-modal .submit-mission-image-info-div #file {
+    display: none;
+}
+
+#mission-submit-modal button {
+    width: 20%;
+}
+
+#mission-submit-modal #btn-cancel-submit-mission {
+    border-color: #dddddd;
+}
+
+
+
+
+
+
+
+
+
+
+
+
