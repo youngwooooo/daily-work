@@ -4,8 +4,10 @@ import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
 import com.work.daily.mission.dto.RequestMissionDto;
 import com.work.daily.mission.dto.RequestMissionParticipantsDto;
+import com.work.daily.mission.dto.RequestMissionStateDto;
 import com.work.daily.mission.dto.ResponseMissionParticipants;
 import com.work.daily.mission.service.MissionService;
+import com.work.daily.mission.service.MissionStateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ import java.util.Map;
 public class MissionApiController {
 
     private final MissionService missionService;
+    private final MissionStateService missionStateService;
 
     /**
      * 전체 MISSION - 미션 만들기 - [등록]
@@ -238,4 +241,23 @@ public class MissionApiController {
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(expulsionParticipantsInfo).message("미션 참여자 강퇴가 완료되었습니다.").build(), HttpStatus.OK);
     }
 
+    /**
+     * [미션 제출] - [제출]
+     * @description 미션 결과 제출
+     * @param missionSeq
+     * @param requestMissionStateDto
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/mission/{missionSeq}/submitMission")
+    public ResponseEntity<ResponseDto> createSubmitMission(@PathVariable(name = "missionSeq") long missionSeq
+                                                            , @RequestPart(value = "requestMissionStateDto") RequestMissionStateDto requestMissionStateDto
+                                                            , @RequestPart(value = "file") MultipartFile file) throws IOException {
+
+
+        String result = missionStateService.save(requestMissionStateDto, file);
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 제출이 완료되었습니다.").build(), HttpStatus.CREATED);
+    }
 }
