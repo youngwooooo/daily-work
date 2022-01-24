@@ -11,6 +11,12 @@ import java.util.List;
 @Getter
 @ToString
 @NoArgsConstructor
+@SequenceGenerator(
+        name = "MISSION_SEQ_INCREASE",
+        sequenceName = "MISSION_SEQ_INCREASE", // 시퀸스 명
+        initialValue = 1, // 초기 값
+        allocationSize = 1 // 미리 할당 받을 시퀸스 수
+)
 @AllArgsConstructor
 @Builder
 @Entity
@@ -18,7 +24,7 @@ import java.util.List;
 public class Mission extends BaseTime {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MISSION_SEQ_INCREASE")
     @Column(columnDefinition = "varchar(20) comment '미션번호'")
     private Long missionSeq;
 
@@ -32,7 +38,7 @@ public class Mission extends BaseTime {
     @Column(columnDefinition = "varchar(60) comment '미션명'")
     private String missionNm;
 
-    @Column(columnDefinition = "varchar(60) comment '미션설명'")
+    @Column(columnDefinition = "varchar(1000) comment '미션설명'")
     private String missionDesc;
 
     @Column(columnDefinition = "varchar(60) comment '미션시작일'")
