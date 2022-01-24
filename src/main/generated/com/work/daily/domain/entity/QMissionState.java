@@ -32,9 +32,13 @@ public class QMissionState extends EntityPathBase<MissionState> {
 
     public final NumberPath<Long> missionStateWeek = createNumber("missionStateWeek", Long.class);
 
-    public final StringPath submittedMission = createString("submittedMission");
+    public final StringPath submittedMissionDesc = createString("submittedMissionDesc");
 
     public final DateTimePath<java.time.LocalDateTime> submittedMissionDt = createDateTime("submittedMissionDt", java.time.LocalDateTime.class);
+
+    public final StringPath submittedMissionImage = createString("submittedMissionImage");
+
+    public final StringPath submittedMissionNm = createString("submittedMissionNm");
 
     public QMissionState(String variable) {
         this(MissionState.class, forVariable(variable), INITS);

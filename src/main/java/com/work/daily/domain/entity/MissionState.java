@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 public class MissionState {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long missionStateSeq;
 
     @Id
@@ -31,8 +30,14 @@ public class MissionState {
     })
     private MissionParticipants missionParticipants;
 
-    @Column(columnDefinition = "varchar(100) comment '제출미션'")
-    private String submittedMission;
+    @Column(columnDefinition = "varchar(60) comment '제출미션명'")
+    private String submittedMissionNm;
+
+    @Column(columnDefinition = "varchar(100) comment '제출미션설명'")
+    private String submittedMissionDesc;
+
+    @Column(columnDefinition = "varchar(100) comment '제출미션이미지'")
+    private String submittedMissionImage;
 
     @Column(columnDefinition = "varchar(60) comment '미션제출일'")
     private LocalDateTime submittedMissionDt;
