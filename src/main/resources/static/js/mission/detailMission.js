@@ -331,41 +331,121 @@ $(function(){
     /* 미션 현황 관련 함수 */
     // 미션 상세 조회 시, 1주차 클릭 및 1주차 미션현황 보이기
     $(".nav li:first-child a").addClass("active");
-    $("#weeks-info div:first-child").addClass("active");
+    $("#week1").addClass("active");
 
+    // [미션 제출] 클릭 시, Modal 띄우기
+    $("#btn-mission-submit-modal").on("click", function(){
+        $("#mission-submit-modal").show();
+    });
 
-    if($("input[name='participantsId']").val() == $("#userId").val()){
-        $(".table td:nth-child(n+2)").hover(function(){
-            if($(this).parent().attr("class") == $("#userId").val()){
-                $(this).css("box-shadow", "0 0 0 0.2rem #dee2e6").css("cursor", "pointer");
-                $(this).on("click", function(){
-                    alert("good");
-                });
-            }
+    // 미션 제출 modal -  div 클릭 시
+    $(".submit-mission-image-div").on("click", function(){
+        $("#file").click();
+    });
+
+    // 미션 제출 modal -  미션 제출 이미지 변경 시 미리보기
+    $("#file").on("change", function(){
+        var changeImg = $(this)[0].files[0];
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+           if(changeImg.type.match("image/*")){
+             $('#submit-mission-image').attr("src", e.target.result);
+             $('#submit-mission-image').css("display", "block");
+           }else {
+             alert("이미지 형식의 파일만 가능합니다.");
+           }
+
         }
-        ,function(){
-            $(this).css("box-shadow", "none");
-        });
-    }
+        reader.readAsDataURL(changeImg);
+    });
+
+
+    // [미션 제출] - [제출]
+    $("#btn-create-submit-mission").on("click", function(){
+        if(validatingSubmitMission()){
+            var missionStateWeek = $(".tab-pane.container.active input[name='missionStateWeek']").val();
+            var missionSeq = $("#missionSeq").val();
+            var userSeq = $("#userSeq").val();
+            var userId = $("#userId").val();
+            var submittedMissionNm = $("#submittedMissionNm").val();
+            var submittedMissionDesc = $("#submittedMissionDesc").val();
+            var submittedMissionImage = $("#file")[0].files[0];
+            var submittedMissionDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            var approvalYn = "N";
+
+            var data = {
+                "missionStateWeek" : missionStateWeek
+                , "missionParticipants" : {
+                        "missionSeq" : missionSeq
+                        , "userSeq" : userSeq
+                        , "userId" : userId
+                }
+                , "submittedMissionNm" : submittedMissionNm
+                , "submittedMissionDesc" : submittedMissionDesc
+                , "submittedMissionDt" : submittedMissionDt
+                , "approvalYn" : approvalYn
+            };
+
+             var formData = new FormData();
+            formData.append("file", submittedMissionImage);
+            formData.append("requestMissionStateDto", new Blob([JSON.stringify(data)] , {type: "application/json"}));
+
+            $.ajax({
+                url : "/mission/" + missionSeq + "/submitMission"
+                , type : "post"
+                , data : formData
+                , processData: false
+                , contentType: false
+                , enctype: "multipart/form-data"
+                , success : function(result){
+                    if(result.status = "201"){
+                        alert(result.message);
+                        location.reload();
+                    }
+                }
+                , error : function(xhr){
+                    console.log(xhr);
+                }
+            });
+        }
+
+    });
+
+    // 미션 제출 modal - [닫기]
+    $("#btn-cancel-submit-mission").on("click", function(){
+        $("#mission-submit-modal").hide();
+    });
+
     /************************************************************************************************/
 
 }); // end $(function(){});
 
 /************************************************************************************************/
 
-// 미션시작일 ~ 미션종료일 사이의 날짜 + 요일의 값을 구하는 함수
-function getDatesStartToLast(missionStDt, missionEndDt) {
-	var result = [];
-	var weekArray = ["일", "월", "화", "수", "목", "금", "토"];
-	while(missionStDt <= missionEndDt) {
-	    if(missionStDt.toISOString().slice(5,7) < 10){
-	        result.push(missionStDt.toISOString().slice(6).replace("-", ".").split("T")[0] + "(" + weekArray[missionStDt.getDay()] + ")");
-	    }else {
-		    result.push(missionStDt.toISOString().slice(5).replace("-", ".").split("T")[0] + "(" + weekArray[missionStDt.getDay()] + ")");
-	    }
-		missionStDt.setDate(missionStDt.getDate() + 1);
-	}
-	return result;
+// [미션 제출] - [제출] - 유효성 검사
+function validatingSubmitMission(){
+  var submittedMissionNm = $("#submittedMissionNm").val();
+  var submittedMissionDesc = $("#submittedMissionDesc").val();
+  var submittedMissionImage = $("#file")[0].files[0];
+
+    if(submittedMissionNm == "" || submittedMissionNm == null){
+        alert("제목을 입력해주세요.");
+        return false;
+    }
+
+    if(submittedMissionDesc == "" || submittedMissionDesc == null){
+        alert("미션에 대한 간단한 설명을 적어주세요.");
+        return false;
+    }
+
+    if(submittedMissionImage == "" || submittedMissionImage == null){
+        alert("미션을 완료한 이미지를 올려주세요.");
+        return false;
+    }
+
+    return true;
 }
+
 
 /************************************************************************************************/
