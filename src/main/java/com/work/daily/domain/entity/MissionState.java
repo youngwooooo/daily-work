@@ -1,5 +1,6 @@
 package com.work.daily.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.work.daily.domain.pk.MissionStatePK;
 import lombok.*;
 
@@ -24,10 +25,11 @@ public class MissionState {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "MISSION_SEQ"),
-            @JoinColumn(name = "USER_SEQ"),
-            @JoinColumn(name = "USER_ID")
+            @JoinColumn(name = "MISSION_SEQ" , referencedColumnName = "missionSeq"),
+            @JoinColumn(name = "USER_SEQ", referencedColumnName = "userSeq"),
+            @JoinColumn(name = "USER_ID" , referencedColumnName = "userId")
     })
+    @JsonBackReference
     private MissionParticipants missionParticipants;
 
     @Column(columnDefinition = "varchar(60) comment '제출미션명'")
