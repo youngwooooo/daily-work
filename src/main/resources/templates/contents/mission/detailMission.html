@@ -96,12 +96,13 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th th:text="${date}" th:each="date : ${dateOfWeek.get(weekStat.index)}"></th>
+                                <th:block th:each="date : ${dateOfWeek.get(weekStat.index)}">
+                                <th th:text="|${#temporals.format(date, 'MM.dd')}(${#temporals.dayOfWeekNameShort(date)})|"></th>
+                                </th:block>
                             </tr>
                             </thead>
                             <tbody th:if="${mission.missionParticipants != null}">
-                            <tr th:class="${participants.user.userId}"
-                                th:each="participants : ${mission.missionParticipants}" th:object="${participants}"
+                            <tr th:each="participants : ${mission.missionParticipants}" th:object="${participants}"
                                 th:if="${participants.missionJoinYn != 'N'}">
                                 <td>
                                     <div>
@@ -109,7 +110,9 @@
                                         <span th:text="${participants.user.userNm}"></span>
                                     </div>
                                 </td>
-                                <td th:each="date : ${dateOfWeek.get(weekStat.index)}"></td>
+                                <td th:each="date : ${dateOfWeek.get(weekStat.index)}">
+                                    <input type="hidden" name="week-date" th:value="${date}">
+                                </td>
                             </tr>
                             </tbody>
                         </table>

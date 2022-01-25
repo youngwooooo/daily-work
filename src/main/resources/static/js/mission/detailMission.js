@@ -329,9 +329,27 @@ $(function(){
     /************************************************************************************************/
 
     /* 미션 현황 관련 함수 */
-    // 미션 상세 조회 시, 1주차 클릭 및 1주차 미션현황 보이기
-    $(".nav li:first-child a").addClass("active");
-    $("#week1").addClass("active");
+
+    // 미션 상세 조회 시, 현재 날짜와 비교하여 주차 및 주차별 미션현황 자동 선택
+    // 현재 날짜
+    var now = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    // 주차 및 주차별 미션현황 자동 선택
+    $("input[name='week-date']").each(function(idx, item){
+        // input[name='week-date']의 값(날짜)와 현재 날짜가 같을 때
+        if($(this).val() == now){
+            // 미션현황주차
+            var missionStateWeek = $(this).parents(".tab-pane").find("input[name='missionStateWeek']").val();
+            // 미션 주차의 미션현황 자동 선택
+            $(this).parents(".tab-pane").addClass("active")
+            // 미션 주차 자동 선택
+            $(this).parents(".tab-pane").parent().siblings(".nav").find("a").each(function(){
+                if($(this).attr("href") == "#week" + missionStateWeek){
+                    $(this).addClass("active");
+                }
+            });
+        }
+    });
+
 
     // [미션 제출] 클릭 시, Modal 띄우기
     $("#btn-mission-submit-modal").on("click", function(){
@@ -352,6 +370,7 @@ $(function(){
            if(changeImg.type.match("image/*")){
              $('#submit-mission-image').attr("src", e.target.result);
              $('#submit-mission-image').css("display", "block");
+             $(".submit-mission-image-desc").css("display", "none");
            }else {
              alert("이미지 형식의 파일만 가능합니다.");
            }
@@ -364,7 +383,15 @@ $(function(){
     // [미션 제출] - [제출]
     $("#btn-create-submit-mission").on("click", function(){
         if(validatingSubmitMission()){
-            var missionStateWeek = $(".tab-pane.container.active input[name='missionStateWeek']").val();
+
+            var missionStateWeek = "";
+            $("input[name='week-date']").each(function(idx, item){
+                if($(this).val() == now){
+                    // 미션현황주차
+                    missionStateWeek = $(this).parents(".tab-pane").find("input[name='missionStateWeek']").val();
+                }
+            });
+
             var missionSeq = $("#missionSeq").val();
             var userSeq = $("#userSeq").val();
             var userId = $("#userId").val();
@@ -387,7 +414,7 @@ $(function(){
                 , "approvalYn" : approvalYn
             };
 
-             var formData = new FormData();
+            var formData = new FormData();
             formData.append("file", submittedMissionImage);
             formData.append("requestMissionStateDto", new Blob([JSON.stringify(data)] , {type: "application/json"}));
 
@@ -414,8 +441,15 @@ $(function(){
 
     // 미션 제출 modal - [닫기]
     $("#btn-cancel-submit-mission").on("click", function(){
+        $("#mission-submit-modal #submittedMissionNm").val(""); // 제목 초기화
+        $("#mission-submit-modal #submittedMissionDesc").val(""); // 설명 초기화
+        $("#mission-submit-modal #submit-mission-image").attr("src", "").css("display", "none"); // 이미지 경로 초기화 및 안보이기
+        $(".submit-mission-image-desc").css("display", "block"); // 이미지 삽입 문구 보이기
+        $("#file").val(""); // 파일 비우기
         $("#mission-submit-modal").hide();
     });
+
+
 
     /************************************************************************************************/
 
