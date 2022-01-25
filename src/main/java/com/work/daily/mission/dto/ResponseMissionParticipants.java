@@ -1,9 +1,11 @@
 package com.work.daily.mission.dto;
 
+import com.work.daily.domain.entity.MissionState;
 import com.work.daily.domain.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,5 +21,6 @@ public class ResponseMissionParticipants {
     private LocalDateTime missionJoinDt;
     private String missionJoinYn;
     private LocalDateTime missionJoinApprovalDt;
+    private List<MissionState> missionStates;
 
 }
