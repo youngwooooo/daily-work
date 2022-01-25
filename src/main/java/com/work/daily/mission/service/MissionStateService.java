@@ -1,8 +1,10 @@
 package com.work.daily.mission.service;
 
 import com.work.daily.access.ReturnResult;
+import com.work.daily.domain.entity.MissionState;
 import com.work.daily.domain.repository.MissionStateRepository;
 import com.work.daily.mission.dto.RequestMissionStateDto;
+import com.work.daily.mission.dto.ResponseMissionStateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,6 +33,13 @@ public class MissionStateService {
 
     private final MissionStateRepository missionStateRepository;
 
+    /** [미션 제출] - [제출]
+     * @description 미션 결과 제출
+     * @param requestMissionStateDto
+     * @param file
+     * @return
+     * @throws IOException
+     */
     @Transactional
     public String save(RequestMissionStateDto requestMissionStateDto, MultipartFile file) throws IOException {
 
@@ -57,10 +68,25 @@ public class MissionStateService {
         return ReturnResult.SUCCESS.getValue();
     }
 
+    /**
+     * 년/월/일 폴더를 만들어주는 메서드
+     * @return
+     */
     private String getFolder(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String folder = sdf.format(date);
         return folder.replace("-", File.separator);
+    }
+
+    /**
+     * 미션 번호에 따른 모든 미션 현황 조회
+     * @description 미션 번호에 따른 모든 미션 현황을 조회하여 VIEW에 보여주기 위함
+     * @param missionSeq
+     * @return
+     */
+    public List<ResponseMissionStateDto> findAllMissionStateByMissionSeq(long missionSeq){
+        List<MissionState> findMissionStates = missionStateRepository.findAllMissionStateByMissionSeq(missionSeq);
+        return findMissionStates.stream().map(ResponseMissionStateDto::new).collect(Collectors.toList());
     }
 }
