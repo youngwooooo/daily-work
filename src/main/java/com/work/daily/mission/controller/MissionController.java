@@ -1,7 +1,9 @@
 package com.work.daily.mission.controller;
 
 import com.work.daily.mission.dto.ResponseMissionDto;
+import com.work.daily.mission.dto.ResponseMissionStateDto;
 import com.work.daily.mission.service.MissionService;
+import com.work.daily.mission.service.MissionStateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -17,6 +20,7 @@ import java.util.List;
 public class MissionController {
 
     private final MissionService missionService;
+    private final MissionStateService missionStateService;
 
     /**
      * 전체 MISSION 페이지
@@ -67,9 +71,12 @@ public class MissionController {
         log.info("MissionController :: detailMission called");
 
         ResponseMissionDto findMission = missionService.findMission(missionSeq);
-        List<List<String>> dateOfWeek = missionService.getDateOfWeek(findMission.getMissionSeq());
+        List<List<LocalDate>> dateOfWeek = missionService.getDateOfWeek(findMission.getMissionSeq());
+        List<ResponseMissionStateDto> findAllMissionState = missionStateService.findAllMissionStateByMissionSeq(missionSeq);1.
+
         model.addAttribute("mission", findMission);
         model.addAttribute("dateOfWeek", dateOfWeek);
+        model.addAttribute("missionState", findAllMissionState);
 
         return "contents/mission/detailMission";
     }
