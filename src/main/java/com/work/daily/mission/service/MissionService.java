@@ -91,7 +91,7 @@ public class MissionService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<List<String>> getDateOfWeek(long missionSeq){
+    public List<List<LocalDate>> getDateOfWeek(long missionSeq){
 
         Optional<Mission> findMission = missionRepository.findById(missionSeq);
         if(!findMission.isPresent()){
@@ -104,46 +104,31 @@ public class MissionService {
         LocalDate missionEndDt = LocalDate.from(findMission.get().getMissionEndDt());
         // 총 미션 일수
         long totalDateCont = ChronoUnit.DAYS.between(missionStDt, missionEndDt);
-        // 요일 배열
-        String[] weeks = {"월", "화", "수", "목", "금", "토", "일"};
-        // 미션시작일 ~ 미션종료일 사이의 모든 날짜를 담을 Array
-        List<String> allDateList = new ArrayList<>();
 
+        // 미션시작일 ~ 미션종료일 사이의 모든 날짜를 담을 Array
+        List<LocalDate> allDateList = new ArrayList<>();
         // 미션시작일 ~ 미션종료일 사이의 모든 날짜 allDateList에 담기
         for(int i = 0; i <= totalDateCont; i++){
             // 날짜
-            String date = String.valueOf(missionStDt.plusDays(i));
-            /*
-              숫자 요일
-              missionStDt.plusDays(i).getDayOfWeek().getValue() : 1(월), 2(화). 3(수), 4(목), 5(금), 6(토), 7(일)
-              weeks = 0(월), 1(화). 2(수), 3(목), 4(금), 5(토), 6(일)
-              weeks와 인덱스를 맞추기 위해 -1을 해준다.
-            */
-            int weekCount = missionStDt.plusDays(i).getDayOfWeek().getValue() - 1;
-
-            // 1 ~ 9월
-            if(Integer.parseInt(date.substring(5,7)) < 10){
-                // 형식 : 1.01(월), 1.02(화) ....
-                date = date.substring(6).replace("-", ".") + "(" + weeks[weekCount]  + ")";
-                allDateList.add(date);
-            }else {
-            // 10 ~ 12월
-                // 형식 : 10.01(월), 10.02(화) ....
-                date = date.substring(5).replace("-", ".") + "(" + weeks[weekCount]  + ")";
-                allDateList.add(date);
-            }
+            LocalDate date = missionStDt.plusDays(i);
+            allDateList.add(date);
         }
 
         // 각 주차별로 날짜를 담을 Array
-        List<List<String>> dateOfWeek = new ArrayList<>();
+        List<List<LocalDate>> dateOfWeek = new ArrayList<>();
         // 임시 배열
-        List<String> temp = new ArrayList<>();
+        List<LocalDate> temp = new ArrayList<>();
+        // 주차 별로 끊기 위한 변수
         int cnt = 0;
-
+        // 일요일을 기준으로 주차별로 끊어서 dateOfWeek에 담기
         for(int i=0; i<allDateList.size(); i++){
             temp.add(allDateList.get(i));
 
-            if(allDateList.get(i).contains("(일)")){
+            /*
+             * 일요일을 기준으로 주차를 끊어주기
+             * getDayOfWeek().getValue() : 1 = 월, 2= 화, 3=수 .... 7 = 일
+             */
+            if(allDateList.get(i).getDayOfWeek().getValue() == 7){
                 cnt++;
             }
 
