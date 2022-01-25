@@ -72,7 +72,7 @@ public class MissionController {
 
         ResponseMissionDto findMission = missionService.findMission(missionSeq);
         List<List<LocalDate>> dateOfWeek = missionService.getDateOfWeek(findMission.getMissionSeq());
-        List<ResponseMissionStateDto> findAllMissionState = missionStateService.findAllMissionStateByMissionSeq(missionSeq);1.
+        List<ResponseMissionStateDto> findAllMissionState = missionStateService.findAllMissionStateByMissionSeq(missionSeq);
 
         model.addAttribute("mission", findMission);
         model.addAttribute("dateOfWeek", dateOfWeek);
