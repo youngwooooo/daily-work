@@ -56,8 +56,8 @@ public class MissionStateService {
         File submitMissionImage = new File(uploadFolder, fileOriginalName);
         file.transferTo(submitMissionImage);
 
-        // DB에 저장할 대표 이미지 경로
-        String submitMissionImagePath = "/mission/" + requestMissionStateDto.getMissionParticipants().getMissionSeq() + "/" + requestMissionStateDto.getMissionParticipants().getUserId() + "/" + requestMissionStateDto.getMissionStateWeek() + "/" + fileOriginalName;
+        // DB에 저장할 제출 미션 이미지 경로
+        String submitMissionImagePath = uploadFolder.toString().substring(28).replaceAll("\\\\", "/") +  "/" + fileOriginalName;
 
         // dto에 저장
         requestMissionStateDto.setSubmittedMissionImage(submitMissionImagePath);
