@@ -102,7 +102,7 @@
 }
 
 .mission-state-wrapper .mission-state-div .tab-content {
-    min-height: 500px;
+    min-height: 400px;
 }
 
 .mission-state-wrapper .mission-submit-info-div h4 {
@@ -156,6 +156,39 @@
 
 .tab-content .table tbody td:nth-child(n+2) {
     border: 1px solid #dee2e6;
+}
+
+.approve-wait-submit-mission-wrapper {
+    display: none;
+}
+
+.approve-wait-submit-mission-wrapper, .my-submit-mission-wrapper {
+    margin-bottom: 30px;
+}
+
+.my-submit-mission-div .col-sm-12
+, .approve-wait-submit-mission-div .col-sm-12 {
+    text-align: center;
+    min-height: 300px;
+}
+
+.my-submit-mission-div .empty-submit-mission-desc
+, .approve-wait-submit-mission-div .empty-approve-wait-submit-mission-desc {
+    position: relative;
+    top: 45%;
+    color: gray;
+}
+
+.my-submit-mission-div .card-body p {
+    margin: 0px;
+}
+
+.my-submit-mission-div .list-group .list-group-item span {
+    color: gray;
+}
+
+.my-submit-mission-div .list-group .list-group-item span:nth-child(2) {
+    float: right;
 }
 
 /* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] Modal */

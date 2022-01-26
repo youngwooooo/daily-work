@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
@@ -118,8 +119,68 @@
                         </table>
                     </div>
                 </th:block>
-
             </div>
+
+        </div>
+
+        <div class="approve-wait-submit-mission-wrapper">
+            <h4>승인 대기 미션</h4>
+            <br/>
+            <div class="row approve-wait-submit-mission-div">
+                <div class="col-sm-12">
+                    <p class="empty-approve-wait-submit-mission-desc">승인 대기 중인 미션이 존재하지 않습니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 인증이 된 유저(로그인한)이고 미션 참여자 일 때 '나의 제출 미션' 보이기 -->
+        <div sec:authorize="isAuthenticated()"
+             th:each="participants : ${mission.missionParticipants}" th:object="${participants}"
+             th:if="${participants.userId == #authentication.principal.LoginUserDto.userId}">
+
+            <div class="my-submit-mission-wrapper">
+                <h4>나의 제출 미션</h4>
+                <br/>
+                <div class="row my-submit-mission-div">
+
+                    <th:block th:each="missionState : ${missionState}" th:object="${missionState}" th:if="${missionState.missionParticipants.userId == #authentication.principal.LoginUserDto.userId}">
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <img class="card-img-top" th:src="${missionState.submittedMissionImage}" alt="Card image">
+                                </div>
+                                <div class="card-body">
+                                    <p th:text="${missionState.submittedMissionNm}"></p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span th:text="제출완료"></span>
+                                        <span th:text="${#temporals.format(missionState.submittedMissionDt, 'yyyy-MM-dd HH:mm')}"></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <th:block th:if="${missionState.approvalYn == 'N'}">
+                                            <span th:text="승인대기" style="color: #00af00; font-weight: bold;"></span>
+                                        </th:block>
+                                        <th:block th:unless="${missionState.approvalYn == 'N'}">
+                                            <span th:text="승인완료" style="color: #007bff; font-weight: bold;"></span>
+                                            <span th:text="${#temporals.format(missionState.approvalDt, 'yyyy-MM-dd HH:mm')}"></span>
+                                        </th:block>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </th:block>
+
+                    <!--<th:block th:each="missionState : ${missionState}" th:object="${missionState}" th:unless="${missionState.missionParticipants.userId == #authentication.principal.LoginUserDto.userId}">
+                        <p th:text="${#lists.contains(missionState, #authentication.principal.LoginUserDto.userId)}"></p>
+                        <div class="col-sm-12">
+                            <p class="empty-submit-mission-desc">제출한 미션이 존재하지 않습니다.</p>
+                        </div>
+                    </th:block>-->
+
+                </div>
+            </div>
+
         </div>
 
     </div>
