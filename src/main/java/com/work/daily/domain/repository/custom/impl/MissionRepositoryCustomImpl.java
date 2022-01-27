@@ -49,8 +49,6 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
                 .selectFrom(qMission)
                 .innerJoin(qMission.user, qUser)
                 .fetchJoin()
-                .innerJoin(qMission.MissionParticipants, qMissionParticipants)
-                .fetchJoin()
                 .where(qMission.missionSeq.eq(missionSeq))
                 .fetchOne());
     }
