@@ -32,7 +32,7 @@ public class QMissionParticipants extends EntityPathBase<MissionParticipants> {
 
     public final NumberPath<Long> missionSeq = createNumber("missionSeq", Long.class);
 
-    public final ListPath<MissionState, QMissionState> missionStates = this.<MissionState, QMissionState>createList("missionStates", MissionState.class, QMissionState.class, PathInits.DIRECT2);
+    public final ListPath<MissionState, QMissionState> missionState = this.<MissionState, QMissionState>createList("missionState", MissionState.class, QMissionState.class, PathInits.DIRECT2);
 
     public final QUser user;
 
