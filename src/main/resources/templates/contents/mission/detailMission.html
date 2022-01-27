@@ -50,11 +50,11 @@
         <div class="mission-participants-div">
             <h4>미션 참여자</h4>
             <br/>
-            <div class="mission-participants-info" th:if="${mission.missionParticipants != null}">
+            <div class="mission-participants-info" th:if="${missionParticipants != null}">
 
-                <div class="mission-participants-info-result" th:each="participants : ${mission.missionParticipants}"
+                <div class="mission-participants-info-result" th:each="participants : ${missionParticipants}"
                      th:object="${participants}" th:if="${participants.missionJoinYn != 'N'}">
-                    <input type="hidden" name="participantsId" th:value="${participants.userId}">
+                    <input type="hidden" name="participantsId" th:value="${participants.user.userId}">
                     <img th:src="${participants.user.profileImage}">
                     <span th:text="${participants.user.userNm}"></span>
                 </div>
@@ -102,8 +102,8 @@
                                 </th:block>
                             </tr>
                             </thead>
-                            <tbody th:if="${mission.missionParticipants != null}">
-                            <tr th:each="participants : ${mission.missionParticipants}" th:object="${participants}"
+                            <tbody th:if="${missionParticipants != null}">
+                            <tr th:each="participants : ${missionParticipants}" th:object="${participants}"
                                 th:if="${participants.missionJoinYn != 'N'}">
                                 <td>
                                     <div>
@@ -135,8 +135,8 @@
 
         <!-- 인증이 된 유저(로그인한)이고 미션 참여자 일 때 '나의 제출 미션' 보이기 -->
         <div sec:authorize="isAuthenticated()"
-             th:each="participants : ${mission.missionParticipants}" th:object="${participants}"
-             th:if="${participants.userId == #authentication.principal.LoginUserDto.userId}">
+             th:each="participants : ${missionParticipants}" th:object="${participants}"
+             th:if="${participants.user.userId == #authentication.principal.LoginUserDto.userId}">
 
             <div class="my-submit-mission-wrapper">
                 <h4>나의 제출 미션</h4>
@@ -171,12 +171,12 @@
                         </div>
                     </th:block>
 
-                    <!--<th:block th:each="missionState : ${missionState}" th:object="${missionState}" th:unless="${missionState.missionParticipants.userId == #authentication.principal.LoginUserDto.userId}">
-                        <p th:text="${#lists.contains(missionState, #authentication.principal.LoginUserDto.userId)}"></p>
+                    <th:block th:each="missionState : ${missionState}" th:object="${missionState}" th:if="${missionState.missionParticipants.userId != #authentication.principal.LoginUserDto.userId}">
+                        <p th:text="${missionStateStat.size}"></p>
                         <div class="col-sm-12">
                             <p class="empty-submit-mission-desc">제출한 미션이 존재하지 않습니다.</p>
                         </div>
-                    </th:block>-->
+                    </th:block>
 
                 </div>
             </div>
@@ -231,14 +231,14 @@
                         &times;
                     </button>
                 </div>
-                <div class="modal-body" th:if="${mission.missionParticipants != null}">
+                <div class="modal-body" th:if="${missionParticipants != null}">
 
                     <div class="mission-participants-management-div justify-content-between"
-                         th:each="participants : ${mission.missionParticipants}" th:object="${participants}"
-                         th:if="${participants.userId != mission.user.userId}">
+                         th:each="participants : ${missionParticipants}" th:object="${participants}"
+                         th:if="${participants.user.userId != mission.user.userId}">
                         <div class="mission-participants-management-info-div">
-                            <input type="hidden" name="participantsSeq" th:value="${participants.userSeq}">
-                            <input type="hidden" name="participantsId" th:value="${participants.userId}">
+                            <input type="hidden" name="participantsSeq" th:value="${participants.user.userSeq}">
+                            <input type="hidden" name="participantsId" th:value="${participants.user.userId}">
                             <img th:src="${participants.user.profileImage}">
                             <span th:text="${participants.user.userNm}"></span>
                         </div>
