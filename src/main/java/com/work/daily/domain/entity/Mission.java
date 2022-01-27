@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@ToString
 @NoArgsConstructor
 @SequenceGenerator(
         name = "MISSION_SEQ_INCREASE",

@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,7 +22,7 @@ public class MissionParticipants {
     @Id
     private long missionSeq;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "missionSeq", insertable = false, updatable = false)
     @JsonBackReference
     private Mission mission;
@@ -34,7 +33,7 @@ public class MissionParticipants {
     @Id
     private String userId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "userSeq", insertable = false, updatable = false),
             @JoinColumn(name = "userId", insertable = false, updatable = false)
@@ -52,7 +51,7 @@ public class MissionParticipants {
 
     @OneToMany(mappedBy = "missionParticipants")
     @JsonManagedReference
-    private List<MissionState> missionStates;
+    private List<MissionState> missionState;
 
     // 참여여부, 참여승인일 수정
     public void approveParticipants(RequestMissionParticipantsDto requestMissionParticipantsDto){

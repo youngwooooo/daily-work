@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,7 +22,7 @@ public class MissionState {
     @Id
     private long missionStateWeek;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "MISSION_SEQ" , referencedColumnName = "missionSeq"),
             @JoinColumn(name = "USER_SEQ", referencedColumnName = "userSeq"),
