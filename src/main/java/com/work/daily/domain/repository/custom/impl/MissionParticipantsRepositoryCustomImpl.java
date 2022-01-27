@@ -9,6 +9,7 @@ import com.work.daily.domain.repository.custom.MissionParticipantsRepositoryCust
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,6 +21,22 @@ public class MissionParticipantsRepositoryCustomImpl implements MissionParticipa
     QMissionParticipants qMissionParticipants = QMissionParticipants.missionParticipants;
     QMission qMission = QMission.mission;
     QUser qUser = QUser.user;
+
+    /**
+     * 모든 미션 참여자 조회
+     * @description 미션번호에 따른 해당 미션의 모든 미션 참여자 조회
+     * @param missionSeq
+     * @return
+     */
+    @Override
+    public List<MissionParticipants> findAllMissionParticipantByMissionSeq(long missionSeq) {
+        return jpaQueryFactory
+                .selectFrom(qMissionParticipants)
+                .innerJoin(qMissionParticipants.user, qUser)
+                .fetchJoin()
+                .where(qMissionParticipants.missionSeq.eq(missionSeq))
+                .fetch();
+    }
 
     /**
      * 미션 참여자 단건 조회
@@ -36,9 +53,11 @@ public class MissionParticipantsRepositoryCustomImpl implements MissionParticipa
                 .innerJoin(qMissionParticipants.mission, qMission)
                 .fetchJoin()
                 .innerJoin(qMissionParticipants.user, qUser)
+                .fetchJoin()
                 .where(qMissionParticipants.missionSeq.eq(missionSeq)
                         .and(qMissionParticipants.userSeq.eq(userSeq))
                         .and(qMissionParticipants.userId.eq(userId)))
                 .fetchOne());
     }
+
 }
