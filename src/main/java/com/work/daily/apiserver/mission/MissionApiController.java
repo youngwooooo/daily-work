@@ -5,7 +5,8 @@ import com.work.daily.access.dto.ResponseDto;
 import com.work.daily.mission.dto.RequestMissionDto;
 import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import com.work.daily.mission.dto.RequestMissionStateDto;
-import com.work.daily.mission.dto.ResponseMissionParticipants;
+import com.work.daily.mission.dto.ResponseMissionParticipantsDto;
+import com.work.daily.mission.service.MissionParticipantsService;
 import com.work.daily.mission.service.MissionService;
 import com.work.daily.mission.service.MissionStateService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -28,6 +30,7 @@ import java.util.Map;
 public class MissionApiController {
 
     private final MissionService missionService;
+    private final MissionParticipantsService missionParticipantsService;
     private final MissionStateService missionStateService;
 
     /**
@@ -143,7 +146,7 @@ public class MissionApiController {
                     , HttpStatus.BAD_REQUEST);
         }
 
-        String result = missionService.joinMission(requestMissionParticipantsDto);
+        String result = missionParticipantsService.joinMission(requestMissionParticipantsDto);
 
         if(ReturnResult.ERROR.getValue().equals(result)){
             return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("이미 참여한 미션입니다.").build(), HttpStatus.BAD_REQUEST);
@@ -174,7 +177,7 @@ public class MissionApiController {
                     , HttpStatus.BAD_REQUEST);
         }
 
-        String result = missionService.secessionMission(requestMissionParticipantsDto);
+        String result = missionParticipantsService.secessionMission(requestMissionParticipantsDto);
 
         if(ReturnResult.ERROR.getValue().equals(result)){
             return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("미션 참여자가 아닙니다.").build(), HttpStatus.BAD_REQUEST);
@@ -207,7 +210,7 @@ public class MissionApiController {
                     , HttpStatus.BAD_REQUEST);
         }
 
-        ResponseMissionParticipants approveParticipantsInfo = missionService.approveParticipants(requestMissionParticipantsDto);
+        ResponseMissionParticipantsDto approveParticipantsInfo = missionParticipantsService.approveParticipants(requestMissionParticipantsDto);
 
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(approveParticipantsInfo).message("미션 참여자 승인이 완료되었습니다.").build(), HttpStatus.OK);
     }
@@ -236,7 +239,7 @@ public class MissionApiController {
                     , HttpStatus.BAD_REQUEST);
         }
 
-        ResponseMissionParticipants expulsionParticipantsInfo = missionService.expulsionParticipants(requestMissionParticipantsDto);
+        ResponseMissionParticipantsDto expulsionParticipantsInfo = missionParticipantsService.expulsionParticipants(requestMissionParticipantsDto);
 
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(expulsionParticipantsInfo).message("미션 참여자 강퇴가 완료되었습니다.").build(), HttpStatus.OK);
     }
@@ -259,5 +262,11 @@ public class MissionApiController {
         String result = missionStateService.save(requestMissionStateDto, file);
 
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 제출이 완료되었습니다.").build(), HttpStatus.CREATED);
+    }
+
+    // 테스트 용 api
+    @GetMapping("/mission/test/{missionSeq}")
+    public List<ResponseMissionParticipantsDto> test(@PathVariable("missionSeq") long missionSeq){
+        return missionParticipantsService.findAllMissionParticipantByMissionSeq(missionSeq);
     }
 }
