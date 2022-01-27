@@ -1,7 +1,9 @@
 package com.work.daily.mission.controller;
 
 import com.work.daily.mission.dto.ResponseMissionDto;
+import com.work.daily.mission.dto.ResponseMissionParticipantsDto;
 import com.work.daily.mission.dto.ResponseMissionStateDto;
+import com.work.daily.mission.service.MissionParticipantsService;
 import com.work.daily.mission.service.MissionService;
 import com.work.daily.mission.service.MissionStateService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 public class MissionController {
 
     private final MissionService missionService;
+    private final MissionParticipantsService missionParticipantsService;
     private final MissionStateService missionStateService;
 
     /**
@@ -72,10 +75,12 @@ public class MissionController {
 
         ResponseMissionDto findMission = missionService.findMission(missionSeq);
         List<List<LocalDate>> dateOfWeek = missionService.getDateOfWeek(findMission.getMissionSeq());
+        List<ResponseMissionParticipantsDto> findAllMissionParticipantByMissionSeq = missionParticipantsService.findAllMissionParticipantByMissionSeq(missionSeq);
         List<ResponseMissionStateDto> findAllMissionState = missionStateService.findAllMissionStateByMissionSeq(missionSeq);
 
         model.addAttribute("mission", findMission);
         model.addAttribute("dateOfWeek", dateOfWeek);
+        model.addAttribute("missionParticipants", findAllMissionParticipantByMissionSeq);
         model.addAttribute("missionState", findAllMissionState);
 
         return "contents/mission/detailMission";
