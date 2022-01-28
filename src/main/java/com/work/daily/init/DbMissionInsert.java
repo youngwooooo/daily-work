@@ -1,15 +1,12 @@
 package com.work.daily.init;
 
-import com.work.daily.access.dto.JoinUserDto;
-import com.work.daily.domain.UserRole;
 import com.work.daily.domain.entity.Mission;
-import com.work.daily.domain.entity.User;
+import com.work.daily.domain.entity.MissionParticipants;
+import com.work.daily.domain.repository.MissionParticipantsRepository;
 import com.work.daily.domain.repository.MissionRepository;
 import com.work.daily.domain.repository.UserRepository;
-import com.work.daily.domain.repository.custom.MissionRepositoryCustom;
-import com.work.daily.domain.repository.custom.impl.MissionRepositoryCustomImpl;
 import com.work.daily.mission.dto.RequestMissionDto;
-import com.work.daily.mission.dto.ResponseMissionDto;
+import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +28,7 @@ import java.util.List;
 public class DbMissionInsert {
     private final UserRepository userRepository;
     private final MissionRepository missionRepository;
+    private final MissionParticipantsRepository missionParticipantsRepository;
 
     /**
      * @filename : DbMissionInsert.java
@@ -45,8 +43,21 @@ public class DbMissionInsert {
 
     }
 
+    /**
+     * @filename : DbMissionInsert.java
+     * @description : 미션 참여자 등록 (test 데이터 google, kakao, naver 로 등록)
+     * @author : 이준범
+     */
+    @Bean("missionParticipantsInsert")
+    @DependsOn(value = {"missionInfoInsert"})
+    public void missionParticipantsInsert() {
+
+    }
 
 
+
+
+    // 미션 , 미션 마스터 등록
     private List<Mission> createMissionMasterDto() {
         List<Mission> saveMissionDtoList = new ArrayList<>();
 
@@ -100,4 +111,15 @@ public class DbMissionInsert {
 
         return saveMissionDtoList;
     }
+
+    // 미션 참여자 등록
+//    private List<Mission> createMissionParticipantsDto() {
+//        List<MissionParticipants> saveMissionDtoList = new ArrayList<>();
+//        RequestMissionParticipantsDto.builder()
+//                .
+//        return null;
+//    }
+
+
+
 }
