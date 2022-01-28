@@ -111,6 +111,49 @@ public class DbUserInfoInsert {
             saveUserList.add(joinUserDto.toEntity());
         }
 
+
+
+        // 미션테이블 마스터용
+        // 한상우
+        saveUserList.add(
+                JoinUserDto.builder()
+                        .userId("sangWooHan")
+                        .userPw(userPw)
+                        .userNm("한상우")
+                        .userEmail("sangWooHan" + "@daily.com")
+                        .role(UserRole.USER)
+                        .provider("test")
+                        .build()
+                        .toEntity()
+        );
+
+        // 이준범
+        saveUserList.add(
+                JoinUserDto.builder()
+                        .userId("junBeomLee")
+                        .userPw(userPw)
+                        .userNm("이준범")
+                        .userEmail("junBeomLee" + "@daily.com")
+                        .role(UserRole.USER)
+                        .provider("test")
+                        .build()
+                        .toEntity()
+        );
+
+        // 이영우
+        saveUserList.add(
+            JoinUserDto.builder()
+                    .userId("youngWooLee")
+                    .userPw(userPw)
+                    .userNm("이영우")
+                    .userEmail("youngWooLee" + "@daily.com")
+                    .role(UserRole.USER)
+                    .provider("test")
+                    .build()
+                    .toEntity()
+        );
+
+
         userRepository.saveAll(saveUserList);
 
 
