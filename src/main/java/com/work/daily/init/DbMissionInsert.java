@@ -9,6 +9,7 @@ import com.work.daily.mission.dto.RequestMissionDto;
 import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -113,12 +115,26 @@ public class DbMissionInsert {
     }
 
     // 미션 참여자 등록
-//    private List<Mission> createMissionParticipantsDto() {
-//        List<MissionParticipants> saveMissionDtoList = new ArrayList<>();
-//        RequestMissionParticipantsDto.builder()
-//                .
-//        return null;
-//    }
+    private List<Mission> createMissionParticipantsDto() {
+
+        List<MissionParticipants> saveMissionDtoList = new ArrayList<>();
+        List<MissionParticipants> all = missionParticipantsRepository.findAll()
+                .stream()
+                .filter(missionParticipants -> missionParticipants.getMission().getMissionNm().contains("google"))
+                .collect(Collectors.toList());
+
+        RequestMissionParticipantsDto.builder()
+                .missionSeq(1)
+                .userSeq(1)
+                .userId("d")
+                .missionJoinDt(LocalDateTime.now())
+                .missionJoinYn("Y")
+                .missionJoinApprovalDt(LocalDateTime.now())
+                .build()
+                .toEntity();
+
+        return null;
+    }
 
 
 
