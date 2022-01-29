@@ -225,19 +225,6 @@ public class DbMissionInsert {
 
         List<MissionParticipants> allMissionParticipants = missionParticipantsRepository.findAll();
 
-        saveMissionStateDtoList.add(RequestMissionStateDto.builder()
-                .missionStateWeek(0)
-                .missionParticipants(allMissionParticipants.get(0))
-                .submittedMissionNm("한상우의 코딩 특강으로 자바 마스터하기 첫번째")
-                .submittedMissionDesc("자바의 기본적인 메모리 구조에 대해 학습")
-                .submittedMissionImage("img파일")
-                .submittedMissionDt(LocalDateTime.now())
-                .approvalYn("Y")
-                .approvalDt(LocalDateTime.now())
-                .build()
-                .toEntity()
-        );
-
         for (MissionParticipants allMissionParticipant : allMissionParticipants) {
 
             if (allMissionParticipant.getUserId().contains("google")) { // 한상우 미션
