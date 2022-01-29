@@ -66,6 +66,7 @@ public class DbUserInfoInsert {
                     .userEmail("구글 유저"+i+"번@google.com")
                     .role(UserRole.USER)
                     .provider("test")
+                    .profileImage("/resources/static/img/common/basic_profile.png")
                     .build();
             saveUserList.add(joinUserDto.toEntity());
         }
@@ -79,6 +80,7 @@ public class DbUserInfoInsert {
                     .userEmail("네이버 유저"+i+"번@naver.com")
                     .role(UserRole.USER)
                     .provider("test")
+                    .profileImage("/resources/static/img/common/basic_profile.png")
                     .build();
 
             saveUserList.add(joinUserDto.toEntity());
@@ -93,6 +95,7 @@ public class DbUserInfoInsert {
                     .userEmail("카카오 유저"+i+"번@kakao.com")
                     .role(UserRole.USER)
                     .provider("test")
+                    .profileImage("/resources/static/img/common/basic_profile.png")
                     .build();
 
             saveUserList.add(joinUserDto.toEntity());
@@ -106,6 +109,7 @@ public class DbUserInfoInsert {
                     .userNm("관리자"+i+"번")
                     .userEmail("관리자"+i+"번@admin.com")
                     .role(UserRole.ADMIN)
+                    .profileImage("/resources/static/img/common/basic_profile.png")
                     .build();
 
             saveUserList.add(joinUserDto.toEntity());
@@ -123,6 +127,7 @@ public class DbUserInfoInsert {
                         .userEmail("sangWooHan" + "@daily.com")
                         .role(UserRole.USER)
                         .provider("test")
+                        .profileImage("/resources/static/img/common/basic_profile.png")
                         .build()
                         .toEntity()
         );
@@ -136,6 +141,7 @@ public class DbUserInfoInsert {
                         .userEmail("junBeomLee" + "@daily.com")
                         .role(UserRole.USER)
                         .provider("test")
+                        .profileImage("/resources/static/img/common/basic_profile.png")
                         .build()
                         .toEntity()
         );
@@ -149,6 +155,7 @@ public class DbUserInfoInsert {
                     .userEmail("youngWooLee" + "@daily.com")
                     .role(UserRole.USER)
                     .provider("test")
+                    .profileImage("/resources/static/img/common/basic_profile.png")
                     .build()
                     .toEntity()
         );
