@@ -102,7 +102,7 @@ public class DbMissionInsert {
                     .user(userRepository.findByUserId("sangWooHan").get())
                     .delYn("N")
                     .temporaryYn("N")
-                    .missionImage("/main/resources/static/img/common/basic_mission.jpg")
+                    .missionImage("/img/common/basic_mission.jpg")
                     .build()
                     .toEntity()
         );
@@ -119,7 +119,7 @@ public class DbMissionInsert {
                         .user(userRepository.findByUserId("junBeomLee").get())
                         .delYn("N")
                         .temporaryYn("N")
-                        .missionImage("/main/resources/static/img/common/basic_mission.jpg")
+                        .missionImage("/img/common/basic_mission.jpg")
                         .build()
                         .toEntity()
         );
@@ -136,7 +136,7 @@ public class DbMissionInsert {
                         .user(userRepository.findByUserId("youngWooLee").get())
                         .delYn("N")
                         .temporaryYn("N")
-                        .missionImage("/main/resources/static/img/common/basic_mission.jpg")
+                        .missionImage("/img/common/basic_mission.jpg")
                         .build()
                         .toEntity()
         );
