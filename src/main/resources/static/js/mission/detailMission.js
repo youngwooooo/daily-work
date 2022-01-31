@@ -2,26 +2,28 @@
 $(function(){
     /* 미션 권한 관련 함수 */
 
-    // 1. 미션 생성자와 로그인 한 회원이 같을 경우 : [미션 수정하기], [미션 삭제하기], [미션 참여자 관리] 버튼 보이기
+    // 1. 미션 생성자와 로그인 한 회원이 같을 경우 : [미션 수정하기], [미션 삭제하기], [미션 참여자 관리], [미션 제출] 보이기
     if($("#missionCreatedUserId").val() == $("#userId").val()){
         $("#btn-modify-mission-form").css("display", "inline-block");
         $("#btn-delete-mission-modal").css("display", "inline-block");
         $("#btn-participants-management-modal").css("display", "inline-block");
+        $(".mission-submit-btn-div").css("display", "block");
     }else {
     // 2. 미션 생성자와 로그인 한 회원이 다를 경우
-        var participantsIdInput = $("input[name='participantsId']");
-        for(var i=0; i<participantsIdInput.length; i++){
-            var participantsId = participantsIdInput[i].value;  // 미션 참여자 ID
-            // 2-1. 로그인한 회원이 미션 참여자인 경우 : [미션 탈퇴하기] 버튼 보이기, [미션 참여하기] 버튼 숨기기
-            if(participantsId == $("#userId").val()){
+        $(".mission-participants-info-result input[name='participantsId']").each(function(){
+            // 미션 참여자 ID 중 로그인 한 회원의 ID와 같은 경우 [미션 참여하기] 숨기기, [미션 탈퇴하기], [미션 제출] 보이기
+            if($(this).val() == $("#userId").val()){
                 $("#btn-join-mission-modal").css("display", "none");
                 $("#btn-secession-mission-modal").css("display", "inline-block");
-            }else {
-            // 2-2. 로그인한 회원이 미션 참여자가 아닌 경우 : [미션 참여하기] 버튼 보이기, [미션 탈퇴하기] 버튼 숨기기
-                $("#btn-join-mission-modal").css("display", "inline-block");
-                $("#btn-secession-mission-modal").css("display", "none");
+                $(".mission-submit-btn-div").css("display", "block");
+                return false;
             }
-        }
+
+             $("#btn-join-mission-modal").css("display", "inline-block");
+             $("#btn-secession-mission-modal").css("display", "none");
+
+        });
+
     }
 
     // 3. 비로그인 사용자일 때, [미션 참여하기] 클릭 시

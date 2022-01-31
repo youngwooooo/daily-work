@@ -36,8 +36,7 @@
                 <div style="display: flex">
                     <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
                     <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
-                    <button type="button" class="btn btn-success" id="btn-participants-management-modal">미션 참여자 관리
-                    </button>
+                    <button type="button" class="btn btn-success" id="btn-participants-management-modal">미션 참여자 관리</button>
                     <button type="button" class="btn btn-primary" id="btn-modify-mission-form">미션 수정하기</button>
                     <button type="button" class="btn btn-danger" id="btn-delete-mission-modal">미션 삭제하기</button>
                 </div>
@@ -123,18 +122,47 @@
 
         </div>
 
+        <br/>
+
         <div class="approve-wait-submit-mission-wrapper">
             <h4>승인 대기 미션</h4>
             <br/>
             <div class="row approve-wait-submit-mission-div">
-                <div class="col-sm-12">
-                    <p class="empty-approve-wait-submit-mission-desc">승인 대기 중인 미션이 존재하지 않습니다.</p>
-                </div>
+
+                <th:block th:if="${#lists.size(allMissionState) > 0}">
+                    <th:block th:each="allMissionState : ${allMissionState}" th:object="${allMissionState}" th:if="${allMissionState.approvalYn == 'N'}">
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <img class="card-img-top" th:src="${allMissionState.submittedMissionImage}" alt="Card image">
+                                </div>
+                                <div class="card-body">
+                                    <p th:text="${allMissionState.submittedMissionNm}"></p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span th:text="제출완료"></span>
+                                        <span th:text="${#temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd HH:mm')}"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </th:block>
+                </th:block>
+
+                <th:block th:unless="${#lists.size(allMissionState) > 0}">
+                    <div class="col-sm-12">
+                        <p class="empty-approve-wait-submit-mission-desc">승인 대기 중인 미션이 존재하지 않습니다.</p>
+                    </div>
+                </th:block>
+
             </div>
         </div>
 
+        <br/>
+
         <!-- 인증이 된 유저(로그인한)이고 미션 참여자 일 때 '나의 제출 미션' 보이기 -->
-        <div sec:authorize="isAuthenticated()"
+        <th:block sec:authorize="isAuthenticated()"
              th:each="participants : ${missionParticipants}" th:object="${participants}"
              th:if="${participants.user.userId == #authentication.principal.LoginUserDto.userId}">
 
@@ -143,27 +171,27 @@
                 <br/>
                 <div class="row my-submit-mission-div">
 
-                    <th:block th:each="missionState : ${missionState}" th:object="${missionState}" th:if="${missionState.missionParticipants.userId == #authentication.principal.LoginUserDto.userId}">
+                    <th:block th:each="myMissionState : ${myMissionState}" th:if="${#lists.size(myMissionState) > 0}">
                         <div class="col-sm-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <img class="card-img-top" th:src="${missionState.submittedMissionImage}" alt="Card image">
+                                    <img class="card-img-top" th:src="${myMissionState.submittedMissionImage}" alt="Card image">
                                 </div>
                                 <div class="card-body">
-                                    <p th:text="${missionState.submittedMissionNm}"></p>
+                                    <p th:text="${myMissionState.submittedMissionNm}"></p>
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <span th:text="제출완료"></span>
-                                        <span th:text="${#temporals.format(missionState.submittedMissionDt, 'yyyy-MM-dd HH:mm')}"></span>
+                                        <span th:text="${#temporals.format(myMissionState.submittedMissionDt, 'yyyy-MM-dd HH:mm')}"></span>
                                     </li>
                                     <li class="list-group-item">
-                                        <th:block th:if="${missionState.approvalYn == 'N'}">
+                                        <th:block th:if="${myMissionState.approvalYn == 'N'}">
                                             <span th:text="승인대기" style="color: #00af00; font-weight: bold;"></span>
                                         </th:block>
-                                        <th:block th:unless="${missionState.approvalYn == 'N'}">
+                                        <th:block th:unless="${myMissionState.approvalYn == 'N'}">
                                             <span th:text="승인완료" style="color: #007bff; font-weight: bold;"></span>
-                                            <span th:text="${#temporals.format(missionState.approvalDt, 'yyyy-MM-dd HH:mm')}"></span>
+                                            <span th:text="${#temporals.format(myMissionState.approvalDt, 'yyyy-MM-dd HH:mm')}"></span>
                                         </th:block>
                                     </li>
                                 </ul>
@@ -171,8 +199,7 @@
                         </div>
                     </th:block>
 
-                    <th:block th:each="missionState : ${missionState}" th:object="${missionState}" th:if="${missionState.missionParticipants.userId != #authentication.principal.LoginUserDto.userId}">
-                        <p th:text="${missionStateStat.size}"></p>
+                    <th:block th:unless="${#lists.size(myMissionState) > 0}">
                         <div class="col-sm-12">
                             <p class="empty-submit-mission-desc">제출한 미션이 존재하지 않습니다.</p>
                         </div>
@@ -181,9 +208,11 @@
                 </div>
             </div>
 
-        </div>
+        </th:block>
 
     </div>
+
+    <br/>
 
     <!-- [미션 참여하기], [미션 탈퇴하기], [미션 삭제하기] Modal -->
     <div class="modal" id="response-modal">

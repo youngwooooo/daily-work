@@ -120,6 +120,7 @@
 
 .mission-state-wrapper .mission-submit-info-div .mission-submit-btn-div {
     float: right;
+    display: none;
 }
 
 .mission-state-wrapper .mission-submit-info-div .mission-submit-btn-div button {
