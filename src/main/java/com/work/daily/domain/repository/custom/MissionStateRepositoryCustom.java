@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MissionStateRepositoryCustom {
     List<MissionState> findAllMissionStateByMissionSeq(long missionSeq);
+    List<MissionState> findMissionStateByMissionSeqAndUserId(long missionSeq, String userId);
 }

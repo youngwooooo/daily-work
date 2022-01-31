@@ -20,7 +20,7 @@ public class MissionStateRepositoryCustomImpl implements MissionStateRepositoryC
     QMissionParticipants qMissionParticipants = QMissionParticipants.missionParticipants;
 
     /**
-     * 미션 번호에 따른 모든 미션 현황 조회
+     * 모든 미션 현황 조회
      * @param missionSeq
      * @return
      */
@@ -32,4 +32,20 @@ public class MissionStateRepositoryCustomImpl implements MissionStateRepositoryC
                 .where(qMissionState.missionParticipants.missionSeq.eq(missionSeq))
                 .fetch();
     }
+
+    /**
+     * 나의 제출 미션 조회
+     * @param missionSeq
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<MissionState> findMissionStateByMissionSeqAndUserId(long missionSeq, String userId) {
+        return jpaQueryFactory.selectFrom(qMissionState)
+                .innerJoin(qMissionState.missionParticipants, qMissionParticipants)
+                .fetchJoin()
+                .where(qMissionState.missionParticipants.missionSeq.eq(missionSeq).and(qMissionState.missionParticipants.userId.eq(userId)))
+                .fetch();
+    }
+
 }

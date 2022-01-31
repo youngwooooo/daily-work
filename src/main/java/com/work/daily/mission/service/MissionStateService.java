@@ -80,7 +80,7 @@ public class MissionStateService {
     }
 
     /**
-     * 미션 번호에 따른 모든 미션 현황 조회
+     * 모든 미션 현황 조회
      * @description 미션 번호에 따른 모든 미션 현황을 조회하여 VIEW에 보여주기 위함
      * @param missionSeq
      * @return
@@ -88,5 +88,17 @@ public class MissionStateService {
     public List<ResponseMissionStateDto> findAllMissionStateByMissionSeq(long missionSeq){
         List<MissionState> findMissionStates = missionStateRepository.findAllMissionStateByMissionSeq(missionSeq);
         return findMissionStates.stream().map(ResponseMissionStateDto::new).collect(Collectors.toList());
+    }
+
+    /**
+     * 나의 제출 미션 조회
+     * @description 미션 번호, 회원 ID에 따른 자신의 모든 제출 미션 조회
+     * @param missionSeq
+     * @param userId
+     * @return
+     */
+    public List<ResponseMissionStateDto> findMissionStateByMissionSeqAndUserId(long missionSeq, String userId){
+        List<MissionState> findMissionStateByMissionSeqAndUserId = missionStateRepository.findMissionStateByMissionSeqAndUserId(missionSeq, userId);
+        return findMissionStateByMissionSeqAndUserId.stream().map(ResponseMissionStateDto::new).collect(Collectors.toList());
     }
 }
