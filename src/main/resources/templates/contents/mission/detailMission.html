@@ -97,7 +97,7 @@
                             <tr>
                                 <th></th>
                                 <th:block th:each="date : ${dateOfWeek.get(weekStat.index)}">
-                                <th th:text="|${#temporals.format(date, 'MM.dd')}(${#temporals.dayOfWeekNameShort(date)})|"></th>
+                                    <th th:text="|${#temporals.format(date, 'MM.dd')}(${#temporals.dayOfWeekNameShort(date)})|"></th>
                                 </th:block>
                             </tr>
                             </thead>
@@ -106,12 +106,27 @@
                                 th:if="${participants.missionJoinYn != 'N'}">
                                 <td>
                                     <div>
+                                        <input type="hidden" name="participantsId" th:value="${participants.user.userId}">
                                         <img th:src="${participants.user.profileImage}" alt="profile-Image">
                                         <span th:text="${participants.user.userNm}"></span>
                                     </div>
                                 </td>
-                                <td th:each="date : ${dateOfWeek.get(weekStat.index)}">
+                                <td th:each="date : ${dateOfWeek.get(weekStat.index)}" style="text-align: center;">
                                     <input type="hidden" name="week-date" th:value="${date}">
+                                    <th:block th:each="allMissionState : ${allMissionState}" th:object="${allMissionState}" th:if="${allMissionState.missionStateWeek == weekStat.count}">
+                                        <th:block th:if="${participants.user.userId == allMissionState.userId
+                                                        and #temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd').equals(date.toString())}"
+                                                  th:switch="${allMissionState.approvalYn}">
+                                            <i th:case="Y" class="fas fa-check-circle fa-2x"></i>
+                                            <i th:case="N" class="fas fa-dot-circle fa-2x"></i>
+                                        </th:block>
+
+                                        <th:block th:if="${participants.user.userId == allMissionState.userId
+                                                        and !#temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd').equals(date.toString())}">
+                                            <i class="fas fa-times-circle fa-2x"></i>
+                                        </th:block>
+
+                                    </th:block>
                                 </td>
                             </tr>
                             </tbody>
@@ -119,6 +134,16 @@
                     </div>
                 </th:block>
             </div>
+            <script th:inline="javascript">
+                var aa = [[${allMissionState}]];
+                console.log(aa);
+                aa.forEach(function(item){
+                    if(item.missionStateWeek == 1){
+                        console.log(item);
+                    }
+                });
+
+            </script>
 
         </div>
 
