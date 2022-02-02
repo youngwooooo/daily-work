@@ -1,6 +1,5 @@
 package com.work.daily.mission.dto;
 
-import com.work.daily.domain.entity.MissionParticipants;
 import com.work.daily.domain.entity.MissionState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,9 @@ public class ResponseMissionStateDto {
 
     private long missionStateSeq;
     private long missionStateWeek;
-    private MissionParticipants missionParticipants;
+    private long missionSeq;
+    private long userSeq;
+    private String userId;
     private String submittedMissionNm;
     private String submittedMissionDesc;
     private String submittedMissionImage;
@@ -28,7 +29,9 @@ public class ResponseMissionStateDto {
     public ResponseMissionStateDto(MissionState missionState){
         this.missionStateSeq = missionState.getMissionStateSeq();
         this.missionStateWeek = missionState.getMissionStateWeek();
-        this.missionParticipants = missionState.getMissionParticipants();
+        this.missionSeq = missionState.getMissionParticipants().getMissionSeq();
+        this.userSeq = missionState.getMissionParticipants().getUserSeq();
+        this.userId = missionState.getMissionParticipants().getUserId();
         this.submittedMissionNm = missionState.getSubmittedMissionNm();
         this.submittedMissionDesc = missionState.getSubmittedMissionDesc();
         this.submittedMissionImage = missionState.getSubmittedMissionImage();

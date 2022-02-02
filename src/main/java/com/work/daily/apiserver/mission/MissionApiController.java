@@ -2,10 +2,7 @@ package com.work.daily.apiserver.mission;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
-import com.work.daily.mission.dto.RequestMissionDto;
-import com.work.daily.mission.dto.RequestMissionParticipantsDto;
-import com.work.daily.mission.dto.RequestMissionStateDto;
-import com.work.daily.mission.dto.ResponseMissionParticipantsDto;
+import com.work.daily.mission.dto.*;
 import com.work.daily.mission.service.MissionParticipantsService;
 import com.work.daily.mission.service.MissionService;
 import com.work.daily.mission.service.MissionStateService;
@@ -266,7 +263,7 @@ public class MissionApiController {
 
     // 테스트 용 api
     @GetMapping("/mission/test/{missionSeq}")
-    public List<ResponseMissionParticipantsDto> test(@PathVariable("missionSeq") long missionSeq){
-        return missionParticipantsService.findAllMissionParticipantByMissionSeq(missionSeq);
+    public List<ResponseMissionStateDto> test(@PathVariable("missionSeq") long missionSeq){
+        return missionStateService.findAllMissionStateByMissionSeq(missionSeq);
     }
 }
