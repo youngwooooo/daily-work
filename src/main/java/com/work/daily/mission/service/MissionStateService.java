@@ -85,6 +85,7 @@ public class MissionStateService {
      * @param missionSeq
      * @return
      */
+    @Transactional(readOnly = true)
     public List<ResponseMissionStateDto> findAllMissionStateByMissionSeq(long missionSeq){
         List<MissionState> findMissionStates = missionStateRepository.findAllMissionStateByMissionSeq(missionSeq);
         return findMissionStates.stream().map(ResponseMissionStateDto::new).collect(Collectors.toList());
@@ -97,6 +98,7 @@ public class MissionStateService {
      * @param userId
      * @return
      */
+    @Transactional(readOnly = true)
     public List<ResponseMissionStateDto> findMissionStateByMissionSeqAndUserId(long missionSeq, String userId){
         List<MissionState> findMissionStateByMissionSeqAndUserId = missionStateRepository.findMissionStateByMissionSeqAndUserId(missionSeq, userId);
         return findMissionStateByMissionSeqAndUserId.stream().map(ResponseMissionStateDto::new).collect(Collectors.toList());
