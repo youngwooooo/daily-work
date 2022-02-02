@@ -402,6 +402,14 @@ $(function(){
             var submittedMissionImage = $("#file")[0].files[0];
             var submittedMissionDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
             var approvalYn = "N";
+            var approvalDt = null;
+
+            // 미션 생성자와 로그인 회원이 같을 때
+            if($("#missionCreatedUserId").val() == $("#userId").val()){
+                // 승인여부 : Y , 승인일자 : 현재시간
+                approvalYn = "Y";
+                approvalDt = submittedMissionDt;
+            }
 
             var data = {
                 "missionStateWeek" : missionStateWeek
@@ -414,6 +422,7 @@ $(function(){
                 , "submittedMissionDesc" : submittedMissionDesc
                 , "submittedMissionDt" : submittedMissionDt
                 , "approvalYn" : approvalYn
+                , "approvalDt" : approvalDt
             };
 
             var formData = new FormData();
