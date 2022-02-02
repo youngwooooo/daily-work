@@ -265,16 +265,16 @@ public class DbMissionInsert {
             } else if (allMissionParticipant.getUserId().contains("naver")) { // 이영우 미션
 
                 if ("naverUser0".equals(allMissionParticipant.getUserId())) {
-                    saveMissionStateDtoList.add(createMissionState(1, allMissionParticipant, "개발자가 되기 위한 첫걸음", "나는 어떤 개발자가 되려는가", "image test 1", "Y"));
-                    saveMissionStateDtoList.add(createMissionState(2, allMissionParticipant, "어떤 공부부터 해야할까", "웹 개발자가 되기 위해 어떤 공부부터 시작해야할까", "image test 2", "Y"));
-                    saveMissionStateDtoList.add(createMissionState(3, allMissionParticipant, "프로젝트 수행에서 역할 나누기", "프로젝트를 시작하기 전, 각자 역할을 나누는 방법", "image test 3", "Y"));
-                    saveMissionStateDtoList.add(createMissionState(4, allMissionParticipant, "스프링 기본 세팅", "스프링 기본 세팅으로 화면 띄우기", "image test 4", "Y"));
-                    saveMissionStateDtoList.add(createMissionState(5, allMissionParticipant, "URI 매핑하기", "Controller 를 활용한 URI 매핑", "image test 5", "N"));
+                    saveMissionStateDtoList.add(createMissionState2(1, allMissionParticipant, "개발자가 되기 위한 첫걸음", "나는 어떤 개발자가 되려는가", "image test 1", LocalDateTime.parse("2022-02-02T22:15:30"), "Y"));
+                    saveMissionStateDtoList.add(createMissionState2(2, allMissionParticipant, "어떤 공부부터 해야할까", "웹 개발자가 되기 위해 어떤 공부부터 시작해야할까", "image test 2", LocalDateTime.parse("2022-02-07T22:15:30"),  "Y"));
+                    saveMissionStateDtoList.add(createMissionState2(3, allMissionParticipant, "프로젝트 수행에서 역할 나누기", "프로젝트를 시작하기 전, 각자 역할을 나누는 방법", "image test 3", LocalDateTime.parse("2022-02-14T22:15:30"), "Y"));
+                    saveMissionStateDtoList.add(createMissionState2(4, allMissionParticipant, "스프링 기본 세팅", "스프링 기본 세팅으로 화면 띄우기", "image test 4", LocalDateTime.parse("2022-02-21T22:15:30") ,"Y"));
+                    saveMissionStateDtoList.add(createMissionState2(5, allMissionParticipant, "URI 매핑하기", "Controller 를 활용한 URI 매핑", "image test 5", LocalDateTime.parse("2022-02-28T22:15:30"), "N"));
                 } else if ("naverUser1".equals(allMissionParticipant.getUserId())) {
-                    saveMissionStateDtoList.add(createMissionState(1, allMissionParticipant, "개발자가 되기 위한 첫걸음", "나는 어떤 개발자가 되려는가", "image test 1", "Y"));
-                    saveMissionStateDtoList.add(createMissionState(2, allMissionParticipant, "어떤 공부부터 해야할까", "웹 개발자가 되기 위해 어떤 공부부터 시작해야할까", "image test 2", "Y"));
-                    saveMissionStateDtoList.add(createMissionState(3, allMissionParticipant, "프로젝트 수행에서 역할 나누기", "프로젝트를 시작하기 전, 각자 역할을 나누는 방법", "image test 3", "Y"));
-                    saveMissionStateDtoList.add(createMissionState(4, allMissionParticipant, "스프링 기본 세팅", "스프링 기본 세팅으로 화면 띄우기", "image test 4", "N"));
+                    saveMissionStateDtoList.add(createMissionState2(1, allMissionParticipant, "개발자가 되기 위한 첫걸음", "나는 어떤 개발자가 되려는가", "image test 1", LocalDateTime.parse("2022-02-03T22:15:30"), "Y"));
+                    saveMissionStateDtoList.add(createMissionState2(2, allMissionParticipant, "어떤 공부부터 해야할까", "웹 개발자가 되기 위해 어떤 공부부터 시작해야할까", "image test 2", LocalDateTime.parse("2022-02-08T22:15:30"), "Y"));
+                    saveMissionStateDtoList.add(createMissionState2(3, allMissionParticipant, "프로젝트 수행에서 역할 나누기", "프로젝트를 시작하기 전, 각자 역할을 나누는 방법", "image test 3", LocalDateTime.parse("2022-02-15T22:15:30"), "Y"));
+                    saveMissionStateDtoList.add(createMissionState2(4, allMissionParticipant, "스프링 기본 세팅", "스프링 기본 세팅으로 화면 띄우기", "image test 4", LocalDateTime.parse("2022-02-22T22:15:30"), "N"));
                 } else if ("naverUser2".equals(allMissionParticipant.getUserId())) {
                     saveMissionStateDtoList.add(createMissionState(1, allMissionParticipant, "개발자가 되기 위한 첫걸음", "나는 어떤 개발자가 되려는가", "image test 1", "Y"));
                     saveMissionStateDtoList.add(createMissionState(2, allMissionParticipant, "어떤 공부부터 해야할까", "웹 개발자가 되기 위해 어떤 공부부터 시작해야할까", "image test 2", "N"));
@@ -317,6 +317,30 @@ public class DbMissionInsert {
                 .submittedMissionDesc(submittedMissionDesc)
                 .submittedMissionImage(submittedMissionImage)
                 .submittedMissionDt(LocalDateTime.now())
+                .approvalYn(approvalYn)
+                .approvalDt(LocalDateTime.now())
+                .build()
+                .toEntity();
+
+        return requestMissionStateDto;
+    }
+
+    private MissionState createMissionState2(
+            long missionStateWeek,
+            MissionParticipants missionParticipants,
+            String submittedMissionNm,
+            String submittedMissionDesc,
+            String submittedMissionImage,
+            LocalDateTime submittedMissionDt,
+            String approvalYn
+    ) {
+        MissionState requestMissionStateDto = RequestMissionStateDto.builder()
+                .missionStateWeek(missionStateWeek)
+                .missionParticipants(missionParticipants)
+                .submittedMissionNm(submittedMissionNm)
+                .submittedMissionDesc(submittedMissionDesc)
+                .submittedMissionImage(submittedMissionImage)
+                .submittedMissionDt(submittedMissionDt)
                 .approvalYn(approvalYn)
                 .approvalDt(LocalDateTime.now())
                 .build()
