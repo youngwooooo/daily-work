@@ -261,6 +261,39 @@ public class MissionApiController {
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 제출이 완료되었습니다.").build(), HttpStatus.CREATED);
     }
 
+    /**
+     * 나의 제출 미션 단건 조회
+     * @param missionStateSeq
+     * @param missionStateWeek
+     * @return
+     */
+    @GetMapping("/missionState/{missionStateWeek}/{missionStateSeq}")
+    public ResponseEntity<ResponseDto> detailMissionState(@PathVariable("missionStateSeq") long missionStateSeq
+                                                        , @PathVariable("missionStateWeek") long missionStateWeek){
+        ResponseMissionStateDto findOneMissionState = missionStateService.findOneMissionState(missionStateSeq, missionStateWeek);
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).message("나의 제출 미션 조회 성공").data(findOneMissionState).build(), HttpStatus.OK);
+    }
+
+    /**
+     * 나의 제출 미션 수정
+     * @param missionStateSeq
+     * @param missionStateWeek
+     * @param requestMissionStateDto
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @PatchMapping("/missionState/{missionStateWeek}/{missionStateSeq}")
+    public ResponseEntity<ResponseDto> modifyMissionState(@PathVariable("missionStateSeq") long missionStateSeq
+                                                        , @PathVariable("missionStateWeek") long missionStateWeek
+                                                        , @RequestPart(value = "requestMissionStateDto") RequestMissionStateDto requestMissionStateDto
+                                                        , @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+
+        String result = missionStateService.modify(requestMissionStateDto, file);
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("제출 미션 수정이 완료되었습니다.").build(), HttpStatus.CREATED);
+    }
+
     // 테스트 용 api
     @GetMapping("/mission/test/{missionSeq}")
     public List<ResponseMissionStateDto> test(@PathVariable("missionSeq") long missionSeq){
