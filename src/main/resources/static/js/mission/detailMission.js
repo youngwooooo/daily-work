@@ -104,6 +104,7 @@ $(function(){
     $(document).on("click", "button[name='btn-expulsion-participants']", function(){
         var thisParent = $(this).parent().parent();
         var participantsInfoResultDiv = $(".mission-participants-info-result");
+        var missionStateInfoTr = $(".tab-pane .table tbody tr");
 
         var missionSeq = $("#missionSeq").val();
         var userSeq = $(this).parents(".mission-participants-management-div").find("input[name='participantsSeq']").val();
@@ -132,6 +133,12 @@ $(function(){
                     }
                 }
 
+                missionStateInfoTr.each(function(){
+                    var missionStateUser = $(this).find("input[name='participantsId']").val();
+                    if(missionStateUser == userId){
+                        $(this).remove();
+                    }
+                });
             }
             , error : function(xhr){
                 console.log(xhr);
@@ -381,6 +388,20 @@ $(function(){
         reader.readAsDataURL(changeImg);
     });
 
+    // [미션 제출] 숨기기
+    $(".tab-pane .table tbody tr input[name='participantsId']").each(function(){
+        if($(this).val() == $("#userId").val()){
+            $(this).parents("tr").find("input[name='week-date']").each(function(){
+                var now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
+                if($(this).val() == now){
+                    if($(this).siblings("input[name='missionStateSeq']").length != 0){
+                        $(".mission-submit-btn-div").css("display", "none");
+                    }
+                }
+            });
+        }
+    });
+
 
     // [미션 제출] - [제출]
     $("#btn-create-submit-mission").on("click", function(){
@@ -438,7 +459,6 @@ $(function(){
                 , enctype: "multipart/form-data"
                 , success : function(result){
                     if(result.status = "201"){
-                        alert(result.message);
                         location.reload();
                     }
                 }
@@ -470,6 +490,106 @@ $(function(){
         $(".approve-wait-submit-mission-wrapper").css("display", "block");
     }
 
+    /************************************************************************************************/
+
+    /* 나의 제출 미션 관련 js */
+    // 나의 제출 미션 클릭 시, 해당 미션 정보 modal 띄우기
+    $(".my-submit-mission-div .card").on("click", function(){
+        var missionStateSeq = $(this).find("input[name='myMissionStateSeq']").val();
+        var missionStateWeek = $(this).find("input[name='myMissionStateWeek']").val();
+
+        $.ajax({
+            url : "/missionState/" + missionStateWeek + "/" + missionStateSeq
+            , type : "get"
+            , dataType : "json"
+            , success : function(result){
+                if(result.status == 200){
+                    console.log(result);
+                    $("#my-submit-mission-modal #my-submittedMissionSeq").val(missionStateSeq);
+                    $("#my-submit-mission-modal #my-submittedMissionWeek").val(missionStateWeek);
+                    $("#my-submit-mission-modal #my-submittedMissionNm").val(result.data.submittedMissionNm);
+                    $("#my-submit-mission-modal #my-submittedMissionDesc").val(result.data.submittedMissionDesc);
+                    $("#my-submit-mission-modal #my-submit-mission-image").attr("src", result.data.submittedMissionImage);
+
+                    if(result.data.approvalYn == "Y"){
+                        $("#my-submit-mission-modal #btn-modify-my-submit-mission").css("display", "none");
+                    }
+
+                    $("#my-submit-mission-modal").show();
+                }
+            }
+            , error : function(xhr){
+                console.log(xhr);
+            }
+        });
+    });
+
+    // 나의 제출 미션 modal - div 클릭 시
+    $(".my-submit-mission-image-div").on("click", function(){
+        $("#my-file").click();
+    });
+
+    // 나의 제출 미션 modal -  미션 제출 이미지 변경 시 미리보기
+    $("#my-file").on("change", function(){
+        var changeImg = $(this)[0].files[0];
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+           if(changeImg.type.match("image/*")){
+             $('#my-submit-mission-image').attr("src", e.target.result);
+           }else {
+             alert("이미지 형식의 파일만 가능합니다.");
+           }
+        }
+        reader.readAsDataURL(changeImg);
+    });
+
+    // 나의 제출 미션 - [닫기]
+    $("#btn-cancel-my-submit-mission").on("click", function(){
+        $("#my-submit-mission-modal").hide();
+    });
+
+    // 나의 제출 미션 - [수정]
+    $("#btn-modify-my-submit-mission").on("click", function(){
+        if(validatingModifyMySubmitMission()){
+
+            var missionStateSeq = $(this).parents("#my-submit-mission-modal").find("#my-submittedMissionSeq").val();
+            var missionStateWeek = $(this).parents("#my-submit-mission-modal").find("#my-submittedMissionWeek").val();
+            var submittedMissionNm = $(this).parents("#my-submit-mission-modal").find("#my-submittedMissionNm").val();
+            var submittedMissionDesc = $(this).parents("#my-submit-mission-modal").find("#my-submittedMissionDesc").val();
+
+            var data = {
+               "missionStateSeq" : missionStateSeq
+                , "missionStateWeek" : missionStateWeek
+                , "submittedMissionNm" : submittedMissionNm
+                , "submittedMissionDesc" : submittedMissionDesc
+            };
+
+            var formData = new FormData();
+            formData.append("file", $("#my-file")[0].files[0]);
+            formData.append("requestMissionStateDto", new Blob([JSON.stringify(data)] , {type: "application/json"}));
+
+            $.ajax({
+                url : "/missionState/" + missionStateWeek + "/" + missionStateSeq
+                , type : "patch"
+                , data : formData
+                , processData: false
+                , contentType: false
+                , enctype: "multipart/form-data"
+                , success : function(result){
+                    if(result.status = "201"){
+                        location.reload();
+                    }
+                }
+                , error : function(xhr){
+                    console.log(xhr);
+                }
+            });
+        }
+
+    });
+
+
 
     /************************************************************************************************/
 
@@ -495,6 +615,24 @@ function validatingSubmitMission(){
 
     if(submittedMissionImage == "" || submittedMissionImage == null){
         alert("미션을 완료한 이미지를 올려주세요.");
+        return false;
+    }
+
+    return true;
+}
+
+// 나의 제출 미션 - [수정] - 유효성 검사
+function validatingModifyMySubmitMission(){
+  var submittedMissionNm = $("#my-submittedMissionNm").val();
+  var submittedMissionDesc = $("#my-submittedMissionDesc").val();
+
+    if(submittedMissionNm == "" || submittedMissionNm == null){
+        alert("제목을 입력해주세요.");
+        return false;
+    }
+
+    if(submittedMissionDesc == "" || submittedMissionDesc == null){
+        alert("미션에 대한 간단한 설명을 적어주세요.");
         return false;
     }
 
