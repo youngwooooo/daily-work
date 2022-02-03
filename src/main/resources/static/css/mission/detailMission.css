@@ -167,6 +167,26 @@
     margin-bottom: 30px;
 }
 
+.my-submit-mission-div .col-sm-4 {
+    margin-bottom: 15px;
+}
+
+.my-submit-mission-div .card {
+    max-height: 370px;
+    min-height: 370px;
+}
+
+.my-submit-mission-div .card:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 10px 3px #dddddd;
+}
+
+.my-submit-mission-div .card-body p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .my-submit-mission-div .col-sm-12
 , .approve-wait-submit-mission-div .col-sm-12 {
     text-align: center;
@@ -193,7 +213,7 @@
 }
 
 /* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] Modal */
-#response-modal, #mission-participants-management-modal, #mission-submit-modal {
+#response-modal, #mission-participants-management-modal, #mission-submit-modal, #my-submit-mission-modal {
     background-color:rgba(0,0,0,.3);
 }
 
@@ -272,17 +292,20 @@
     margin-top: 6px;
 }
 
-/* 미션 제출 Modal */
-#mission-submit-modal input, #mission-submit-modal textarea {
+/* [미션 제출], [나의 제출 미션] Modal */
+#mission-submit-modal input, #mission-submit-modal textarea
+, #my-submit-mission-modal input, #my-submit-mission-modal textarea {
     border: none;
 }
 
-#mission-submit-modal .submit-mission-image-div {
+#mission-submit-modal .submit-mission-image-div
+, #my-submit-mission-modal .my-submit-mission-image-div {
     border: 1px dashed #dddddd;
     height: 200px;
 }
 
-#mission-submit-modal .submit-mission-image-div:hover {
+#mission-submit-modal .submit-mission-image-div:hover
+, #my-submit-mission-modal .my-submit-mission-image-div:hover {
     cursor: pointer;
 }
 
@@ -290,6 +313,11 @@
     width: 100%;
     height: 100%;
     display: none;
+}
+
+#my-submit-mission-modal .my-submit-mission-image-div img {
+    width: 100%;
+    height: 100%;
 }
 
 #mission-submit-modal .submit-mission-image-div .submit-mission-image-desc {
@@ -302,15 +330,17 @@
     color: #cfcfcf;
 }
 
-#mission-submit-modal .submit-mission-image-info-div #file {
+#mission-submit-modal .submit-mission-image-info-div #file
+, #my-submit-mission-modal .my-submit-mission-image-info-div #my-file {
     display: none;
 }
 
-#mission-submit-modal button {
+#mission-submit-modal button, #mission-submit-modal button {
     width: 20%;
 }
 
-#mission-submit-modal #btn-cancel-submit-mission {
+#mission-submit-modal #btn-cancel-submit-mission
+, #my-submit-mission-modal #btn-cancel-my-submit-mission {
     border-color: #dddddd;
 }
 

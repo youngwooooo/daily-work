@@ -113,19 +113,14 @@
                                 </td>
                                 <td th:each="date : ${dateOfWeek.get(weekStat.index)}" style="text-align: center;">
                                     <input type="hidden" name="week-date" th:value="${date}">
-                                    <th:block th:each="allMissionState : ${allMissionState}" th:object="${allMissionState}" th:if="${allMissionState.missionStateWeek == weekStat.count}">
-                                        <th:block th:if="${participants.user.userId == allMissionState.userId
+                                    <th:block th:each="allMissionState : ${allMissionState}" th:object="${allMissionState}"
+                                              th:if="${allMissionState.missionStateWeek == weekStat.count
+                                                        and allMissionState.userId == participants.user.userId
                                                         and #temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd').equals(date.toString())}"
-                                                  th:switch="${allMissionState.approvalYn}">
-                                            <i th:case="Y" class="fas fa-check-circle fa-2x"></i>
-                                            <i th:case="N" class="fas fa-dot-circle fa-2x"></i>
-                                        </th:block>
-
-                                        <th:block th:if="${participants.user.userId == allMissionState.userId
-                                                        and !#temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd').equals(date.toString())}">
-                                            <i class="fas fa-times-circle fa-2x"></i>
-                                        </th:block>
-
+                                              th:switch="${allMissionState.approvalYn}">
+                                        <input type="hidden" name="missionStateSeq" th:value="${allMissionState.missionStateSeq}">
+                                        <i th:case="Y" class="fas fa-check-circle fa-2x"></i>
+                                        <i th:case="N" class="fas fa-dot-circle fa-2x"></i>
                                     </th:block>
                                 </td>
                             </tr>
@@ -134,17 +129,6 @@
                     </div>
                 </th:block>
             </div>
-            <script th:inline="javascript">
-                var aa = [[${allMissionState}]];
-                console.log(aa);
-                aa.forEach(function(item){
-                    if(item.missionStateWeek == 1){
-                        console.log(item);
-                    }
-                });
-
-            </script>
-
         </div>
 
         <br/>
@@ -199,6 +183,8 @@
                     <th:block th:each="myMissionState : ${myMissionState}" th:if="${#lists.size(myMissionState) > 0}">
                         <div class="col-sm-4">
                             <div class="card">
+                                <input type="hidden" name="myMissionStateSeq" th:value="${myMissionState.missionStateSeq}">
+                                <input type="hidden" name="myMissionStateWeek" th:value="${myMissionState.missionStateWeek}">
                                 <div class="card-header">
                                     <img class="card-img-top" th:src="${myMissionState.submittedMissionImage}" alt="Card image">
                                 </div>
@@ -343,6 +329,34 @@
             </div>
         </div>
     </div>
+
+    <!-- 나의 미션 현황 상세 modal -->
+    <div class="modal" id="my-submit-mission-modal">
+        <input type="hidden" id="my-submittedMissionSeq">
+        <input type="hidden" id="my-submittedMissionWeek">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <input type="text" id="my-submittedMissionNm" class="form-control" placeholder="제목을 입력하세요.">
+                    <hr/>
+                    <textarea id="my-submittedMissionDesc" class="form-control" rows="10" placeholder="완료한 미션에 대한 간단한 설명을 적어주세요."></textarea>
+                    <hr/>
+                    <div class="my-submit-mission-image-info-div">
+                        <div class="my-submit-mission-image-div">
+                            <img id="my-submit-mission-image" alt="mission-image">
+                        </div>
+                        <input type="file" id="my-file" accept="image/*">
+                    </div>
+                    <hr/>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="btn-modify-my-submit-mission">수정</button>
+                        <button type="button" class="btn btn-light" id="btn-cancel-my-submit-mission">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 <!-- container end -->
