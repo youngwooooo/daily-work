@@ -2,7 +2,12 @@ package com.work.daily.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.work.daily.domain.pk.MissionStatePK;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,6 +28,7 @@ public class MissionState {
     private long missionStateWeek;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumns({
             @JoinColumn(name = "MISSION_SEQ" , referencedColumnName = "missionSeq"),
             @JoinColumn(name = "USER_SEQ", referencedColumnName = "userSeq"),
@@ -49,5 +55,10 @@ public class MissionState {
     @Column(columnDefinition = "varchar(60) comment '승인일자'")
     private LocalDateTime approvalDt;
 
-
+    // 나의 제출 미션 수정(제목, 내용, 이미지)
+    public void modifyMissionState(String submittedMissionNm, String submittedMissionDesc, String submittedMissionImage){
+        this.submittedMissionNm = submittedMissionNm;
+        this.submittedMissionDesc = submittedMissionDesc;
+        this.submittedMissionImage = submittedMissionImage;
+    }
 }
