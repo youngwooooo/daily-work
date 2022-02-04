@@ -38,11 +38,15 @@
                     <img class="card-img-top" th:src="${mission.missionImage}" alt="mission-image">
                     <div class="card-body">
                         <h4 class="card-title" th:text="${mission.missionNm}">미션 제목</h4>
-                        <div class="mission-writer-image-div">
-                            <img class="mission-writer-image" th:src="${mission.user.profileImage}" alt="mission-writer-image">
-                            <p class="mission-writer" th:text="${mission.user.userNm}">미션 작성자</p>
-                        </div>
                     </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="mission-writer-image-div">
+                                <img class="mission-writer-image" th:src="${mission.user.profileImage}" alt="mission-writer-image">
+                                <p class="mission-writer" th:text="${mission.user.userNm}">미션 작성자</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
