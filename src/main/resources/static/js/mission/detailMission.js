@@ -518,6 +518,38 @@ $(function(){
         });
     });
 
+    // 승인 대기 미션 modal - [승인]
+    $("#btn-approval-wait-submit-mission").on("click", function(){
+        var missionStateSeq = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-submittedMissionSeq").val();
+        var missionStateWeek = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-submittedMissionWeek").val();
+        var approvalYn = "Y";
+        var approvalDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+
+        var data = {
+            "missionStateSeq" : missionStateSeq
+            , "missionStateWeek" : missionStateWeek
+            , "approvalYn" : approvalYn
+            , "approvalDt" : approvalDt
+        };
+
+        $.ajax({
+            url : "/missionState/" + missionStateWeek + "/" + missionStateSeq
+            , type : "patch"
+            , data : JSON.stringify(data)
+            , contentType: "application/json; charset=UTF-8"
+            , dataType : "json"
+            , success : function(result){
+                if(result.status == 200){
+                    location.reload();
+                }
+            }
+            , error : function(xhr){
+                console.log(xhr);
+            }
+        });
+
+    });
+
     // 승인 대기 미션 modal - [닫기]
     $("#btn-cancel-approval-wait-submit-mission").on("click", function(){
         $(this).parents("#approval-wait-submit-mission-modal").hide();
@@ -619,14 +651,14 @@ $(function(){
             formData.append("requestMissionStateDto", new Blob([JSON.stringify(data)] , {type: "application/json"}));
 
             $.ajax({
-                url : "/missionState/" + missionStateWeek + "/" + missionStateSeq
+                url : "/my-missionState/" + missionStateWeek + "/" + missionStateSeq
                 , type : "patch"
                 , data : formData
                 , processData: false
                 , contentType: false
                 , enctype: "multipart/form-data"
                 , success : function(result){
-                    if(result.status = "201"){
+                    if(result.status = 200){
                         location.reload();
                     }
                 }
