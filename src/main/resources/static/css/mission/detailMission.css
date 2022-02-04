@@ -167,24 +167,36 @@
     margin-bottom: 30px;
 }
 
-.my-submit-mission-div .col-sm-4 {
+.my-submit-mission-div .col-sm-4
+, .approve-wait-submit-mission-div .col-sm-4 {
     margin-bottom: 15px;
 }
 
-.my-submit-mission-div .card {
-    max-height: 370px;
-    min-height: 370px;
+.my-submit-mission-div .card
+, .approve-wait-submit-mission-div .card {
+    max-height: 360px;
+    min-height: 360px;
 }
 
-.my-submit-mission-div .card:hover {
+.my-submit-mission-div .card:hover
+, .approve-wait-submit-mission-div .card:hover {
     cursor: pointer;
     box-shadow: 1px 1px 10px 3px #dddddd;
 }
 
-.my-submit-mission-div .card-body p {
+.my-submit-mission-div .card .card-img-top
+, .approve-wait-submit-mission-div .card .card-img-top {
+    max-height: 195px;
+    min-height: 195px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.my-submit-mission-div .card-body p
+, .approve-wait-submit-mission-div .card-body p {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    margin: 0px;
 }
 
 .my-submit-mission-div .col-sm-12
@@ -200,20 +212,28 @@
     color: gray;
 }
 
-.my-submit-mission-div .card-body p {
-    margin: 0px;
-}
-
-.my-submit-mission-div .list-group .list-group-item span {
+.my-submit-mission-div .list-group .list-group-item span
+, .approve-wait-submit-mission-div .list-group .list-group-item span {
     color: gray;
 }
 
-.my-submit-mission-div .list-group .list-group-item span:nth-child(2) {
+.approve-wait-submit-mission-div .list-group-item img {
+    width: 30px;
+    border-radius: 50%;
+}
+
+.my-submit-mission-div .list-group .list-group-item span:nth-child(2)
+, .approve-wait-submit-mission-div .list-group .list-group-item span:nth-child(2) {
     float: right;
 }
 
+.approve-wait-submit-mission-div .list-group-item:first-child span:nth-child(2) {
+    float: none;
+    vertical-align: middle;
+}
+
 /* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] Modal */
-#response-modal, #mission-participants-management-modal, #mission-submit-modal, #my-submit-mission-modal {
+#response-modal, #mission-participants-management-modal, #mission-submit-modal, #my-submit-mission-modal, #approval-wait-submit-mission-modal {
     background-color:rgba(0,0,0,.3);
 }
 
@@ -245,7 +265,7 @@
 }
 
 .response-modal-btn-div #btn-main-form
-, .response-modal-btn-div button[name="btn-cancel"] {
+, .response-modal-btn-div button[name="btn-cancel-response-modal"] {
     border-color: #dae0e5;
 }
 
@@ -292,20 +312,24 @@
     margin-top: 6px;
 }
 
-/* [미션 제출], [나의 제출 미션] Modal */
+/* [미션 제출], [나의 제출 미션], [승인 대기 미션] Modal */
 #mission-submit-modal input, #mission-submit-modal textarea
-, #my-submit-mission-modal input, #my-submit-mission-modal textarea {
+, #my-submit-mission-modal input, #my-submit-mission-modal textarea
+, #approval-wait-submit-mission-modal input, #approval-wait-submit-mission-modal textarea {
     border: none;
+    background-color: white;
 }
 
 #mission-submit-modal .submit-mission-image-div
-, #my-submit-mission-modal .my-submit-mission-image-div {
+, #my-submit-mission-modal .my-submit-mission-image-div
+, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div {
     border: 1px dashed #dddddd;
     height: 200px;
 }
 
 #mission-submit-modal .submit-mission-image-div:hover
-, #my-submit-mission-modal .my-submit-mission-image-div:hover {
+, #my-submit-mission-modal .my-submit-mission-image-div:hover
+, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div:hover {
     cursor: pointer;
 }
 
@@ -315,7 +339,8 @@
     display: none;
 }
 
-#my-submit-mission-modal .my-submit-mission-image-div img {
+#my-submit-mission-modal .my-submit-mission-image-div img
+, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div img {
     width: 100%;
     height: 100%;
 }
@@ -335,15 +360,25 @@
     display: none;
 }
 
-#mission-submit-modal button, #mission-submit-modal button {
+#mission-submit-modal button, #my-submit-mission-modal button, #approval-wait-submit-mission-modal button {
     width: 20%;
 }
 
 #mission-submit-modal #btn-cancel-submit-mission
-, #my-submit-mission-modal #btn-cancel-my-submit-mission {
+, #my-submit-mission-modal #btn-cancel-my-submit-mission
+, #approval-wait-submit-mission-modal #btn-cancel-approval-wait-submit-mission {
     border-color: #dddddd;
 }
 
+/* 이미지 열기 modal */
+#open-image-modal .modal-dialog {
+    max-width: 75%;
+}
+
+#open-image-modal img {
+    width: 100%;
+    max-height: 800px;
+}
 
 
 

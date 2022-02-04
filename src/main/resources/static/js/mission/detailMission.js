@@ -490,6 +490,51 @@ $(function(){
         $(".approve-wait-submit-mission-wrapper").css("display", "block");
     }
 
+    // 승인 대기 미션 클릭시, 해당 미션 정보 modal 띄우기
+    $(".approve-wait-submit-mission-div .card").on("click", function(){
+        var missionStateSeq = $(this).find("input[name='approvalMissionStateSeq']").val();
+        var missionStateWeek = $(this).find("input[name='approvalMissionStateWeek']").val();
+
+        $.ajax({
+            url : "/missionState/" + missionStateWeek + "/" + missionStateSeq
+            , type : "get"
+            , dataType : "json"
+            , success : function(result){
+                if(result.status == 200){
+                    console.log(result);
+                    $("#approval-wait-submit-mission-modal #approval-wait-submittedMissionSeq").val(missionStateSeq);
+                    $("#approval-wait-submit-mission-modal #approval-wait-submittedMissionWeek").val(missionStateWeek);
+                    //$("#approval-wait-submit-mission-modal #approval-wait-approvalYn").val(result.data.approvalYn);
+                    $("#approval-wait-submit-mission-modal #approval-wait-submittedMissionNm").val(result.data.submittedMissionNm);
+                    $("#approval-wait-submit-mission-modal #approval-wait-submittedMissionDesc").val(result.data.submittedMissionDesc);
+                    $("#approval-wait-submit-mission-modal #approval-wait-submit-mission-image").attr("src", result.data.submittedMissionImage);
+
+                    $("#approval-wait-submit-mission-modal").show();
+                }
+            }
+            , error : function(xhr){
+                console.log(xhr);
+            }
+        });
+    });
+
+    // 승인 대기 미션 modal - [닫기]
+    $("#btn-cancel-approval-wait-submit-mission").on("click", function(){
+        $(this).parents("#approval-wait-submit-mission-modal").hide();
+    });
+
+    // 승인 대기 미션 modal - 이미지 div 클릭 시
+    $(".approval-wait-submit-mission-image-div").on("click", function(){
+        var openImage = $(this).find("#approval-wait-submit-mission-image").attr("src")
+        $("#open-image-modal img").attr("src", openImage);
+        $("#open-image-modal").show();
+    });
+
+    // 이미지 modal 닫기
+    $("#btn-close-open-image-modal").on("click", function(){
+        $(this).parents("#open-image-modal").hide();
+    });
+
     /************************************************************************************************/
 
     /* 나의 제출 미션 관련 js */
@@ -507,12 +552,14 @@ $(function(){
                     console.log(result);
                     $("#my-submit-mission-modal #my-submittedMissionSeq").val(missionStateSeq);
                     $("#my-submit-mission-modal #my-submittedMissionWeek").val(missionStateWeek);
+                    $("#my-submit-mission-modal #my-approvalYn").val(result.data.approvalYn);
                     $("#my-submit-mission-modal #my-submittedMissionNm").val(result.data.submittedMissionNm);
                     $("#my-submit-mission-modal #my-submittedMissionDesc").val(result.data.submittedMissionDesc);
                     $("#my-submit-mission-modal #my-submit-mission-image").attr("src", result.data.submittedMissionImage);
 
                     if(result.data.approvalYn == "Y"){
                         $("#my-submit-mission-modal #btn-modify-my-submit-mission").css("display", "none");
+                        $("#my-submit-mission-modal .my-submit-mission-image-div").css("cursor", "default");
                     }
 
                     $("#my-submit-mission-modal").show();
@@ -526,7 +573,9 @@ $(function(){
 
     // 나의 제출 미션 modal - div 클릭 시
     $(".my-submit-mission-image-div").on("click", function(){
-        $("#my-file").click();
+        if($(this).parents("#my-submit-mission-modal").find("#my-approvalYn").val() != 'Y'){
+            $("#my-file").click();
+        }
     });
 
     // 나의 제출 미션 modal -  미션 제출 이미지 변경 시 미리보기
