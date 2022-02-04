@@ -31,7 +31,13 @@
 }
 
 .all-mission-div .mission-div .mission {
+    min-height: 372px;
+    max-height: 372px;
+}
+
+.all-mission-div .mission-div .mission:hover {
     cursor: pointer;
+    box-shadow: 1px 1px 10px 3px #dddddd;
 }
 
 .all-mission-div .mission-div .mission .card-img-top {
@@ -54,108 +60,4 @@
     padding-top: 5px;
     margin-left: 10px;
     margin-bottom: 0px;
-}
-
-/* 미션 만들기 CSS */
-.create-mission-wrapper-div {
-    padding-top: 45px;
-    padding-bottom: 45px;
-}
-.create-mission-wrapper-div h3 {
-    margin-bottom: 30px;
-}
-
-.create-mission-form-div .table th {
-    vertical-align: middle;
-}
-
-.create-mission-form-div .table tr:last-child {
-    border-bottom: 1px solid #dee2e6;
-}
-
-.create-mission-form-div .table .mission-title,
-.create-mission-form-div .table .mission-desc {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
-.create-mission-form-div .table .mission-title {
-    border-top: none;
-}
-
-.create-mission-form-div .table #missionNm {
-    border: none;
-    font-size: 1.5rem;
-    height: 50px;
-}
-
-.ck-editor__editable {
-    min-height: 500px;
-}
-
-.create-mission-form-div .table .mission-image-td {
-    display: flex;
-}
-
-.create-mission-form-div .table .mission-image-div {
-    width: 50%;
-    border: 1px dashed #dddddd;
-    height: 200px;
-}
-
-.create-mission-form-div .table .mission-image-div:hover {
-    cursor: pointer;
-    background-color: #efefef;
-}
-
-.create-mission-form-div .table .mission-image-div #mission-image {
-    width: 100%;
-    height: 100%;
-    display: none;
-}
-
-.create-mission-form-div .table .mission-image-desc-div {
-    margin: auto;
-}
-
-.create-mission-form-div .table #file {
-    display: none;
-}
-
-.create-mission-form-div .table .mission-image-desc-div p,
-.create-mission-form-div .table .mission-date-div p {
-    margin-bottom: 0px;
-    color: gray;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-.create-mission-form-div .table .mission-image-desc-div p:first-child {
-    color: #007bff;
-}
-
-.create-mission-form-div .table .form-check {
-    display: inline;
-    margin-right: 20px;
-}
-
-.create-mission-form-div .table .form-check .form-check-label {
-    cursor: pointer;
-}
-
-.mission-button-div {
-    margin-top: 50px;
-    margin-bottom: 20px;
-    display: flex;
-}
-
-.mission-button-div button {
-    height: 50px;
-    margin-right: 5px;
-    margin-left: 5px;
-    width: 150px;
-}
-
-.mission-button-div #btn-cancel {
-    border: 1px solid #dddddd;
 }
