@@ -64,9 +64,9 @@
 
             <div class="mission-submit-info-div">
                 <div class="mission-submit-info-color">
-                    <span><i class="fas fa-square" style="color: red;"></i>&nbsp;미제출</span>
-                    <span><i class="fas fa-square" style="color: blue;"></i>&nbsp;제출</span>
-                    <span><i class="fas fa-square" style="color: green;"></i>&nbsp;승인</span>
+                    <span><i class="fas fa-times-circle" style="color: #f55858;"></i>&nbsp;미제출</span>
+                    <span><i class="fas fa-dot-circle" style="color: #007bff;"></i>&nbsp;제출</span>
+                    <span><i class="fas fa-check-circle" style="color: #00c700;"></i>&nbsp;승인</span>
                 </div>
                 <h4>미션 현황</h4>
                 <div class="mission-submit-btn-div">
@@ -111,7 +111,7 @@
                                         <span th:text="${participants.user.userNm}"></span>
                                     </div>
                                 </td>
-                                <td th:each="date : ${dateOfWeek.get(weekStat.index)}" style="text-align: center;">
+                                <td class="a" th:each="date : ${dateOfWeek.get(weekStat.index)}" style="text-align: center;">
                                     <input type="hidden" name="week-date" th:value="${date}">
                                     <th:block th:each="allMissionState : ${allMissionState}" th:object="${allMissionState}"
                                               th:if="${allMissionState.missionStateWeek == weekStat.count
@@ -119,8 +119,8 @@
                                                         and #temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd').equals(date.toString())}"
                                               th:switch="${allMissionState.approvalYn}">
                                         <input type="hidden" name="missionStateSeq" th:value="${allMissionState.missionStateSeq}">
-                                        <i th:case="Y" class="fas fa-check-circle fa-2x"></i>
-                                        <i th:case="N" class="fas fa-dot-circle fa-2x"></i>
+                                        <i th:case="Y" class="fas fa-check-circle fa-2x" style="color: #00c700;"></i>
+                                        <i th:case="N" class="fas fa-dot-circle fa-2x" style="color: #007bff;"></i>
                                     </th:block>
                                 </td>
                             </tr>
@@ -130,6 +130,15 @@
                 </th:block>
             </div>
         </div>
+        <script th:inline="javascript">
+            var allMissionState = [[${allMissionState}]];
+
+            $(".tab-pane .table .a").each(function(){
+                if($(this).find("input[name='missionStateSeq']").length == 0){
+                    $(this).append('<i class="fas fa-times-circle fa-2x" style="color: #f55858;"></i>');
+                }
+            });
+        </script>
 
         <br/>
 
@@ -138,17 +147,23 @@
             <br/>
             <div class="row approve-wait-submit-mission-div">
 
-                <th:block th:if="${#lists.size(allMissionState) > 0}">
-                    <th:block th:each="allMissionState : ${allMissionState}" th:object="${allMissionState}" th:if="${allMissionState.approvalYn == 'N'}">
+                <th:block th:each="allMissionState : ${allMissionState}">
+                    <th:block th:if="${allMissionState.approvalYn == 'N'}">
                         <div class="col-sm-4">
                             <div class="card">
-                                <div class="card-header">
-                                    <img class="card-img-top" th:src="${allMissionState.submittedMissionImage}" alt="Card image">
-                                </div>
+                                <input type="hidden" name="approvalMissionStateSeq" th:value="${allMissionState.missionStateSeq}">
+                                <input type="hidden" name="approvalMissionStateWeek" th:value="${allMissionState.missionStateWeek}">
+                                <img class="card-img-top" th:src="${allMissionState.submittedMissionImage}" alt="Card image">
                                 <div class="card-body">
                                     <p th:text="${allMissionState.submittedMissionNm}"></p>
                                 </div>
                                 <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"
+                                        th:each="participants : ${missionParticipants}" th:object="${participants}"
+                                        th:if="${participants.user.userId == allMissionState.userId}">
+                                        <img th:src="${participants.user.profileImage}" alt="participants-image">
+                                        <span th:text="${participants.user.userNm}"></span>
+                                    </li>
                                     <li class="list-group-item">
                                         <span th:text="제출완료"></span>
                                         <span th:text="${#temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd HH:mm')}"></span>
@@ -158,15 +173,26 @@
                         </div>
                     </th:block>
                 </th:block>
-
-                <th:block th:unless="${#lists.size(allMissionState) > 0}">
-                    <div class="col-sm-12">
-                        <p class="empty-approve-wait-submit-mission-desc">승인 대기 중인 미션이 존재하지 않습니다.</p>
-                    </div>
-                </th:block>
-
             </div>
         </div>
+        <script th:inline="javascript">
+            var allMissionState = [[${allMissionState}]];
+            var arrOfApprovalN = new Array();
+            var str = '<div class="col-sm-12">'
+                        + '<p class="empty-approve-wait-submit-mission-desc">승인 대기 중인 미션이 존재하지 않습니다.</p>'
+                        + '</div>';
+
+            allMissionState.forEach(function(item){
+                if(item.approvalYn == 'N'){
+                    arrOfApprovalN.push(item);
+                }
+            });
+
+            // 제출 미션이 존재하지 않거나, 승인 대기 미션이 존재하지 않으면
+            if(allMissionState.length == 0 || arrOfApprovalN.length <= 0){
+                $(".approve-wait-submit-mission-div").append(str);
+            }
+        </script>
 
         <br/>
 
@@ -185,9 +211,7 @@
                             <div class="card">
                                 <input type="hidden" name="myMissionStateSeq" th:value="${myMissionState.missionStateSeq}">
                                 <input type="hidden" name="myMissionStateWeek" th:value="${myMissionState.missionStateWeek}">
-                                <div class="card-header">
-                                    <img class="card-img-top" th:src="${myMissionState.submittedMissionImage}" alt="Card image">
-                                </div>
+                                <img class="card-img-top" th:src="${myMissionState.submittedMissionImage}" alt="Card image">
                                 <div class="card-body">
                                     <p th:text="${myMissionState.submittedMissionNm}"></p>
                                 </div>
@@ -330,10 +354,54 @@
         </div>
     </div>
 
+    <!-- 승인 대기 미션 modal -->
+    <div class="modal" id="approval-wait-submit-mission-modal">
+        <input type="hidden" id="approval-wait-submittedMissionSeq">
+        <input type="hidden" id="approval-wait-submittedMissionWeek">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <input type="text" id="approval-wait-submittedMissionNm" class="form-control" readonly="readonly">
+                    <hr/>
+                    <textarea id="approval-wait-submittedMissionDesc" class="form-control" rows="10" readonly="readonly"></textarea>
+                    <hr/>
+                    <div class="approval-wait-submit-mission-image-info-div">
+                        <div class="approval-wait-submit-mission-image-div">
+                            <img id="approval-wait-submit-mission-image" alt="mission-image">
+                        </div>
+                    </div>
+                    <hr/>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="btn-approval-wait-submit-mission">승인</button>
+                        <button type="button" class="btn btn-danger" id="btn-return-approval-wait-submit-mission">반려</button>
+                        <button type="button" class="btn btn-light" id="btn-cancel-approval-wait-submit-mission">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 승인 대기 미션 - 이미지 div 클릭 시, 해당 이미지를 크게 보여주는 modal -->
+    <div class="modal" id="open-image-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="btn-close-open-image-modal">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img alt="approval-mission-image">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 나의 미션 현황 상세 modal -->
     <div class="modal" id="my-submit-mission-modal">
         <input type="hidden" id="my-submittedMissionSeq">
         <input type="hidden" id="my-submittedMissionWeek">
+        <input type="hidden" id="my-approvalYn">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
