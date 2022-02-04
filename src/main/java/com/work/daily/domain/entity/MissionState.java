@@ -55,8 +55,14 @@ public class MissionState {
     @Column(columnDefinition = "varchar(60) comment '승인일자'")
     private LocalDateTime approvalDt;
 
+    // 승인여부 N -> Y 수정
+    public void modifyMissionStateApprovalYn(String approvalYn, LocalDateTime approvalDt){
+        this.approvalYn = approvalYn;
+        this.approvalDt = approvalDt;
+    }
+
     // 나의 제출 미션 수정(제목, 내용, 이미지)
-    public void modifyMissionState(String submittedMissionNm, String submittedMissionDesc, String submittedMissionImage){
+    public void modifyMyMissionState(String submittedMissionNm, String submittedMissionDesc, String submittedMissionImage){
         this.submittedMissionNm = submittedMissionNm;
         this.submittedMissionDesc = submittedMissionDesc;
         this.submittedMissionImage = submittedMissionImage;

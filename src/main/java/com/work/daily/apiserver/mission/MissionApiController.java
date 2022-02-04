@@ -262,7 +262,7 @@ public class MissionApiController {
     }
 
     /**
-     * 나의 제출 미션 단건 조회
+     * 미션현황 단건 조회
      * @param missionStateSeq
      * @param missionStateWeek
      * @return
@@ -275,7 +275,23 @@ public class MissionApiController {
     }
 
     /**
-     * 나의 제출 미션 수정
+     * 미션현황 승인여부 N -> Y 수정
+     * @param missionStateSeq
+     * @param missionStateWeek
+     * @return
+     */
+    @PatchMapping("/missionState/{missionStateWeek}/{missionStateSeq}")
+    public ResponseEntity<ResponseDto> modifyMissionStateApprovalYn(@PathVariable("missionStateSeq") long missionStateSeq
+                                                                    , @PathVariable("missionStateWeek") long missionStateWeek
+                                                                    , @RequestBody RequestMissionStateDto requestMissionStateDto){
+
+        String result = missionStateService.modifyMissionStateApprovalYn(requestMissionStateDto);
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).message("제출 미션현황 승인이 완료되었습니다.").data(result).build(), HttpStatus.OK);
+    }
+
+    /**
+     * 나의 제출 미션현황 수정
      * @param missionStateSeq
      * @param missionStateWeek
      * @param requestMissionStateDto
@@ -283,15 +299,15 @@ public class MissionApiController {
      * @return
      * @throws IOException
      */
-    @PatchMapping("/missionState/{missionStateWeek}/{missionStateSeq}")
-    public ResponseEntity<ResponseDto> modifyMissionState(@PathVariable("missionStateSeq") long missionStateSeq
+    @PatchMapping("/my-missionState/{missionStateWeek}/{missionStateSeq}")
+    public ResponseEntity<ResponseDto> modifyMyMissionState(@PathVariable("missionStateSeq") long missionStateSeq
                                                         , @PathVariable("missionStateWeek") long missionStateWeek
                                                         , @RequestPart(value = "requestMissionStateDto") RequestMissionStateDto requestMissionStateDto
                                                         , @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
-        String result = missionStateService.modify(requestMissionStateDto, file);
+        String result = missionStateService.modifyMyMissionState(requestMissionStateDto, file);
 
-        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("제출 미션 수정이 완료되었습니다.").build(), HttpStatus.CREATED);
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("제출 미션 수정이 완료되었습니다.").build(), HttpStatus.OK);
     }
 
     // 테스트 용 api
