@@ -40,6 +40,9 @@ $(function(){
         location.href = "/missions";
     });
 
+    // 미션 참여자 관리, 미션 수정, 미션 삭제 툴팁 보이기
+    $('[data-toggle="tooltip"]').tooltip();
+
     /************************************************************************************************/
 
     /* 미션 생성자 - [미션 참여자 관리] 관련 함수 */
@@ -359,7 +362,6 @@ $(function(){
         }
     });
 
-
     // [미션 제출] 클릭 시, Modal 띄우기
     $("#btn-mission-submit-modal").on("click", function(){
         $("#mission-submit-modal").show();
@@ -424,6 +426,7 @@ $(function(){
             var submittedMissionDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
             var approvalYn = "N";
             var approvalDt = null;
+            var rejectionYn = "N";
 
             // 미션 생성자와 로그인 회원이 같을 때
             if($("#missionCreatedUserId").val() == $("#userId").val()){
@@ -444,6 +447,7 @@ $(function(){
                 , "submittedMissionDt" : submittedMissionDt
                 , "approvalYn" : approvalYn
                 , "approvalDt" : approvalDt
+                , "rejectionYn" : rejectionYn
             };
 
             var formData = new FormData();
@@ -504,7 +508,6 @@ $(function(){
                     console.log(result);
                     $("#approval-wait-submit-mission-modal #approval-wait-submittedMissionSeq").val(missionStateSeq);
                     $("#approval-wait-submit-mission-modal #approval-wait-submittedMissionWeek").val(missionStateWeek);
-                    //$("#approval-wait-submit-mission-modal #approval-wait-approvalYn").val(result.data.approvalYn);
                     $("#approval-wait-submit-mission-modal #approval-wait-submittedMissionNm").val(result.data.submittedMissionNm);
                     $("#approval-wait-submit-mission-modal #approval-wait-submittedMissionDesc").val(result.data.submittedMissionDesc);
                     $("#approval-wait-submit-mission-modal #approval-wait-submit-mission-image").attr("src", result.data.submittedMissionImage);
@@ -530,6 +533,46 @@ $(function(){
             , "missionStateWeek" : missionStateWeek
             , "approvalYn" : approvalYn
             , "approvalDt" : approvalDt
+        };
+
+        $.ajax({
+            url : "/missionState/" + missionStateWeek + "/" + missionStateSeq
+            , type : "patch"
+            , data : JSON.stringify(data)
+            , contentType: "application/json; charset=UTF-8"
+            , dataType : "json"
+            , success : function(result){
+                if(result.status == 200){
+                    location.reload();
+                }
+            }
+            , error : function(xhr){
+                console.log(xhr);
+            }
+        });
+
+    });
+
+    // 승인 대기 미션 modal - [반려]
+    $("#btn-rejection-approval-wait-submit-mission").on("click", function(){
+        var missionStateSeq = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-submittedMissionSeq").val();
+        var missionStateWeek = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-submittedMissionWeek").val();
+        var rejectionYn = "Y";
+        var rejectionDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        var rejectionDesc = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-rejectionDesc").val();
+
+        // 반려 내용 유효성 검사
+        if($("#approval-wait-rejectionDesc").val() == "" || $("#approval-wait-rejectionDesc").val() == null || $("#approval-wait-rejectionDesc").val() == " "){
+            alert("반려 이유를 입력해주세요.");
+            return false;
+        }
+
+        var data = {
+            "missionStateSeq" : missionStateSeq
+            , "missionStateWeek" : missionStateWeek
+            , "rejectionYn" : rejectionYn
+            , "rejectionDt" : rejectionDt
+            , "rejectionDesc" : rejectionDesc
         };
 
         $.ajax({
@@ -594,6 +637,13 @@ $(function(){
                         $("#my-submit-mission-modal .my-submit-mission-image-div").css("cursor", "default");
                     }
 
+                    if(result.data.rejectionYn == "Y" && result.data.rejectionDesc != null){
+                        $("#my-submit-mission-modal #my-rejectionDesc").val(result.data.rejectionDesc);
+                        $("#my-submit-mission-modal #my-rejectionDesc").css("color", "#f55858");
+                        $("#my-submit-mission-modal .my-submit-mission-rejectionDesc").css("display", "block");
+                        $("#my-submit-mission-modal .my-submit-mission-rejectionDesc").after("<hr/>");
+                    }
+
                     $("#my-submit-mission-modal").show();
                 }
             }
@@ -638,12 +688,18 @@ $(function(){
             var missionStateWeek = $(this).parents("#my-submit-mission-modal").find("#my-submittedMissionWeek").val();
             var submittedMissionNm = $(this).parents("#my-submit-mission-modal").find("#my-submittedMissionNm").val();
             var submittedMissionDesc = $(this).parents("#my-submit-mission-modal").find("#my-submittedMissionDesc").val();
+            var rejectionYn = "N";
+            var rejectionDt = null;
+            var rejectionDesc = null;
 
             var data = {
                "missionStateSeq" : missionStateSeq
                 , "missionStateWeek" : missionStateWeek
                 , "submittedMissionNm" : submittedMissionNm
                 , "submittedMissionDesc" : submittedMissionDesc
+                , "rejectionYn" : rejectionYn
+                , "rejectionDt" : rejectionDt
+                , "rejectionDesc" : rejectionDesc
             };
 
             var formData = new FormData();
