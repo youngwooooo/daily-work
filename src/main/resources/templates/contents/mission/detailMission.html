@@ -36,9 +36,9 @@
                 <div style="display: flex">
                     <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
                     <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
-                    <button type="button" class="btn btn-success" id="btn-participants-management-modal">미션 참여자 관리</button>
-                    <button type="button" class="btn btn-primary" id="btn-modify-mission-form">미션 수정하기</button>
-                    <button type="button" class="btn btn-danger" id="btn-delete-mission-modal">미션 삭제하기</button>
+                    <button type="button" class="btn btn-light" id="btn-participants-management-modal" data-toggle="tooltip" title="미션 참여자 관리"><i class="fas fa-user-cog fa-2x"></i></button>
+                    <button type="button" class="btn btn-light" id="btn-modify-mission-form" data-toggle="tooltip" title="미션 수정"><i class="fas fa-edit fa-2x"></i></button>
+                    <button type="button" class="btn btn-light" id="btn-delete-mission-modal" data-toggle="tooltip" title="미션 삭제"><i class="fas fa-trash-alt fa-2x"></i></button>
                 </div>
             </div>
         </div>
@@ -148,7 +148,7 @@
             <div class="row approve-wait-submit-mission-div">
 
                 <th:block th:each="allMissionState : ${allMissionState}">
-                    <th:block th:if="${allMissionState.approvalYn == 'N'}">
+                    <th:block th:if="${allMissionState.approvalYn == 'N' and allMissionState.rejectionYn == 'N'}">
                         <div class="col-sm-4">
                             <div class="card">
                                 <input type="hidden" name="approvalMissionStateSeq" th:value="${allMissionState.missionStateSeq}">
@@ -183,7 +183,7 @@
                         + '</div>';
 
             allMissionState.forEach(function(item){
-                if(item.approvalYn == 'N'){
+                if(item.approvalYn == 'N' && item.rejectionYn == 'N'){
                     arrOfApprovalN.push(item);
                 }
             });
@@ -221,10 +221,14 @@
                                         <span th:text="${#temporals.format(myMissionState.submittedMissionDt, 'yyyy-MM-dd HH:mm')}"></span>
                                     </li>
                                     <li class="list-group-item">
-                                        <th:block th:if="${myMissionState.approvalYn == 'N'}">
+                                        <th:block th:if="${myMissionState.approvalYn == 'N' and myMissionState.rejectionYn == 'N'}">
                                             <span th:text="승인대기" style="color: #00af00; font-weight: bold;"></span>
                                         </th:block>
-                                        <th:block th:unless="${myMissionState.approvalYn == 'N'}">
+                                        <th:block th:if="${myMissionState.approvalYn == 'N' and myMissionState.rejectionYn == 'Y'}">
+                                            <span th:text="반려" style="color: #f55858; font-weight: bold;"></span>
+                                            <span th:text="${#temporals.format(myMissionState.rejectionDt, 'yyyy-MM-dd HH:mm')}"></span>
+                                        </th:block>
+                                        <th:block th:if="${myMissionState.approvalYn == 'Y' and myMissionState.rejectionYn == 'N'}">
                                             <span th:text="승인완료" style="color: #007bff; font-weight: bold;"></span>
                                             <span th:text="${#temporals.format(myMissionState.approvalDt, 'yyyy-MM-dd HH:mm')}"></span>
                                         </th:block>
@@ -372,8 +376,12 @@
                     </div>
                     <hr/>
                     <div>
+                        <input type="text" class="form-control" id="approval-wait-rejectionDesc" placeholder="반려 처리 시, 반려 이유를 입력해주세요.">
+                    </div>
+                    <hr/>
+                    <div>
                         <button type="button" class="btn btn-primary" id="btn-approval-wait-submit-mission">승인</button>
-                        <button type="button" class="btn btn-danger" id="btn-return-approval-wait-submit-mission">반려</button>
+                        <button type="button" class="btn btn-danger" id="btn-rejection-approval-wait-submit-mission">반려</button>
                         <button type="button" class="btn btn-light" id="btn-cancel-approval-wait-submit-mission">닫기</button>
                     </div>
                 </div>
@@ -416,6 +424,9 @@
                         <input type="file" id="my-file" accept="image/*">
                     </div>
                     <hr/>
+                    <div class="my-submit-mission-rejectionDesc" style="display: none;">
+                        <input type="text" class="form-control" id="my-rejectionDesc" readonly="readonly">
+                    </div>
                     <div>
                         <button type="button" class="btn btn-primary" id="btn-modify-my-submit-mission">수정</button>
                         <button type="button" class="btn btn-light" id="btn-cancel-my-submit-mission">닫기</button>

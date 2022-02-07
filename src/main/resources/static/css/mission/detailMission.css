@@ -35,17 +35,8 @@
     margin-bottom: 0px;
 }
 
-.mission-info-wrapper .mission-info-div #btn-join-mission-modal
-, .mission-info-wrapper .mission-info-div #btn-secession-mission-modal {
+.mission-info-wrapper .mission-info-div button {
     width: 100%;
-    height: 50px;
-    display: none;
-}
-
-.mission-info-wrapper .mission-info-div #btn-modify-mission-form
-, .mission-info-wrapper .mission-info-div #btn-delete-mission-modal
-, .mission-info-wrapper .mission-info-div #btn-participants-management-modal{
-    width: auto;
     height: 50px;
     display: none;
 }
