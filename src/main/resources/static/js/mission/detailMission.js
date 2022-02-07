@@ -362,6 +362,13 @@ $(function(){
         }
     });
 
+    // 미션 제출하지 않은 날의 <td>에 x 아이콘 넣기
+    $(".tab-pane .table .a").each(function(){
+        if($(this).find("input[name='missionStateSeq']").length == 0){
+            $(this).append('<i class="fas fa-times-circle fa-2x" style="color: #f55858;"></i>');
+        }
+    });
+
     // [미션 제출] 클릭 시, Modal 띄우기
     $("#btn-mission-submit-modal").on("click", function(){
         $("#mission-submit-modal").show();
@@ -484,6 +491,18 @@ $(function(){
         $("#mission-submit-modal").hide();
     });
 
+    // 주차별 제출 미션을 펼쳤을 때 - 아이콘으로 변경
+    $('.collapse').on('shown.bs.collapse', function () {
+        var target = $("[data-target='#"+$(this).prop("id")+"']");
+        target.removeClass("fa-plus-square");
+        target.addClass("fa-minus-square");
+    });
+    // 주차별 제출 미션을 접었을 때 + 아이콘으로 변경
+    $('.collapse').on('hidden.bs.collapse', function () {
+        var target = $("[data-target='#"+$(this).prop("id")+"']");
+        target.removeClass("fa-minus-square");
+        target.addClass("fa-plus-square");
+    });
 
 
     /************************************************************************************************/
