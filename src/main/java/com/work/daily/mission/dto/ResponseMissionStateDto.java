@@ -25,6 +25,9 @@ public class ResponseMissionStateDto {
     private LocalDateTime submittedMissionDt;
     private String approvalYn;
     private LocalDateTime approvalDt;
+    private String rejectionYn;
+    private LocalDateTime rejectionDt;
+    private String rejectionDesc;
 
     public ResponseMissionStateDto(MissionState missionState){
         this.missionStateSeq = missionState.getMissionStateSeq();
@@ -38,5 +41,8 @@ public class ResponseMissionStateDto {
         this.submittedMissionDt = missionState.getSubmittedMissionDt();
         this.approvalYn = missionState.getApprovalYn();
         this.approvalDt = missionState.getApprovalDt();
+        this.rejectionYn = missionState.getRejectionYn();
+        this.rejectionDt = missionState.getRejectionDt();
+        this.rejectionDesc = missionState.getRejectionDesc();
     }
 }

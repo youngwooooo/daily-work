@@ -23,6 +23,9 @@ public class RequestMissionStateDto {
     private LocalDateTime submittedMissionDt;
     private String approvalYn;
     private LocalDateTime approvalDt;
+    private String rejectionYn;
+    private LocalDateTime rejectionDt;
+    private String rejectionDesc;
 
     public MissionState toEntity(){
         return MissionState.builder()
@@ -34,6 +37,9 @@ public class RequestMissionStateDto {
                             .submittedMissionDt(submittedMissionDt)
                             .approvalYn(approvalYn)
                             .approvalDt(approvalDt)
+                            .rejectionYn(rejectionYn)
+                            .rejectionDt(rejectionDt)
+                            .rejectionDesc(rejectionDesc)
                             .build();
     }
 
