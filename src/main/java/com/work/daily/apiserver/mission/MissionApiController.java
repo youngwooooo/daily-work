@@ -275,19 +275,26 @@ public class MissionApiController {
     }
 
     /**
-     * 미션현황 승인여부 N -> Y 수정
+     * 승인 대기 미션현황 수정
+     * @description 1. 승인여부 N -> Y 수정
+     *              2. 반려여부 N -> Y, 반려 일자, 반려 내용 수정
      * @param missionStateSeq
      * @param missionStateWeek
      * @return
      */
     @PatchMapping("/missionState/{missionStateWeek}/{missionStateSeq}")
-    public ResponseEntity<ResponseDto> modifyMissionStateApprovalYn(@PathVariable("missionStateSeq") long missionStateSeq
+    public ResponseEntity<ResponseDto> modifyMissionState(@PathVariable("missionStateSeq") long missionStateSeq
                                                                     , @PathVariable("missionStateWeek") long missionStateWeek
                                                                     , @RequestBody RequestMissionStateDto requestMissionStateDto){
-
-        String result = missionStateService.modifyMissionStateApprovalYn(requestMissionStateDto);
-
-        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).message("제출 미션현황 승인이 완료되었습니다.").data(result).build(), HttpStatus.OK);
+        if("Y".equals(requestMissionStateDto.getRejectionYn())){
+            // 반려여부 N -> Y, 반려 일자, 반려 내용 수정
+            String result = missionStateService.modifyMissionStateRejectionInfo(requestMissionStateDto);
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).message("반려 처리가 완료되었습니다.").data(result).build(), HttpStatus.OK);
+        }else {
+            // 승인여부 N -> Y 수정
+            String result = missionStateService.modifyMissionStateApprovalYn(requestMissionStateDto);
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).message("승인이 완료되었습니다.").data(result).build(), HttpStatus.OK);
+        }
     }
 
     /**
