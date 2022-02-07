@@ -116,13 +116,16 @@ public class MissionStateService {
                 .submittedMissionDesc(findMissionState.get().getSubmittedMissionDesc())
                 .submittedMissionImage(findMissionState.get().getSubmittedMissionImage())
                 .approvalYn(findMissionState.get().getApprovalYn())
+                .rejectionYn(findMissionState.get().getRejectionYn())
+                .rejectionDt(findMissionState.get().getRejectionDt())
+                .rejectionDesc(findMissionState.get().getRejectionDesc())
                 .build();
 
         return responseMissionStateDto;
     }
 
     /**
-     * 미션현황 승인여부 N -> Y 수정
+     * 승인 대기 미션현황 수정
      * @description 미션현황의 승인여부를 Y로 수정한다.
      * @param requestMissionStateDto
      * @return
@@ -144,6 +147,28 @@ public class MissionStateService {
     }
 
     /**
+     * 승인 대기 미션현황 수정
+     * @description 미션현황의 반려여부 N -> Y, 반려 일자, 반려 내용을 수정한다.
+     * @param requestMissionStateDto
+     * @return
+     */
+    @Transactional
+    public String modifyMissionStateRejectionInfo(RequestMissionStateDto requestMissionStateDto) {
+        MissionStatePK missionStatePK = MissionStatePK.builder()
+                .missionStateSeq(requestMissionStateDto.getMissionStateSeq())
+                .missionStateWeek(requestMissionStateDto.getMissionStateWeek()).build();
+
+        Optional<MissionState> findMissionState =  missionStateRepository.findById(missionStatePK);
+        if(!findMissionState.isPresent()){
+            throw new IllegalArgumentException("해당 미션 현황이 존재하지 않습니다. 미션현황번호 : " + requestMissionStateDto.getMissionStateSeq());
+        }
+
+        findMissionState.get().modifyMissionStateRejectionInfo(requestMissionStateDto.getRejectionYn(), requestMissionStateDto.getRejectionDt(), requestMissionStateDto.getRejectionDesc());
+
+        return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
      * 나의 제출 미션현황 전체 조회
      * @description 미션 번호, 회원 ID에 따른 자신의 모든 제출 미션 조회
      * @param missionSeq
@@ -158,7 +183,7 @@ public class MissionStateService {
 
     /**
      * 나의 제출 미션현황 수정
-     * @description 나의 제출 미션 제목, 내용, 이미지 수정
+     * @description 나의 제출 미션 제목, 내용, 이미지, 반려 여부 N, 반려 일자 = null, 반려 내용 = null로 수정한다.
      * @param requestMissionStateDto
      * @param file
      * @return
@@ -176,7 +201,7 @@ public class MissionStateService {
         }
 
         if(file == null){
-            findMissionState.get().modifyMyMissionState(requestMissionStateDto.getSubmittedMissionNm(), requestMissionStateDto.getSubmittedMissionDesc(), findMissionState.get().getSubmittedMissionImage());
+            findMissionState.get().modifyMyMissionState(requestMissionStateDto.getSubmittedMissionNm(), requestMissionStateDto.getSubmittedMissionDesc(), findMissionState.get().getSubmittedMissionImage(), requestMissionStateDto.getRejectionYn(), requestMissionStateDto.getRejectionDt(), requestMissionStateDto.getRejectionDesc());
         }else {
             // 파일 관련
             File uploadFolder = new File(rootImagePath + findMissionState.get().getSubmittedMissionImage().substring(0, findMissionState.get().getSubmittedMissionImage().lastIndexOf("/")));
@@ -198,7 +223,7 @@ public class MissionStateService {
             String submitMissionImagePath = uploadFolder.toString().substring(28).replaceAll("\\\\", "/") +  "/" + fileOriginalName;
 
             // 수정
-            findMissionState.get().modifyMyMissionState(requestMissionStateDto.getSubmittedMissionNm(), requestMissionStateDto.getSubmittedMissionDesc(), submitMissionImagePath);
+            findMissionState.get().modifyMyMissionState(requestMissionStateDto.getSubmittedMissionNm(), requestMissionStateDto.getSubmittedMissionDesc(), submitMissionImagePath, requestMissionStateDto.getRejectionYn(), requestMissionStateDto.getRejectionDt(), requestMissionStateDto.getRejectionDesc());
         }
 
         return ReturnResult.SUCCESS.getValue();
