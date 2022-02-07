@@ -32,6 +32,12 @@ public class QMissionState extends EntityPathBase<MissionState> {
 
     public final NumberPath<Long> missionStateWeek = createNumber("missionStateWeek", Long.class);
 
+    public final StringPath rejectionDesc = createString("rejectionDesc");
+
+    public final DateTimePath<java.time.LocalDateTime> rejectionDt = createDateTime("rejectionDt", java.time.LocalDateTime.class);
+
+    public final StringPath rejectionYn = createString("rejectionYn");
+
     public final StringPath submittedMissionDesc = createString("submittedMissionDesc");
 
     public final DateTimePath<java.time.LocalDateTime> submittedMissionDt = createDateTime("submittedMissionDt", java.time.LocalDateTime.class);
