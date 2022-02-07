@@ -55,16 +55,35 @@ public class MissionState {
     @Column(columnDefinition = "varchar(60) comment '승인일자'")
     private LocalDateTime approvalDt;
 
+    @Column(columnDefinition = "varchar(10) comment '반려여부'")
+    private String rejectionYn;
+
+    @Column(columnDefinition = "varchar(60) comment '반려일자'")
+    private LocalDateTime rejectionDt;
+
+    @Column(columnDefinition = "varchar(100) comment '반려내용'")
+    private String rejectionDesc;
+
     // 승인여부 N -> Y 수정
     public void modifyMissionStateApprovalYn(String approvalYn, LocalDateTime approvalDt){
         this.approvalYn = approvalYn;
         this.approvalDt = approvalDt;
     }
 
-    // 나의 제출 미션 수정(제목, 내용, 이미지)
-    public void modifyMyMissionState(String submittedMissionNm, String submittedMissionDesc, String submittedMissionImage){
+    // 반려여부 N -> Y, 반려 일자, 반려 내용 수정
+    public void modifyMissionStateRejectionInfo(String rejectionYn, LocalDateTime rejectionDt, String rejectionDesc){
+        this.rejectionYn = rejectionYn;
+        this.rejectionDt = rejectionDt;
+        this.rejectionDesc = rejectionDesc;
+    }
+
+    // 나의 제출 미션 수정(제목, 내용, 이미지, 반려 정보)
+    public void modifyMyMissionState(String submittedMissionNm, String submittedMissionDesc, String submittedMissionImage, String rejectionYn, LocalDateTime rejectionDt, String rejectionDesc){
         this.submittedMissionNm = submittedMissionNm;
         this.submittedMissionDesc = submittedMissionDesc;
         this.submittedMissionImage = submittedMissionImage;
+        this.rejectionYn = rejectionYn;
+        this.rejectionDt = rejectionDt;
+        this.rejectionDesc = rejectionDesc;
     }
 }
