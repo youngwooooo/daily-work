@@ -92,10 +92,6 @@
    font-weight: bold;
 }
 
-.mission-state-wrapper .mission-state-div .tab-content {
-    min-height: 400px;
-}
-
 .mission-state-wrapper .mission-submit-info-div h4 {
     display: inline-block;
 }
@@ -116,6 +112,10 @@
 
 .mission-state-wrapper .mission-submit-info-div .mission-submit-btn-div button {
     width: 200px;
+}
+
+.tab-content .tab-pane {
+    padding: 0px;
 }
 
 .tab-content .table thead th {
@@ -150,6 +150,23 @@
     border: 1px solid #dee2e6;
 }
 
+.tab-content .week-missionState-desc-div {
+    margin-top: 30px;
+}
+
+.tab-content .week-missionState-desc-div span {
+    vertical-align: middle;
+}
+
+.tab-content .week-missionState-desc-div span:nth-child(1):hover {
+    cursor: pointer;
+}
+
+.tab-content .week-missionState-desc-div .week-missionState-desc-title {
+    font-size: 1.2rem;
+    margin-left: 10px;
+}
+
 .approve-wait-submit-mission-wrapper {
     display: none;
 }
@@ -158,63 +175,69 @@
     margin-bottom: 30px;
 }
 
-.my-submit-mission-div .col-sm-4
-, .approve-wait-submit-mission-div .col-sm-4 {
+.col-sm-4 {
     margin-bottom: 20px;
 }
 
-.my-submit-mission-div .card
-, .approve-wait-submit-mission-div .card {
+.week-missionState-info-div .card {
+    max-height: 414px;
+    min-height: 414px;
+}
+
+.approve-wait-submit-mission-div .card {
+    max-height: 365px;
+    min-height: 365px;
+}
+
+.my-submit-mission-div .card {
     max-height: 360px;
     min-height: 360px;
 }
 
-.my-submit-mission-div .card:hover
-, .approve-wait-submit-mission-div .card:hover {
+.my-submit-mission-div .card {
+    max-height: 360px;
+    min-height: 360px;
+}
+
+.card:hover {
     cursor: pointer;
     box-shadow: 1px 1px 10px 3px #dddddd;
 }
 
-.my-submit-mission-div .card .card-img-top
-, .approve-wait-submit-mission-div .card .card-img-top {
+.card .card-img-top {
     max-height: 195px;
     min-height: 195px;
     border-bottom: 1px solid #dddddd;
 }
 
-.my-submit-mission-div .card-body p
-, .approve-wait-submit-mission-div .card-body p {
+.card-body p {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     margin: 0px;
 }
 
-.my-submit-mission-div .col-sm-12
-, .approve-wait-submit-mission-div .col-sm-12 {
+.col-sm-12 {
     text-align: center;
     min-height: 300px;
 }
 
-.my-submit-mission-div .empty-submit-mission-desc
-, .approve-wait-submit-mission-div .empty-approve-wait-submit-mission-desc {
+.empty-submit-mission-desc, .empty-approve-wait-submit-mission-desc, .empty-week-missionState-desc {
     position: relative;
     top: 45%;
     color: gray;
 }
 
-.my-submit-mission-div .list-group .list-group-item span
-, .approve-wait-submit-mission-div .list-group .list-group-item span {
+.list-group .list-group-item span {
     color: gray;
 }
 
-.approve-wait-submit-mission-div .list-group-item img {
+.list-group .list-group-item img {
     width: 30px;
     border-radius: 50%;
 }
 
-.my-submit-mission-div .list-group .list-group-item span:nth-child(2)
-, .approve-wait-submit-mission-div .list-group .list-group-item span:nth-child(2) {
+.list-group .list-group-item span:nth-child(2) {
     float: right;
 }
 

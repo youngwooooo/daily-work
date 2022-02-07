@@ -36,9 +36,12 @@
                 <div style="display: flex">
                     <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
                     <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
-                    <button type="button" class="btn btn-light" id="btn-participants-management-modal" data-toggle="tooltip" title="미션 참여자 관리"><i class="fas fa-user-cog fa-2x"></i></button>
-                    <button type="button" class="btn btn-light" id="btn-modify-mission-form" data-toggle="tooltip" title="미션 수정"><i class="fas fa-edit fa-2x"></i></button>
-                    <button type="button" class="btn btn-light" id="btn-delete-mission-modal" data-toggle="tooltip" title="미션 삭제"><i class="fas fa-trash-alt fa-2x"></i></button>
+                    <button type="button" class="btn btn-light" id="btn-participants-management-modal"
+                            data-toggle="tooltip" title="미션 참여자 관리"><i class="fas fa-user-cog fa-2x"></i></button>
+                    <button type="button" class="btn btn-light" id="btn-modify-mission-form" data-toggle="tooltip"
+                            title="미션 수정"><i class="fas fa-edit fa-2x"></i></button>
+                    <button type="button" class="btn btn-light" id="btn-delete-mission-modal" data-toggle="tooltip"
+                            title="미션 삭제"><i class="fas fa-trash-alt fa-2x"></i></button>
                 </div>
             </div>
         </div>
@@ -87,6 +90,7 @@
             <!-- 주차별 미션현황 -->
             <div class="tab-content" id="weeks-info" th:with="id = 'week'">
                 <th:block th:each="week : ${dateOfWeek}">
+
                     <div class="tab-pane container" th:id="${id + weekStat.count}">
                         <input type="hidden" name="missionStateWeek" th:value="${weekStat.count}">
                         <table class="table">
@@ -106,19 +110,23 @@
                                 th:if="${participants.missionJoinYn != 'N'}">
                                 <td>
                                     <div>
-                                        <input type="hidden" name="participantsId" th:value="${participants.user.userId}">
+                                        <input type="hidden" name="participantsId"
+                                               th:value="${participants.user.userId}">
                                         <img th:src="${participants.user.profileImage}" alt="profile-Image">
                                         <span th:text="${participants.user.userNm}"></span>
                                     </div>
                                 </td>
-                                <td class="a" th:each="date : ${dateOfWeek.get(weekStat.index)}" style="text-align: center;">
+                                <td class="a" th:each="date : ${dateOfWeek.get(weekStat.index)}"
+                                    style="text-align: center;">
                                     <input type="hidden" name="week-date" th:value="${date}">
-                                    <th:block th:each="allMissionState : ${allMissionState}" th:object="${allMissionState}"
+                                    <th:block th:each="allMissionState : ${allMissionState}"
+                                              th:object="${allMissionState}"
                                               th:if="${allMissionState.missionStateWeek == weekStat.count
                                                         and allMissionState.userId == participants.user.userId
                                                         and #temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd').equals(date.toString())}"
                                               th:switch="${allMissionState.approvalYn}">
-                                        <input type="hidden" name="missionStateSeq" th:value="${allMissionState.missionStateSeq}">
+                                        <input type="hidden" name="missionStateSeq"
+                                               th:value="${allMissionState.missionStateSeq}">
                                         <i th:case="Y" class="fas fa-check-circle fa-2x" style="color: #00c700;"></i>
                                         <i th:case="N" class="fas fa-dot-circle fa-2x" style="color: #007bff;"></i>
                                     </th:block>
@@ -126,19 +134,64 @@
                             </tr>
                             </tbody>
                         </table>
+
+                        <th:block sec:authorize="isAuthenticated()"
+                                  th:each="participants : ${missionParticipants}" th:object="${participants}"
+                                  th:if="${participants.user.userId == #authentication.principal.LoginUserDto.userId}">
+
+                            <hr/>
+
+                            <!-- 주차별 제출 미션 정보 -->
+                            <div class="week-missionState-desc-div">
+                            <span>
+                                <i class="fa fa-plus-square fa-lg" data-toggle="collapse"
+                                   th:data-target="${'#' + id + weekStat.count + '-missionState'}"
+                                   aria-expanded="false"></i>
+                            </span>
+                                <span class="week-missionState-desc-title" th:text="|${weekStat.count}주차 제출 미션|"></span>
+                            </div>
+                            <br/>
+                            <div th:id="${id + weekStat.count + '-missionState'}"
+                                 class="collapse row week-missionState-info-div">
+                                <th:block th:each="allMissionState : ${allMissionState}" th:object="${allMissionState}"
+                                          th:if="${allMissionState.approvalYn == 'Y' and allMissionState.missionStateWeek == weekStat.count}">
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <img class="card-img-top" th:src="${allMissionState.submittedMissionImage}"
+                                                 alt="Card image">
+                                            <div class="card-body">
+                                                <p th:text="${allMissionState.submittedMissionNm}"></p>
+                                            </div>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"
+                                                    th:each="participants : ${missionParticipants}"
+                                                    th:object="${participants}"
+                                                    th:if="${participants.user.userId == allMissionState.userId}">
+                                                    <img th:src="${participants.user.profileImage}"
+                                                         alt="participants-image">
+                                                    <span th:text="${participants.user.userNm}"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <span th:text="제출완료"></span>
+                                                    <span th:text="${#temporals.format(allMissionState.submittedMissionDt, 'yyyy-MM-dd HH:mm')}"></span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <span th:text="승인완료"
+                                                          style="color: #007bff; font-weight: bold;"></span>
+                                                    <span th:text="${#temporals.format(allMissionState.approvalDt, 'yyyy-MM-dd HH:mm')}"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </th:block>
+
                     </div>
                 </th:block>
             </div>
+            <hr/>
         </div>
-        <script th:inline="javascript">
-            var allMissionState = [[${allMissionState}]];
-
-            $(".tab-pane .table .a").each(function(){
-                if($(this).find("input[name='missionStateSeq']").length == 0){
-                    $(this).append('<i class="fas fa-times-circle fa-2x" style="color: #f55858;"></i>');
-                }
-            });
-        </script>
 
         <br/>
 
@@ -151,9 +204,12 @@
                     <th:block th:if="${allMissionState.approvalYn == 'N' and allMissionState.rejectionYn == 'N'}">
                         <div class="col-sm-4">
                             <div class="card">
-                                <input type="hidden" name="approvalMissionStateSeq" th:value="${allMissionState.missionStateSeq}">
-                                <input type="hidden" name="approvalMissionStateWeek" th:value="${allMissionState.missionStateWeek}">
-                                <img class="card-img-top" th:src="${allMissionState.submittedMissionImage}" alt="Card image">
+                                <input type="hidden" name="approvalMissionStateSeq"
+                                       th:value="${allMissionState.missionStateSeq}">
+                                <input type="hidden" name="approvalMissionStateWeek"
+                                       th:value="${allMissionState.missionStateWeek}">
+                                <img class="card-img-top" th:src="${allMissionState.submittedMissionImage}"
+                                     alt="Card image">
                                 <div class="card-body">
                                     <p th:text="${allMissionState.submittedMissionNm}"></p>
                                 </div>
@@ -192,14 +248,15 @@
             if(allMissionState.length == 0 || arrOfApprovalN.length <= 0){
                 $(".approve-wait-submit-mission-div").append(str);
             }
+
         </script>
 
         <br/>
 
         <!-- 인증이 된 유저(로그인한)이고 미션 참여자 일 때 '나의 제출 미션' 보이기 -->
         <th:block sec:authorize="isAuthenticated()"
-             th:each="participants : ${missionParticipants}" th:object="${participants}"
-             th:if="${participants.user.userId == #authentication.principal.LoginUserDto.userId}">
+                  th:each="participants : ${missionParticipants}" th:object="${participants}"
+                  th:if="${participants.user.userId == #authentication.principal.LoginUserDto.userId}">
 
             <div class="my-submit-mission-wrapper">
                 <h4>나의 제출 미션</h4>
@@ -209,9 +266,12 @@
                     <th:block th:each="myMissionState : ${myMissionState}" th:if="${#lists.size(myMissionState) > 0}">
                         <div class="col-sm-4">
                             <div class="card">
-                                <input type="hidden" name="myMissionStateSeq" th:value="${myMissionState.missionStateSeq}">
-                                <input type="hidden" name="myMissionStateWeek" th:value="${myMissionState.missionStateWeek}">
-                                <img class="card-img-top" th:src="${myMissionState.submittedMissionImage}" alt="Card image">
+                                <input type="hidden" name="myMissionStateSeq"
+                                       th:value="${myMissionState.missionStateSeq}">
+                                <input type="hidden" name="myMissionStateWeek"
+                                       th:value="${myMissionState.missionStateWeek}">
+                                <img class="card-img-top" th:src="${myMissionState.submittedMissionImage}"
+                                     alt="Card image">
                                 <div class="card-body">
                                     <p th:text="${myMissionState.submittedMissionNm}"></p>
                                 </div>
@@ -221,14 +281,17 @@
                                         <span th:text="${#temporals.format(myMissionState.submittedMissionDt, 'yyyy-MM-dd HH:mm')}"></span>
                                     </li>
                                     <li class="list-group-item">
-                                        <th:block th:if="${myMissionState.approvalYn == 'N' and myMissionState.rejectionYn == 'N'}">
+                                        <th:block
+                                                th:if="${myMissionState.approvalYn == 'N' and myMissionState.rejectionYn == 'N'}">
                                             <span th:text="승인대기" style="color: #00af00; font-weight: bold;"></span>
                                         </th:block>
-                                        <th:block th:if="${myMissionState.approvalYn == 'N' and myMissionState.rejectionYn == 'Y'}">
+                                        <th:block
+                                                th:if="${myMissionState.approvalYn == 'N' and myMissionState.rejectionYn == 'Y'}">
                                             <span th:text="반려" style="color: #f55858; font-weight: bold;"></span>
                                             <span th:text="${#temporals.format(myMissionState.rejectionDt, 'yyyy-MM-dd HH:mm')}"></span>
                                         </th:block>
-                                        <th:block th:if="${myMissionState.approvalYn == 'Y' and myMissionState.rejectionYn == 'N'}">
+                                        <th:block
+                                                th:if="${myMissionState.approvalYn == 'Y' and myMissionState.rejectionYn == 'N'}">
                                             <span th:text="승인완료" style="color: #007bff; font-weight: bold;"></span>
                                             <span th:text="${#temporals.format(myMissionState.approvalDt, 'yyyy-MM-dd HH:mm')}"></span>
                                         </th:block>
@@ -240,7 +303,7 @@
 
                     <th:block th:unless="${#lists.size(myMissionState) > 0}">
                         <div class="col-sm-12">
-                            <p class="empty-submit-mission-desc">제출한 미션이 존재하지 않습니다.</p>
+                            <p class="empty-submit-mission-desc">나의 제출 미션이 존재하지 않습니다.</p>
                         </div>
                     </th:block>
 
@@ -336,7 +399,8 @@
                 <div class="modal-body">
                     <input type="text" id="submittedMissionNm" class="form-control" placeholder="제목을 입력하세요.">
                     <hr/>
-                    <textarea id="submittedMissionDesc" class="form-control" rows="10" placeholder="완료한 미션에 대한 간단한 설명을 적어주세요."></textarea>
+                    <textarea id="submittedMissionDesc" class="form-control" rows="10"
+                              placeholder="완료한 미션에 대한 간단한 설명을 적어주세요."></textarea>
                     <hr/>
                     <div class="submit-mission-image-info-div">
                         <div class="submit-mission-image-div">
@@ -367,7 +431,8 @@
                 <div class="modal-body">
                     <input type="text" id="approval-wait-submittedMissionNm" class="form-control" readonly="readonly">
                     <hr/>
-                    <textarea id="approval-wait-submittedMissionDesc" class="form-control" rows="10" readonly="readonly"></textarea>
+                    <textarea id="approval-wait-submittedMissionDesc" class="form-control" rows="10"
+                              readonly="readonly"></textarea>
                     <hr/>
                     <div class="approval-wait-submit-mission-image-info-div">
                         <div class="approval-wait-submit-mission-image-div">
@@ -376,13 +441,17 @@
                     </div>
                     <hr/>
                     <div>
-                        <input type="text" class="form-control" id="approval-wait-rejectionDesc" placeholder="반려 처리 시, 반려 이유를 입력해주세요.">
+                        <input type="text" class="form-control" id="approval-wait-rejectionDesc"
+                               placeholder="반려 처리 시, 반려 이유를 입력해주세요.">
                     </div>
                     <hr/>
                     <div>
                         <button type="button" class="btn btn-primary" id="btn-approval-wait-submit-mission">승인</button>
-                        <button type="button" class="btn btn-danger" id="btn-rejection-approval-wait-submit-mission">반려</button>
-                        <button type="button" class="btn btn-light" id="btn-cancel-approval-wait-submit-mission">닫기</button>
+                        <button type="button" class="btn btn-danger" id="btn-rejection-approval-wait-submit-mission">
+                            반려
+                        </button>
+                        <button type="button" class="btn btn-light" id="btn-cancel-approval-wait-submit-mission">닫기
+                        </button>
                     </div>
                 </div>
             </div>
@@ -415,7 +484,8 @@
                 <div class="modal-body">
                     <input type="text" id="my-submittedMissionNm" class="form-control" placeholder="제목을 입력하세요.">
                     <hr/>
-                    <textarea id="my-submittedMissionDesc" class="form-control" rows="10" placeholder="완료한 미션에 대한 간단한 설명을 적어주세요."></textarea>
+                    <textarea id="my-submittedMissionDesc" class="form-control" rows="10"
+                              placeholder="완료한 미션에 대한 간단한 설명을 적어주세요."></textarea>
                     <hr/>
                     <div class="my-submit-mission-image-info-div">
                         <div class="my-submit-mission-image-div">
