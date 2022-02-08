@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @Configuration
 @Component("DbBoardInsert")
 public class DbBoardInsert {
+
     private final BoardRepository boardRepository;
     private final BoardCommentRepository boardCommentRepository;
     private final UserRepository userRepository;
