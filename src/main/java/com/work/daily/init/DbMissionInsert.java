@@ -141,6 +141,25 @@ public class DbMissionInsert {
                         .toEntity()
         );
 
+        for(int i=1; i<=100; i++){
+            saveMissionDtoList.add(
+                    RequestMissionDto.builder()
+                            .missionNm(String.valueOf(i) + "번 미션")
+                            .missionDesc(String.valueOf(i) + "번 미션 내용")
+                            .missionStDt(LocalDateTime.now())
+                            .missionEndDt(LocalDateTime.now().plusMonths(1))
+                            .releaseYn("Y")
+                            .autoAccessYn("Y")
+                            .masterYn("Y")
+                            .user(userRepository.findByUserId("youngWooLee").get())
+                            .delYn("N")
+                            .temporaryYn("N")
+                            .missionImage("/img/common/basic_mission.jpg")
+                            .build()
+                            .toEntity()
+            );
+        }
+
         return saveMissionDtoList;
     }
 
