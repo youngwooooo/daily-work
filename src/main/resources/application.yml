@@ -25,6 +25,12 @@ spring:
     livereload:
       enabled: true
 
+  # 페이징 처리 시, 기본 page 값을 1로 설정
+  data:
+    web:
+      pageable:
+          one-indexed-parameters: true
+
   # H2 DB
   h2:
     console:
