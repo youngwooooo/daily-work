@@ -87,10 +87,10 @@
                 </li>
             </ul>
 
-            <!-- 주차별 미션현황 -->
+
             <div class="tab-content" id="weeks-info" th:with="id = 'week'">
                 <th:block th:each="week : ${dateOfWeek}">
-
+                    <!-- 주차별 미션현황 -->
                     <div class="tab-pane container" th:id="${id + weekStat.count}">
                         <input type="hidden" name="missionStateWeek" th:value="${weekStat.count}">
                         <table class="table">
@@ -134,6 +134,7 @@
                             </tr>
                             </tbody>
                         </table>
+                        <!-- 주차별 미션현황 끝 -->
 
                         <th:block sec:authorize="isAuthenticated()"
                                   th:each="participants : ${missionParticipants}" th:object="${participants}"
@@ -143,11 +144,12 @@
 
                             <!-- 주차별 제출 미션 정보 -->
                             <div class="week-missionState-desc-div">
-                            <span>
-                                <i class="fa fa-plus-square fa-lg" data-toggle="collapse"
-                                   th:data-target="${'#' + id + weekStat.count + '-missionState'}"
-                                   aria-expanded="false"></i>
-                            </span>
+                                <span>
+                                    <i class="fa fa-plus-square fa-lg" data-toggle="collapse"
+                                       th:data-target="${'#' + id + weekStat.count + '-missionState'}"
+                                       aria-expanded="false"
+                                       th:aria-controls="${id + weekStat.count + '-missionState'}"></i>
+                                </span>
                                 <span class="week-missionState-desc-title" th:text="|${weekStat.count}주차 제출 미션|"></span>
                             </div>
                             <br/>
@@ -157,6 +159,8 @@
                                           th:if="${allMissionState.approvalYn == 'Y' and allMissionState.missionStateWeek == weekStat.count}">
                                     <div class="col-sm-4">
                                         <div class="card">
+                                            <input type="hidden" name="week-missionState-missionStateSeq" th:value="${allMissionState.missionStateSeq}">
+                                            <input type="hidden" name="week-missionState-missionStateWeek" th:value="${allMissionState.missionStateWeek}">
                                             <img class="card-img-top" th:src="${allMissionState.submittedMissionImage}"
                                                  alt="Card image">
                                             <div class="card-body">
@@ -186,13 +190,14 @@
                                 </th:block>
                             </div>
                         </th:block>
-
+                        <!-- 주차별 제출 미션 정보 끝 -->
                     </div>
                 </th:block>
             </div>
+            <!-- .tab-content 끝 -->
             <hr/>
         </div>
-
+        <!-- .mission-state-div 끝 -->
         <br/>
 
         <div class="approve-wait-submit-mission-wrapper">
@@ -248,6 +253,7 @@
             if(allMissionState.length == 0 || arrOfApprovalN.length <= 0){
                 $(".approve-wait-submit-mission-div").append(str);
             }
+
 
         </script>
 
@@ -421,6 +427,30 @@
             </div>
         </div>
     </div>
+
+    <!-- 주차별 제출 미션 현황 상세 modal -->
+    <div class="modal" id="week-missionState-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <input type="text" id="week-missionState-submittedMissionNm" class="form-control" readonly="readonly">
+                    <hr/>
+                    <textarea id="week-missionState-submittedMissionDesc" class="form-control" rows="10" readonly="readonly"></textarea>
+                    <hr/>
+                    <div class="week-missionState-submit-mission-image-info-div">
+                        <div class="week-missionState-submit-mission-image-div">
+                            <img id="week-missionState-submit-mission-image" alt="mission-image">
+                        </div>
+                    </div>
+                    <hr/>
+                    <div>
+                        <button type="button" class="btn btn-light" id="btn-cancel-week-missionState-submit-mission">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- 승인 대기 미션 modal -->
     <div class="modal" id="approval-wait-submit-mission-modal">

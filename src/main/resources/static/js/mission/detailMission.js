@@ -491,6 +491,17 @@ $(function(){
         $("#mission-submit-modal").hide();
     });
 
+    //  주차별 제출 미션이 존재하지 않을 때, emptyWeekMissionStateDesc를 append
+    var emptyWeekMissionStateDesc = '<div class="col-sm-12">'
+                        + '<p class="empty-week-missionState-desc">제출된 미션이 존재하지 않습니다.</p>'
+                        + '</div>';
+
+    $(".week-missionState-info-div").each(function(){
+        if($(this).children().length == 0){
+            $(this).append(emptyWeekMissionStateDesc);
+        }
+    });
+
     // 주차별 제출 미션을 펼쳤을 때 - 아이콘으로 변경
     $('.collapse').on('shown.bs.collapse', function () {
         var target = $("[data-target='#"+$(this).prop("id")+"']");
@@ -504,6 +515,42 @@ $(function(){
         target.addClass("fa-plus-square");
     });
 
+    // 주차별 제출 미션 클릭 시, 상세 modal 띄우기
+    $(".week-missionState-info-div .card").on("click", function(){
+            var missionStateSeq = $(this).find("input[name='week-missionState-missionStateSeq']").val();
+            var missionStateWeek = $(this).find("input[name='week-missionState-missionStateWeek']").val();
+
+            $.ajax({
+                url : "/missionState/" + missionStateWeek + "/" + missionStateSeq
+                , type : "get"
+                , dataType : "json"
+                , success : function(result){
+                    if(result.status == 200){
+                        console.log(result);
+                        $("#week-missionState-modal #week-missionState-submittedMissionNm").val(result.data.submittedMissionNm);
+                        $("#week-missionState-modal #week-missionState-submittedMissionDesc").val(result.data.submittedMissionDesc);
+                        $("#week-missionState-modal #week-missionState-submit-mission-image").attr("src", result.data.submittedMissionImage);
+
+                        $("#week-missionState-modal").show();
+                    }
+                }
+                , error : function(xhr){
+                    console.log(xhr);
+                }
+            });
+        });
+
+    // 주차별 제출 미션 modal - [닫기]
+    $("#btn-cancel-week-missionState-submit-mission").on("click", function(){
+        $("#week-missionState-modal").hide();
+    });
+
+    // 주차별 제출 미션 modal - 이미지 div 클릭 시 이미지 보기
+    $(".week-missionState-submit-mission-image-div").on("click", function(){
+        var openImage = $(this).find("#week-missionState-submit-mission-image").attr("src")
+        $("#open-image-modal img").attr("src", openImage);
+        $("#open-image-modal").show();
+    });
 
     /************************************************************************************************/
 
@@ -511,6 +558,7 @@ $(function(){
     // 미션 작성자와 회원의 아이디가 같을 때, 승인 대기 미션 보이기
     if($("#missionCreatedUserId").val() == $("#userId").val()){
         $(".approve-wait-submit-mission-wrapper").css("display", "block");
+        $(".approve-wait-submit-mission-wrapper").after("<hr/>");
     }
 
     // 승인 대기 미션 클릭시, 해당 미션 정보 modal 띄우기

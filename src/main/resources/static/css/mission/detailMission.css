@@ -246,8 +246,8 @@
     vertical-align: middle;
 }
 
-/* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] Modal */
-#response-modal, #mission-participants-management-modal, #mission-submit-modal, #my-submit-mission-modal, #approval-wait-submit-mission-modal {
+/* modal 공통 */
+#response-modal, #mission-participants-management-modal, #mission-submit-modal, #my-submit-mission-modal, #approval-wait-submit-mission-modal, #week-missionState-modal {
     background-color:rgba(0,0,0,.3);
 }
 
@@ -256,6 +256,7 @@
     text-align: center;
 }
 
+/* [미션 삭제하기], [미션 참여하기], [미션 탈퇴하기] Modal */
 .response-modal-img-div #check-icon {
     width: 15%;
 }
@@ -326,24 +327,27 @@
     margin-top: 6px;
 }
 
-/* [미션 제출], [나의 제출 미션], [승인 대기 미션] Modal */
+/* [미션 제출], [주차별 제출 미션], [나의 제출 미션], [승인 대기 미션] Modal */
 #mission-submit-modal input, #mission-submit-modal textarea
 , #my-submit-mission-modal input, #my-submit-mission-modal textarea
-, #approval-wait-submit-mission-modal input, #approval-wait-submit-mission-modal textarea {
+, #approval-wait-submit-mission-modal input, #approval-wait-submit-mission-modal textarea
+, #week-missionState-modal input, #week-missionState-modal textarea {
     border: none;
     background-color: white;
 }
 
 #mission-submit-modal .submit-mission-image-div
 , #my-submit-mission-modal .my-submit-mission-image-div
-, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div {
+, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div
+, #week-missionState-modal .week-missionState-submit-mission-image-div {
     border: 1px dashed #dddddd;
     height: 200px;
 }
 
 #mission-submit-modal .submit-mission-image-div:hover
 , #my-submit-mission-modal .my-submit-mission-image-div:hover
-, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div:hover {
+, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div:hover
+, #week-missionState-modal .week-missionState-submit-mission-image-div:hover {
     cursor: pointer;
 }
 
@@ -354,7 +358,8 @@
 }
 
 #my-submit-mission-modal .my-submit-mission-image-div img
-, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div img {
+, #approval-wait-submit-mission-modal .approval-wait-submit-mission-image-div img
+, #week-missionState-modal .week-missionState-submit-mission-image-div img {
     width: 100%;
     height: 100%;
 }
@@ -374,13 +379,17 @@
     display: none;
 }
 
-#mission-submit-modal button, #my-submit-mission-modal button, #approval-wait-submit-mission-modal button {
+#mission-submit-modal button
+, #my-submit-mission-modal button
+, #approval-wait-submit-mission-modal button
+, #week-missionState-modal button {
     width: 20%;
 }
 
 #mission-submit-modal #btn-cancel-submit-mission
 , #my-submit-mission-modal #btn-cancel-my-submit-mission
-, #approval-wait-submit-mission-modal #btn-cancel-approval-wait-submit-mission {
+, #approval-wait-submit-mission-modal #btn-cancel-approval-wait-submit-mission
+, #week-missionState-modal #btn-cancel-week-missionState-submit-mission {
     border-color: #dddddd;
 }
 
