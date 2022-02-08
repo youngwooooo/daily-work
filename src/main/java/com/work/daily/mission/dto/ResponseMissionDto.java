@@ -44,4 +44,21 @@ public class ResponseMissionDto {
         this.reviewGrade = mission.getReviewGrade();
         this.missionImage = mission.getMissionImage();
     }
+
+    public static ResponseMissionDto toPaging(Mission mission){
+        return ResponseMissionDto.builder()
+                .missionSeq(mission.getMissionSeq())
+                .user(mission.getUser())
+                .missionNm(mission.getMissionNm())
+                .missionDesc(mission.getMissionNm())
+                .missionStDt(mission.getMissionStDt())
+                .missionEndDt(mission.getMissionEndDt())
+                .releaseYn(mission.getReleaseYn())
+                .autoAccessYn(mission.getAutoAccessYn())
+                .masterYn(mission.getMasterYn())
+                .delYn(mission.getDelYn())
+                .temporaryYn(mission.getTemporaryYn())
+                .reviewGrade(mission.getReviewGrade())
+                .missionImage(mission.getMissionImage()).build();
+    }
 }

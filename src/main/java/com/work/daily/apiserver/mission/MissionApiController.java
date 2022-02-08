@@ -8,6 +8,9 @@ import com.work.daily.mission.service.MissionService;
 import com.work.daily.mission.service.MissionStateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -318,8 +321,19 @@ public class MissionApiController {
     }
 
     // 테스트 용 api
-    @GetMapping("/mission/test/{missionSeq}")
-    public List<ResponseMissionStateDto> test(@PathVariable("missionSeq") long missionSeq){
-        return missionStateService.findAllMissionStateByMissionSeq(missionSeq);
+    @GetMapping("/mission/test")
+    public Page<ResponseMissionDto> test(@PageableDefault(size = 9) Pageable pageable){
+        Page<ResponseMissionDto> a = missionService.findAllMissions(pageable);
+        log.info("pageable.getOffset() : " + pageable.getOffset());
+        log.info("pageable.getPageNumber() : " + pageable.getPageNumber());
+        log.info("pageable.getPageSize() : " + pageable.getPageSize());
+        log.info("==========================================================");
+        log.info("getTotalPages() : " + a.getTotalPages());
+        log.info("getTotalElements() : " + a.getTotalElements());
+        log.info("getPageable().getOffset() : " + a.getPageable().getOffset());
+        log.info("getPageable().getPageNumber() : " + a.getPageable().getPageNumber());
+        log.info("getPageable().getPageSize() : " + a.getPageable().getPageSize());
+
+        return a;
     }
 }

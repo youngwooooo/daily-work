@@ -10,6 +10,8 @@ import com.work.daily.mission.dto.ResponseMissionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,16 +42,14 @@ public class MissionService {
 
     /**
      * 전체 Mission 조회
-     * @return 전체 Mission List
+     * @return 페이징 처리 된 전체 Mission List
      */
     @Transactional(readOnly = true)
-    public List<ResponseMissionDto> findAllMissions(){
+    public Page<ResponseMissionDto> findAllMissions(Pageable pageable){
         // 전체 Mission 조회
-        List<Mission> findAllMission = missionRepository.findAllMission();
-        // Mission -> ResponseMissionDto 타입으로 변경하여 List 생성
-        return findAllMission.stream().map(ResponseMissionDto::new).collect(Collectors.toList());
+        Page<Mission> findAllMission = missionRepository.findAllMission(pageable);
+        return findAllMission.map(ResponseMissionDto::toPaging);
     }
-
     /**
      * Mission 단건 조회(상세 조회)
      * @param missionSeq

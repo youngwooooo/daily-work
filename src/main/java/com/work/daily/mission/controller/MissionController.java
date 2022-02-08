@@ -9,6 +9,9 @@ import com.work.daily.mission.service.MissionService;
 import com.work.daily.mission.service.MissionStateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,10 +35,17 @@ public class MissionController {
      * @return 전체 MISSION VIEW
      */
     @GetMapping("/missions")
-    public String missions(Model model){
+    public String missions(Model model, @PageableDefault(size = 9) Pageable pageable){
         log.info("MissionController :: missions called");
 
-        List<ResponseMissionDto> findAllMissions = missionService.findAllMissions();
+        Page<ResponseMissionDto> findAllMissions = missionService.findAllMissions(pageable);
+        int startPage = 1;
+        int endPage = findAllMissions.getTotalPages();
+        log.info("startPage : " + startPage);
+        log.info("endPage : " + endPage);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         model.addAttribute("missions", findAllMissions);
 
         return "contents/mission/missions";
