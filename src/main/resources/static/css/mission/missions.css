@@ -1,7 +1,6 @@
 /* 전체 MISSION CSS */
 .all-mission-wrapper-div {
     padding-top: 45px;
-    padding-bottom: 20px;
 }
 
 .all-mission-div .mission-div {
@@ -60,4 +59,28 @@
     padding-top: 5px;
     margin-left: 10px;
     margin-bottom: 0px;
+}
+
+.pagination {
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+.page-item {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.page-item .move-page {
+    color: #555;
+}
+
+.page-item .pageNum {
+    color: #555;
+    border-color: white;
+}
+
+.page-item .selected {
+    background-color: #343a40;
+    color: white;
 }

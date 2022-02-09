@@ -39,11 +39,14 @@ public class MissionController {
         log.info("MissionController :: missions called");
 
         Page<ResponseMissionDto> findAllMissions = missionService.findAllMissions(pageable);
-        int startPage = 1;
-        int endPage = findAllMissions.getTotalPages();
-        log.info("startPage : " + startPage);
-        log.info("endPage : " + endPage);
 
+        int firstPage = 1;  // 첫번째 페이지
+        int lastPage = findAllMissions.getTotalPages(); // 마지막 페이지(미션 전체 개수)
+        int startPage = Math.max(firstPage + 1, findAllMissions.getPageable().getPageNumber() - 2); // 시작 페이지
+        int endPage = Math.min(lastPage - 1, findAllMissions.getPageable().getPageNumber() + 4);    // 끝 페이지
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("lastPage", lastPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("missions", findAllMissions);
