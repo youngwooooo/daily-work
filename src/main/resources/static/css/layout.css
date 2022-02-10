@@ -3,15 +3,100 @@ html, body {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-header {
-    height: 56px;
-}
-
 #layout-content {
     min-height: 850px;
 }
 
-#collapsibleNavbar {
+header {
+    height: 56px;
+}
+
+header #collapsibleNavbar {
     justify-content: right;
 }
+
+header #profile-menu {
+    position: absolute;
+    left: 71%;
+}
+
+header .menu-right .nav-item .profile-image-icon img {
+    width: 35px;
+    border-radius: 50%;
+}
+
+header .menu-right .nav-item #profile-menu {
+    box-shadow: 0px 2px 4px 0px #dddddd;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-info-div {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #dddddd;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-info-div img {
+    width: 100px;
+    border-radius: 50%;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-info-div .menu-user-name-email {
+    margin-left: 15px;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-info-div .menu-user-name-email p {
+    margin: 0px;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-info-div .menu-user-name-email p:nth-child(2) {
+    font-size: 0.9rem;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-info-div .menu-user-name-email button {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-post {
+    border-bottom: 1px solid #dddddd;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-post ul {
+    list-style: none;
+    padding: 15px;
+    background-color: #fbfbfb;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-post ul li {
+    padding: 7px;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-post ul a {
+    color: black;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-post ul a:hover {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-logout-and-mypage {
+    display: flex;
+    padding: 15px 15px 10px 15px;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-logout-and-mypage a {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+header .menu-right .nav-item #profile-menu .menu-user-logout-and-mypage a:hover {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+
 

@@ -10,12 +10,12 @@ $(function(){
         location.href = "/join";
     });
 
-    // [로그아웃] 클릭 시
-    $("#btn-move-logout").on("click", function(){
-        location.href = "/logout";
+    // [계정관리] 클릭 시
+    $("#btn-move-myAccount-form").on("click", function(){
+        location.href = "/user/my-account";
     });
 
-    // 회원 - [전체 MISSION] 클릭 시
+    // [미션] 클릭 시
     $("#btn-move-all-mission").on("click", function(){
         location.href = "/missions"
     });
