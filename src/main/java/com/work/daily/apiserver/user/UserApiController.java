@@ -39,7 +39,7 @@ public class UserApiController {
      * @param bindingResult
      * @return
      */
-    @PatchMapping("/user/mypage")
+    @PatchMapping("/user/my-account")
     public ResponseEntity<ResponseDto> modifyUserInfo(@Valid @RequestPart(value = "modifyUserInfoDto") ModifyUserInfoDto modifyUserInfoDto
                                                         , @RequestPart(value = "file", required = false) MultipartFile file
                                                         , BindingResult bindingResult
@@ -82,7 +82,7 @@ public class UserApiController {
      * @param bindingResult
      * @return
      */
-    @PostMapping("/user/mypage/valid/password")
+    @PostMapping("/user/my-account/valid/password")
     public ResponseEntity<ResponseDto> validatingPassword(@RequestBody @Valid ModifyPasswordDto modifyPasswordDto, BindingResult bindingResult){
         log.info("UserApiController :: passwordModifyForm called");
 
@@ -120,7 +120,7 @@ public class UserApiController {
      * @param bindingResult
      * @return
      */
-    @PatchMapping("/user/mypage/password")
+    @PatchMapping("/user/my-account/password")
     public ResponseEntity<ResponseDto> modifyPassword(@RequestBody @Valid ModifyPasswordDto modifyPasswordDto, BindingResult bindingResult){
         log.info("UserApiController :: modifyPassword called");
 
