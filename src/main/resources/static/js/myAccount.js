@@ -27,10 +27,10 @@ $(function(){
         if(modifyUserInfoValidate()){
             var data = {
                 "userId" : $("#userId").val()
-                , "userNm" : $("#userNm").val()
-                , "userEmail" : $("#userEmail").val()
+                , "userNm" : $("input[name='userNm']").val()
+                , "userEmail" : $("input[name='userEmail']").val()
             };
-
+            console.log(data);
             var file = $("#file")[0].files[0];
 
             var formData = new FormData();
@@ -38,7 +38,7 @@ $(function(){
             formData.append("modifyUserInfoDto", new Blob([JSON.stringify(data)] , {type: "application/json"}));
 
             $.ajax({
-                url : "/user/mypage"
+                url : "/user/my-account"
                 , type : "patch"
                 , data : formData
                 , processData: false
@@ -48,6 +48,7 @@ $(function(){
                     console.log(result);
                     if(result.status == 200){
                         alert(result.message);
+                        location.reload();
                     }
                 }
                 , error : function(xhr){
@@ -81,14 +82,14 @@ $(function(){
         };
 
         $.ajax({
-            url : "/user/mypage/valid/password"
+            url : "/user/my-account/valid/password"
             , type : "post"
             , data : JSON.stringify(data)
             , contentType : "application/json; charset=UTF-8"
             , dataType: "json"
             , success : function(result){
                 if(result.status == 200){
-                    location.href = "/user/mypage/password";
+                    location.href = "/user/my-account/password";
                 }
             }
             , error : function(xhr){
@@ -109,8 +110,8 @@ $(function(){
 
 // name, email validate 체크
 function modifyUserInfoValidate(){
-    var userNm = $("#userNm").val();
-    var userEmail = $("#userEmail").val();
+    var userNm = $("input[name='userNm']").val();
+    var userEmail = $("input[name='userEmail']").val();
 
     // 이름 유효성 검사
     if(!checkRexExp("userNm", userNm)){

@@ -5,11 +5,11 @@
 
 <!-- 컨텐츠페이지의 CSS -->
 <th:block layout:fragment="css">
-    <link rel="stylesheet" href="/css/mypage.css">
+    <link rel="stylesheet" href="/css/myAccount.css">
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-    <script src="/js/mypage.js"></script>
+    <script src="/js/myAccount.js"></script>
 </th:block>
 
 <div layout:fragment="content" class="container">
@@ -30,7 +30,7 @@
                     <tbody>
                     <tr>
                         <th>이름</th>
-                        <td><input type="text" class="form-control" id="userNm" name="userNm"
+                        <td><input type="text" class="form-control" name="userNm"
                                    th:value="${#authentication.principal.LoginUserDto.userNm}" maxlength="6">
                             <span class="errorMsg"></span>
                             <div class="name-regExp-description">
@@ -48,7 +48,7 @@
                     </tr>
                     <tr>
                         <th>이메일</th>
-                        <td><input type="email" class="form-control" id="userEmail" name="userEmail"
+                        <td><input type="email" class="form-control" name="userEmail"
                                    th:value="${#authentication.principal.LoginUserDto.userEmail}">
                             <span class="errorMsg"></span>
                         </td>
