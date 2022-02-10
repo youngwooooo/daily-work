@@ -12,18 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AccessController {
     /**
      * 메인 페이지
-     * @param customUserDetails
-     * @return 로그인 : 메인 페이지 VIEW
-     *         비로그인 : 전체 미션 VIEW
+     * @return 전체 Mission View
      */
     @GetMapping({"","/"})
-    public String index(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public String index(){
         log.info("AccessController::index called");
 
-        if(customUserDetails != null){
-            return "contents/common/index";
-        }
-        return "contents/mission/missions";
+        return "redirect:missions";
     }
 
     /**
@@ -39,7 +34,7 @@ public class AccessController {
         if(customUserDetails == null){
             return "contents/common/login";
         }
-        return "contents/common/index";
+        return "redirect:missions";
     }
 
     /**
