@@ -9,14 +9,14 @@ $(function(){
             };
 
             $.ajax({
-                url : "/user/mypage/password"
+                url : "/user/my-account/password"
                 , type : "patch"
                 , data : JSON.stringify(data)
                 , contentType : "application/json; charset=UTF-8"
                 , dataType : "json"
                 , success : function(result){
                     if(result.status == 200){
-                        location.href = "/user/mypage/password/success";
+                        location.href = "/user/my-account/password/success";
                     }
                 }
                 , error : function(xhr){
