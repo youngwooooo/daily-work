@@ -10,6 +10,6 @@ import java.util.Optional;
  * QueryDSL을 사용하기 위해 쿼리를 정의하는 interface
  */
 public interface MissionRepositoryCustom {
-    Page<Mission> findAllMission(Pageable pageable);
+    Page<Mission> findAllMission(Pageable pageable, String search);
     Optional<Mission> findMission(long missionSeq);
 }

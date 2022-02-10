@@ -322,8 +322,8 @@ public class MissionApiController {
 
     // 테스트 용 api
     @GetMapping("/mission/test")
-    public Page<ResponseMissionDto> test(@PageableDefault(size = 9) Pageable pageable){
-        Page<ResponseMissionDto> a = missionService.findAllMissions(pageable);
+    public Page<ResponseMissionDto> test(@PageableDefault(size = 9) Pageable pageable, @RequestParam(required = false, defaultValue = "") String keyword){
+        Page<ResponseMissionDto> a = missionService.findAllMissions(pageable, keyword);
         log.info("pageable.getOffset() : " + pageable.getOffset());
         log.info("pageable.getPageNumber() : " + pageable.getPageNumber());
         log.info("pageable.getPageSize() : " + pageable.getPageSize());

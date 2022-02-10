@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,10 +36,10 @@ public class MissionController {
      * @return 전체 MISSION VIEW
      */
     @GetMapping("/missions")
-    public String missions(Model model, @PageableDefault(size = 9) Pageable pageable){
+    public String missions(Model model, @PageableDefault(size = 9) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search){
         log.info("MissionController :: missions called");
 
-        Page<ResponseMissionDto> findAllMissions = missionService.findAllMissions(pageable);
+        Page<ResponseMissionDto> findAllMissions = missionService.findAllMissions(pageable, search);
 
         int firstPage = 1;  // 첫번째 페이지
         int lastPage = findAllMissions.getTotalPages(); // 마지막 페이지(미션 전체 개수)
@@ -49,6 +50,7 @@ public class MissionController {
         model.addAttribute("lastPage", lastPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("search", search);
         model.addAttribute("missions", findAllMissions);
 
         return "contents/mission/missions";

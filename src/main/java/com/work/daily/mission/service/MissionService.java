@@ -45,9 +45,9 @@ public class MissionService {
      * @return 페이징 처리 된 전체 Mission List
      */
     @Transactional(readOnly = true)
-    public Page<ResponseMissionDto> findAllMissions(Pageable pageable){
+    public Page<ResponseMissionDto> findAllMissions(Pageable pageable, String search){
         // 전체 Mission 조회
-        Page<Mission> findAllMission = missionRepository.findAllMission(pageable);
+        Page<Mission> findAllMission = missionRepository.findAllMission(pageable, search);
         return findAllMission.map(ResponseMissionDto::toPaging);
     }
     /**

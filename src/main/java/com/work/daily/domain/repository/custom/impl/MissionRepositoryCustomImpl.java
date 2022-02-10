@@ -1,5 +1,6 @@
 package com.work.daily.domain.repository.custom.impl;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.work.daily.domain.entity.Mission;
@@ -33,15 +34,19 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
      * 전체 Mission 조회
      * @description 1. 공개여부 Y, 삭제여부 N, 임시여부 N인 전체 Mission 조회
      *              2. 페이징 처리
+     *              3. 미션명 / 미션작성자 검색
      * @return 전체 Mission List
      */
     @Override
-    public Page<Mission> findAllMission(Pageable pageable) {
+    public Page<Mission> findAllMission(Pageable pageable, String search) {
         List<Mission> content =  jpaQueryFactory
                 .selectFrom(qMission)
                 .innerJoin(qMission.user, qUser)
                 .fetchJoin()
-                .where(qMission.releaseYn.eq("Y").and(qMission.delYn.eq("N")).and(qMission.temporaryYn.eq("N")))
+                .where(qMission.releaseYn.eq("Y")
+                        .and(qMission.delYn.eq("N"))
+                        .and(qMission.temporaryYn.eq("N")))
+                .where(missionNmEq(search).or(missionUserNmEq(search)))
                 .orderBy(qMission.insDtm.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -51,10 +56,21 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
                 .selectFrom(qMission)
                 .innerJoin(qMission.user, qUser)
                 .fetchJoin()
-                .where(qMission.releaseYn.eq("Y").and(qMission.delYn.eq("N")).and(qMission.temporaryYn.eq("N")))
+                .where(qMission.releaseYn.eq("Y")
+                        .and(qMission.delYn.eq("N"))
+                        .and(qMission.temporaryYn.eq("N")))
+                .where(missionNmEq(search).or(missionUserNmEq(search)))
                 .orderBy(qMission.insDtm.desc());
 
         return PageableExecutionUtils.getPage(content, pageable, ()-> totalCount.fetch().size());
+    }
+
+    private BooleanExpression missionNmEq(String search) {
+        return search != null ? qMission.missionNm.contains(search) : null;
+    }
+
+    private BooleanExpression missionUserNmEq(String search) {
+        return search != null ? qMission.user.userNm.contains(search) : null;
     }
 
     @Override
