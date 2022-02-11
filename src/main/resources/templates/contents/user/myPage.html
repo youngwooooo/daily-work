@@ -18,106 +18,91 @@
         <!-- 회원 로그인 시 메인 화면 -->
         <div class="row authentication-user" sec:authorize="hasRole('ROLE_USER')">
 
-            <div class="col-sm-4 user-info-card-div">
-
-                <div class="card">
-                    <img class="card-img-top" th:src="${#authentication.principal.LoginUserDto.profileImage}"
-                         alt="profile_image">
-                    <div class="card-body">
-                        <div class="user-simple-info">
-                            <h5 class="card-title" th:text="${#authentication.principal.LoginUserDto.userNm}"></h5>
-                            <p class="card-text" th:text="${#authentication.principal.LoginUserDto.userEmail}"></p>
-                        </div>
-                        <div class="user-info-management">
-                            <button type="button" class="btn btn-dark" id="btn-move-mypage-form">계정 관리</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mission-rate-info">
-                            <h4 class="card-title">MISSION 달성률</h4>
-                            <span><span th:text="${#authentication.principal.LoginUserDto.userNm}"></span>님의 미션 달성률을 확인할 수 있어요!</span>
-                        </div>
-                        <div class="mission-rating-character-div">
-                            <img class="mission-rating-character" src="/img/common/mission_rating_character.png"
-                                 alt="mission_rating_character">
-                        </div>
-                        <div class="mission-rate-count">
-                            <h4>50%</h4>
-                            <div class="mission-all-rating">
-                                <div class="mission-complete-rating"></div>
+            <div class="col-sm-3 user-info-card-div">
+                <div class="a">
+                    <div class="card">
+                        <img class="card-img-top" th:src="${#authentication.principal.LoginUserDto.profileImage}"
+                             alt="profile_image">
+                        <div class="card-body">
+                            <div class="user-simple-info">
+                                <h5 class="card-title" th:text="${#authentication.principal.LoginUserDto.userNm}"></h5>
+                                <p class="card-text" th:text="${#authentication.principal.LoginUserDto.userEmail}"></p>
+                            </div>
+                            <div class="user-info-management">
+                                <button type="button" class="btn btn-dark" id="btn-move-mypage-form">계정 관리</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="b">
+                    <p>미션 관리</p>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <span>나의 참여 미션</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span>나의 작성 미션</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span>나의 미션 현황</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p>커뮤니티</p>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <span>나의 게시글</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="c">
+                    <div class="mission-rate-info">
+                        <h4 class="card-title">미션 달성률</h4>
+                        <p>미션 달성률을 확인할 수 있어요!</p>
+                        <h4>50%</h4>
+                        <div class="mission-all-rating">
+                            <div class="mission-complete-rating"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- .user-info-card-div end -->
 
-            <div class="col-sm-8 mission-info-card-div">
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mission-info">
-                            <div class="mission-title justify-content-between">
-                                <h4 class="card-title">참여 MISSION</h4>
-                                <h4 class="mission-count">5</h4>
+            <div class="col-sm-9 mission-info-card-div">
+                <div>
+                    <h4>최근 참여한 미션</h4>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="card mission">
+                                <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
+                                <div class="card-body">
+                                    <h4 class="card-title">미션 제목</h4>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="mission-writer-image-div">
+                                            <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
+                                            <p class="mission-writer">미션 작성자</p>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
-                            <span><span th:text="${#authentication.principal.LoginUserDto.userNm}"></span>님이 참여중인 미션을 확인할 수 있어요!</span>
-                        </div>
-                        <div class="move-mission-list-div">
-                            <a href="#">참여중인 미션 보러가기</a>
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mission-info">
-                            <div class="mission-title justify-content-between">
-                                <h4 class="card-title">나의 MISSION</h4>
-                                <h4 class="mission-count">5</h4>
-                            </div>
-                            <span><span th:text="${#authentication.principal.LoginUserDto.userNm}"></span>님이 등록한 미션을 확인할 수 있어요!</span>
-                        </div>
-                        <div class="move-mission-list-div">
-                            <a href="#">내가 만든 미션 보러가기</a>
-                        </div>
-                    </div>
+                <div>
+                    <h4>최근 작성한 미션</h4>
                 </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mission-info">
-                            <div class="mission-title justify-content-between">
-                                <h4 class="card-title">달성 MISSION</h4>
-                                <h4 class="mission-count">5</h4>
-                            </div>
-                            <span><span th:text="${#authentication.principal.LoginUserDto.userNm}"></span>님이 달성한 미션을 확인할 수 있어요!</span>
-                        </div>
-                        <div class="move-mission-list-div">
-                            <a href="#">달성한 미션 보러가기</a>
-                        </div>
-                    </div>
+                <div>
+                    <h4>최근 작성한 게시글</h4>
                 </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mission-info">
-                            <div class="mission-title justify-content-between">
-                                <h4 class="card-title">마감 MISSION</h4>
-                                <h4 class="mission-count">5</h4>
-                            </div>
-                            <span><span th:text="${#authentication.principal.LoginUserDto.userNm}"></span>님이 참여했던 미션을 확인할 수 있어요!</span>
-                        </div>
-                        <div class="move-mission-list-div">
-                            <a href="#">마감된 미션 보러가기</a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
             <!-- .mission-info-card-div end -->
 

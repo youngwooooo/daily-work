@@ -1,19 +1,19 @@
 .index-div {
-    padding-top: 45px;
-    padding-bottom: 20px;
-}
-
-.authentication-user .card {
-    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .authentication-user .user-info-card-div .card {
-    margin-bottom: 27px;
+    padding: 20px;
+    border: none;
+}
+
+.authentication-user .user-info-card-div .a {
+    border: 1px solid #dddddd;
 }
 
 .authentication-user .user-info-card-div .card-img-top {
-    width: 65%;
-    height: 200px;
+    width: 50%;
     margin: auto;
     border-radius: 50%;
     object-fit: cover;
@@ -40,65 +40,121 @@
     width: 100%;
 }
 
-.authentication-user .mission-rating-character {
-    width: 60%;
-    margin-top: 35px;
-    margin-bottom: 10px;
+.authentication-user .user-info-card-div .b, .authentication-user .user-info-card-div .c {
+    border: 1px solid #dddddd;
+    border-top: none;
+    padding: 20px;
 }
 
-.authentication-user .mission-rate-info h4 {
+.authentication-user .user-info-card-div .b p {
+    color: #ababab;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.authentication-user .user-info-card-div .b ul {
+    list-style: none;
+    margin-bottom: 30px;
+    padding-left: 20px;
+}
+
+.authentication-user .user-info-card-div .b ul:last-child {
+    margin-bottom: 15px;
+}
+
+.authentication-user .user-info-card-div .b ul li {
+    padding: 3px;
+}
+
+.authentication-user .user-info-card-div .b ul li a {
+    color: black;
+}
+
+.authentication-user .user-info-card-div .b ul li a:hover {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.authentication-user .user-info-card-div .c {
+
+}
+
+.authentication-user .user-info-card-div .c .mission-rate-info h4 {
     margin-bottom: 0px;
     font-weight: bold;
 }
 
-.authentication-user .mission-rate-info span {
+.authentication-user .user-info-card-div .c .mission-rate-info p {
     color: gray;
     font-size: 0.9rem;
+    margin-bottom: 50px;
+    margin-top: 3px;
 }
 
-.authentication-user .mission-rate-count h4 {
-    font-weight: bold
-}
-
-.authentication-user .mission-rate-count .mission-all-rating {
+.authentication-user .user-info-card-div .c .mission-all-rating {
     height: 15px;
     width: 100%;
     background-color: #efefef;
 }
 
-.authentication-user .mission-rate-count .mission-complete-rating {
+.authentication-user .user-info-card-div .c .mission-complete-rating {
     width: 50%;
     height: 15px;
     background-color: #6a83ff;
+    margin-top: 5px;
 }
 
-.authentication-user .mission-info-card-div .card {
-    margin-bottom: 30px;
+.mission-info-card-div .col-sm-4 .mission {
+    min-height: 372px;
+    max-height: 372px;
 }
 
-.authentication-user .mission-info-card-div .mission-info .mission-title {
+.mission-info-card-div .col-sm-4 .mission:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 10px 3px #dddddd;
+}
+
+.mission-info-card-div .col-sm-4 .mission .card-img-top {
+    border-bottom: 1px solid #dfdfdf;
+    max-height: 200px;
+    min-height: 200px;
+}
+
+.mission-info-card-div .col-sm-4 .mission .mission-writer-image-div {
     display: flex;
 }
 
-.authentication-user .mission-info-card-div .mission-info .mission-title h4 {
+.mission-info-card-div .col-sm-4 .mission .mission-writer-image-div .mission-writer-image {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.mission-info-card-div .col-sm-4 .mission .mission-writer-image-div .mission-writer {
+    padding-top: 5px;
+    margin-left: 10px;
     margin-bottom: 0px;
-    font-weight: bold;
 }
 
-.authentication-user .mission-info-card-div .mission-info .mission-title .mission-count {
-    color: red;
+.mission-info-card-div .empty-mission-div {
+    text-align: center;
+    min-height: 500px;
 }
 
-.authentication-user .mission-info-card-div .mission-info span {
+.mission-info-card-div .empty-mission-div .empty-mission-desc {
+    position: relative;
+    top: 35%;
+}
+
+.mission-info-card-div .empty-mission-div .empty-mission-desc i{
+    color: #f55858;
+}
+
+.mission-info-card-div .empty-mission-div .empty-mission-desc h3 {
+    margin-top: 15px;
     color: gray;
-    font-size: 0.9rem;
 }
 
-.authentication-user .mission-info-card-div .move-mission-list-div {
-    margin-top: 20px;
-}
-
-.authentication-user .mission-info-card-div .move-mission-list-div a {
+.mission-info-card-div .empty-mission-div .empty-mission-desc span {
     color: gray;
-    float: right;
 }
