@@ -10,11 +10,6 @@ $(function(){
         location.href = "/join";
     });
 
-    // [계정관리] 클릭 시
-    $("#btn-move-myAccount-form").on("click", function(){
-        location.href = "/user/my-account";
-    });
-
     // [미션] 클릭 시
     $("#btn-move-all-mission").on("click", function(){
         location.href = "/missions"

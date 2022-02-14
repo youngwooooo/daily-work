@@ -17,7 +17,7 @@ header #collapsibleNavbar {
 
 header #profile-menu {
     position: absolute;
-    left: 71%;
+    left: 72%;
 }
 
 header .menu-right .nav-item .profile-image-icon img {
@@ -36,7 +36,7 @@ header .menu-right .nav-item #profile-menu .menu-user-info-div {
 }
 
 header .menu-right .nav-item #profile-menu .menu-user-info-div img {
-    width: 90px;
+    width: 50px;
     border-radius: 50%;
 }
 

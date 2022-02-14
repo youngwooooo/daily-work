@@ -1,136 +1,156 @@
-.index-div {
-    margin-top: 30px;
-    margin-bottom: 30px;
+ .container-fluid {
+    padding-right: 30px;
 }
 
-.authentication-user .user-info-card-div .card {
+
+ .user-info-card-div {
+    border-right: 1px solid #dddddd;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+ .user-info-card-div .card {
     padding: 20px;
     border: none;
 }
 
-.authentication-user .user-info-card-div .a {
-    border: 1px solid #dddddd;
-}
-
-.authentication-user .user-info-card-div .card-img-top {
+ .user-info-card-div .card-img-top {
     width: 50%;
     margin: auto;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.authentication-user .user-info-card-div .user-simple-info {
+ .user-info-card-div .user-simple-info {
     text-align: center;
 }
 
-.authentication-user .user-info-card-div .user-simple-info .card-title {
+ .user-info-card-div .user-simple-info .card-title {
     margin-bottom: 0px;
 }
 
-.authentication-user .user-info-card-div .user-simple-info .card-text {
+ .user-info-card-div .user-simple-info .card-text {
     color: gray;
     font-size: 0.9rem;
 }
 
-.authentication-user .user-info-card-div .user-info-management {
+ .user-info-card-div .user-info-management {
     margin-top: 20px;
 }
 
-.authentication-user .user-info-card-div .user-info-management button {
+ .user-info-card-div .user-info-management button {
     width: 100%;
 }
 
-.authentication-user .user-info-card-div .b, .authentication-user .user-info-card-div .c {
-    border: 1px solid #dddddd;
-    border-top: none;
+ .user-info-card-div .my-menu,  .user-info-card-div .my-mission-rating {
     padding: 20px;
 }
 
-.authentication-user .user-info-card-div .b p {
+ .user-info-card-div .my-menu {
+    min-height: 350px;
+ }
+
+ .user-info-card-div .my-menu p {
     color: #ababab;
     font-size: 0.9rem;
     margin-bottom: 8px;
 }
 
-.authentication-user .user-info-card-div .b ul {
+ .user-info-card-div .my-menu ul {
     list-style: none;
     margin-bottom: 30px;
     padding-left: 20px;
 }
 
-.authentication-user .user-info-card-div .b ul:last-child {
+ .user-info-card-div .my-menu ul:last-child {
     margin-bottom: 15px;
 }
 
-.authentication-user .user-info-card-div .b ul li {
+ .user-info-card-div .my-menu ul li {
     padding: 3px;
 }
 
-.authentication-user .user-info-card-div .b ul li a {
+ .user-info-card-div .my-menu ul li a {
     color: black;
 }
 
-.authentication-user .user-info-card-div .b ul li a:hover {
+ .user-info-card-div .my-menu ul li a:hover {
     font-weight: bold;
     text-decoration: none;
 }
 
-.authentication-user .user-info-card-div .c {
-
-}
-
-.authentication-user .user-info-card-div .c .mission-rate-info h4 {
+ .user-info-card-div .my-mission-rating .mission-rate-info h4 {
     margin-bottom: 0px;
     font-weight: bold;
 }
 
-.authentication-user .user-info-card-div .c .mission-rate-info p {
+ .user-info-card-div .my-mission-rating .mission-rate-info p {
     color: gray;
     font-size: 0.9rem;
     margin-bottom: 50px;
     margin-top: 3px;
 }
 
-.authentication-user .user-info-card-div .c .mission-all-rating {
+ .user-info-card-div .my-mission-rating .mission-all-rating {
     height: 15px;
     width: 100%;
     background-color: #efefef;
 }
 
-.authentication-user .user-info-card-div .c .mission-complete-rating {
+ .user-info-card-div .my-mission-rating .mission-complete-rating {
     width: 50%;
     height: 15px;
     background-color: #6a83ff;
     margin-top: 5px;
 }
 
-.mission-info-card-div .col-sm-4 .mission {
-    min-height: 372px;
-    max-height: 372px;
+.mission-info-card-div {
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
-.mission-info-card-div .col-sm-4 .mission:hover {
+.mission-info-card-div .row {
+    padding-left: 15px;
+}
+
+.mission-info-card-div .col-sm-3 {
+    margin-bottom: 100px;
+}
+
+.mission-info-card-div .col-sm-3 .mission {
+    max-height: 316px;
+    min-height: 316px;
+}
+
+.mission-info-card-div .col-sm-3 .mission:hover {
     cursor: pointer;
     box-shadow: 1px 1px 10px 3px #dddddd;
 }
 
-.mission-info-card-div .col-sm-4 .mission .card-img-top {
-    border-bottom: 1px solid #dfdfdf;
-    max-height: 200px;
-    min-height: 200px;
+.mission-info-card-div .col-sm-3 .mission h5 {
+    margin: 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-.mission-info-card-div .col-sm-4 .mission .mission-writer-image-div {
+.mission-info-card-div .col-sm-3 .mission .card-img-top {
+    border-bottom: 1px solid #dfdfdf;
+    max-height: 190px;
+    min-height: 190px;
+}
+
+.mission-info-card-div .col-sm-3 .mission .mission-writer-image-div {
     display: flex;
 }
 
-.mission-info-card-div .col-sm-4 .mission .mission-writer-image-div .mission-writer-image {
+.mission-info-card-div .col-sm-3 .mission .mission-writer-image-div .mission-writer-image {
     width: 35px;
     height: 35px;
     border-radius: 50%;
 }
 
-.mission-info-card-div .col-sm-4 .mission .mission-writer-image-div .mission-writer {
+.mission-info-card-div .col-sm-3 .mission .mission-writer-image-div .mission-writer {
     padding-top: 5px;
     margin-left: 10px;
     margin-bottom: 0px;
@@ -158,3 +178,24 @@
 .mission-info-card-div .empty-mission-div .empty-mission-desc span {
     color: gray;
 }
+
+.mission-info-card-div .col-sm-12 .table {
+    table-layout: fixed;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.mission-info-card-div .col-sm-12 .table th {
+    border-bottom: none;
+}
+
+.mission-info-card-div .col-sm-12 .table tbody tr:last-child td {
+    border-bottom: 1px solid #dddddd;
+}
+
+.mission-info-card-div .col-sm-12 .table tbody tr td:nth-child(2) {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
