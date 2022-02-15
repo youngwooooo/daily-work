@@ -61,7 +61,7 @@ $(function(){
         var userSeq = $(this).parents(".mission-participants-management-div").find("input[name='participantsSeq']").val();
         var userId = $(this).parents(".mission-participants-management-div").find("input[name='participantsId']").val();
         var missionJoinYn = "Y";
-        var missionJoinApprovalDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        var missionJoinApprovalDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19);
 
         var data = {
             "missionSeq" : missionSeq
@@ -254,7 +254,7 @@ $(function(){
         var missionSeq = $("#missionSeq").val(); // 미션번호
         var userSeq = $("#userSeq").val();       // 회원번호
         var userId = $("#userId").val();         // 회원ID
-        var missionJoinDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16); // 미션참여일
+        var missionJoinDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19); // 미션참여일
 
         var autoAccessYn = $("#autoAccessYn").val();    // 자동참여 여부
         var missionJoinYn = ""; // 참여여부
@@ -262,7 +262,7 @@ $(function(){
         // 자동참여 여부에 따른 참여여부 값
         if(autoAccessYn == "Y"){
             missionJoinYn = "Y"
-            missionJoinApprovalDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            missionJoinApprovalDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19);
         }else {
             missionJoinYn = "N";
             missionJoinApprovalDt = null;
@@ -430,7 +430,7 @@ $(function(){
             var submittedMissionNm = $("#submittedMissionNm").val();
             var submittedMissionDesc = $("#submittedMissionDesc").val();
             var submittedMissionImage = $("#file")[0].files[0];
-            var submittedMissionDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            var submittedMissionDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19);
             var approvalYn = "N";
             var approvalDt = null;
             var rejectionYn = "N";
@@ -593,7 +593,7 @@ $(function(){
         var missionStateSeq = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-submittedMissionSeq").val();
         var missionStateWeek = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-submittedMissionWeek").val();
         var approvalYn = "Y";
-        var approvalDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        var approvalDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19);
 
         var data = {
             "missionStateSeq" : missionStateSeq
@@ -625,7 +625,7 @@ $(function(){
         var missionStateSeq = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-submittedMissionSeq").val();
         var missionStateWeek = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-submittedMissionWeek").val();
         var rejectionYn = "Y";
-        var rejectionDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        var rejectionDt = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19);
         var rejectionDesc = $(this).parents("#approval-wait-submit-mission-modal").find("#approval-wait-rejectionDesc").val();
 
         // 반려 내용 유효성 검사
