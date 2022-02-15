@@ -4,6 +4,7 @@ import com.work.daily.domain.entity.Mission;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -12,4 +13,10 @@ import java.util.Optional;
 public interface MissionRepositoryCustom {
     Page<Mission> findAllMission(Pageable pageable, String search);
     Optional<Mission> findMission(long missionSeq);
+
+    List<Mission> findLatelyParticipationMission(String userId);
+    Page<Mission> findAllLatelyParticipationMission(String userId, Pageable pageable, String search);
+
+    List<Mission> findLatelyCreatedMission(String userId);
+
 }

@@ -287,4 +287,38 @@ public class MissionService {
         return ReturnResult.SUCCESS.getValue();
     }
 
+    /**
+     * 최근 참여 미션 5건 조회
+     * @param userId
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public List<ResponseMissionDto> findLatelyParticipationMission(String userId) {
+        List<Mission> findLatelyParticipationMission = missionRepository.findLatelyParticipationMission(userId);
+        return findLatelyParticipationMission.stream().map(ResponseMissionDto::new).collect(Collectors.toList());
+    }
+
+    /**
+     * 나의 참여 미션 조회
+     * @param userId
+     * @param pageable
+     * @param search
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public Page<ResponseMissionDto> findAllLatelyParticipationMission(String userId, Pageable pageable, String search){
+        Page<Mission> findAllLatelyParticipationMission = missionRepository.findAllLatelyParticipationMission(userId, pageable, search);
+        return findAllLatelyParticipationMission.map(ResponseMissionDto::toPaging);
+    }
+
+    /**
+     * 최근 작성한 미션 5건 조회
+     * @param userId
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public List<ResponseMissionDto> findLatelyCreatedMission(String userId) {
+        List<Mission> findLatelyCreatedMission = missionRepository.findLatelyCreatedMission(userId);
+        return findLatelyCreatedMission.stream().map(ResponseMissionDto::new).collect(Collectors.toList());
+    }
 }
