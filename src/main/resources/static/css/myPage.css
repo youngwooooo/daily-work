@@ -113,6 +113,10 @@
     padding-left: 15px;
 }
 
+.mission-info-card-div .col-sm-12 h5 {
+    font-weight: bold;
+}
+
 .mission-info-card-div .col-sm-3 {
     margin-bottom: 100px;
 }
@@ -156,26 +160,14 @@
     margin-bottom: 0px;
 }
 
-.mission-info-card-div .empty-mission-div {
+.mission-info-card-div .empty-desc-div {
+    min-height: 316px;
     text-align: center;
-    min-height: 500px;
 }
 
-.mission-info-card-div .empty-mission-div .empty-mission-desc {
+.mission-info-card-div .empty-desc {
     position: relative;
-    top: 35%;
-}
-
-.mission-info-card-div .empty-mission-div .empty-mission-desc i{
-    color: #f55858;
-}
-
-.mission-info-card-div .empty-mission-div .empty-mission-desc h3 {
-    margin-top: 15px;
-    color: gray;
-}
-
-.mission-info-card-div .empty-mission-div .empty-mission-desc span {
+    top: 45%;
     color: gray;
 }
 
@@ -197,5 +189,11 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.mission-info-card-div .col-sm-12 .table tbody tr td:nth-child(2):hover {
+    cursor: pointer;
+    background-color: #f9f9f9;
+    font-weight: bold;
 }
 

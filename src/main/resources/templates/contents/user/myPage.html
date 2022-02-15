@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout}">
 
 <!-- 컨텐츠페이지의 CSS -->
@@ -38,7 +37,7 @@
                     <p>미션 관리</p>
                     <ul>
                         <li>
-                            <a href="#">
+                            <a href="/user/mypage/my-participation-mission">
                                 <span>나의 참여 미션</span>
                             </a>
                         </li>
@@ -81,139 +80,57 @@
                         <h5><i class="fa-solid fa-bookmark mr-3"></i>최근 참여한 미션</h5>
                         <hr/>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="card mission">
-                            <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
-                            <div class="card-body">
-                                <h5 class="card-title">미션 제목</h5>
+                    <th:block th:each="pm : ${participationMission}">
+                        <div class="col-sm-3">
+                            <div class="card mission">
+                                <img class="card-img-top" th:src="${pm.missionImage}" alt="mission-image">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${pm.missionNm}">미션 제목</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="mission-writer-image-div">
+                                            <img class="mission-writer-image" th:src="${pm.user.profileImage}" alt="mission-writer-image">
+                                            <p class="mission-writer" th:text="${pm.user.userNm}">미션 작성자</p>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="mission-writer-image-div">
-                                        <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
-                                        <p class="mission-writer">미션 작성자</p>
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card mission">
-                            <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
-                            <div class="card-body">
-                                <h5 class="card-title">미션 제목</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="mission-writer-image-div">
-                                        <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
-                                        <p class="mission-writer">미션 작성자</p>
-                                    </div>
-                                </li>
-                            </ul>
+                    </th:block>
+                    <th:block th:if="${#lists.size(participationMission) == 0}">
+                        <div class="col-sm-12 empty-desc-div">
+                            <p class="empty-desc">최근 참여한 미션이 존재하지 않습니다.</p>
                         </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card mission">
-                            <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
-                            <div class="card-body">
-                                <h5 class="card-title">미션 제목</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="mission-writer-image-div">
-                                        <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
-                                        <p class="mission-writer">미션 작성자</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card mission">
-                            <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
-                            <div class="card-body">
-                                <h5 class="card-title">미션 제목</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="mission-writer-image-div">
-                                        <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
-                                        <p class="mission-writer">미션 작성자</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    </th:block>
 
                     <div class="col-sm-12">
                         <h5><i class="fa-solid fa-bookmark mr-3"></i>최근 작성한 미션</h5>
                         <hr/>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="card mission">
-                            <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
-                            <div class="card-body">
-                                <h5 class="card-title">미션 제목</h5>
+                    <th:block th:each="cm : ${createdMission}">
+                        <div class="col-sm-3">
+                            <div class="card mission">
+                                <img class="card-img-top" th:src="${cm.missionImage}" alt="mission-image">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${cm.missionNm}">미션 제목</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="mission-writer-image-div">
+                                            <img class="mission-writer-image" th:src="${cm.user.profileImage}" alt="mission-writer-image">
+                                            <p class="mission-writer" th:text="${cm.user.userNm}">미션 작성자</p>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="mission-writer-image-div">
-                                        <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
-                                        <p class="mission-writer">미션 작성자</p>
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card mission">
-                            <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
-                            <div class="card-body">
-                                <h5 class="card-title">미션 제목</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="mission-writer-image-div">
-                                        <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
-                                        <p class="mission-writer">미션 작성자</p>
-                                    </div>
-                                </li>
-                            </ul>
+                    </th:block>
+                    <th:block th:if="${#lists.size(createdMission) == 0}">
+                        <div class="col-sm-12 empty-desc-div">
+                            <p class="empty-desc">최근 작성한 미션이 존재하지 않습니다.</p>
                         </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card mission">
-                            <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
-                            <div class="card-body">
-                                <h5 class="card-title">미션 제목</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="mission-writer-image-div">
-                                        <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
-                                        <p class="mission-writer">미션 작성자</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="card mission">
-                            <img class="card-img-top" src="/img/common/basic_mission.jpg" alt="mission-image">
-                            <div class="card-body">
-                                <h5 class="card-title">미션 제목</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="mission-writer-image-div">
-                                        <img class="mission-writer-image" th:src="${#authentication.principal.LoginUserDto.profileImage}" alt="mission-writer-image">
-                                        <p class="mission-writer">미션 작성자</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    </th:block>
 
                     <div class="col-sm-12">
                         <h5><i class="fa-solid fa-bookmark mr-3"></i>최근 작성한 게시글</h5>
