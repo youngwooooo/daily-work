@@ -9,7 +9,7 @@
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-
+    <script src="/js/myMissionState.js"></script>
 </th:block>
 
 <div layout:fragment="content" class="container-fluid">
@@ -105,6 +105,9 @@
                     <th:block th:each="ms : ${missionState}">
                         <div class="col-sm-3">
                             <div class="card mission">
+                                <input type="hidden" name="missionStateSeq" th:value="${ms.missionStateSeq}">
+                                <input type="hidden" name="missionStateWeek" th:value="${ms.missionStateWeek}">
+                                <input type="hidden" name="missionSeq" th:value="${ms.missionSeq}">
                                 <img class="card-img-top" th:src="${ms.submittedMissionImage}" alt="mission-state-image">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${ms.submittedMissionNm}">미션 현황 제목</h5>
@@ -197,6 +200,48 @@
 
     </div>
     <!-- .index-div end-->
+
+    <div class="modal" id="missionState-modal">
+        <input type="hidden" name="get-missionSeq">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <input type="text" id="missionState-submittedMissionNm" class="form-control" readonly="readonly">
+                    <hr/>
+                    <textarea id="missionState-submittedMissionDesc" class="form-control" rows="10" readonly="readonly"></textarea>
+                    <hr/>
+                    <div class="missionState-submit-mission-image-info-div">
+                        <div class="missionState-submit-mission-image-div">
+                            <img id="missionState-submit-mission-image" alt="mission-image">
+                        </div>
+                    </div>
+                    <div class="my-submit-mission-rejectionDesc" style="display: none;">
+                        <input type="text" class="form-control" id="my-rejectionDesc" readonly="readonly">
+                    </div>
+                    <hr/>
+                    <div class="button-div">
+                        <button type="button" class="btn btn-dark" id="btn-move-mission">미션 바로가기</button>
+                        <button type="button" class="btn btn-light" id="btn-cancel-missionState-submit-mission">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="open-image-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="btn-close-open-image-modal">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img alt="approval-mission-image">
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <!-- container end -->

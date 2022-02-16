@@ -222,3 +222,39 @@
     color: white;
 }
 
+ #missionState-modal input, #missionState-modal textarea {
+    border: none;
+    background-color: white;
+}
+
+ #missionState-modal .missionState-submit-mission-image-div {
+    border: 1px dashed #dddddd;
+    height: 200px;
+}
+
+ #missionState-modal .missionState-submit-mission-image-div:hover {
+    cursor: pointer;
+}
+
+ #missionState-modal .missionState-submit-mission-image-div img {
+    width: 100%;
+    height: 100%;
+}
+
+ #missionState-modal .button-div {
+    text-align: center;
+ }
+
+ #missionState-modal #btn-cancel-missionState-submit-mission {
+    border-color: #dddddd;
+    width: 20%;
+}
+
+#open-image-modal .modal-dialog {
+    max-width: 75%;
+}
+
+#open-image-modal img {
+    width: 100%;
+    max-height: 800px;
+}
