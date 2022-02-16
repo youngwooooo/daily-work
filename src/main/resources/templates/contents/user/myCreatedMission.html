@@ -9,7 +9,7 @@
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-
+    <script src="/js/myPage.js"></script>
 </th:block>
 
 <div layout:fragment="content" class="container-fluid">
@@ -105,6 +105,7 @@
                     <th:block th:each="cm : ${createdMission}">
                         <div class="col-sm-3">
                             <div class="card mission">
+                                <input type="hidden" name="missionSeq" th:value="${cm.missionSeq}">
                                 <img class="card-img-top" th:src="${cm.missionImage}" alt="mission-image">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${cm.missionNm}">미션 제목</h5>

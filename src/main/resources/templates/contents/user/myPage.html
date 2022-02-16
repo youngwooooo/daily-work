@@ -91,6 +91,7 @@
                     <th:block th:each="pm : ${participationMission}">
                         <div class="col-sm-3">
                             <div class="card mission">
+                                <input type="hidden" name="missionSeq" th:value="${pm.missionSeq}">
                                 <img class="card-img-top" th:src="${pm.missionImage}" alt="mission-image">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${pm.missionNm}">미션 제목</h5>
@@ -119,6 +120,7 @@
                     <th:block th:each="cm : ${createdMission}">
                         <div class="col-sm-3">
                             <div class="card mission">
+                                <input type="hidden" name="missionSeq" th:value="${cm.missionSeq}">
                                 <img class="card-img-top" th:src="${cm.missionImage}" alt="mission-image">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${cm.missionNm}">미션 제목</h5>

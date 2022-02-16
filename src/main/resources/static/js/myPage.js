@@ -5,4 +5,9 @@ $(function(){
         location.href = "/user/my-account";
     });
 
+    $(".card").on("click", function(){
+        var missionSeq = $(this).find("input[name='missionSeq']").val();
+        location.href="/mission/" + missionSeq;
+    });
+
 });
