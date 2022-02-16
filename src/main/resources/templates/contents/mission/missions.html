@@ -89,7 +89,7 @@
                     </li>
                 </th:block>
 
-                <li class="page-item" th:each="pNo : ${#numbers.sequence(startPage, endPage)}">
+                <li class="page-item" th:each="pNo : ${#numbers.sequence(startPage, endPage)}" th:if="${endPage >= 2}">
                     <a class="page-link pageNum" th:classappend="${pNo == missions.pageable.pageNumber + 1} ? 'selected'" th:text="${pNo}" th:href="@{/missions(page=${pNo}, search=${search})}">선택 페이지</a>
                 </li>
 
@@ -98,10 +98,10 @@
                         <a class="page-link pageNum"><span>...</span></a>
                     </li>
                 </th:block>
+
                 <li class="page-item">
                     <a class="page-link pageNum" th:classappend="${lastPage == missions.pageable.pageNumber + 1} ? 'selected'" th:text="${lastPage}" th:href="@{/missions(page=${lastPage}, search=${search})}">마지막 페이지</a>
                 </li>
-
             </th:block>
 
             <li class="page-item" th:classappend="${missions.totalPages == missions.pageable.pageNumber + 1} ? 'disabled'">
