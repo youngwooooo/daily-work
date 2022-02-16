@@ -1,6 +1,7 @@
 package com.work.daily.domain.repository.custom.impl;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.work.daily.domain.entity.*;
@@ -66,6 +67,7 @@ public class MissionStateRepositoryCustomImpl implements MissionStateRepositoryC
                 .innerJoin(qMissionState.missionParticipants, qMissionParticipants)
                 .where(qMissionState.missionParticipants.missionSeq.eq(qMission.missionSeq)
                         .and(qMissionState.missionParticipants.userId.eq(userId))
+                        .and(missionNmLike(search).or(submittedMissionNmLike(search)))
                 )
                 .orderBy(qMissionState.submittedMissionDt.desc())
                 .offset(pageable.getOffset())
@@ -78,10 +80,18 @@ public class MissionStateRepositoryCustomImpl implements MissionStateRepositoryC
                 .innerJoin(qMissionState.missionParticipants, qMissionParticipants)
                 .where(qMissionState.missionParticipants.missionSeq.eq(qMission.missionSeq)
                         .and(qMissionState.missionParticipants.userId.eq(userId))
+                        .and(missionNmLike(search).or(submittedMissionNmLike(search)))
                 )
                 .orderBy(qMissionState.submittedMissionDt.desc());
 
         return PageableExecutionUtils.getPage(content, pageable, () -> totalCount.fetch().size());
     }
 
+    private BooleanExpression missionNmLike(String search) {
+        return search != null ? qMission.missionNm.contains(search) : null;
+    }
+
+    private BooleanExpression submittedMissionNmLike(String search) {
+        return search != null ? qMissionState.submittedMissionNm.contains(search) : null;
+    }
 }
