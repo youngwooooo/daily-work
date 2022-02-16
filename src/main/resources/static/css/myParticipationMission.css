@@ -62,10 +62,6 @@
     padding-left: 20px;
 }
 
- .user-info-card-div .my-menu ul:last-child {
-    margin-bottom: 15px;
-}
-
  .user-info-card-div .my-menu ul li {
     padding: 3px;
 }
@@ -78,6 +74,10 @@
     font-weight: bold;
     text-decoration: none;
 }
+
+ .user-info-card-div .my-menu ul li .my-participation-mission {
+    font-weight: bold;
+ }
 
  .user-info-card-div .my-mission-rating .mission-rate-info h4 {
     margin-bottom: 0px;
@@ -125,6 +125,7 @@
 .mission-info-card-div {
     margin-top: 30px;
     margin-bottom: 30px;
+    position: relative;
 }
 
 .mission-info-card-div .row {
@@ -179,7 +180,7 @@
 }
 
 .mission-info-card-div .empty-desc-div {
-    min-height: 316px;
+    min-height: 700px;
     text-align: center;
 }
 
@@ -187,5 +188,30 @@
     position: relative;
     top: 45%;
     color: gray;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 0;
+    left: 40%;
+}
+
+.page-item {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.page-item .move-page {
+    color: #555;
+}
+
+.page-item .pageNum {
+    color: #555;
+    border-color: white;
+}
+
+.page-item .selected {
+    background-color: #343a40;
+    color: white;
 }
 

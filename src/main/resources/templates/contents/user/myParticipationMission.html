@@ -9,7 +9,7 @@
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-    <script src="/js/myPage.js"></script>
+
 </th:block>
 
 <div layout:fragment="content" class="container-fluid">
@@ -34,20 +34,28 @@
                     </div>
                 </div>
                 <div class="my-menu">
+                    <p>마이페이지</p>
+                    <ul>
+                        <li>
+                            <a class="my-page" href="/user/mypage">
+                                <span>HOME</span>
+                            </a>
+                        </li>
+                    </ul>
                     <p>미션 관리</p>
                     <ul>
                         <li>
-                            <a href="/user/mypage/my-participation-mission">
+                            <a class="my-participation-mission" href="/user/mypage/my-participation-mission">
                                 <span>나의 참여 미션</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a class="my-created-mission" href="/user/mypage/my-created-mission">
                                 <span>나의 작성 미션</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a class="my-mission-state" href="/user/mypage/my-mission-state">
                                 <span>나의 미션 현황</span>
                             </a>
                         </li>
@@ -78,13 +86,13 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="participation-title-div">
-                            <h5><i class="fa-solid fa-bookmark mr-3"></i>최근 참여한 미션</h5>
+                            <h5><i class="fa-solid fa-bookmark mr-3"></i>나의 참여 미션</h5>
                         </div>
                         <div class="search-div">
-                            <form method="get" th:action="@{/missions}">
+                            <form method="get" th:action="@{/user/mypage/my-participation-mission}">
                                 <div class="input-group search-input-div">
                                     <input type="hidden" name="page" th:value="${firstPage}">
-                                    <input type="search" class="form-control" id="search" name="search" placeholder="참여하고 싶은 미션을 검색해보세요!" th:value="${search}">
+                                    <input type="search" class="form-control" id="search" name="search" placeholder="미션명/작성자 검색" th:value="${search}">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-dark" id="btn-search"><i class="fas fa-search"></i>
                                         </button>
@@ -112,17 +120,62 @@
                             </div>
                         </div>
                     </th:block>
-                    <th:block th:if="${#lists.size(participationMission) == 0}">
+                    <th:block th:if="${lastPage == 0}">
                         <div class="col-sm-12 empty-desc-div">
-                            <p class="empty-desc">최근 참여한 미션이 존재하지 않습니다.</p>
+                            <p class="empty-desc">나의 참여 미션이 존재하지 않습니다.</p>
                         </div>
                     </th:block>
                 </div>
+
+                <th:block th:if="${lastPage > 0}">
+
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${1 == participationMission.pageable.pageNumber + 1} ? 'disabled'">
+                            <a class="page-link move-page" th:href="@{/user/mypage/my-participation-mission(page=${firstPage}, search=${search})}"><i class="fa-solid fa-angles-left"></i></a>
+                        </li>
+                        <li class="page-item" th:classappend="${1 == participationMission.pageable.pageNumber + 1} ? 'disabled'">
+                            <a class="page-link move-page" th:href="@{/user/mypage/my-participation-mission(page=${participationMission.pageable.pageNumber}, search=${search})}"><i class="fa-solid fa-angle-left"></i></a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link pageNum" th:classappend="${firstPage == participationMission.pageable.pageNumber + 1} ? 'selected'" th:text="${firstPage}" th:href="@{/user/mypage/my-participation-mission(page=${firstPage}, search=${search})}">첫번째 페이지</a>
+                        </li>
+
+                        <th:block th:if="${lastPage > 1}">
+
+                            <th:block th:if="${participationMission.pageable.pageNumber - firstPage > 3}">
+                                <li class="page-item">
+                                    <a class="page-link pageNum">...</a>
+                                </li>
+                            </th:block>
+
+                            <li class="page-item" th:each="pNo : ${#numbers.sequence(startPage, endPage)}" th:if="${endPage >= 2}">
+                                <a class="page-link pageNum" th:classappend="${pNo == participationMission.pageable.pageNumber + 1} ? 'selected'" th:text="${pNo}" th:href="@{/user/mypage/my-participation-mission(page=${pNo}, search=${search})}">선택 페이지</a>
+                            </li>
+
+                            <th:block th:if="${lastPage - participationMission.pageable.pageNumber > 5}">
+                                <li class="page-item">
+                                    <a class="page-link pageNum"><span>...</span></a>
+                                </li>
+                            </th:block>
+
+                            <li class="page-item">
+                                <a class="page-link pageNum" th:classappend="${lastPage == participationMission.pageable.pageNumber + 1} ? 'selected'" th:text="${lastPage}" th:href="@{/user/mypage/my-participation-mission(page=${lastPage}, search=${search})}">마지막 페이지</a>
+                            </li>
+                        </th:block>
+
+                        <li class="page-item" th:classappend="${participationMission.totalPages == participationMission.pageable.pageNumber + 1} ? 'disabled'">
+                            <a class="page-link move-page" th:href="@{/user/mypage/my-participation-mission(page=${participationMission.pageable.pageNumber + 2}, search=${search})}"><i class="fa-solid fa-angle-right"></i></a>
+                        </li>
+                        <li class="page-item" th:classappend="${participationMission.totalPages == participationMission.pageable.pageNumber + 1} ? 'disabled'">
+                            <a class="page-link move-page" th:href="@{/user/mypage/my-participation-mission(page=${lastPage}, search=${search})}"><i class="fa-solid fa-angles-right"></i></a>
+                        </li>
+                    </ul>
+
+                </th:block>
+
             </div>
             <!-- .mission-info-card-div end -->
-
         </div>
-        <!-- 회원 로그인 시 메인 화면 끝 -->
 
     </div>
     <!-- .index-div end-->
