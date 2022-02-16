@@ -1,5 +1,6 @@
 package com.work.daily.mission.dto;
 
+import com.work.daily.domain.entity.Mission;
 import com.work.daily.domain.entity.MissionState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,7 @@ public class ResponseMissionStateDto {
     private String rejectionYn;
     private LocalDateTime rejectionDt;
     private String rejectionDesc;
+    private String missionNm;
 
     public ResponseMissionStateDto(MissionState missionState){
         this.missionStateSeq = missionState.getMissionStateSeq();
@@ -45,4 +47,23 @@ public class ResponseMissionStateDto {
         this.rejectionDt = missionState.getRejectionDt();
         this.rejectionDesc = missionState.getRejectionDesc();
     }
+
+    public ResponseMissionStateDto(MissionState missionState, Mission mission){
+        this.missionStateSeq = missionState.getMissionStateSeq();
+        this.missionStateWeek = missionState.getMissionStateWeek();
+        this.missionSeq = missionState.getMissionParticipants().getMissionSeq();
+        this.userSeq = missionState.getMissionParticipants().getUserSeq();
+        this.userId = missionState.getMissionParticipants().getUserId();
+        this.submittedMissionNm = missionState.getSubmittedMissionNm();
+        this.submittedMissionDesc = missionState.getSubmittedMissionDesc();
+        this.submittedMissionImage = missionState.getSubmittedMissionImage();
+        this.submittedMissionDt = missionState.getSubmittedMissionDt();
+        this.approvalYn = missionState.getApprovalYn();
+        this.approvalDt = missionState.getApprovalDt();
+        this.rejectionYn = missionState.getRejectionYn();
+        this.rejectionDt = missionState.getRejectionDt();
+        this.rejectionDesc = missionState.getRejectionDesc();
+        this.missionNm = mission.getMissionNm();
+    }
+
 }
