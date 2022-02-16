@@ -1,11 +1,15 @@
 package com.work.daily.domain.repository.custom.impl;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.work.daily.domain.entity.MissionState;
-import com.work.daily.domain.entity.QMissionParticipants;
-import com.work.daily.domain.entity.QMissionState;
+import com.work.daily.domain.entity.*;
 import com.work.daily.domain.repository.custom.MissionStateRepositoryCustom;
+import com.work.daily.mission.dto.ResponseMissionStateDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +22,7 @@ public class MissionStateRepositoryCustomImpl implements MissionStateRepositoryC
 
     QMissionState qMissionState = QMissionState.missionState;
     QMissionParticipants qMissionParticipants = QMissionParticipants.missionParticipants;
+    QMission qMission = QMission.mission;
 
     /**
      * 모든 미션 현황 조회
@@ -46,6 +51,37 @@ public class MissionStateRepositoryCustomImpl implements MissionStateRepositoryC
                 .fetchJoin()
                 .where(qMissionState.missionParticipants.missionSeq.eq(missionSeq).and(qMissionState.missionParticipants.userId.eq(userId)))
                 .fetch();
+    }
+
+    /**
+     * 마이페이지 - 나의 미션 현황 전체 조회
+     * @param userId
+     * @return
+     */
+    @Override
+    public Page<ResponseMissionStateDto> findAllMyMissionState(String userId, Pageable pageable, String search) {
+        List<ResponseMissionStateDto> content = jpaQueryFactory
+                .select(Projections.constructor(ResponseMissionStateDto.class, qMissionState, qMission))
+                .from(qMissionState, qMission)
+                .innerJoin(qMissionState.missionParticipants, qMissionParticipants)
+                .where(qMissionState.missionParticipants.missionSeq.eq(qMission.missionSeq)
+                        .and(qMissionState.missionParticipants.userId.eq(userId))
+                )
+                .orderBy(qMissionState.submittedMissionDt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        JPAQuery<ResponseMissionStateDto> totalCount = jpaQueryFactory
+                .select(Projections.constructor(ResponseMissionStateDto.class, qMissionState, qMission))
+                .from(qMissionState, qMission)
+                .innerJoin(qMissionState.missionParticipants, qMissionParticipants)
+                .where(qMissionState.missionParticipants.missionSeq.eq(qMission.missionSeq)
+                        .and(qMissionState.missionParticipants.userId.eq(userId))
+                )
+                .orderBy(qMissionState.submittedMissionDt.desc());
+
+        return PageableExecutionUtils.getPage(content, pageable, () -> totalCount.fetch().size());
     }
 
 }
