@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -322,9 +321,8 @@ public class MissionApiController {
 
     // 테스트 용 api
     @GetMapping("/mission/test")
-    public List<ResponseMissionDto> test(){
+    public Page<ResponseMissionStateDto> test(@PageableDefault(size = 9) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search){
         String userId = "googleUser0";
-        List<ResponseMissionDto> a = missionService.findLatelyCreatedMission(userId);
-        return a;
+        return missionStateService.findAllMyMissionState(userId, pageable, search);
     }
 }

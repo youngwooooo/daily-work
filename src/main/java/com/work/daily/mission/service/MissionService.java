@@ -288,7 +288,7 @@ public class MissionService {
     }
 
     /**
-     * 최근 참여 미션 5건 조회
+     * 최근 참여 미션 4건 조회
      * @param userId
      * @return
      */
@@ -312,7 +312,7 @@ public class MissionService {
     }
 
     /**
-     * 최근 작성한 미션 5건 조회
+     * 최근 작성한 미션 4건 조회
      * @param userId
      * @return
      */
@@ -320,5 +320,18 @@ public class MissionService {
     public List<ResponseMissionDto> findLatelyCreatedMission(String userId) {
         List<Mission> findLatelyCreatedMission = missionRepository.findLatelyCreatedMission(userId);
         return findLatelyCreatedMission.stream().map(ResponseMissionDto::new).collect(Collectors.toList());
+    }
+
+    /**
+     * 나의 작성 미션 전체 조회
+     * @param userId
+     * @param pageable
+     * @param search
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public Page<ResponseMissionDto> findAllLatelyCreatedMission(String userId, Pageable pageable, String search){
+        Page<Mission> findAllLatelyCreatedMission = missionRepository.findAllLatelyCreatedMission(userId, pageable, search);
+        return findAllLatelyCreatedMission.map(ResponseMissionDto::toPaging);
     }
 }

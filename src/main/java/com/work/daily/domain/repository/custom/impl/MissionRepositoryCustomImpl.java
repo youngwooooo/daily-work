@@ -34,21 +34,22 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
 
     /**
      * 전체 Mission 조회
-     * @description 1. 공개여부 Y, 삭제여부 N, 임시여부 N인 전체 Mission 조회
-     *              2. 페이징 처리
-     *              3. 미션명 / 미션작성자 검색
      * @return 전체 Mission List
+     * @description 1. 공개여부 Y, 삭제여부 N, 임시여부 N인 전체 Mission 조회
+     * 2. 페이징 처리
+     * 3. 미션명 / 미션작성자 검색
      */
     @Override
     public Page<Mission> findAllMission(Pageable pageable, String search) {
-        List<Mission> content =  jpaQueryFactory
+        List<Mission> content = jpaQueryFactory
                 .selectFrom(qMission)
                 .innerJoin(qMission.user, qUser)
                 .fetchJoin()
                 .where(qMission.releaseYn.eq("Y")
                         .and(qMission.delYn.eq("N"))
-                        .and(qMission.temporaryYn.eq("N")))
-                .where(missionNmLike(search).or(missionUserNmLike(search)))
+                        .and(qMission.temporaryYn.eq("N"))
+                        .and(missionNmLike(search).or(missionUserNmLike(search)))
+                )
                 .orderBy(qMission.insDtm.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -60,11 +61,12 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
                 .fetchJoin()
                 .where(qMission.releaseYn.eq("Y")
                         .and(qMission.delYn.eq("N"))
-                        .and(qMission.temporaryYn.eq("N")))
-                .where(missionNmLike(search).or(missionUserNmLike(search)))
+                        .and(qMission.temporaryYn.eq("N"))
+                        .and(missionNmLike(search).or(missionUserNmLike(search)))
+                )
                 .orderBy(qMission.insDtm.desc());
 
-        return PageableExecutionUtils.getPage(content, pageable, ()-> totalCount.fetch().size());
+        return PageableExecutionUtils.getPage(content, pageable, () -> totalCount.fetch().size());
     }
 
     private BooleanExpression missionNmLike(String search) {
@@ -91,7 +93,7 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
     }
 
     /**
-     * 최근 참여한 미션 5건 조회
+     * 최근 참여한 미션 4건 조회
      * @param userId
      * @return
      */
@@ -102,18 +104,21 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
                 .innerJoin(qMission.user, qUser).fetchJoin()
                 .innerJoin(qMission.MissionParticipants, qMissionParticipants).on(qMission.missionSeq.eq(qMissionParticipants.missionSeq))
                 .where(qMission.releaseYn.eq("Y")
-                        .and(qMission.delYn.eq("N")
-                        .and(qMission.temporaryYn.eq("N")
-                        .and(qMissionParticipants.userId.eq(userId))))
+                        .and(qMission.delYn.eq("N"))
+                        .and(qMission.temporaryYn.eq("N"))
+                        .and(qMissionParticipants.userId.eq(userId))
+                        .and(qMissionParticipants.missionJoinYn.eq("Y"))
                 )
                 .orderBy(qMissionParticipants.missionJoinApprovalDt.desc())
-                .limit(5)
+                .limit(4)
                 .fetch();
     }
 
     /**
      * 나의 참여 미션 전체 조회
      * @param userId
+     * @param pageable
+     * @param search
      * @return
      */
     @Override
@@ -123,9 +128,11 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
                 .innerJoin(qMission.user, qUser).fetchJoin()
                 .innerJoin(qMission.MissionParticipants, qMissionParticipants).on(qMission.missionSeq.eq(qMissionParticipants.missionSeq))
                 .where(qMission.releaseYn.eq("Y")
-                        .and(qMission.delYn.eq("N")
-                                .and(qMission.temporaryYn.eq("N")
-                                        .and(qMissionParticipants.userId.eq(userId))))
+                        .and(qMission.delYn.eq("N"))
+                        .and(qMission.temporaryYn.eq("N"))
+                        .and(qMissionParticipants.userId.eq(userId))
+                        .and(qMissionParticipants.missionJoinYn.eq("Y"))
+                        .and(missionNmLike(search).or(missionUserNmLike(search)))
                 )
                 .orderBy(qMissionParticipants.missionJoinApprovalDt.desc())
                 .offset(pageable.getOffset())
@@ -137,18 +144,19 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
                 .innerJoin(qMission.user, qUser).fetchJoin()
                 .innerJoin(qMission.MissionParticipants, qMissionParticipants).on(qMission.missionSeq.eq(qMissionParticipants.missionSeq))
                 .where(qMission.releaseYn.eq("Y")
-                        .and(qMission.delYn.eq("N")
-                                .and(qMission.temporaryYn.eq("N")
-                                        .and(qMissionParticipants.userId.eq(userId))))
+                        .and(qMission.delYn.eq("N"))
+                        .and(qMission.temporaryYn.eq("N"))
+                        .and(qMissionParticipants.userId.eq(userId))
+                        .and(qMissionParticipants.missionJoinYn.eq("Y"))
+                        .and(missionNmLike(search).or(missionUserNmLike(search)))
                 )
                 .orderBy(qMissionParticipants.missionJoinApprovalDt.desc());
 
-        return PageableExecutionUtils.getPage(content, pageable, ()-> totalCount.fetch().size());
+        return PageableExecutionUtils.getPage(content, pageable, () -> totalCount.fetch().size());
     }
 
-
     /**
-     * 최근 작성한 미션 5건 조회
+     * 최근 작성한 미션 4건 조회
      * @param userId
      * @return
      */
@@ -157,9 +165,44 @@ public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
         return jpaQueryFactory
                 .selectFrom(qMission)
                 .innerJoin(qMission.user, qUser).fetchJoin()
-                .where(qMission.user.userId.eq(userId))
+                .where(qMission.user.userId.eq(userId)
+                        .and(qMission.delYn.eq("N"))
+                )
                 .orderBy(qMission.insDtm.desc())
-                .limit(5)
+                .limit(4)
                 .fetch();
+    }
+
+    /**
+     * 나의 작성 미션 전체 조회
+     * @param userId
+     * @param pageable
+     * @param search
+     * @return
+     */
+    @Override
+    public Page<Mission> findAllLatelyCreatedMission(String userId, Pageable pageable, String search) {
+        List<Mission> content = jpaQueryFactory
+                .selectFrom(qMission)
+                .innerJoin(qMission.user, qUser).fetchJoin()
+                .where(qMission.user.userId.eq(userId)
+                        .and(qMission.delYn.eq("N"))
+                        .and(missionNmLike(search).or(missionUserNmLike(search)))
+                )
+                .orderBy(qMission.insDtm.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        JPAQuery<Mission> totalCount = jpaQueryFactory
+                .selectFrom(qMission)
+                .innerJoin(qMission.user, qUser).fetchJoin()
+                .where(qMission.user.userId.eq(userId)
+                        .and(qMission.delYn.eq("N"))
+                        .and(missionNmLike(search).or(missionUserNmLike(search)))
+                )
+                .orderBy(qMission.insDtm.desc());
+
+        return PageableExecutionUtils.getPage(content, pageable, () -> totalCount.fetch().size());
     }
 }
