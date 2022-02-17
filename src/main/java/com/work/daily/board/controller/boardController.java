@@ -12,7 +12,11 @@ public class boardController {
 
     @GetMapping("/boards")
     public String boards(){
-
         return "/contents/board/boards";
+    }
+
+    @GetMapping("/board")
+    public String createBoardForm(){
+        return "/contents/board/createBoard";
     }
 }
