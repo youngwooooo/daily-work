@@ -1,0 +1,61 @@
+.create-board-wrapper-div {
+    padding-top: 45px;
+    padding-bottom: 45px;
+}
+.create-board-wrapper-div h3 {
+    margin-bottom: 30px;
+}
+
+.create-board-form-div .table th {
+    vertical-align: middle;
+}
+
+.create-board-form-div .table tr:last-child {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.create-board-form-div .table .board-title,
+.create-board-form-div .table .board-desc {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.create-board-form-div .table .board-title {
+    border-top: none;
+}
+
+.create-board-form-div .table #boardNm {
+    border: none;
+    font-size: 1.5rem;
+    height: 50px;
+}
+
+.ck-editor__editable {
+    min-height: 500px;
+}
+
+.create-board-form-div .table .form-check {
+    display: inline;
+    margin-right: 20px;
+}
+
+.create-board-form-div .table .form-check .form-check-label {
+    cursor: pointer;
+}
+
+.board-button-div {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.board-button-div button {
+    height: 50px;
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 150px;
+}
+
+.board-button-div #btn-cancel {
+    border: 1px solid #dddddd;
+}
