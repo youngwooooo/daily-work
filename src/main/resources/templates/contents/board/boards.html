@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<!-- 컨텐츠페이지의 CSS -->
+<th:block layout:fragment="css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/board/boards.css}"/>
+</th:block>
+<!-- 컨텐츠페이지의 JS -->
+<th:block layout:fragment="script">
+  <script type="text/javascript" th:src="@{/js/board/boards.js}"></script>
+</th:block>
+
+<div layout:fragment="content" class="container">
+  <div class="boards-wrapper" style="margin-top: 40px; margin-bottom: 40px;">
+
+    <div class="boards-title">
+      <h4>커뮤니티</h4>
+      <p style="font-size: 0.9rem; color: gray;">모두의 커뮤니티입니다. 자유롭게 글을 쓰고 소통하세요!</p>
+    </div>
+    <hr/>
+
+    <div style="margin-top: 50px; margin-bottom: 15px; overflow: hidden; display: flex;">
+      <div>
+        <p style="margin: 0px; padding-top: 7px;"><i class="fa-solid fa-bars mr-2"></i>전체 <span>1,000건</span></p>
+      </div>
+      <div style="width: 30%; margin-left: auto; margin-right: 10px;">
+        <form method="get" th:action="@{/missions}">
+          <div class="input-group search-input-div">
+            <input type="hidden" name="page" th:value="${firstPage}">
+            <input type="search" class="form-control" id="search" name="search" placeholder="제목 / 작성자 검색" th:value="${search}">
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-dark" id="btn-search"><i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div>
+        <button type="button" class="btn btn-dark" style="width: 120px;"><i class="fa-solid fa-pen-to-square mr-3 fa-lg"></i>글 쓰기</button>
+      </div>
+    </div>
+
+    <div class="board-list-div" style="min-height: 700px;">
+      <table class="table" style="text-align: center;">
+        <colgroup>
+          <col width="100px">
+          <col width="auto">
+          <col width="200px">
+          <col width="200px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일자</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>게시판1</td>
+            <td>
+              <img src="/img/common/basic_profile.png" style="width: 30px; border-radius: 50%;">
+              <span style="vertical-align: middle;">이영우</span>
+            </td>
+            <td>2022-02-17</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+</html>
