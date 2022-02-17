@@ -15,4 +15,9 @@ $(function(){
         location.href = "/missions"
     });
 
+    // [커뮤니티] 클릭 시
+    $("#btn-move-boards").on("click", function(){
+        location.href = "/boards";
+    });
+
 });
