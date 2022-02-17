@@ -13,19 +13,20 @@
 </th:block>
 
 <div layout:fragment="content" class="container">
-  <div class="boards-wrapper" style="margin-top: 40px; margin-bottom: 40px;">
+  <div class="board-wrapper">
 
-    <div class="boards-title">
+    <div class="board-title">
       <h4>커뮤니티</h4>
-      <p style="font-size: 0.9rem; color: gray;">모두의 커뮤니티입니다. 자유롭게 글을 쓰고 소통하세요!</p>
+      <p>모두의 커뮤니티입니다. 자유롭게 글을 쓰고 소통하세요!</p>
     </div>
     <hr/>
 
-    <div style="margin-top: 50px; margin-bottom: 15px; overflow: hidden; display: flex;">
-      <div>
-        <p style="margin: 0px; padding-top: 7px;"><i class="fa-solid fa-bars mr-2"></i>전체 <span>1,000건</span></p>
+    <div class="board-menu">
+      <div class="board-count">
+        <p><i class="fa-solid fa-bars mr-2"></i>전체 <span>1,000</span> 건</p>
       </div>
-      <div style="width: 30%; margin-left: auto; margin-right: 10px;">
+
+      <div class="board-search">
         <form method="get" th:action="@{/missions}">
           <div class="input-group search-input-div">
             <input type="hidden" name="page" th:value="${firstPage}">
@@ -37,13 +38,14 @@
           </div>
         </form>
       </div>
-      <div>
-        <button type="button" class="btn btn-dark" style="width: 120px;"><i class="fa-solid fa-pen-to-square mr-3 fa-lg"></i>글 쓰기</button>
+
+      <div class="board-button">
+        <button type="button" class="btn btn-dark"><i class="fa-solid fa-pen-to-square mr-3 fa-lg"></i>글 쓰기</button>
       </div>
     </div>
 
-    <div class="board-list-div" style="min-height: 700px;">
-      <table class="table" style="text-align: center;">
+    <div class="board-list-div">
+      <table class="table">
         <colgroup>
           <col width="100px">
           <col width="auto">
@@ -55,18 +57,18 @@
             <th>번호</th>
             <th>제목</th>
             <th>작성자</th>
-            <th>작성일자</th>
+            <th>작성일</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>게시판1</td>
+          <tr th:each="num : ${#numbers.sequence(1, 10)}">
+            <td><span th:text="${num}">번호</span></td>
+            <td><span th:text="|게시판${num}|">제목</span></td>
             <td>
-              <img src="/img/common/basic_profile.png" style="width: 30px; border-radius: 50%;">
-              <span style="vertical-align: middle;">이영우</span>
+              <img src="/img/common/basic_profile.png">
+              <span>이영우</span>
             </td>
-            <td>2022-02-17</td>
+            <td><span>2022-02-17</span></td>
           </tr>
         </tbody>
       </table>

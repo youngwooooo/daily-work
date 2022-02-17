@@ -1,4 +1,60 @@
-.boards-wrapper {
+.board-wrapper {
     margin-top: 40px;
     margin-bottom: 40px;
+}
+
+.board-title p {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.board-menu {
+    margin-top: 50px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    display: flex;
+}
+
+.board-menu .board-count p {
+    margin: 0px;
+    padding-top: 7px;
+}
+
+.board-menu .board-count span {
+    color: #007bff;
+}
+
+.board-menu .board-search {
+    width: 30%;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.board-menu .board-button button {
+    width: 120px;
+}
+
+.board-list-div {
+    min-height: 700px;
+}
+
+.board-list-div .table {
+    text-align: center;
+}
+
+.board-list-div .table th {
+    border-bottom: none;
+}
+
+.board-list-div .table tr:last-child {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.board-list-div .table img {
+  width: 30px;
+  border-radius: 50%;
+}
+
+.board-list-div .table span {
+     vertical-align: middle;
 }
