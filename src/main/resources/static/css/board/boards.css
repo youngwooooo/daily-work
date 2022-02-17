@@ -34,6 +34,10 @@
     width: 120px;
 }
 
+.board-menu .board-button i {
+    vertical-align: baseline;
+}
+
 .board-list-div {
     min-height: 700px;
 }
