@@ -55,10 +55,19 @@
 }
 
 .board-list-div .table img {
-  width: 30px;
-  border-radius: 50%;
+    width: 30px;
+    border-radius: 50%;
 }
 
 .board-list-div .table span {
-     vertical-align: middle;
+    vertical-align: middle;
+}
+
+.board-list-div .table .board-type {
+    padding: 5px 20px;
+    color: white;
+    background-color: #007bff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
 }
