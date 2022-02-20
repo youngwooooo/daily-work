@@ -43,6 +43,42 @@
     cursor: pointer;
 }
 
+.create-board-form-div .table #file {
+    display: none;
+}
+
+.create-board-form-div .table .preview-file-wrapper {
+    display: none;
+    border: 1px solid #dddddd;
+    margin-top: 10px;
+}
+
+.create-board-form-div .table .preview-file-wrapper .preview-file-icon-div {
+    padding: 40px;
+    text-align: center;
+    border-right: 1px solid #dddddd;
+    width: 20%;
+}
+
+.create-board-form-div .table .preview-file-wrapper .preview-file-icon-div p {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.create-board-form-div .table .preview-file-wrapper .preview-file-list {
+    padding: 15px;
+    width: 80%;
+}
+
+.create-board-form-div .table .preview-file-wrapper .preview-file-list .list-group-item {
+    font-size: 0.8rem;
+}
+
+.create-board-form-div .table .preview-file-wrapper .preview-file-list .list-group-item .delete-file {
+    float: right;
+    cursor: pointer;
+}
+
 .board-button-div {
     margin-top: 50px;
     margin-bottom: 20px;

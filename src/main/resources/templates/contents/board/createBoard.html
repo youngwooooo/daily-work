@@ -30,6 +30,16 @@
           </td>
         </tr>
         <tr>
+          <th>분류</th>
+          <td>
+            <select class="form-control" style="width: auto; font-size: 0.9rem;">
+              <option value="NORMAL">일반</option>
+              <option value="QA">질문</option>
+              <option value="PR">홍보</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
           <th>댓글 여부</th>
           <td>
             <div class="form-check">
@@ -43,6 +53,23 @@
               <label class="form-check-label" for="autoAccessN">
                 허용안함
               </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>첨부파일</th>
+          <td>
+            <button id="select-file" type="button" class="btn btn-dark">파일 선택</button>
+            <input type="file" id="file" multiple maxlength="3">
+            <div class="preview-file-wrapper">
+                <div class="preview-file-icon-div">
+                  <i class="fa-solid fa-file-lines fa-3x"></i>
+                  <p>파일 목록</p>
+                </div>
+                <div class="preview-file-list">
+                  <ul class="list-group" style="padding: 0px;">
+                  </ul>
+                </div>
             </div>
           </td>
         </tr>
