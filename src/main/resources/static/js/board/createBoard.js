@@ -1,11 +1,65 @@
 $(function(){
 
+    // 첨부파일 객체를 담을 array 전역 변수
+    var fileArr = new Array();
+
     CKEDITOR.replace("boardDesc", {
         height: 400
     });
 
+    // [파일 선텍]
+    $("#select-file").on("click", function(){
+        if(fileArr.length > 2){
+            alert("파일은 최대 3개까지 첨부 가능합니다\n(파일을 먼저 삭제 해주세요.)");
+            return;
+        }else {
+            $("#file").click();
+        }
+    });
+
+    // [파일 선택] - 파일 첨부
+    $("#file").on("change", function(){
+        var files = $(this)[0].files;
+
+        if(files.length > 3){
+            alert("파일은 최대 3개까지 첨부 가능합니다.");
+            $(this).val("");
+            return;
+        }
+
+        for(var i=0; i<files.length; i++){
+            fileArr.push(files[i]);
+            var fileList = '<il class="list-group-item">'
+                    + '<span class="file-name">'+ files[i].name + '</span>'
+                    + '<span>(' + fileSizePrint(files[i].size) + ')</span>'
+                    + '<span class="delete-file"><i class="fa-solid fa-xmark"></i></span>'
+                    + '</il>';
+
+            $(".preview-file-list ul").append(fileList);
+        }
+    });
+
+    // 첨부 파일 삭제
+    $(document).on("click", ".delete-file", function(){
+        var fileName = $(this).siblings(".file-name").text();
+        fileArr.forEach(function(item){
+            if(fileName == item.name){
+                var idx = fileArr.indexOf(item);
+                fileArr.splice(idx, 1);
+            }
+        });
+
+        $(this).parent().remove();
+    });
+
+    // [등록]
     $("#btn-save-board").on("click", function(){
-        alert("글 등록");
+        var files = $("#file")[0].files;
+        console.log(files);
+        console.log(fileArr);
+        /*if(validatingBoard()){
+            savingBoard("N");
+        }*/
     });
 
     $("#btn-temporary-board").on("click", function(){
@@ -36,14 +90,14 @@ function validatingBoard(){
     return true;
 }
 
-/*
 function savingBoard(temporaryValue){
     var userSeq = $("#userSeq").val();
     var userId = $("#userId").val();
-    var boardNm = $("#boardNm").val();  // 미션명
-    var boardDesc = CKEDITOR.instances.boardDesc.getData();  // 미션 설명
-    var delYn = "N";    // 삭제 여부
-    var temporaryYn = temporaryValue   // 임시 여부
+    var boardNm = $("#boardNm").val();
+    var boardDesc = CKEDITOR.instances.boardDesc.getData();
+    var delYn = "N";
+    var temporaryYn = temporaryValue
+    var boardType = $(".table select").val();
 
     var data = {
                     "user" : {
@@ -54,9 +108,12 @@ function savingBoard(temporaryValue){
                     , "boardDesc" : boardDesc
                     , "delYn" : delYn
                     , "temporaryYn" : temporaryYn
+                    , "boardType" : boardType
                 };
 
-    var formData = new FormData();
+    console.log(data);
+
+    /*var formData = new FormData();
     formData.append("file", boardImage);
     formData.append("", new Blob([JSON.stringify(data)] , {type: "application/json"}));
 
@@ -76,5 +133,20 @@ function savingBoard(temporaryValue){
         , error : function(xhr){
             console.log(xhr);
         }
-    });
-}*/
+    });*/
+}
+
+function fileSizePrint(fileSize){
+     var result = "";
+     if(fileSize < 1024){
+        result = fileSize + "B";
+     }else if(fileSize < 1024 * 1024) {
+        result = parseInt (fileSize / 1024) + "KB";
+     }else if(fileSize < 1024 * 1024 * 1024) {
+        result = parseInt (fileSize / (1024 * 1024)) + "M";
+     }else {
+        result = parseInt (fileSize / (1024 * 1024 * 1024)) + "G";
+     }
+
+     return result;
+}
