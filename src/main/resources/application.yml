@@ -7,9 +7,6 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
 
 # 서버에 저장된 파일의 경로를 직접 설정(@Value를 활용하여 사용)
 custom:
@@ -17,8 +14,14 @@ custom:
     root-image: D:\daily-work\src\main\image\
     profile-image: D:\daily-work\src\main\image\profile\
     mission-image: D:\daily-work\src\main\image\mission\
+    board-file: D:\daily-work\src\main\boardfile\
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
   devtools:
     restart:
       enabled: true
