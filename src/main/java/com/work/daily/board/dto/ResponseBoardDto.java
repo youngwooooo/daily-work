@@ -1,17 +1,19 @@
 package com.work.daily.board.dto;
 
+import com.work.daily.domain.BoardType;
 import com.work.daily.domain.entity.Board;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.work.daily.domain.entity.BoardFile;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ResponseBoardDto {
 
     private long boardSeq;
@@ -24,7 +26,8 @@ public class ResponseBoardDto {
     private String boardDesc;
     private String delYn;
     private String temporaryYn;
-    private String boardType;
+    private BoardType boardType;
+    private List<BoardFile> boardFileList;
 
     public ResponseBoardDto(Board board){
         this.boardSeq = board.getBoardSeq();
