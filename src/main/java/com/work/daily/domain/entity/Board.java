@@ -1,8 +1,11 @@
 package com.work.daily.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.work.daily.domain.BoardType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 게시판 정보
@@ -41,7 +44,11 @@ public class Board extends BaseTime{
     @Column(columnDefinition = "varchar(10) comment '임시여부'")
     private String temporaryYn;
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(30) comment '게시글구분'")
-    private String boardType;
+    private BoardType boardType;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+    @JsonManagedReference
+    private List<BoardFile> boardFileList;
 }
