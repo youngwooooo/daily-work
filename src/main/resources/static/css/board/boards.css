@@ -54,6 +54,12 @@
     border-bottom: 1px solid #dee2e6;
 }
 
+.board-list-div .table tbody td:nth-child(3):hover {
+    cursor: pointer;
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
 .board-list-div .table img {
     width: 30px;
     border-radius: 50%;

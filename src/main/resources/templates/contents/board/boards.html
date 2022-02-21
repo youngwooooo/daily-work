@@ -56,7 +56,7 @@
         <thead>
           <tr>
             <th>번호</th>
-            <th>분류</th>
+            <th>카테고리</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
@@ -64,7 +64,7 @@
         </thead>
         <tbody>
           <tr th:each="b : ${board}">
-            <td><span th:text="${b.boardSeq}">번호</span></td>
+            <td class="board-num"><span th:text="${b.boardSeq}">번호</span></td>
             <td>
               <th:block>
                 <span class="board-type">홍보</span>
