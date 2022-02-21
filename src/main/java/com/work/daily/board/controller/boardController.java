@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -17,6 +18,11 @@ public class boardController {
 
     private final BoardService boardService;
 
+    /**
+     * 커뮤니티(게시글) VIEW
+     * @param model
+     * @return
+     */
     @GetMapping("/boards")
     public String boards(Model model){
         List<ResponseBoardDto> findAll = boardService.findAllBoard();
@@ -24,8 +30,25 @@ public class boardController {
         return "/contents/board/boards";
     }
 
+    /**
+     * 게시글 등록 VIEW
+     * @return
+     */
     @GetMapping("/board")
     public String createBoardForm(){
         return "/contents/board/createBoard";
+    }
+
+    /**
+     * 게시글 상세 조회 VIEW
+     * @param boardSeq
+     * @param model
+     * @return
+     */
+    @GetMapping("/board/{boardSeq}")
+    public String detailBoard(@PathVariable("boardSeq") long boardSeq, Model model){
+        ResponseBoardDto findOneBoard = boardService.findOneBoard(boardSeq);
+        model.addAttribute("board", findOneBoard);
+        return "/contents/board/detailBoard";
     }
 }
