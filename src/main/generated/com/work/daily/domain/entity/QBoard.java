@@ -26,11 +26,13 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final StringPath boardDesc = createString("boardDesc");
 
+    public final ListPath<BoardFile, QBoardFile> boardFileList = this.<BoardFile, QBoardFile>createList("boardFileList", BoardFile.class, QBoardFile.class, PathInits.DIRECT2);
+
     public final StringPath boardNm = createString("boardNm");
 
     public final NumberPath<Long> boardSeq = createNumber("boardSeq", Long.class);
 
-    public final StringPath boardType = createString("boardType");
+    public final EnumPath<com.work.daily.domain.BoardType> boardType = createEnum("boardType", com.work.daily.domain.BoardType.class);
 
     public final StringPath delYn = createString("delYn");
 
