@@ -37,6 +37,9 @@ $(function(){
 
             $(".preview-file-list ul").append(fileList);
         }
+
+        $(".preview-file-wrapper").css("display", "flex");
+
     });
 
     // 첨부 파일 삭제
@@ -50,16 +53,18 @@ $(function(){
         });
 
         $(this).parent().remove();
+
+        if($(".preview-file-list .list-group").children().length == 0){
+            $(".preview-file-wrapper").css("display", "none");
+        }
+
     });
 
     // [등록]
     $("#btn-save-board").on("click", function(){
-        var files = $("#file")[0].files;
-        console.log(files);
-        console.log(fileArr);
-        /*if(validatingBoard()){
-            savingBoard("N");
-        }*/
+        if(validatingBoard()){
+            savingBoard("N", fileArr);
+        }
     });
 
     $("#btn-temporary-board").on("click", function(){
@@ -90,7 +95,7 @@ function validatingBoard(){
     return true;
 }
 
-function savingBoard(temporaryValue){
+function savingBoard(temporaryValue, fileArr){
     var userSeq = $("#userSeq").val();
     var userId = $("#userId").val();
     var boardNm = $("#boardNm").val();
@@ -111,11 +116,12 @@ function savingBoard(temporaryValue){
                     , "boardType" : boardType
                 };
 
-    console.log(data);
+    var formData = new FormData();
 
-    /*var formData = new FormData();
-    formData.append("file", boardImage);
-    formData.append("", new Blob([JSON.stringify(data)] , {type: "application/json"}));
+    fileArr.forEach(function(item){
+        formData.append("files", item);
+    });
+    formData.append("requestBoardDto", new Blob([JSON.stringify(data)] , {type: "application/json"}));
 
     $.ajax({
         url : "/board"
@@ -128,12 +134,15 @@ function savingBoard(temporaryValue){
             if(result.status == 201){
                 alert(result.message);
                 location.href = "/boards";
+            }else {
+                alert(result.message);
+                return;
             }
         }
         , error : function(xhr){
             console.log(xhr);
         }
-    });*/
+    });
 }
 
 function fileSizePrint(fileSize){
