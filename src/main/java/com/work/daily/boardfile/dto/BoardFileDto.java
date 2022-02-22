@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class BoardFileDto {
 
     private long fileSeq;
-    private long fileOrder;
     private Board board;
     private String fileOriginNm;
     private String fileServerNm;
@@ -26,7 +25,6 @@ public class BoardFileDto {
 
     public BoardFile toEntity(){
         return BoardFile.builder()
-                .fileOrder(fileOrder)
                 .board(board)
                 .fileOriginNm(fileOriginNm)
                 .fileServerNm(fileServerNm)
