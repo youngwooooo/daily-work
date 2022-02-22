@@ -1,0 +1,62 @@
+.board-wrapper {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.board-info-div {
+    over-flow: hidden;
+}
+
+.board-info-div .boardType-desc-div, .board-info-div .board-user-insDtm-div {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.board-info-div .boardType-desc-div {
+    display: inline-block;
+}
+
+.board-info-div .board-user-insDtm-div {
+    float: right;
+}
+
+.board-info-div .board-user-insDtm-div img {
+    width: 25px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.board-info-div .board-user-insDtm-div span {
+    vertical-align: middle;
+}
+
+.board-desc-div {
+    min-height: 400px;
+}
+
+.board-file-div {
+    display: flex;
+    border: 1px solid #dddddd;
+    margin-top: 30px;
+}
+
+.board-file-div .board-file-icon-div {
+    padding: 40px;
+    text-align: center;
+    border-right: 1px solid #dddddd;
+    width: 20%;
+}
+
+.board-file-div .board-file-icon-div p {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.board-file-div .board-file-list {
+    padding: 15px;
+    width: 80%;
+}
+
+.board-file-div .board-file-list .list-group-item {
+    font-size: 0.8rem;
+}

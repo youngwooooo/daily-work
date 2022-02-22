@@ -5,28 +5,55 @@
 
 <!-- 컨텐츠페이지의 CSS -->
 <th:block layout:fragment="css">
-  <link rel="stylesheet" th:href="@{/css/board/boards.css}"/>
+  <link rel="stylesheet" th:href="@{/css/board/detailBoard.css}"/>
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-  <script type="text/javascript" th:src="@{/js/board/boards.js}"></script>
+  <script type="text/javascript" th:src="@{/js/board/detailBoard.js}"></script>
 </th:block>
 
 <div layout:fragment="content" class="container">
+
   <div class="board-wrapper">
 
-    <div class="board-title">
+    <div class="board-info-div">
       <h4 th:text="${board.boardNm}">게시글 제목</h4>
-      <div>
-        <p>커뮤니티 > 질문</p>
+      <div class="boardType-desc-div">
+          <span>카테고리</span><i class="fa-solid fa-caret-right mr-2 ml-2"></i><span th:text="${board.boardType}"></span>
       </div>
-      <div>
-        <img th:src="${board.profileImage}" style="width: 30px; border-radius: 50%; margin-right: 5px;"><span th:text="${board.userNm}" style="vertical-align: middle;"></span>
-        <span style="vertical-align: middle;"><i class="fa-solid fa-grip-lines-vertical ml-2 mr-2"></i></span>
-        <span th:text="${#temporals.format(board.insDtm, 'yyyy-MM-dd HH:mm:ss')}" style="vertical-align: middle;"></span>
+      <div class="board-user-insDtm-div">
+        <img th:src="${board.profileImage}" style=""><span th:text="${board.userNm}"></span>
+        <span><i class="fa-solid fa-grip-lines-vertical ml-2 mr-2"></i></span>
+        <span th:text="${#temporals.format(board.insDtm, 'yyyy-MM-dd HH:mm:ss')}"></span>
       </div>
     </div>
+
     <hr/>
+
+    <div class="board-desc-div" th:utext="${board.boardDesc}">
+
+    </div>
+
+    <div class="board-file-div">
+      <div class="board-file-icon-div">
+        <i class="fa-solid fa-file-lines fa-3x"></i>
+        <p>파일 목록</p>
+      </div>
+      <div class="board-file-list">
+        <ul class="list-group">
+          <th:block th:each="bf : ${board.boardFileList}">
+            <li class="list-group-item" style="cursor: pointer;">
+              <input type="hidden" name="fileSeq" th:value="${bf.fileSeq}">
+              <span class="file-name" th:text="${bf.fileOriginNm}"></span>
+              <span class="file-size" th:text="${bf.fileSize}"></span>
+            </li>
+          </th:block>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
 
   </div>
 
