@@ -24,8 +24,6 @@ public class QBoardFile extends EntityPathBase<BoardFile> {
 
     public final QBoard board;
 
-    public final NumberPath<Long> fileOrder = createNumber("fileOrder", Long.class);
-
     public final StringPath fileOriginNm = createString("fileOriginNm");
 
     public final NumberPath<Long> fileSeq = createNumber("fileSeq", Long.class);

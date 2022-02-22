@@ -19,9 +19,6 @@ public class BoardFile {
     @Column(columnDefinition = "varchar(20) comment '게시글파일번호'")
     private long fileSeq;
 
-    @Column(columnDefinition = "varchar(20) comment '게시글파일순서'")
-    private long fileOrder;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOARD_SEQ")
     @JsonBackReference
@@ -36,7 +33,7 @@ public class BoardFile {
     @Column(columnDefinition = "varchar(200) comment '게시글파일경로'")
     private String fileUploadPath;
 
-    @Column(columnDefinition = "number comment '게시글파일크기'")
+    @Column(columnDefinition = "varchar(100) comment '게시글파일크기'")
     private long fileSize;
 
     @Column(columnDefinition = "varchar(5) comment '이미지여부'")
@@ -44,5 +41,4 @@ public class BoardFile {
 
     @Column(columnDefinition = "varchar(30) comment '게시글파일등록일자'")
     private LocalDateTime insDtm;
-
 }
