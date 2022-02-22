@@ -18,6 +18,7 @@ import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -59,7 +60,6 @@ public class BoardFileService {
 
             if(files.get(i).getContentType().contains("image")){
                 boardFileDto = BoardFileDto.builder()
-                                    .fileOrder(i+1)
                                     .board(board)
                                     .fileOriginNm(files.get(i).getOriginalFilename())
                                     .fileServerNm(fileServerNm)
@@ -71,7 +71,6 @@ public class BoardFileService {
 
             }else {
                 boardFileDto = BoardFileDto.builder()
-                                    .fileOrder(i+1)
                                     .board(board)
                                     .fileOriginNm(files.get(i).getOriginalFilename())
                                     .fileServerNm(fileServerNm)
@@ -88,5 +87,30 @@ public class BoardFileService {
         boardFileRepository.saveAll(boardFiles);
 
         return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
+     * 게시글 파일 조회
+     * @param fileSeq
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public BoardFileDto findOneBoardFile(long fileSeq){
+        Optional<BoardFile> findOneBoardFile = boardFileRepository.findById(fileSeq);
+        if(!findOneBoardFile.isPresent()){
+            throw new IllegalArgumentException("해당 파일이 존재하지 않습니다. 게시글파일번호 : " + fileSeq);
+        }
+
+        BoardFileDto boardFileDto = BoardFileDto.builder()
+                                        .fileSeq(findOneBoardFile.get().getFileSeq())
+                                        .board(findOneBoardFile.get().getBoard())
+                                        .fileOriginNm(findOneBoardFile.get().getFileOriginNm())
+                                        .fileServerNm(findOneBoardFile.get().getFileServerNm())
+                                        .fileUploadPath(findOneBoardFile.get().getFileUploadPath())
+                                        .fileSize(findOneBoardFile.get().getFileSize())
+                                        .imageYn(findOneBoardFile.get().getImageYn())
+                                        .insDtm(findOneBoardFile.get().getInsDtm())
+                                        .build();
+        return boardFileDto;
     }
 }
