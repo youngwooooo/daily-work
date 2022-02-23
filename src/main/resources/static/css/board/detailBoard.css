@@ -70,3 +70,85 @@
     cursor: pointer;
     color: gray;
 }
+
+.board-comment-div .board-comment-count {
+    font-weight: bold;
+}
+
+.board-comment-div .board-comment-list {
+    list-style: none;
+    padding: 0px;
+}
+
+.board-comment-div .board-comment {
+    padding: 15px;
+    border-bottom: 1px solid #dddddd;
+    /*background-color: #f7f7f7;*/
+}
+
+.board-comment-div .board-comment-reply {
+    padding: 15px 15px 15px 0px;
+    margin-left: 30px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.board-comment-div .board-comment-user img {
+    width: 30px;
+    border-radius: 50%;
+}
+
+.board-comment-div .board-comment-user span {
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.board-comment-div .board-comment-desc {
+    margin-top: 5px;
+    padding-left: 34px;
+}
+
+.board-comment-div .board-comment-date-reply {
+    font-size: 0.8rem;
+    color: gray;
+}
+
+.board-comment-div .board-comment-create-reply {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.board-comment-div .board-comment-content {
+    height: 30px;
+    resize: none;
+    width: 100%;
+    overflow-y: hidden;
+    border: none;
+}
+
+.board-comment-div .create-board-comment-form-div {
+    border: 2px solid #dddddd;
+    padding: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.board-comment-div .create-board-comment-form {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.board-comment-div .text-count-div {
+    display: none;
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.board-comment-div .board-comment-content:focus {
+  outline: none;
+}
+
+.board-comment-buttons button {
+    font-size: 0.9rem;
+    width: 70px;
+    float: right;
+}

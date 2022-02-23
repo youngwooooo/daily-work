@@ -62,6 +62,44 @@
 
         <hr/>
 
+        <div class="board-comment-div">
+
+            <div class="board-comment-list-div">
+                <p class="board-comment-count"><i class="fa-solid fa-comment-dots mr-2"></i>댓글(1)</p>
+                <ul class="board-comment-list">
+                    <th:block th:each="num : ${#numbers.sequence(1, 10)}">
+                    <li class="board-comment">
+                        <div class="board-comment-user">
+                            <img th:src="${#authentication.principal.LoginUserDto.profileImage}" style="width: 30px;">
+                            <span>이영우</span>
+                        </div>
+                        <div class="board-comment-desc">
+                            <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                            <div class="board-comment-date-reply">
+                                <span class="board-comment-date">2022-02-23</span>
+                                <span class="board-comment-create-reply">답글쓰기</span>
+                            </div>
+                        </div>
+                    </li>
+                    </th:block>
+
+                </ul>
+            </div>
+
+            <div class="create-board-comment-form-div">
+                <div class="create-board-comment-form justify-content-between">
+                    <span th:text="${#authentication.principal.LoginUserDto.userNm}"></span>
+                    <div class="text-count-div">
+                        <span class="text-count"></span>/<span>200</span>
+                    </div>
+                </div>
+                <textarea class="board-comment-content" placeholder="댓글을 입력하세요" maxlength="200"></textarea>
+                <div class="board-comment-buttons">
+                    <button type="button" class="btn btn-primary">등록</button>
+                </div>
+            </div>
+
+        </div>
 
     </div>
 
