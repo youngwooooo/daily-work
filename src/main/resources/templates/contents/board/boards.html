@@ -66,10 +66,11 @@
           <tr th:each="b : ${board}">
             <td class="board-num"><span th:text="${b.boardSeq}">번호</span></td>
             <td>
-              <th:block>
-                <span class="board-type">홍보</span>
+              <th:block th:switch="${#strings.toString(b.boardType)}">
+                <span class="board-type normal" th:case="NORMAL">일반</span>
+                <span class="board-type qa" th:case="QA">질문</span>
+                <span class="board-type pr" th:case="PR">홍보</span>
               </th:block>
-            </td>
             <td><span th:text="${b.boardNm}">제목</span></td>
             <td>
               <img th:src="${b.profileImage}">

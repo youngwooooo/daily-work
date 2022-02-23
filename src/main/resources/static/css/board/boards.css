@@ -71,9 +71,22 @@
 
 .board-list-div .table .board-type {
     padding: 5px 20px;
-    color: white;
-    background-color: #007bff;
     font-size: 0.9rem;
     font-weight: bold;
     border-radius: 5px;
+}
+
+.board-list-div .table .normal {
+    color: white;
+    background-color: #343a40;
+}
+
+.board-list-div .table .qa {
+    color: white;
+    background-color: #007bff;
+}
+
+.board-list-div .table .pr {
+    color: white;
+    background-color: #ff5a5a;
 }
