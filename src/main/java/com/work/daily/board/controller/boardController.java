@@ -46,9 +46,22 @@ public class boardController {
      * @return
      */
     @GetMapping("/board/{boardSeq}")
-    public String detailBoard(@PathVariable("boardSeq") long boardSeq, Model model){
+    public String detailBoardForm(@PathVariable("boardSeq") long boardSeq, Model model){
         ResponseBoardDto findOneBoard = boardService.findOneBoard(boardSeq);
         model.addAttribute("board", findOneBoard);
         return "/contents/board/detailBoard";
+    }
+
+    /**
+     * 게시글 수정 VIEW
+     * @param boardSeq
+     * @param model
+     * @return
+     */
+    @GetMapping("/board/{boardSeq}/modify")
+    public String modifyBoardForm(@PathVariable("boardSeq") long boardSeq, Model model){
+        ResponseBoardDto findOneBoard = boardService.findOneBoard(boardSeq);
+        model.addAttribute("board", findOneBoard);
+        return "/contents/board/modifyBoard";
     }
 }
