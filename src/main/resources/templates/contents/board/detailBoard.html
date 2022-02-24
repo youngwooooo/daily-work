@@ -17,6 +17,7 @@
     <div class="board-wrapper">
 
         <div class="board-info-div">
+            <input type="hidden" id="boardSeq" th:value="${board.boardSeq}">
             <h4 th:text="${board.boardNm}">게시글 제목</h4>
             <div class="board-user-info-div justify-content-between">
                 <div class="board-user-insDtm-div">
@@ -26,8 +27,8 @@
                 </div>
                 <th:block th:if="${board.userId == #authentication.principal.LoginUserDto.userId}">
                     <div class="board-user-buttons">
-                        <button type="button" class="btn" data-toggle="tooltip" data-placement="top" title="수정"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button type="button" class="btn" data-toggle="tooltip" data-placement="top" title="삭제"><i class="fa-solid fa-trash-can"></i></button>
+                        <button type="button" class="btn" id="btn-board-edit-form" data-toggle="tooltip" data-placement="top" title="수정"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button type="button" class="btn" id="btn-board-delete-modal" data-toggle="tooltip" data-placement="top" title="삭제"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 </th:block>
             </div>
@@ -50,6 +51,7 @@
                         <th:block th:each="bf : ${board.boardFileList}">
                             <li class="list-group-item">
                                 <input type="hidden" name="fileSeq" th:value="${bf.fileSeq}">
+                                <span><i class="fa-solid fa-folder-open fa-lg mr-3"></i></span>
                                 <span class="file-name" th:text="${bf.fileOriginNm}"></span>
                                 <span class="file-size" th:text="${bf.fileSize}"></span>
                                 <span class="file-download"><i class="fa-solid fa-circle-down fa-lg"></i></span>
@@ -101,6 +103,26 @@
 
         </div>
 
+    </div>
+
+    <!-- 게시글 - [삭제] - 경고 modal -->
+    <div class="modal" id="response-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="response-modal-desc-div">
+                        <h3>삭제하시겠습니까?</h3>
+                        <p>모든 게시글 정보가 삭제됩니다.</p>
+                        <p>삭제된 게시글은 복구할 수 없습니다.</p>
+                    </div>
+                    <div class="response-modal-btn-div">
+                        <button type="button" class="btn btn-danger" id="btn-board-delete">삭제</button>
+                        <button type="button" class="btn btn-light" id="btn-cancel-response-modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

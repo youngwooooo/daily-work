@@ -88,7 +88,7 @@
 
 .board-comment-div .board-comment-reply {
     padding: 15px 15px 15px 0px;
-    margin-left: 30px;
+    margin-left: 120px;
     border-bottom: 1px solid #dddddd;
 }
 
@@ -151,4 +151,41 @@
     font-size: 0.9rem;
     width: 70px;
     float: right;
+}
+
+.board-comment-buttons #btn-cancel-comment {
+    margin-right: 5px;
+    border-color: #dddddd;
+}
+
+/* 게시글 - [삭제] - 경고 modal */
+#response-modal {
+    background-color:rgba(0,0,0,.3);
+}
+
+#response-modal .modal-body {
+    padding: 30px;
+    text-align: center;
+}
+
+.response-modal-desc-div {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.response-modal-desc-div h3 {
+    font-weight: bold;
+}
+
+.response-modal-desc-div p {
+    margin: 0px;
+}
+
+.response-modal-btn-div button {
+    width: 100px;
+    height: 45px;
+}
+
+.response-modal-btn-div #btn-cancel-response-modal {
+    border-color: #dae0e5;
 }
