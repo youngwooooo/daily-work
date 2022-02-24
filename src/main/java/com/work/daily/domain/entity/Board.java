@@ -1,6 +1,7 @@
 package com.work.daily.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.work.daily.board.dto.RequestBoardDto;
 import com.work.daily.domain.BoardType;
 import lombok.*;
 
@@ -51,4 +52,16 @@ public class Board extends BaseTime{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
     @JsonManagedReference
     private List<BoardFile> boardFileList;
+
+    // 게시글 삭제여부 N으로 변경
+    public void deleteBoard(String delYn){
+        this.delYn = delYn;
+    }
+
+    // 게시글 수정
+    public void modifyBoard(RequestBoardDto requestBoardDto){
+        this.boardNm = requestBoardDto.getBoardNm();
+        this.boardDesc = requestBoardDto.getBoardDesc();
+        this.boardType = requestBoardDto.getBoardType();
+    }
 }
