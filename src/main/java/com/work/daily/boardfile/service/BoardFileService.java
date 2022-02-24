@@ -113,4 +113,24 @@ public class BoardFileService {
                                         .build();
         return boardFileDto;
     }
+
+    /**
+     * 게시글 파일 삭제
+     * @param fileSeqList
+     */
+    public void delete(List<Long> fileSeqList) {
+
+        for(int i=0; i<fileSeqList.size(); i++){
+            Optional<BoardFile> findBoardFile = boardFileRepository.findById(fileSeqList.get(i));
+
+            File file = new File(boardFileUploadPath + findBoardFile.get().getBoard().getBoardSeq() + "/" + findBoardFile.get().getFileServerNm());
+            log.info("삭제될 파일 이름 : " + file.toString());
+            if(file.exists()){
+                file.delete();
+            }
+        }
+
+        boardFileRepository.deleteAllByIdInBatch(fileSeqList);
+
+    }
 }
