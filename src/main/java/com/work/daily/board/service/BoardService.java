@@ -87,4 +87,53 @@ public class BoardService {
 
         return ReturnResult.SUCCESS.getValue();
     }
+
+    /**
+     * 게시글 수정
+     * @param boardSeq
+     * @param requestBoardDto
+     * @param files
+     * @param fileSeqList
+     * @return
+     * @throws IOException
+     */
+    @Transactional
+    public String modify(long boardSeq, RequestBoardDto requestBoardDto, List<MultipartFile> files, List<Long> fileSeqList) throws IOException {
+        Optional<Board> findBoard = boardRepository.findById(boardSeq);
+        if(!findBoard.isPresent()){
+            throw new IllegalArgumentException("해당 게시글이 존재하지 안습니다 . 게시글번호 : " + boardSeq);
+        }
+
+        if(files != null){
+            Board board = Board.builder().boardSeq(findBoard.get().getBoardSeq()).build();
+            boardFileService.save(files, board);
+        }
+
+        if(fileSeqList.size() > 0){
+            boardFileService.delete(fileSeqList);
+        }
+
+        // 게시글 제목/내용/카테고리 수정
+        findBoard.get().modifyBoard(requestBoardDto);
+
+        return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
+     * 게시글 삭제
+     * @param boardSeq
+     * @return
+     */
+    @Transactional
+    public String delete(long boardSeq) {
+        Optional<Board> findBoard = boardRepository.findById(boardSeq);
+        if(!findBoard.isPresent()){
+            throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다. 게시글번호 : " + boardSeq);
+        }
+
+        findBoard.get().deleteBoard("Y");
+
+        return ReturnResult.SUCCESS.getValue();
+    }
+
 }
