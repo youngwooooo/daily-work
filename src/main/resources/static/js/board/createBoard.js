@@ -2,34 +2,47 @@ $(function(){
 
     // 첨부파일 객체를 담을 array 전역 변수
     var fileArr = new Array();
+    // 첨부 파일 총 용량을 담을 전역 변수
+    var totalFileSize = 0;
 
     CKEDITOR.replace("boardDesc", {
         height: 400
     });
 
+    // 파일 목록 보이지 않기
+    $(".preview-file-wrapper").css("display", "none");
+
     // [파일 선텍]
     $("#select-file").on("click", function(){
-        if(fileArr.length > 2){
-            alert("파일은 최대 3개까지 첨부 가능합니다\n(파일을 먼저 삭제 해주세요.)");
-            return;
-        }else {
-            $("#file").click();
-        }
+        $("#file").click();
     });
+
 
     // [파일 선택] - 파일 첨부
     $("#file").on("change", function(){
         var files = $(this)[0].files;
-
-        if(files.length > 3){
-            alert("파일은 최대 3개까지 첨부 가능합니다.");
-            $(this).val("");
-            return;
-        }
+        var maxFileSize = 10 * 1024 * 1000;
 
         for(var i=0; i<files.length; i++){
+            // 개당 첨부 파일 용량 제한
+            if(files[i].size > maxFileSize){
+                alert("첨부 파일의 최대 용량는 10MB 입니다");
+                return;
+            }
+
+            // 파일 용량 누적
+            totalFileSize += files[i].size;
+            $(".file-size-view").text(fileSizePrint(totalFileSize));
+
+            // 총 첨부 파일 용량 제한
+            if(totalFileSize > maxFileSize){
+                alert("첨부 파일의 최대 용량는 10MB 입니다.2");
+                return;
+            }
+
             fileArr.push(files[i]);
             var fileList = '<il class="list-group-item">'
+                    + '<span><i class="fa-solid fa-folder-open fa-lg mr-3"></i></span>'
                     + '<span class="file-name">'+ files[i].name + '</span>'
                     + '<span>(' + fileSizePrint(files[i].size) + ')</span>'
                     + '<span class="delete-file"><i class="fa-solid fa-xmark"></i></span>'
@@ -38,8 +51,8 @@ $(function(){
             $(".preview-file-list ul").append(fileList);
         }
 
+        $(".board-file-select-div > div").css("display", "block");
         $(".preview-file-wrapper").css("display", "flex");
-
     });
 
     // 첨부 파일 삭제
@@ -47,6 +60,9 @@ $(function(){
         var fileName = $(this).siblings(".file-name").text();
         fileArr.forEach(function(item){
             if(fileName == item.name){
+                totalFileSize = totalFileSize - parseInt(item.size);
+                $(".file-size-view").text(fileSizePrint(totalFileSize));
+
                 var idx = fileArr.indexOf(item);
                 fileArr.splice(idx, 1);
             }
@@ -152,9 +168,9 @@ function fileSizePrint(fileSize){
      }else if(fileSize < 1024 * 1024) {
         result = parseInt (fileSize / 1024) + "KB";
      }else if(fileSize < 1024 * 1024 * 1024) {
-        result = parseInt (fileSize / (1024 * 1024)) + "M";
+        result = parseInt (fileSize / (1024 * 1024)) + "MB";
      }else {
-        result = parseInt (fileSize / (1024 * 1024 * 1024)) + "G";
+        result = parseInt (fileSize / (1024 * 1024 * 1024)) + "GB";
      }
 
      return result;

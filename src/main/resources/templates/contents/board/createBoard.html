@@ -5,67 +5,76 @@
 
 <!-- 컨텐츠페이지의 CSS -->
 <th:block layout:fragment="css">
-  <link rel="stylesheet" href="/css/board/createAndModifyBoard.css"/>
+    <link rel="stylesheet" href="/css/board/createAndModifyBoard.css"/>
 </th:block>
 <!-- 컨텐츠페이지의 JS -->
 <th:block layout:fragment="script">
-  <script src="/js/board/createBoard.js"></script>
+    <script src="/js/board/createBoard.js"></script>
 </th:block>
 
 <div layout:fragment="content" class="container">
-  <div class="create-board-wrapper-div">
-    <div class="create-board-form-div">
-      <table class="table">
-        <colgroup>
-          <col width="150px;">
-          <col width="auto">
-        </colgroup>
-        <tbody>
-        <tr>
-          <td colspan="2" class="board-title"><input type="text" class="form-control" id="boardNm"
-                                                       placeholder="게시글 제목을 입력하세요." maxlength="32"></td>
-        </tr>
-        <tr>
-          <td colspan="2" class="board-desc"><textarea id="boardDesc"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <th>카테고리</th>
-          <td>
-            <select class="form-control" style="width: auto; font-size: 0.9rem;">
-              <option value="NORMAL">일반</option>
-              <option value="QA">질문</option>
-              <option value="PR">홍보</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>첨부파일</th>
-          <td>
-            <button id="select-file" type="button" class="btn btn-dark">파일 선택</button>
-            <input type="file" id="file" multiple maxlength="3">
-            <div class="preview-file-wrapper">
-                <div class="preview-file-icon-div">
-                  <i class="fa-solid fa-file-lines fa-3x"></i>
-                  <p>파일 목록</p>
-                </div>
-                <div class="preview-file-list">
-                  <ul class="list-group" style="padding: 0px;">
-                  </ul>
-                </div>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="create-board-wrapper-div">
+        <div class="create-board-form-div">
+            <table class="table">
+                <colgroup>
+                    <col width="150px;">
+                    <col width="auto">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td colspan="2" class="board-title"><input type="text" class="form-control" id="boardNm"
+                                                               placeholder="게시글 제목을 입력하세요." maxlength="32"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="board-desc"><textarea id="boardDesc"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>카테고리</th>
+                    <td>
+                        <select class="form-control">
+                            <option value="NORMAL">일반</option>
+                            <option value="QA">질문</option>
+                            <option value="PR">홍보</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td>
+                        <div class="board-file-select-div justify-content-between">
+                            <button id="select-file" type="button" class="btn btn-dark">파일 선택</button>
+                            <div>
+                                <span class="file-size-view"></span><span>/10MB</span>
+                            </div>
+                        </div>
 
-    <div class="board-button-div justify-content-center">
-      <button type="button" class="btn btn-dark" id="btn-temporary-board">임시저장</button>
-      <button type="button" class="btn btn-primary" id="btn-save-board">등록</button>
-      <button type="button" class="btn btn-light" id="btn-cancel">취소</button>
+                        <input type="file" id="file" multiple="multiple" maxlength="3">
+
+                        <div class="preview-file-wrapper">
+                            <div class="preview-file-icon-div">
+                                <div>
+                                    <i class="fa-solid fa-file-lines fa-3x"></i>
+                                    <p>파일 목록</p>
+                                </div>
+                            </div>
+                            <div class="preview-file-list">
+                                <ul class="list-group" style="padding: 0px;">
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="board-button-div justify-content-center">
+            <button type="button" class="btn btn-dark" id="btn-temporary-board">임시저장</button>
+            <button type="button" class="btn btn-primary" id="btn-save-board">등록</button>
+            <button type="button" class="btn btn-light" id="btn-cancel">취소</button>
+        </div>
     </div>
-  </div>
 
 </div>
 

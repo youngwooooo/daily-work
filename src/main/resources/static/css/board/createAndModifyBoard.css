@@ -34,13 +34,23 @@
     min-height: 500px;
 }
 
-.create-board-form-div .table .form-check {
-    display: inline;
-    margin-right: 20px;
+.create-board-form-div .table select {
+    width: auto;
+    font-size: 0.9rem;
 }
 
-.create-board-form-div .table .form-check .form-check-label {
-    cursor: pointer;
+.create-board-form-div .table .board-file-select-div {
+    display: flex;
+}
+
+.create-board-form-div .table .board-file-select-div > div {
+    display: none;
+}
+
+.create-board-form-div .table .board-file-select-div > div span {
+    vertical-align: middle;
+    font-size: 0.9rem;
+    color: gray;
 }
 
 .create-board-form-div .table #file {
@@ -48,9 +58,10 @@
 }
 
 .create-board-form-div .table .preview-file-wrapper {
-    display: none;
+    display: flex;
     border: 1px solid #dddddd;
     margin-top: 10px;
+    min-height: 342px;
 }
 
 .create-board-form-div .table .preview-file-wrapper .preview-file-icon-div {
@@ -58,6 +69,13 @@
     text-align: center;
     border-right: 1px solid #dddddd;
     width: 20%;
+    position: relative;
+}
+
+.create-board-form-div .table .preview-file-wrapper .preview-file-icon-div > div {
+    top: 40%;
+    position: absolute;
+    left: 32%;
 }
 
 .create-board-form-div .table .preview-file-wrapper .preview-file-icon-div p {
