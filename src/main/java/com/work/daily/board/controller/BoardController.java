@@ -1,6 +1,8 @@
 package com.work.daily.board.controller;
 
+import com.work.daily.board.dto.ResponseBoardCommentDto;
 import com.work.daily.board.dto.ResponseBoardDto;
+import com.work.daily.board.service.BoardCommentService;
 import com.work.daily.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +15,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
+    private final BoardCommentService boardCommentService;
 
     /**
      * 전체 게시글(커뮤니티) VIEW
@@ -73,9 +78,22 @@ public class BoardController {
      * @return
      */
     @GetMapping("/board/{boardSeq}")
-    public String detailBoardForm(@PathVariable("boardSeq") long boardSeq, Model model){
+    public String detailBoardForm(@PathVariable("boardSeq") long boardSeq, Model model, @PageableDefault(size = 10) Pageable pageable){
+        // 게시글 단건(상세) 조회
         ResponseBoardDto findOneBoard = boardService.findOneBoard(boardSeq);
+        // 전체 댓글 조회
+        Page<ResponseBoardCommentDto> findAllParentBoardComment = boardCommentService.findAllParentBoardComment(boardSeq, pageable);
+        // 전체 답글 조회
+        List<ResponseBoardCommentDto> findAllChildBoardComment = boardCommentService.findAllChildBoardComment(boardSeq);
+        // 총 댓글 + 답글 개수
+        long boardCommentTotalCount = findAllParentBoardComment.getTotalElements() + findAllChildBoardComment.size();
+
         model.addAttribute("board", findOneBoard);
+        model.addAttribute("boardParentComment", findAllParentBoardComment);
+        model.addAttribute("boardChildComment", findAllChildBoardComment);
+
+        model.addAttribute("boardCommentTotalCount", boardCommentTotalCount);
+
         return "/contents/board/detailBoard";
     }
 
@@ -89,6 +107,7 @@ public class BoardController {
     public String modifyBoardForm(@PathVariable("boardSeq") long boardSeq, Model model){
         ResponseBoardDto findOneBoard = boardService.findOneBoard(boardSeq);
         model.addAttribute("board", findOneBoard);
+
         return "/contents/board/modifyBoard";
     }
 }
