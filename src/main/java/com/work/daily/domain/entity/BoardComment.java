@@ -38,7 +38,7 @@ public class BoardComment extends BaseTime {
     @Column(columnDefinition = "varchar(60) comment '부모댓글번호'")
     private long parentCommentSeq;
 
-    @Column(columnDefinition = "varchar(300) comment '댓글내용'")
+    @Column(columnDefinition = "varchar(600) comment '댓글내용'")
     private String commentDesc;
 
     @Column(columnDefinition = "varchar(10) comment '삭제여부'")
