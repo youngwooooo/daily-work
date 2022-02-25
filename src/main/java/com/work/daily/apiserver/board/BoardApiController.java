@@ -2,8 +2,10 @@ package com.work.daily.apiserver.board;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
+import com.work.daily.board.dto.RequestBoardCommentDto;
 import com.work.daily.board.dto.RequestBoardDto;
 import com.work.daily.board.dto.ResponseBoardDto;
+import com.work.daily.board.service.BoardCommentService;
 import com.work.daily.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ import java.util.List;
 public class BoardApiController {
 
     private final BoardService boardService;
+    private final BoardCommentService boardCommentService;
 
     @GetMapping("/btest")
     public Page<ResponseBoardDto> test(@PageableDefault(size = 10) Pageable pageable
@@ -67,22 +70,8 @@ public class BoardApiController {
     public ResponseEntity<ResponseDto> modifyBoard(@PathVariable("boardSeq") long boardSeq
                                                     , @RequestPart(value = "requestBoardDto") RequestBoardDto requestBoardDto
                                                     , @RequestPart(value = "files", required = false) List<MultipartFile> files
-                                                    , @RequestPart(value = "fileSeqList", required = false) List<Long> fileSeqList
-    ) throws IOException {
-        log.info("requestBoardDto : " + requestBoardDto.toString());
-        if(files != null){
-            for(MultipartFile file : files){
-                log.info("업로드 파일 : " + file.getOriginalFilename());
-            }
-        }
-
-        log.info("fileSeqList Size : " + fileSeqList.size());
-        if(fileSeqList != null){
-            for(int i=0; i<fileSeqList.size(); i++){
-                log.info("fileSeq : " + fileSeqList.get(i));
-            }
-        }
-
+                                                    , @RequestPart(value = "fileSeqList", required = false) List<Long> fileSeqList) throws IOException
+    {
         String result = boardService.modify(boardSeq, requestBoardDto, files, fileSeqList);
 
         if(!ReturnResult.SUCCESS.getValue().equals(result)){
@@ -110,4 +99,19 @@ public class BoardApiController {
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("게시글 삭제가 완료되었습니다.").build(), HttpStatus.OK);
     }
 
+    /**
+     * 댓글 등록
+     * @param requestBoardCommentDto
+     * @return
+     */
+    @PostMapping("/boardComment")
+    public ResponseEntity<ResponseDto> createBoardComment(@RequestBody RequestBoardCommentDto requestBoardCommentDto){
+        String result = boardCommentService.save(requestBoardCommentDto);
+
+        if(!ReturnResult.SUCCESS.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("댓글 등록에 실패하였습니다. 다시 시도해주세요.").build(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("댓글 등록이 완료되었습니다.").build(), HttpStatus.CREATED);
+    }
 }
