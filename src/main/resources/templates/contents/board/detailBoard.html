@@ -66,26 +66,56 @@
 
         <div class="board-comment-div">
 
-            <div class="board-comment-list-div">
-                <p class="board-comment-count"><i class="fa-solid fa-comment-dots mr-2"></i>댓글(1)</p>
-                <ul class="board-comment-list">
-                    <th:block th:each="num : ${#numbers.sequence(1, 10)}">
-                    <li class="board-comment">
-                        <div class="board-comment-user">
-                            <img th:src="${#authentication.principal.LoginUserDto.profileImage}" style="width: 30px;">
-                            <span>이영우</span>
-                        </div>
-                        <div class="board-comment-desc">
-                            <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-                            <div class="board-comment-date-reply">
-                                <span class="board-comment-date">2022-02-23</span>
-                                <span class="board-comment-create-reply">답글쓰기</span>
-                            </div>
-                        </div>
-                    </li>
-                    </th:block>
+            <div class="board-comment-list-div" id="board-comment-list-div">
+                <div class="board-comment-count-div">
+                    <i class="fa-solid fa-comment-dots mr-2"></i><span class="board-comment-count" th:text="|댓글(${boardCommentTotalCount})|"></span>
+                </div>
 
-                </ul>
+                <th:block th:if="${#lists.size(boardParentComment) > 0}">
+
+                    <ul class="board-comment-list">
+                        <th:block th:each="bpc : ${boardParentComment}" th:object="${bpc}" th:if="${bpc.parentCommentSeq == 0}">
+                            <li class="board-comment">
+                                <input type="hidden" name="commentSeq" th:value="${bpc.commentSeq}">
+                                <div class="board-comment-user">
+                                    <img th:src="${bpc.profileImage}">
+                                    <span th:text="${bpc.userNm}">댓글 작성자</span>
+                                    <a class="board-comment-ud" type="button" data-toggle="dropdown"><i class="fa-solid fa-ellipsis fa-lg"></i></a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" type="button">수정</a>
+                                        <a class="dropdown-item" type="button">삭제</a>
+                                    </div>
+                                </div>
+                                <div class="board-comment-desc-div">
+                                    <div class="board-comment-desc" th:utext="${bpc.commentDesc}"></div>
+                                    <div class="board-comment-date-reply">
+                                        <span class="board-comment-date" th:text="${#temporals.format(bpc.insDtm, 'yyyy-MM-dd HH:mm:ss')}">댓글 등록일</span>
+                                        <span class="board-comment-create-reply">답글쓰기</span>
+                                    </div>
+                                </div>
+
+                                <th:block th:each="bcc : ${boardChildComment}" th:object="${bcc}" th:if="${bpc.commentSeq == bcc.parentCommentSeq}">
+                                    <div class="board-comment-reply">
+                                        <input type="hidden" name="commentSeq" th:value="${bcc.commentSeq}">
+                                        <div class="board-comment-user">
+                                            <img th:src="${bcc.profileImage}">
+                                            <span th:text="${bcc.userNm}">댓글 작성자</span>
+                                        </div>
+                                        <div class="board-comment-desc-div">
+                                            <div class="board-comment-desc" th:utext="${bcc.commentDesc}"></div>
+                                            <div class="board-comment-date-reply">
+                                                <span class="board-comment-date" th:text="${#temporals.format(bcc.insDtm, 'yyyy-MM-dd HH:mm:ss')}">댓글 등록일</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </li>
+
+                        </th:block>
+                    </ul>
+
+                </th:block>
+
             </div>
 
             <div class="create-board-comment-form-div">
@@ -97,7 +127,7 @@
                 </div>
                 <textarea class="board-comment-content" placeholder="댓글을 입력하세요" maxlength="200"></textarea>
                 <div class="board-comment-buttons">
-                    <button type="button" class="btn btn-primary">등록</button>
+                    <button type="button" class="btn btn-primary" id="btn-create-board-comment">등록</button>
                 </div>
             </div>
 

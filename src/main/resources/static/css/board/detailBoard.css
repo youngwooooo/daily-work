@@ -71,8 +71,9 @@
     color: gray;
 }
 
-.board-comment-div .board-comment-count {
+.board-comment-div .board-comment-count-div {
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .board-comment-div .board-comment-list {
@@ -82,13 +83,6 @@
 
 .board-comment-div .board-comment {
     padding: 15px;
-    border-bottom: 1px solid #dddddd;
-    /*background-color: #f7f7f7;*/
-}
-
-.board-comment-div .board-comment-reply {
-    padding: 15px 15px 15px 0px;
-    margin-left: 120px;
     border-bottom: 1px solid #dddddd;
 }
 
@@ -102,9 +96,23 @@
     vertical-align: middle;
 }
 
-.board-comment-div .board-comment-desc {
+.board-comment-div .board-comment-user .board-comment-ud {
+    float: right;
+    color: #b3b3b3;
+}
+
+.board-comment-div .board-comment-user .dropdown-menu {
+    margin-top: 0px;
+    min-width: 85px;
+}
+
+.board-comment-div .board-comment-desc-div {
     margin-top: 5px;
     padding-left: 34px;
+}
+
+.board-comment-div .board-comment-desc {
+    margin-bottom: 10px;
 }
 
 .board-comment-div .board-comment-date-reply {
@@ -115,6 +123,25 @@
 .board-comment-div .board-comment-create-reply {
     margin-left: 5px;
     cursor: pointer;
+}
+
+.board-comment-div .board-comment .board-comment-reply {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border: 1px solid #f8f9fa;
+    border-radius: 8px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+.board-comment-div .board-comment > div:nth-child(4) {
+    margin-top: 20px;
+}
+
+.board-comment-div .board-comment-reply-form {
+    padding: 15px 15px 15px 0px;
+    margin-left: 30px;
+    border-bottom: 1px solid #dddddd;
 }
 
 .board-comment-div .board-comment-content {
@@ -153,7 +180,7 @@
     float: right;
 }
 
-.board-comment-buttons #btn-cancel-comment {
+.board-comment-buttons #btn-cancel-comment-reply {
     margin-right: 5px;
     border-color: #dddddd;
 }

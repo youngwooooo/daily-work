@@ -1,6 +1,8 @@
 $(function(){
 
-    // 툴팁 활성화
+    /* 게시글 관련 js */
+
+    // 게시글 수정, 삭제 툴팁 활성화
     $('[data-toggle="tooltip"]').tooltip()
 
     // 파일 용량 포맷
@@ -64,11 +66,23 @@ $(function(){
 
     });
 
-    // 답글쓰기
-    $(".board-comment-create-reply").on("click", function(){
-        var userNm = $("#userNm").val();
+    // 댓글 - [등록]
+    $("#btn-create-board-comment").on("click", function(){
+        var commentDesc = $(".create-board-comment-form-div .board-comment-content").val();
+        var parentCommentSeq = 0;
 
-        var str = '<li class="board-comment-reply">'
+        if(validationBoardComment(commentDesc)){
+            createBoardComment(parentCommentSeq, commentDesc);
+        }
+    });
+
+    // 답글쓰기
+    $(document).on("click", ".board-comment-create-reply", function(){
+        var userNm = $("#userNm").val();
+        var parentCommentSeq = $(this).parents(".board-comment").find("input[name='commentSeq']").val();
+
+        var str = '<li class="board-comment-reply-form">'
+                +  '<input type="hidden" name="parentCommentSeq" value="'+ parentCommentSeq +'">'
                 +  '<div class="create-board-comment-form-div">'
                 +       '<div class="create-board-comment-form justify-content-between">'
                 +           '<span>'+ userNm + '</span>'
@@ -78,14 +92,14 @@ $(function(){
                 +       '</div>'
                 +       '<textarea class="board-comment-content" placeholder="답글을 입력하세요" maxlength="200"></textarea>'
                 +       '<div class="board-comment-buttons">'
-                +           '<button type="button" class="btn btn-primary" id="btn-create-comment">등록</button>'
-                +           '<button type="button" class="btn btn-light" id="btn-cancel-comment">취소</button>'
+                +           '<button type="button" class="btn btn-primary" id="btn-create-comment-reply">등록</button>'
+                +           '<button type="button" class="btn btn-light" id="btn-cancel-comment-reply">취소</button>'
                 +       '</div>'
                 +   '</div>'
                 + '</li>';
 
-        if($(".board-comment-reply").length > 0){
-            $(".board-comment-reply").remove();
+        if($(".board-comment-reply-form").length > 0){
+            $(".board-comment-reply-form").remove();
             $(this).parents(".board-comment").after(str);
             autosize($(".board-comment-content"));
         }else {
@@ -95,12 +109,70 @@ $(function(){
 
     });
 
+    // 답글쓰기 - [등록]
+    $(document).on("click", "#btn-create-comment-reply", function(){
+        var commentDesc = $(".board-comment-reply-form .board-comment-content").val();
+        var parentCommentSeq = $(this).parents(".board-comment-reply-form").find("input[name='parentCommentSeq']").val();
+
+        if(validationBoardComment(commentDesc)){
+            createBoardComment(parentCommentSeq, commentDesc);
+        }
+    });
+
     // 답글쓰기 - [취소]
-    $(document).on("click", "#btn-cancel-comment", function(){
-       $(this).parents(".board-comment-reply").remove();
+    $(document).on("click", "#btn-cancel-comment-reply", function(){
+       $(this).parents(".board-comment-reply-form").remove();
     });
 
 });
+
+function validationBoardComment(commentDesc){
+    if(commentDesc == "" || commentDesc == null){
+        alert("댓글(답글)을 입력해주세요.");
+        return false;
+    }
+
+    return true;
+}
+
+function createBoardComment(parentCommentSeq, commentDesc){
+    var boardSeq = $("#boardSeq").val();
+    var userSeq = $("#userSeq").val();
+    var userId = $("#userId").val();
+    var delYn = "N";
+
+    var data = {
+        "board" : {
+            "boardSeq" : boardSeq
+        }
+        , "user" : {
+            "userSeq" : userSeq
+            , "userId" : userId
+        }
+        , "commentDesc" : commentDesc
+        , "delYn" : delYn
+        , "parentCommentSeq" : parentCommentSeq
+
+    };
+
+    $.ajax({
+        url : "/boardComment"
+        , type : "post"
+        , data : JSON.stringify(data)
+        , contentType: "application/json; charset=UTF-8"
+        , dataType : "json"
+        , success : function(result){
+            if(result.status == 201){
+                $(".board-comment-content").val("");
+                $(".text-count").text(0);
+                $("#board-comment-list-div").load(window.location.href + " #board-comment-list-div");
+            }
+        }
+        , error : function(xhr){
+            console.log(xhr);
+        }
+    });
+}
 
 function fileSizePrint(fileSize){
      var result = "";
