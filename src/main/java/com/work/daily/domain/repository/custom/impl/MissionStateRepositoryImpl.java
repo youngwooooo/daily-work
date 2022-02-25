@@ -17,7 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Repository
-public class MissionStateRepositoryCustomImpl implements MissionStateRepositoryCustom {
+public class MissionStateRepositoryImpl implements MissionStateRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 

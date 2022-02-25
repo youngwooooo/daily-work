@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
-public class MissionParticipantsRepositoryCustomImpl implements MissionParticipantsRepositoryCustom {
+public class MissionParticipantsRepositoryImpl implements MissionParticipantsRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 

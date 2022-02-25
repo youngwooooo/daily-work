@@ -22,7 +22,7 @@ import java.util.Optional;
  */
 @RequiredArgsConstructor
 @Repository
-public class MissionRepositoryCustomImpl implements MissionRepositoryCustom {
+public class MissionRepositoryImpl implements MissionRepositoryCustom {
 
     // QuerydslConfig에서 Bean으로 등록한 JPAQueryFactory 주입
     private final JPAQueryFactory jpaQueryFactory;

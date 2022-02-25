@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Repository
 @Slf4j
-public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
+public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
     QBoard qBoard = QBoard.board;
