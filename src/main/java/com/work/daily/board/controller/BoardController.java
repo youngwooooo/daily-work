@@ -4,29 +4,56 @@ import com.work.daily.board.dto.ResponseBoardDto;
 import com.work.daily.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class boardController {
+public class BoardController {
 
     private final BoardService boardService;
 
     /**
-     * 커뮤니티(게시글) VIEW
+     * 전체 게시글(커뮤니티) VIEW
+     * @param pageable
+     * @param search
+     * @param category
      * @param model
      * @return
      */
     @GetMapping("/boards")
-    public String boards(Model model){
-        List<ResponseBoardDto> findAll = boardService.findAllBoard();
-        model.addAttribute("board", findAll);
+    public String boards(@PageableDefault(size = 10) Pageable pageable
+            , @RequestParam(required = false, defaultValue = "") String search
+            , @RequestParam(required = false, defaultValue = "") String category
+            , Model model)
+    {
+        Page<ResponseBoardDto> findAllBoard = boardService.findAllBoard(pageable, search, category);
+
+        int firstPage = 1;  // 첫번째 페이지
+        int lastPage = findAllBoard.getTotalPages(); // 마지막 페이지(게시글 전체 개수)
+        int startPage = Math.max(firstPage + 1, findAllBoard.getPageable().getPageNumber() - 2); // 시작 페이지
+        int endPage = Math.min(lastPage - 1, findAllBoard.getPageable().getPageNumber() + 4);    // 끝 페이지
+        long totalCount = findAllBoard.getTotalElements();
+
+        model.addAttribute("board", findAllBoard);
+
+        model.addAttribute("search", search);
+        model.addAttribute("category", category);
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalCount", totalCount);
+
+
         return "/contents/board/boards";
     }
 

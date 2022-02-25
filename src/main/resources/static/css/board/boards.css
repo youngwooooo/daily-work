@@ -25,9 +25,17 @@
 }
 
 .board-menu .board-search {
-    width: 30%;
+    width: 50%;
     margin-left: auto;
     margin-right: 10px;
+}
+
+.board-menu .board-search select {
+    margin-right: 10px;
+}
+
+.board-menu .board-search input {
+    width: 50%;
 }
 
 .board-menu .board-button button {
@@ -39,7 +47,7 @@
 }
 
 .board-list-div {
-    min-height: 700px;
+    min-height: 650px;
 }
 
 .board-list-div .table {
@@ -54,7 +62,7 @@
     border-bottom: 1px solid #dee2e6;
 }
 
-.board-list-div .table tbody td:nth-child(3):hover {
+.board-list-div .table tbody tr:hover {
     cursor: pointer;
     background-color: #f9f9f9;
     font-weight: bold;
@@ -89,4 +97,28 @@
 .board-list-div .table .pr {
     color: white;
     background-color: #ff5a5a;
+}
+
+.pagination {
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+.page-item {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.page-item .move-page {
+    color: #555;
+}
+
+.page-item .pageNum {
+    color: #555;
+    border-color: white;
+}
+
+.page-item .selected {
+    background-color: #343a40;
+    color: white;
 }

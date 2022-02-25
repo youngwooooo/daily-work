@@ -23,13 +23,19 @@
 
     <div class="board-menu">
       <div class="board-count">
-        <p><i class="fa-solid fa-bars mr-2"></i>전체 <span th:text="${#lists.size(board)}"></span> 건</p>
+        <p><i class="fa-solid fa-bars mr-2"></i>전체 <span th:text="${totalCount}"></span> 건</p>
       </div>
 
       <div class="board-search">
-        <form method="get" th:action="@{/missions}">
+        <form method="get" th:action="@{/boards}">
           <div class="input-group search-input-div">
             <input type="hidden" name="page" th:value="${firstPage}">
+            <select name="category" class="form-control">
+              <option value="">전체</option>
+              <option value="NORMAL">일반</option>
+              <option value="QA">질문</option>
+              <option value="PR">홍보</option>
+            </select>
             <input type="search" class="form-control" id="search" name="search" placeholder="제목 / 작성자 검색" th:value="${search}">
             <div class="input-group-append">
               <button type="submit" class="btn btn-dark" id="btn-search"><i class="fas fa-search"></i>
@@ -38,6 +44,11 @@
           </div>
         </form>
       </div>
+      <script>
+        $(function(){
+          $("select").val("[[${category}]]");
+        });
+      </script>
 
       <div class="board-button">
         <button type="button" class="btn btn-dark" id="btn-move-create-board-form"><i class="fa-solid fa-pen-to-square mr-3 fa-lg"></i>글 쓰기</button>
@@ -51,7 +62,7 @@
           <col width="150px">
           <col width="auto">
           <col width="200px">
-          <col width="200px">
+          <col width="150px">
         </colgroup>
         <thead>
           <tr>
@@ -81,6 +92,52 @@
         </tbody>
       </table>
     </div>
+
+    <th:block th:if="${lastPage > 0}">
+
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${1 == board.pageable.pageNumber + 1} ? 'disabled'">
+          <a class="page-link move-page" th:href="@{/boards(page=${firstPage}, search=${search}, category=${category})}"><i class="fa-solid fa-angles-left"></i></a>
+        </li>
+        <li class="page-item" th:classappend="${1 == board.pageable.pageNumber + 1} ? 'disabled'">
+          <a class="page-link move-page" th:href="@{/boards(page=${board.pageable.pageNumber}, search=${search}, category=${category})}"><i class="fa-solid fa-angle-left"></i></a>
+        </li>
+        <li class="page-item">
+          <a class="page-link pageNum" th:classappend="${firstPage == board.pageable.pageNumber + 1} ? 'selected'" th:text="${firstPage}" th:href="@{/boards(page=${firstPage}, search=${search}, category=${category})}">첫번째 페이지</a>
+        </li>
+
+        <th:block th:if="${lastPage > 1}">
+
+          <th:block th:if="${board.pageable.pageNumber - firstPage > 3}">
+            <li class="page-item">
+              <a class="page-link pageNum">...</a>
+            </li>
+          </th:block>
+
+          <li class="page-item" th:each="pNo : ${#numbers.sequence(startPage, endPage)}" th:if="${endPage >= 2}">
+            <a class="page-link pageNum" th:classappend="${pNo == board.pageable.pageNumber + 1} ? 'selected'" th:text="${pNo}" th:href="@{/boards(page=${pNo}, search=${search}, category=${category})}">선택 페이지</a>
+          </li>
+
+          <th:block th:if="${lastPage - board.pageable.pageNumber > 5}">
+            <li class="page-item">
+              <a class="page-link pageNum"><span>...</span></a>
+            </li>
+          </th:block>
+
+          <li class="page-item">
+            <a class="page-link pageNum" th:classappend="${lastPage == board.pageable.pageNumber + 1} ? 'selected'" th:text="${lastPage}" th:href="@{/boards(page=${lastPage}, search=${search}, category=${category})}">마지막 페이지</a>
+          </li>
+        </th:block>
+
+        <li class="page-item" th:classappend="${board.totalPages == board.pageable.pageNumber + 1} ? 'disabled'">
+          <a class="page-link move-page" th:href="@{/boards(page=${board.pageable.pageNumber + 2}, search=${search}, category=${category})}"><i class="fa-solid fa-angle-right"></i></a>
+        </li>
+        <li class="page-item" th:classappend="${board.totalPages == board.pageable.pageNumber + 1} ? 'disabled'">
+          <a class="page-link move-page" th:href="@{/boards(page=${lastPage}, search=${search}, category=${category})}"><i class="fa-solid fa-angles-right"></i></a>
+        </li>
+      </ul>
+
+    </th:block>
 
   </div>
 
