@@ -13,6 +13,7 @@ import lombok.*;
 @Builder
 public class RequestBoardCommentDto {
 
+    private long commentSeq;
     private Board board;
     private User user;
     private String commentDesc;
@@ -28,4 +29,5 @@ public class RequestBoardCommentDto {
                 .parentCommentSeq(parentCommentSeq)
                 .build();
     }
+
 }

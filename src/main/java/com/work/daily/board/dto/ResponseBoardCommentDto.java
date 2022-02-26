@@ -25,6 +25,7 @@ public class ResponseBoardCommentDto {
     private String delYn;
     private long parentCommentSeq;
     private LocalDateTime insDtm;
+    private LocalDateTime updDtm;
 
     public ResponseBoardCommentDto(BoardComment boardComment){
         this.commentSeq = boardComment.getCommentSeq();
@@ -37,5 +38,6 @@ public class ResponseBoardCommentDto {
         this.delYn = boardComment.getDelYn();
         this.parentCommentSeq = boardComment.getParentCommentSeq();
         this.insDtm = boardComment.getInsDtm();
+        this.updDtm = boardComment.getUpdDtm();
     }
 }
