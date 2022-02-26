@@ -76,6 +76,59 @@ $(function(){
         }
     });
 
+    // 댓글 - 수정 form
+    $(document).on("click", ".modify-board-comment-form", function(){
+        if($("#modify-board-comment-form").length > 0){
+            $("#modify-board-comment-form").siblings(".board-comment-info-div").css("display", "block");
+            $("#modify-board-comment-form").remove();
+        }
+
+        $(this).parents(".board-comment-info-div").css("display", "none");
+
+        var userNm = $("#userNm").val();
+        var commentDesc = $(this).parents(".board-comment-info-div").find(".board-comment-desc").text();
+        var str = '<div class="create-board-comment-form-div" id="modify-board-comment-form">'
+                +       '<div class="create-board-comment-form justify-content-between">'
+                +           '<span>' + userNm + '</span>'
+                +           '<div class="text-count-div">'
+                +               '<span class="text-count"></span>/<span>200</span>'
+                +           '</div>'
+                +       '</div>'
+                +       '<textarea class="board-comment-content" placeholder="댓글을 입력하세요" maxlength="200">'+ commentDesc +'</textarea>'
+                +       '<div class="board-comment-buttons">'
+                +           '<button type="button" class="btn btn-primary" id="btn-modify-board-comment">수정</button>'
+                +           '<button type="button" class="btn btn-light" id="btn-cancel-modify-board-comment">취소</button>'
+                +       '</div>'
+                +   '</div>';
+
+        $(this).parents(".board-comment").prepend(str);
+        autosize($(".board-comment-content"));
+
+    });
+
+    // 댓글 - 수정 form - [취소]
+    $(document).on("click", "#btn-cancel-modify-board-comment", function(){
+        $("#modify-board-comment-form").siblings(".board-comment-info-div").css("display", "block");
+        $(this).parents("#modify-board-comment-form").remove();
+    });
+
+    // 댓글 - 수정 form - [수정]
+    $(document).on("click", "#btn-modify-board-comment", function(){
+        var commentSeq = $(this).parents(".board-comment").find("input[name='commentSeq']").val();
+        var commentDesc = $(this).parent().siblings(".board-comment-content").val();
+
+        if(validationBoardComment(commentDesc)){
+            modifyBoardComment(commentSeq, commentDesc);
+        }
+    });
+
+    // 댓글 - [삭제]
+    $(document).on("click", ".delete-board-comment", function(){
+        var commentSeq = $(this).parents(".board-comment").find("input[name='commentSeq']").val();
+        deleteBoardComment(commentSeq);
+    });
+
+
     // 답글쓰기
     $(document).on("click", ".board-comment-create-reply", function(){
         var userNm = $("#userNm").val();
@@ -156,7 +209,7 @@ function createBoardComment(parentCommentSeq, commentDesc){
     };
 
     $.ajax({
-        url : "/boardComment"
+        url : "/board/comment"
         , type : "post"
         , data : JSON.stringify(data)
         , contentType: "application/json; charset=UTF-8"
@@ -165,6 +218,46 @@ function createBoardComment(parentCommentSeq, commentDesc){
             if(result.status == 201){
                 $(".board-comment-content").val("");
                 $(".text-count").text(0);
+                $("#board-comment-list-div").load(window.location.href + " #board-comment-list-div");
+            }
+        }
+        , error : function(xhr){
+            console.log(xhr);
+        }
+    });
+}
+
+function modifyBoardComment(commentSeq, commentDesc){
+    var data = {
+        "commentSeq" : commentSeq
+        , "commentDesc" : commentDesc
+    };
+
+    $.ajax({
+        url : "/board/comment/" + commentSeq
+        , type : "patch"
+        , data : JSON.stringify(data)
+        , contentType: "application/json; charset=UTF-8"
+        , dataType : "json"
+        , success : function(result){
+            if(result.status == 200){
+                $("#board-comment-list-div").load(window.location.href + " #board-comment-list-div");
+            }
+        }
+        , error : function(xhr){
+            console.log(xhr);
+        }
+    });
+}
+
+function deleteBoardComment(commentSeq){
+    $.ajax({
+        url : "/board/comment/" + commentSeq
+        , type : "delete"
+        , dataType : "json"
+        , success : function(result){
+            console.log(result);
+            if(result.status == 200){
                 $("#board-comment-list-div").load(window.location.href + " #board-comment-list-div");
             }
         }

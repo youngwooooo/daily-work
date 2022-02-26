@@ -96,7 +96,8 @@
     vertical-align: middle;
 }
 
-.board-comment-div .board-comment-user .board-comment-ud {
+.board-comment-div .board-comment-user .board-comment-ud
+ , .board-comment-div .board-comment-user .board-comment-reply-ud{
     float: right;
     color: #b3b3b3;
 }
@@ -122,7 +123,11 @@
 
 .board-comment-div .board-comment-create-reply {
     margin-left: 5px;
+}
+
+.board-comment-div .board-comment-create-reply:hover {
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .board-comment-div .board-comment .board-comment-reply {
@@ -131,11 +136,7 @@
     border: 1px solid #f8f9fa;
     border-radius: 8px;
     margin-left: 30px;
-    margin-bottom: 5px;
-}
-
-.board-comment-div .board-comment > div:nth-child(4) {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .board-comment-div .board-comment-reply-form {
@@ -180,7 +181,8 @@
     float: right;
 }
 
-.board-comment-buttons #btn-cancel-comment-reply {
+.board-comment-buttons #btn-cancel-comment-reply
+ , #btn-cancel-modify-board-comment {
     margin-right: 5px;
     border-color: #dddddd;
 }

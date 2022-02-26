@@ -77,29 +77,54 @@
                         <th:block th:each="bpc : ${boardParentComment}" th:object="${bpc}" th:if="${bpc.parentCommentSeq == 0}">
                             <li class="board-comment">
                                 <input type="hidden" name="commentSeq" th:value="${bpc.commentSeq}">
-                                <div class="board-comment-user">
-                                    <img th:src="${bpc.profileImage}">
-                                    <span th:text="${bpc.userNm}">댓글 작성자</span>
-                                    <a class="board-comment-ud" type="button" data-toggle="dropdown"><i class="fa-solid fa-ellipsis fa-lg"></i></a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" type="button">수정</a>
-                                        <a class="dropdown-item" type="button">삭제</a>
+                                <div class="board-comment-info-div">
+                                    <div class="board-comment-user">
+                                        <img th:src="${bpc.profileImage}">
+                                        <span th:text="${bpc.userNm}">댓글 작성자</span>
+
+                                        <th:block th:if="${bpc.userId == #authentication.principal.LoginUserDto.userId}">
+                                            <a class="board-comment-ud" type="button" data-toggle="dropdown"><i class="fa-solid fa-ellipsis fa-lg"></i></a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item modify-board-comment-form" type="button">수정</a>
+                                                <a class="dropdown-item delete-board-comment" type="button">삭제</a>
+                                            </div>
+                                        </th:block>
+
                                     </div>
-                                </div>
-                                <div class="board-comment-desc-div">
-                                    <div class="board-comment-desc" th:utext="${bpc.commentDesc}"></div>
-                                    <div class="board-comment-date-reply">
-                                        <span class="board-comment-date" th:text="${#temporals.format(bpc.insDtm, 'yyyy-MM-dd HH:mm:ss')}">댓글 등록일</span>
-                                        <span class="board-comment-create-reply">답글쓰기</span>
+                                    <div class="board-comment-desc-div">
+                                        <div class="board-comment-desc" th:utext="${bpc.commentDesc}"></div>
+                                        <div class="board-comment-date-reply">
+
+                                            <th:block th:if="${#temporals.format(bpc.insDtm, 'yyyy-MM-dd HH:mm:ss') == #temporals.format(bpc.updDtm, 'yyyy-MM-dd HH:mm:ss')}">
+                                                <span class="board-comment-date" th:text="${#temporals.format(bpc.insDtm, 'yyyy-MM-dd HH:mm:ss')}">댓글 등록일</span>
+                                            </th:block>
+                                            <th:block th:unless="${#temporals.format(bpc.insDtm, 'yyyy-MM-dd HH:mm:ss') == #temporals.format(bpc.updDtm, 'yyyy-MM-dd HH:mm:ss')}">
+                                                <span class="board-comment-date" th:text="|${#temporals.format(bpc.updDtm, 'yyyy-MM-dd HH:mm:ss')}(수정됨)|">댓글 등록일</span>
+                                            </th:block>
+
+                                            <span class="board-comment-create-reply">답글쓰기</span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <th:block th:each="bcc : ${boardChildComment}" th:object="${bcc}" th:if="${bpc.commentSeq == bcc.parentCommentSeq}">
+
                                     <div class="board-comment-reply">
                                         <input type="hidden" name="commentSeq" th:value="${bcc.commentSeq}">
-                                        <div class="board-comment-user">
-                                            <img th:src="${bcc.profileImage}">
-                                            <span th:text="${bcc.userNm}">댓글 작성자</span>
+                                        <div class="board-comment-reply-info-div">
+                                            <div class="board-comment-user">
+                                                <img th:src="${bcc.profileImage}">
+                                                <span th:text="${bcc.userNm}">댓글 작성자</span>
+
+                                                <th:block th:if="${bcc.userId == #authentication.principal.LoginUserDto.userId}">
+                                                    <a class="board-comment-reply-ud" type="button" data-toggle="dropdown"><i class="fa-solid fa-ellipsis fa-lg"></i></a>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item modify-board-comment-reply-form" type="button">수정</a>
+                                                        <a class="dropdown-item delete-board-comment-reply" type="button">삭제</a>
+                                                    </div>
+                                                </th:block>
+
+                                            </div>
                                         </div>
                                         <div class="board-comment-desc-div">
                                             <div class="board-comment-desc" th:utext="${bcc.commentDesc}"></div>
@@ -108,6 +133,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </th:block>
                             </li>
 
