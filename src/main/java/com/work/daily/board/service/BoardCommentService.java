@@ -3,6 +3,7 @@ package com.work.daily.board.service;
 import com.work.daily.access.ReturnResult;
 import com.work.daily.board.dto.RequestBoardCommentDto;
 import com.work.daily.board.dto.ResponseBoardCommentDto;
+import com.work.daily.domain.entity.BoardComment;
 import com.work.daily.domain.repository.BoardCommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,6 +51,41 @@ public class BoardCommentService {
     @Transactional
     public String save(RequestBoardCommentDto requestBoardCommentDto){
         boardCommentRepository.save(requestBoardCommentDto.toEntity());
+        return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
+     * 댓글/답글 수정
+     * @param requestBoardCommentDto
+     * @return
+     */
+    @Transactional
+    public String modify(RequestBoardCommentDto requestBoardCommentDto) {
+        Optional<BoardComment> findBoardComment = boardCommentRepository.findById(requestBoardCommentDto.getCommentSeq());
+        if(!findBoardComment.isPresent()){
+            throw new IllegalArgumentException("해당 댓글/답글이 존재하지 않습니다. 댓글/답글 번호 : " + requestBoardCommentDto.getCommentSeq());
+        }
+
+        findBoardComment.get().modifyBoardComment(requestBoardCommentDto.getCommentDesc());
+
+        return ReturnResult.SUCCESS.getValue();
+    }
+
+    /**
+     * 댓글/답글 삭제
+     * @description 댓글/답글 삭제여부 Y로 변경
+     * @param commentSeq
+     * @return
+     */
+    @Transactional
+    public String delete(long commentSeq) {
+        Optional<BoardComment> findBoardComment = boardCommentRepository.findById(commentSeq);
+        if(!findBoardComment.isPresent()){
+            throw new IllegalArgumentException("해당 댓글/답글이 존재하지 않습니다. 댓글/답글 번호 : " + commentSeq);
+        }
+
+        findBoardComment.get().deleteBoardComment("Y");
+
         return ReturnResult.SUCCESS.getValue();
     }
 }

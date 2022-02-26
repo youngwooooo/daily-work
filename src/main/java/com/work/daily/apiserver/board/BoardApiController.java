@@ -100,18 +100,52 @@ public class BoardApiController {
     }
 
     /**
-     * 댓글 등록
+     * 댓글/답글 등록
      * @param requestBoardCommentDto
      * @return
      */
-    @PostMapping("/boardComment")
+    @PostMapping("/board/comment")
     public ResponseEntity<ResponseDto> createBoardComment(@RequestBody RequestBoardCommentDto requestBoardCommentDto){
         String result = boardCommentService.save(requestBoardCommentDto);
 
         if(!ReturnResult.SUCCESS.getValue().equals(result)){
-            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("댓글 등록에 실패하였습니다. 다시 시도해주세요.").build(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("댓글/답글 등록에 실패하였습니다. 다시 시도해주세요.").build(), HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("댓글 등록이 완료되었습니다.").build(), HttpStatus.CREATED);
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("댓글/답글 등록이 완료되었습니다.").build(), HttpStatus.CREATED);
+    }
+
+    /**
+     * 댓글/답글 수정
+     * @param commentSeq
+     * @param requestBoardCommentDto
+     * @return
+     */
+    @PatchMapping("/board/comment/{commentSeq}")
+    public ResponseEntity<ResponseDto> modifyBoardComment(@PathVariable("commentSeq") long commentSeq, @RequestBody RequestBoardCommentDto requestBoardCommentDto){
+        String result = boardCommentService.modify(requestBoardCommentDto);
+
+        if(!ReturnResult.SUCCESS.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("댓글/답글 수정에 실패하였습니다. 다시 시도해주세요.").build(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("댓글/답글 수정이 완료되었습니다.").build(), HttpStatus.OK);
+    }
+
+    /**
+     * 댓글/답글 삭제
+     * @description 댓글/답글 삭제여부 Y로 변경
+     * @param commentSeq
+     * @return
+     */
+    @DeleteMapping("/board/comment/{commentSeq}")
+    public ResponseEntity<ResponseDto> deleteBoardComment(@PathVariable("commentSeq") long commentSeq){
+        String result = boardCommentService.delete(commentSeq);
+
+        if(!ReturnResult.SUCCESS.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("댓글/답글 삭제에 실패하였습니다. 다시 시도해주세요.").build(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("댓글/답글 삭제가 완료되었습니다.").build(), HttpStatus.OK);
     }
 }
