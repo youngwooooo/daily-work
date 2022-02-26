@@ -44,4 +44,14 @@ public class BoardComment extends BaseTime {
     @Column(columnDefinition = "varchar(10) comment '삭제여부'")
     private String delYn;
 
+    // 댓글/답글 내용 수정
+    public void modifyBoardComment(String commentDesc){
+        this.commentDesc = commentDesc;
+    }
+
+    // 댓글/답글 삭제(삭제여부 Y로 변경)
+    public void deleteBoardComment(String delYn){
+        this.delYn = delYn;
+    }
+
 }
