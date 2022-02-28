@@ -22,8 +22,10 @@
             <div class="board-user-info-div justify-content-between">
                 <div class="board-user-insDtm-div">
                     <img th:src="${board.profileImage}" style=""><span th:text="${board.userNm}"></span>
-                    <span><i class="fa-solid fa-grip-lines-vertical ml-2 mr-2"></i></span>
+                    <span class="split-bar">|</span>
                     <span th:text="${#temporals.format(board.insDtm, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                    <span class="split-bar">|</span>
+                    <span th:text="|조회 ${board.viewCount}|"></span>
                 </div>
                 <th:block th:if="${board.userId == #authentication.principal.LoginUserDto.userId}">
                     <div class="board-user-buttons">
@@ -81,11 +83,16 @@
                                     <div class="board-comment-user">
                                         <img th:src="${bpc.profileImage}">
                                         <span th:text="${bpc.userNm}">댓글 작성자</span>
+                                        <th:block th:if="${bpc.userId == board.userId}">
+                                            <span class="icon-writer">작성자</span>
+                                        </th:block>
 
-                                        <th:block th:if="${bpc.userId == #authentication.principal.LoginUserDto.userId}">
+                                        <th:block th:if="${bpc.userId == #authentication.principal.LoginUserDto.userId or board.userId == #authentication.principal.LoginUserDto.userId}">
                                             <a class="board-comment-ud" type="button" data-toggle="dropdown"><i class="fa-solid fa-ellipsis fa-lg"></i></a>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item modify-board-comment-form" type="button">수정</a>
+                                                <th:block th:if="${bpc.userId == #authentication.principal.LoginUserDto.userId}">
+                                                    <a class="dropdown-item modify-board-comment-form" type="button">수정</a>
+                                                </th:block>
                                                 <a class="dropdown-item delete-board-comment" type="button">삭제</a>
                                             </div>
                                         </th:block>
@@ -115,23 +122,36 @@
                                             <div class="board-comment-user">
                                                 <img th:src="${bcc.profileImage}">
                                                 <span th:text="${bcc.userNm}">댓글 작성자</span>
+                                                <th:block th:if="${bcc.userId == board.userId}">
+                                                    <span class="icon-writer">작성자</span>
+                                                </th:block>
 
-                                                <th:block th:if="${bcc.userId == #authentication.principal.LoginUserDto.userId}">
+                                                <th:block th:if="${bcc.userId == #authentication.principal.LoginUserDto.userId or board.userId == #authentication.principal.LoginUserDto.userId}">
                                                     <a class="board-comment-reply-ud" type="button" data-toggle="dropdown"><i class="fa-solid fa-ellipsis fa-lg"></i></a>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item modify-board-comment-reply-form" type="button">수정</a>
+                                                        <th:block th:if="${bcc.userId == #authentication.principal.LoginUserDto.userId}">
+                                                            <a class="dropdown-item modify-board-comment-reply-form" type="button">수정</a>
+                                                        </th:block>
                                                         <a class="dropdown-item delete-board-comment-reply" type="button">삭제</a>
                                                     </div>
                                                 </th:block>
 
                                             </div>
-                                        </div>
-                                        <div class="board-comment-desc-div">
-                                            <div class="board-comment-desc" th:utext="${bcc.commentDesc}"></div>
-                                            <div class="board-comment-date-reply">
-                                                <span class="board-comment-date" th:text="${#temporals.format(bcc.insDtm, 'yyyy-MM-dd HH:mm:ss')}">댓글 등록일</span>
+                                            <div class="board-comment-desc-div">
+                                                <div class="board-comment-desc" th:utext="${bcc.commentDesc}"></div>
+                                                <div class="board-comment-date-reply">
+
+                                                    <th:block th:if="${#temporals.format(bcc.insDtm, 'yyyy-MM-dd HH:mm:ss') == #temporals.format(bcc.updDtm, 'yyyy-MM-dd HH:mm:ss')}">
+                                                        <span class="board-comment-date" th:text="${#temporals.format(bcc.insDtm, 'yyyy-MM-dd HH:mm:ss')}">댓글 등록일</span>
+                                                    </th:block>
+                                                    <th:block th:unless="${#temporals.format(bcc.insDtm, 'yyyy-MM-dd HH:mm:ss') == #temporals.format(bcc.updDtm, 'yyyy-MM-dd HH:mm:ss')}">
+                                                        <span class="board-comment-date" th:text="|${#temporals.format(bcc.updDtm, 'yyyy-MM-dd HH:mm:ss')}(수정됨)|">댓글 등록일</span>
+                                                    </th:block>
+
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
 
                                 </th:block>

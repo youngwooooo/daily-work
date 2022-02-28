@@ -172,13 +172,71 @@ $(function(){
         }
     });
 
-    // 답글쓰기 - [취소]
+     // 답글쓰기 - [취소]
     $(document).on("click", "#btn-cancel-comment-reply", function(){
        $(this).parents(".board-comment-reply-form").remove();
     });
 
+    // 답글 - 수정 fom
+    $(document).on("click", ".modify-board-comment-reply-form", function(){
+        if($("#modify-board-comment-reply-form").length > 0){
+            $("#modify-board-comment-reply-form").siblings(".board-comment-reply-info-div").css("display", "block");
+            $(".board-comment-reply").css("background-color", "#f8f9fa");
+
+            $("#modify-board-comment-reply-form").remove();
+        }
+
+        $(this).parents(".board-comment-reply").css("background-color", "white");
+        $(this).parents(".board-comment-reply-info-div").css("display", "none");
+
+        var userNm = $("#userNm").val();
+        var commentDesc = $(this).parents(".board-comment-reply-info-div").find(".board-comment-desc").text();
+        var str = '<div class="create-board-comment-form-div" id="modify-board-comment-reply-form">'
+                +       '<div class="create-board-comment-form justify-content-between">'
+                +           '<span>' + userNm + '</span>'
+                +           '<div class="text-count-div">'
+                +               '<span class="text-count"></span>/<span>200</span>'
+                +           '</div>'
+                +       '</div>'
+                +       '<textarea class="board-comment-content" placeholder="댓글을 입력하세요" maxlength="200">'+ commentDesc +'</textarea>'
+                +       '<div class="board-comment-buttons">'
+                +           '<button type="button" class="btn btn-primary" id="btn-modify-board-comment-reply">수정</button>'
+                +           '<button type="button" class="btn btn-light" id="btn-cancel-modify-board-comment-reply">취소</button>'
+                +       '</div>'
+                +   '</div>';
+
+      $(this).parents(".board-comment-reply").prepend(str);
+      autosize($(".board-comment-content"));
+
+    });
+
+    // 답글 - 수정 form - [수정]
+    $(document).on("click", "#btn-modify-board-comment-reply", function(){
+        var commentSeq = $(this).parents(".board-comment-reply").find("input[name='commentSeq']").val();
+        var commentDesc = $(this).parent().siblings(".board-comment-content").val();
+
+        if(validationBoardComment(commentDesc)){
+            modifyBoardComment(commentSeq, commentDesc);
+        }
+    });
+
+    // 답글 - 수정 form - [취소]
+    $(document).on("click", "#btn-cancel-modify-board-comment-reply", function(){
+        $("#modify-board-comment-reply-form").siblings(".board-comment-reply-info-div").css("display", "block");
+        $(this).parents(".board-comment-reply").css("background-color", "#f8f9fa");
+
+        $(this).parents("#modify-board-comment-reply-form").remove();
+    });
+
+    // 답글 - [삭제]
+    $(document).on("click", ".delete-board-comment-reply", function(){
+        var commentSeq = $(this).parents(".board-comment-reply").find("input[name='commentSeq']").val();
+        deleteBoardComment(commentSeq);
+    });
+
 });
 
+// 댓글 내용 빈값 확인
 function validationBoardComment(commentDesc){
     if(commentDesc == "" || commentDesc == null){
         alert("댓글(답글)을 입력해주세요.");
@@ -188,6 +246,7 @@ function validationBoardComment(commentDesc){
     return true;
 }
 
+// 댓글 등록
 function createBoardComment(parentCommentSeq, commentDesc){
     var boardSeq = $("#boardSeq").val();
     var userSeq = $("#userSeq").val();
@@ -227,6 +286,7 @@ function createBoardComment(parentCommentSeq, commentDesc){
     });
 }
 
+// 댓글 수정
 function modifyBoardComment(commentSeq, commentDesc){
     var data = {
         "commentSeq" : commentSeq
@@ -250,6 +310,7 @@ function modifyBoardComment(commentSeq, commentDesc){
     });
 }
 
+// 댓글 삭제
 function deleteBoardComment(commentSeq){
     $.ajax({
         url : "/board/comment/" + commentSeq
