@@ -152,8 +152,8 @@ function modifyBoard(fileArr, fileSeqList){
         , contentType: false
         , enctype: "multipart/form-data"
         , success : function(result){
-            if(result.status == 201){
-                alert(result.message);
+            if(result.status == 200){
+                location.href = "/board/" + boardSeq;
             }else {
                 alert(result.message);
             }
