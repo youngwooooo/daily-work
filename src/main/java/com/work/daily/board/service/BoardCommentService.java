@@ -86,6 +86,13 @@ public class BoardCommentService {
 
         findBoardComment.get().deleteBoardComment("Y");
 
+        List<BoardComment> findAllChildBoardComment = boardCommentRepository.findAllChildBoardComment(findBoardComment.get().getBoard().getBoardSeq());
+        for(BoardComment cm : findAllChildBoardComment){
+            if(findBoardComment.get().getCommentSeq() == cm.getParentCommentSeq()){
+                cm.deleteBoardComment("Y");
+            }
+        }
+
         return ReturnResult.SUCCESS.getValue();
     }
 }
