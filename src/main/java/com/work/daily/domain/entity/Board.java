@@ -49,9 +49,17 @@ public class Board extends BaseTime{
     @Column(columnDefinition = "varchar(30) comment '게시글구분'")
     private BoardType boardType;
 
+    @Column(columnDefinition = "number comment '조회수'")
+    private long viewCount;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
     @JsonManagedReference
     private List<BoardFile> boardFileList;
+
+    // 조회수 증가
+    public void increaseViewCount(){
+        this.viewCount++;
+    }
 
     // 게시글 삭제여부 N으로 변경
     public void deleteBoard(String delYn){

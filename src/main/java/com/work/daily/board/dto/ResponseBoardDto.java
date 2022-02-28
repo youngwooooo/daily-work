@@ -27,6 +27,7 @@ public class ResponseBoardDto {
     private String delYn;
     private String temporaryYn;
     private BoardType boardType;
+    private long viewCount;
     private List<BoardFile> boardFileList;
 
     public ResponseBoardDto(Board board){
@@ -41,5 +42,6 @@ public class ResponseBoardDto {
         this.delYn = board.getDelYn();
         this.temporaryYn = board.getTemporaryYn();
         this.boardType = board.getBoardType();
+        this.viewCount = board.getViewCount();
     }
 }
