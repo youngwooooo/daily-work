@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .expiredUrl("/"); /* 세션 만료시 이동 url */
 
         http.authorizeRequests()
-                    .antMatchers("/user/**", "/boards", "/board/**").hasRole("USER") /* /user/** 의 url은 USER 권한을 가진 사용자만 접근 가능 */
+                    .antMatchers("/user/**", "/mission/**", "/boards", "/board/**").hasRole("USER") /* /user/** 의 url은 USER 권한을 가진 사용자만 접근 가능 */
                     .antMatchers("/admin/**").hasRole("ADMIN") /* /admin/** 의 url은 ADMIN 권한을 가진 사용자만 접근 가능 */
                     .anyRequest() /* 이 외의 접근 설정 */
                     .permitAll() /* 모두 접근할 수 있도록 함 */
