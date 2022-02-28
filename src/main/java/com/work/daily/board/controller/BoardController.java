@@ -81,6 +81,8 @@ public class BoardController {
     public String detailBoardForm(@PathVariable("boardSeq") long boardSeq, Model model, @PageableDefault(size = 10) Pageable pageable){
         // 게시글 단건(상세) 조회
         ResponseBoardDto findOneBoard = boardService.findOneBoard(boardSeq);
+        // 조회수 증가
+        boardService.increaseViewCount(boardSeq);
         // 전체 댓글 조회
         Page<ResponseBoardCommentDto> findAllParentBoardComment = boardCommentService.findAllParentBoardComment(boardSeq, pageable);
         // 전체 답글 조회

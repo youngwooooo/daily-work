@@ -59,12 +59,26 @@ public class BoardService {
                 .delYn(findBoard.get().getDelYn())
                 .temporaryYn(findBoard.get().getTemporaryYn())
                 .boardType(findBoard.get().getBoardType())
+                .viewCount(findBoard.get().getViewCount())
                 .boardFileList(findBoard.get().getBoardFileList())
                 .build();
 
         return responseBoardDto;
     }
 
+    /**
+     * 게시글 상세 조회 시, 조회수 증가
+     * @param boardSeq
+     */
+    @Transactional
+    public void increaseViewCount(long boardSeq){
+        Optional<Board> findBoard = boardRepository.findById(boardSeq);
+        if(!findBoard.isPresent()){
+            throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다. 게시긃 번호 : " + boardSeq);
+        }
+
+        findBoard.get().increaseViewCount();
+    }
 
     /**
      * 게시글 등록
