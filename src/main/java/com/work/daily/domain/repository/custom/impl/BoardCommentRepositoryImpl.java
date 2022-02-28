@@ -73,7 +73,7 @@ public class BoardCommentRepositoryImpl implements BoardCommentRepositoryCustom 
                         .and(qBoardComment.delYn.eq("N"))
                         .and(qBoardComment.parentCommentSeq.gt(0))
                 )
-                .orderBy(qBoardComment.insDtm.desc())
+                .orderBy(qBoardComment.insDtm.asc())
                 .fetch();
     }
 }
