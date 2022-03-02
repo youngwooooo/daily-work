@@ -32,7 +32,7 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public Page<ResponseBoardDto> findAllBoard(Pageable pageable, String search, String category){
-        return boardRepository.findAllBoard(pageable, search, category).map(ResponseBoardDto::new);
+        return boardRepository.findAllBoard(pageable, search, category);
     }
 
     /**
