@@ -32,9 +32,9 @@
             <input type="hidden" name="page" th:value="${firstPage}">
             <select name="category" class="form-control">
               <option value="">전체</option>
-              <option value="NORMAL">일반</option>
-              <option value="QA">질문</option>
-              <option value="PR">홍보</option>
+              <th:block th:each="bt : ${boardType}">
+                <option th:value="${bt.boardTypeCode}" th:text="${bt.boardTypeNm}">분류명</option>
+              </th:block>
             </select>
             <input type="search" class="form-control" id="search" name="search" placeholder="제목 / 작성자 검색" th:value="${search}">
             <div class="input-group-append">
@@ -44,9 +44,9 @@
           </div>
         </form>
       </div>
-      <script>
+      <script th:inline="javascript">
         $(function(){
-          $("select").val("[[${category}]]");
+          $("select").val([[${category}]]);
         });
       </script>
 
@@ -79,11 +79,7 @@
           <tr th:each="b : ${board}">
             <td class="board-num"><span th:text="${b.boardSeq}">번호</span></td>
             <td>
-              <th:block th:switch="${#strings.toString(b.boardType)}">
-                <span class="board-type normal" th:case="NORMAL">일반</span>
-                <span class="board-type qa" th:case="QA">질문</span>
-                <span class="board-type pr" th:case="PR">홍보</span>
-              </th:block>
+              <span class="board-type" th:classappend="${b.boardType}" th:text="${b.boardTypeNm}">일반</span>
             <td><span th:text="${b.boardNm}">제목</span></td>
             <td>
               <img th:src="${b.profileImage}">

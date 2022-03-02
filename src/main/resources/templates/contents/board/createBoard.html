@@ -33,9 +33,9 @@
                     <th>카테고리</th>
                     <td>
                         <select class="form-control">
-                            <option value="NORMAL">일반</option>
-                            <option value="QA">질문</option>
-                            <option value="PR">홍보</option>
+                            <th:block th:each="bt : ${boardType}">
+                                <option th:value="${bt.boardTypeCode}" th:text="${bt.boardTypeNm}">분류명</option>
+                            </th:block>
                         </select>
                     </td>
                 </tr>
