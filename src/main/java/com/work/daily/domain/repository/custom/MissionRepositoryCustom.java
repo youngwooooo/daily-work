@@ -4,6 +4,7 @@ import com.work.daily.domain.entity.Mission;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,4 +27,5 @@ public interface MissionRepositoryCustom {
     // 마이페이지 - 나의 작성 미션 전체 조회
     Page<Mission> findAllLatelyCreatedMission(String userId, Pageable pageable, String search);
 
+    List<Mission> findAllMissionForClose(LocalDateTime now);
 }

@@ -9,11 +9,13 @@ import com.work.daily.domain.entity.QMissionParticipants;
 import com.work.daily.domain.entity.QUser;
 import com.work.daily.domain.repository.custom.MissionRepositoryCustom;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +24,7 @@ import java.util.Optional;
  */
 @RequiredArgsConstructor
 @Repository
+@Slf4j
 public class MissionRepositoryImpl implements MissionRepositoryCustom {
 
     // QuerydslConfig에서 Bean으로 등록한 JPAQueryFactory 주입
@@ -48,6 +51,7 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
                 .where(qMission.releaseYn.eq("Y")
                         .and(qMission.delYn.eq("N"))
                         .and(qMission.temporaryYn.eq("N"))
+                        .and(qMission.closeYn.eq("N"))
                         .and(missionNmLike(search).or(missionUserNmLike(search)))
                 )
                 .orderBy(qMission.insDtm.desc())
@@ -62,6 +66,7 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
                 .where(qMission.releaseYn.eq("Y")
                         .and(qMission.delYn.eq("N"))
                         .and(qMission.temporaryYn.eq("N"))
+                        .and(qMission.closeYn.eq("N"))
                         .and(missionNmLike(search).or(missionUserNmLike(search)))
                 )
                 .orderBy(qMission.insDtm.desc());
@@ -205,4 +210,19 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
 
         return PageableExecutionUtils.getPage(content, pageable, () -> totalCount.fetch().size());
     }
+
+    /**
+     * 미션종료일 < 오늘 / 마감여부 = N 인 모든 미션 조회
+     * @param now
+     * @return
+     */
+    @Override
+    public List<Mission> findAllMissionForClose(LocalDateTime now) {
+        return jpaQueryFactory.selectFrom(qMission)
+                .innerJoin(qMission.user, qUser)
+                .where(qMission.missionEndDt.lt(now)
+                        .and(qMission.closeYn.eq("N")))
+                .fetch();
+    }
+
 }
