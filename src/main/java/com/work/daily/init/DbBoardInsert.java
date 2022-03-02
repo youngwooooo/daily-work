@@ -2,7 +2,6 @@ package com.work.daily.init;
 
 import com.work.daily.board.dto.BoardCommentDto;
 import com.work.daily.board.dto.BoardDto;
-import com.work.daily.domain.BoardType;
 import com.work.daily.domain.entity.Board;
 import com.work.daily.domain.entity.BoardComment;
 import com.work.daily.domain.entity.User;
@@ -59,7 +58,7 @@ public class DbBoardInsert {
             boardDto.setBoardNm(userList.get(i).getUserNm() + " 의 문의사항");
             boardDto.setTemporaryYn("N");
             boardDto.setDelYn("N");
-            boardDto.setBoardType(BoardType.NORMAL);
+            boardDto.setBoardType("normal");
             boardDto.setBoardDesc("test");
 
             boardDtoList.add(boardDto.toEntity());

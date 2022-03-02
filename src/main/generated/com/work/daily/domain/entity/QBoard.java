@@ -32,7 +32,7 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final NumberPath<Long> boardSeq = createNumber("boardSeq", Long.class);
 
-    public final EnumPath<com.work.daily.domain.BoardType> boardType = createEnum("boardType", com.work.daily.domain.BoardType.class);
+    public final StringPath boardType = createString("boardType");
 
     public final StringPath delYn = createString("delYn");
 

@@ -1,6 +1,5 @@
 package com.work.daily.board.dto;
 
-import com.work.daily.domain.BoardType;
 import com.work.daily.domain.entity.Board;
 import com.work.daily.domain.entity.User;
 import lombok.Getter;
@@ -19,7 +18,7 @@ public class RequestBoardDto {
     private String boardDesc;
     private String delYn;
     private String temporaryYn;
-    private BoardType boardType;
+    private String boardType;
 
     public Board toEntity(){
         return Board.builder()

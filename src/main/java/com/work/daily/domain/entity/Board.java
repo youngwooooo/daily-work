@@ -2,7 +2,6 @@ package com.work.daily.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.work.daily.board.dto.RequestBoardDto;
-import com.work.daily.domain.BoardType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,9 +44,8 @@ public class Board extends BaseTime{
     @Column(columnDefinition = "varchar(10) comment '임시여부'")
     private String temporaryYn;
 
-    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(30) comment '게시글구분'")
-    private BoardType boardType;
+    private String boardType;
 
     @Column(columnDefinition = "number comment '조회수'")
     private long viewCount;

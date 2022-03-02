@@ -1,6 +1,5 @@
 package com.work.daily.board.dto;
 
-import com.work.daily.domain.BoardType;
 import com.work.daily.domain.entity.Board;
 import com.work.daily.domain.entity.User;
 import lombok.*;
@@ -15,10 +14,10 @@ public class BoardDto {
     private String boardDesc;
     private String delYn;
     private String temporaryYn;
-    private BoardType boardType;
+    private String boardType;
 
     @Builder
-    public BoardDto(User user, String boardNm, String boardDesc, String delYn, String temporaryYn, BoardType boardType) {
+    public BoardDto(User user, String boardNm, String boardDesc, String delYn, String temporaryYn, String boardType) {
         this.user = user;
         this.boardNm = boardNm;
         this.boardDesc = boardDesc;
