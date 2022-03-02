@@ -45,6 +45,12 @@ spring:
     username: sa
     password:
 
+  sql:
+    init:
+      mode: ALWAYS
+      data-locations:
+        - classpath:data.sql
+
   #JPA
   jpa:
     open-in-view: false
@@ -55,6 +61,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    defer-datasource-initialization: true
 
   #Thymeleaf
   thymeleaf:
