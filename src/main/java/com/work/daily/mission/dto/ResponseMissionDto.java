@@ -28,6 +28,7 @@ public class ResponseMissionDto {
     private String temporaryYn;
     private String reviewGrade;
     private String missionImage;
+    private String closeYn;
 
     public ResponseMissionDto(Mission mission){
         this.missionSeq = mission.getMissionSeq();
@@ -43,6 +44,7 @@ public class ResponseMissionDto {
         this.temporaryYn = mission.getTemporaryYn();
         this.reviewGrade = mission.getReviewGrade();
         this.missionImage = mission.getMissionImage();
+        this.closeYn = mission.getCloseYn();
     }
 
     public static ResponseMissionDto toPaging(Mission mission){
@@ -59,6 +61,8 @@ public class ResponseMissionDto {
                 .delYn(mission.getDelYn())
                 .temporaryYn(mission.getTemporaryYn())
                 .reviewGrade(mission.getReviewGrade())
-                .missionImage(mission.getMissionImage()).build();
+                .missionImage(mission.getMissionImage())
+                .closeYn(mission.getCloseYn())
+                .build();
     }
 }

@@ -38,19 +38,21 @@ public class RequestMissionDto {
     @NotBlank(message = "공개 여부를 설정해주세요.")
     private String releaseYn;
 
-    @NotBlank(message = "자동참여 여부를 설정해주세요")
+    @NotBlank(message = "자동참여 여부를 설정해주세요.")
     private String autoAccessYn;
 
-    @NotBlank(message = "방장 여부를 설정해주세요")
+    @NotBlank(message = "방장 여부를 설정해주세요.")
     private String masterYn;
 
-    @NotBlank(message = "삭제 여부를 설정해주세요")
+    @NotBlank(message = "삭제 여부를 설정해주세요.")
     private String delYn;
 
-    @NotBlank(message = "임시 여부를 설정해주세요")
+    @NotBlank(message = "임시 여부를 설정해주세요.")
     private String temporaryYn;
 
     private String missionImage;
+
+    private String closeYn;
 
     public Mission toEntity(){
         return Mission.builder()
@@ -65,6 +67,7 @@ public class RequestMissionDto {
                         .delYn(delYn)
                         .temporaryYn(temporaryYn)
                         .missionImage(missionImage)
+                        .closeYn(closeYn)
                         .build();
     }
 }

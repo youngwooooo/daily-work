@@ -26,6 +26,8 @@ public class QMission extends EntityPathBase<Mission> {
 
     public final StringPath autoAccessYn = createString("autoAccessYn");
 
+    public final StringPath closeYn = createString("closeYn");
+
     public final StringPath delYn = createString("delYn");
 
     //inherited

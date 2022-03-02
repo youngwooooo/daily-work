@@ -3,6 +3,7 @@ package com.work.daily.domain.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.work.daily.mission.dto.RequestMissionDto;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -67,6 +68,9 @@ public class Mission extends BaseTime {
     @Column(columnDefinition = "varchar(200) comment '미션이미지'")
     private String missionImage;
 
+    @Column(columnDefinition = "varchar(10) comment '마감여부'")
+    private String closeYn;
+
     @OneToMany(mappedBy = "mission")
     @JsonManagedReference
     private List<MissionParticipants> MissionParticipants;
@@ -75,6 +79,7 @@ public class Mission extends BaseTime {
     public void modifyMissionImage(String missionImagePath){
         this.missionImage = missionImagePath;
     }
+
     // 미션 수정
     public void modifyMission(RequestMissionDto requestMissionDto){
         this.missionNm = requestMissionDto.getMissionNm();
@@ -89,6 +94,11 @@ public class Mission extends BaseTime {
     // 삭제여부 수정
     public void deleteMission(String delYn){
         this.delYn = delYn;
+    }
+
+    // 마감여부 수정
+    public void modifyCloseYn(){
+        this.closeYn = "Y";
     }
 
 }

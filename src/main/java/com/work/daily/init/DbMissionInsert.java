@@ -103,6 +103,7 @@ public class DbMissionInsert {
                     .delYn("N")
                     .temporaryYn("N")
                     .missionImage("/img/common/basic_mission.jpg")
+                    .closeYn("N")
                     .build()
                     .toEntity()
         );
@@ -120,6 +121,7 @@ public class DbMissionInsert {
                         .delYn("N")
                         .temporaryYn("N")
                         .missionImage("/img/common/basic_mission.jpg")
+                        .closeYn("N")
                         .build()
                         .toEntity()
         );
@@ -137,6 +139,7 @@ public class DbMissionInsert {
                         .delYn("N")
                         .temporaryYn("N")
                         .missionImage("/img/common/basic_mission.jpg")
+                        .closeYn("N")
                         .build()
                         .toEntity()
         );
@@ -166,7 +169,7 @@ public class DbMissionInsert {
                             .missionNm(String.valueOf(i) + "번 미션")
                             .missionDesc(String.valueOf(i) + "번 미션 내용")
                             .missionStDt(LocalDateTime.now())
-                            .missionEndDt(LocalDateTime.now().plusMonths(1))
+                            .missionEndDt(LocalDateTime.now())
                             .releaseYn("Y")
                             .autoAccessYn("Y")
                             .masterYn("Y")
@@ -174,6 +177,27 @@ public class DbMissionInsert {
                             .delYn("N")
                             .temporaryYn("N")
                             .missionImage("/img/common/basic_mission.jpg")
+                            .closeYn("N")
+                            .build()
+                            .toEntity()
+            );
+        }
+
+        for(int i=16; i<=30; i++){
+            saveMissionDtoList.add(
+                    RequestMissionDto.builder()
+                            .missionNm(String.valueOf(i) + "번 미션")
+                            .missionDesc(String.valueOf(i) + "번 미션 내용")
+                            .missionStDt(LocalDateTime.now())
+                            .missionEndDt(LocalDateTime.now().minusDays(1))
+                            .releaseYn("Y")
+                            .autoAccessYn("Y")
+                            .masterYn("Y")
+                            .user(userRepository.findByUserId("junBeomLee").get())
+                            .delYn("N")
+                            .temporaryYn("N")
+                            .missionImage("/img/common/basic_mission.jpg")
+                            .closeYn("N")
                             .build()
                             .toEntity()
             );

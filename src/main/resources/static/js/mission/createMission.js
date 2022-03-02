@@ -110,6 +110,7 @@ function savingMission(temporaryValue){
     var masterYn = "Y"; // 방장 여부
     var delYn = "N";    // 삭제 여부
     var temporaryYn = temporaryValue   // 임시 여부
+    var closeYn = "N";
 
     var data = {
                     "user" : {
@@ -125,6 +126,7 @@ function savingMission(temporaryValue){
                     , "masterYn" : masterYn
                     , "delYn" : delYn
                     , "temporaryYn" : temporaryYn
+                    , "closeYn" : closeYn
                 };
 
     var formData = new FormData();
