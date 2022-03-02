@@ -1,9 +1,11 @@
 package com.work.daily.board.controller;
 
+import com.work.daily.board.dto.BoardTypeDto;
 import com.work.daily.board.dto.ResponseBoardCommentDto;
 import com.work.daily.board.dto.ResponseBoardDto;
 import com.work.daily.board.service.BoardCommentService;
 import com.work.daily.board.service.BoardService;
+import com.work.daily.board.service.BoardTypeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ public class BoardController {
 
     private final BoardService boardService;
     private final BoardCommentService boardCommentService;
+    private final BoardTypeService boardTypeService;
 
     /**
      * 전체 게시글(커뮤니티) VIEW
@@ -40,6 +43,7 @@ public class BoardController {
             , Model model)
     {
         Page<ResponseBoardDto> findAllBoard = boardService.findAllBoard(pageable, search, category);
+        List<BoardTypeDto> findAllBoardType = boardTypeService.findAllBoardType();
 
         int firstPage = 1;  // 첫번째 페이지
         int lastPage = findAllBoard.getTotalPages(); // 마지막 페이지(게시글 전체 개수)
@@ -48,6 +52,7 @@ public class BoardController {
         long totalCount = findAllBoard.getTotalElements();
 
         model.addAttribute("board", findAllBoard);
+        model.addAttribute("boardType", findAllBoardType);
 
         model.addAttribute("search", search);
         model.addAttribute("category", category);
@@ -67,7 +72,9 @@ public class BoardController {
      * @return
      */
     @GetMapping("/board")
-    public String createBoardForm(){
+    public String createBoardForm(Model model){
+        List<BoardTypeDto> findAllBoardType = boardTypeService.findAllBoardType();
+        model.addAttribute("boardType", findAllBoardType);
         return "/contents/board/createBoard";
     }
 
@@ -108,6 +115,9 @@ public class BoardController {
     @GetMapping("/board/{boardSeq}/modify")
     public String modifyBoardForm(@PathVariable("boardSeq") long boardSeq, Model model){
         ResponseBoardDto findOneBoard = boardService.findOneBoard(boardSeq);
+        List<BoardTypeDto> findAllBoardType = boardTypeService.findAllBoardType();
+
+        model.addAttribute("boardType", findAllBoardType);
         model.addAttribute("board", findOneBoard);
 
         return "/contents/board/modifyBoard";
