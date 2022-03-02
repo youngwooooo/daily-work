@@ -1,7 +1,6 @@
 package com.work.daily;
 
 import com.work.daily.login.auth.CustomUserDetails;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
-@Slf4j
 @EnableJpaAuditing
 @SpringBootApplication
 public class DailyApplication {
