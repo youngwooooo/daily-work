@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -333,5 +335,21 @@ public class MissionService {
     public Page<ResponseMissionDto> findAllLatelyCreatedMission(String userId, Pageable pageable, String search){
         Page<Mission> findAllLatelyCreatedMission = missionRepository.findAllLatelyCreatedMission(userId, pageable, search);
         return findAllLatelyCreatedMission.map(ResponseMissionDto::toPaging);
+    }
+
+    /**
+     * 미션 마감여부 N -> Y로 변경하는 스케쥴러
+     * @description 매일 오전 6시에 미션종료일이 오늘보다 이전인 미션들의 마감여부를 Y로 수정한다.
+     */
+    @Scheduled(cron = "0 0 6 * * *" )
+    @Transactional
+    public void closeMission(){
+        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+        List<Mission> findAllMissionForClose = missionRepository.findAllMissionForClose(now);
+        log.info("마감해야할 미션 개수 : " + findAllMissionForClose.size());
+        for(Mission m : findAllMissionForClose){
+            m.modifyCloseYn();
+        }
+
     }
 }
