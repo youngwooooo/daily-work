@@ -1,13 +1,11 @@
 package com.work.daily.domain.repository.custom.impl;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.work.daily.domain.BoardType;
-import com.work.daily.domain.entity.Board;
-import com.work.daily.domain.entity.QBoard;
-import com.work.daily.domain.entity.QBoardFile;
-import com.work.daily.domain.entity.QUser;
+import com.work.daily.board.dto.ResponseBoardDto;
+import com.work.daily.domain.entity.*;
 import com.work.daily.domain.repository.custom.BoardRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,16 +26,19 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     QBoard qBoard = QBoard.board;
     QBoardFile qBoardFile = QBoardFile.boardFile;
     QUser qUser = QUser.user;
+    QBoardType qBoardType = QBoardType.boardType;
 
     /**
      * 전체 게시글 조회
      * @return
      */
     @Override
-    public Page<Board> findAllBoard(Pageable pageable, String search, String category) {
-        List<Board> content = jpaQueryFactory
-                .selectFrom(qBoard)
+    public Page<ResponseBoardDto> findAllBoard(Pageable pageable, String search, String category) {
+        List<ResponseBoardDto> content = jpaQueryFactory
+                .select(Projections.constructor(ResponseBoardDto.class, qBoard, qBoardType.boardTypeNm))
+                .from(qBoard)
                 .innerJoin(qBoard.user, qUser).fetchJoin()
+                .join(qBoardType).on(qBoard.boardType.eq(qBoardType.boardTypeCode))
                 .where(qBoard.delYn.eq("N")
                         .and(qBoard.temporaryYn.eq("N"))
                         .and(boardTypeEq(category))
@@ -48,9 +49,11 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        JPAQuery<Board> totalCount = jpaQueryFactory
-                .selectFrom(qBoard)
+        JPAQuery<ResponseBoardDto> totalCount = jpaQueryFactory
+                .select(Projections.constructor(ResponseBoardDto.class, qBoard, qBoardType.boardTypeNm))
+                .from(qBoard)
                 .innerJoin(qBoard.user, qUser).fetchJoin()
+                .join(qBoardType).on(qBoard.boardType.eq(qBoardType.boardTypeCode))
                 .where(qBoard.delYn.eq("N")
                         .and(qBoard.temporaryYn.eq("N"))
                         .and(boardTypeEq(category))
@@ -70,21 +73,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     private BooleanExpression boardTypeEq(String category){
-        log.info("boardTypeEq :: 카테고리 : " + category);
-
-        if(category != null){
-            if(BoardType.NORMAL.getValue().equals(category)){
-                return qBoard.boardType.eq(BoardType.NORMAL);
-
-            }else if(BoardType.QA.getValue().equals(category)){
-                return qBoard.boardType.eq(BoardType.QA);
-
-            }else if(BoardType.PR.getValue().equals(category)){
-                return qBoard.boardType.eq(BoardType.QA);
-
-            }else {
-                return null;
-            }
+        if(category != null && !category.isEmpty()){
+            return qBoard.boardType.eq(category);
         }
 
         return null;
@@ -107,6 +97,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                         .and(qBoard.boardSeq.eq(boardSeq))
                 ).fetchOne());
     }
+
+
 
 
 }
