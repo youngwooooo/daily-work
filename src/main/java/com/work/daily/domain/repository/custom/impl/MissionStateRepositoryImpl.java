@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -93,5 +94,28 @@ public class MissionStateRepositoryImpl implements MissionStateRepositoryCustom 
 
     private BooleanExpression submittedMissionNmLike(String search) {
         return search != null ? qMissionState.submittedMissionNm.contains(search) : null;
+    }
+
+    /**
+     * 마감된 미션의 제출 미션(미션 현황)들의 승인여부를 Y로 변경
+     * @description 1. 마감된 미션번호 = 미션현황 미션번호
+     *              2. 미션제출일 < 스케쥴러 실행 시간
+     *              3. 반려여부 = N
+     *              4. 승인여부 = N
+     * @param missionSeq : 마감된 미션의 미션 번호
+     * @param now : 스케쥴러 실행 시간
+     * @return
+     */
+    @Override
+    public List<MissionState> findAllMissionStateForClose(long missionSeq, LocalDateTime now) {
+        return jpaQueryFactory.selectFrom(qMissionState)
+                .innerJoin(qMissionState.missionParticipants, qMissionParticipants)
+                .fetchJoin()
+                .where(qMissionState.missionParticipants.missionSeq.eq(missionSeq)
+                    .and(qMissionState.submittedMissionDt.lt(now))
+                    .and(qMissionState.rejectionYn.eq("N"))
+                    .and(qMissionState.approvalYn.eq("N"))
+                )
+                .fetch();
     }
 }
