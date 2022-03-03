@@ -4,14 +4,10 @@ import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
 import com.work.daily.board.dto.RequestBoardCommentDto;
 import com.work.daily.board.dto.RequestBoardDto;
-import com.work.daily.board.dto.ResponseBoardDto;
 import com.work.daily.board.service.BoardCommentService;
 import com.work.daily.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +23,6 @@ public class BoardApiController {
 
     private final BoardService boardService;
     private final BoardCommentService boardCommentService;
-
-    @GetMapping("/btest")
-    public Page<ResponseBoardDto> test(@PageableDefault(size = 10) Pageable pageable
-            , @RequestParam(required = false, defaultValue = "") String search
-            , @RequestParam(required = false, defaultValue = "") String category){
-        return boardService.findAllBoard(pageable, search, category);
-    }
 
     /**
      * 게시글 등록
@@ -147,5 +136,22 @@ public class BoardApiController {
         }
 
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("댓글/답글 삭제가 완료되었습니다.").build(), HttpStatus.OK);
+    }
+
+    /**
+     * 마이페이지 - 나의 게시글 - 게시글 삭제
+     * @description 선택된 게시글들의 삭제여부를 N으로 변경
+     * @param boardSeqList
+     * @return
+     */
+    @DeleteMapping("/board")
+    public ResponseEntity<ResponseDto> deleteMultipleBoard(@RequestBody List<Long> boardSeqList){
+        String result = boardService.deleteMultiple(boardSeqList);
+
+        if(!ReturnResult.SUCCESS.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message(boardSeqList.size() + "건의 게시글 삭제가 완료되었습니다.").build(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message(boardSeqList.size() + "건의 게시글 삭제가 완료되었습니다.").build(), HttpStatus.OK);
     }
 }
