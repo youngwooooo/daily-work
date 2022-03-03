@@ -83,8 +83,11 @@ $(function(){
         }
     });
 
+    // [임시저장]
     $("#btn-temporary-board").on("click", function(){
-        alert("글 임시저장");
+        if(validatingBoard()){
+            savingBoard("Y", fileArr);
+        }
     });
 
     $("#btn-cancel").on("click", function(){
