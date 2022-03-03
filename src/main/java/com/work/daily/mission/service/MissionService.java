@@ -338,18 +338,17 @@ public class MissionService {
     }
 
     /**
-     * 미션 마감여부 N -> Y로 변경하는 스케쥴러
-     * @description 매일 오전 6시에 미션종료일이 오늘보다 이전인 미션들의 마감여부를 Y로 수정한다.
+     * 마감여부 N -> Y로 변경
+     * @param now
      */
-    @Scheduled(cron = "0 0 6 * * *" )
     @Transactional
-    public void closeMission(){
-        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+    public void closeMission(LocalDateTime now){
         List<Mission> findAllMissionForClose = missionRepository.findAllMissionForClose(now);
-        log.info("마감해야할 미션 개수 : " + findAllMissionForClose.size());
-        for(Mission m : findAllMissionForClose){
-            m.modifyCloseYn();
-        }
 
+        if(findAllMissionForClose.size() > 0){
+            for(Mission m : findAllMissionForClose){
+                m.modifyCloseYn();
+            }
+        }
     }
 }
