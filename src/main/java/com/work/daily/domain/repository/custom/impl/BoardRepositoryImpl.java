@@ -93,12 +93,69 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .innerJoin(qBoard.user, qUser).fetchJoin()
                 .leftJoin(qBoard.boardFileList, qBoardFile).fetchJoin()
                 .where(qBoard.delYn.eq("N")
-                        .and(qBoard.temporaryYn.eq("N"))
                         .and(qBoard.boardSeq.eq(boardSeq))
                 ).fetchOne());
     }
 
+    /**
+     * 마이페이지 - 최근 작성한 게시글 10건 조회
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<ResponseBoardDto> findBoardCountTen(String userId) {
+        return jpaQueryFactory
+                .select(Projections.constructor(ResponseBoardDto.class, qBoard, qBoardType.boardTypeNm))
+                .from(qBoard)
+                .innerJoin(qBoard.user, qUser).fetchJoin()
+                .join(qBoardType).on(qBoard.boardType.eq(qBoardType.boardTypeCode))
+                .where(qBoard.user.userId.eq(userId)
+                    .and(qBoard.delYn.eq("N"))
+                )
+                .orderBy(qBoard.insDtm.desc())
+                .limit(10)
+                .fetch();
+    }
 
+    /**
+     * 마이페이지 - 나의 게시글 - 나의 게시글 전체 조회
+     * @param pageable
+     * @param search
+     * @param category
+     * @param userId
+     * @return
+     */
+    @Override
+    public Page<ResponseBoardDto> findAllMyBoard(Pageable pageable, String search, String category, String userId) {
+        List<ResponseBoardDto> content = jpaQueryFactory
+                .select(Projections.constructor(ResponseBoardDto.class, qBoard, qBoardType.boardTypeNm))
+                .from(qBoard)
+                .innerJoin(qBoard.user, qUser).fetchJoin()
+                .join(qBoardType).on(qBoard.boardType.eq(qBoardType.boardTypeCode))
+                .where(qBoard.delYn.eq("N")
+                        .and(qBoard.user.userId.eq(userId))
+                        .and(boardTypeEq(category))
+                        .and(boardNmLike(search).or(boardUserLike(search)))
+                )
+                .orderBy(qBoard.insDtm.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        JPAQuery<ResponseBoardDto> totalCount = jpaQueryFactory
+                .select(Projections.constructor(ResponseBoardDto.class, qBoard, qBoardType.boardTypeNm))
+                .from(qBoard)
+                .innerJoin(qBoard.user, qUser).fetchJoin()
+                .join(qBoardType).on(qBoard.boardType.eq(qBoardType.boardTypeCode))
+                .where(qBoard.delYn.eq("N")
+                        .and(qBoard.user.userId.eq(userId))
+                        .and(boardTypeEq(category))
+                        .and(boardNmLike(search).or(boardUserLike(search)))
+                )
+                .orderBy(qBoard.insDtm.desc());
+
+        return PageableExecutionUtils.getPage(content, pageable, () -> totalCount.fetch().size());
+    }
 
 
 }
