@@ -1,0 +1,229 @@
+ .container-fluid {
+    padding-right: 30px;
+}
+
+.row-wrapper {
+    min-height: 850px;
+}
+
+ .user-info-card-div {
+    border-right: 1px solid #dddddd;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+ .user-info-card-div .card {
+    padding: 20px;
+    border: none;
+}
+
+ .user-info-card-div .card-img-top {
+    width: 50%;
+    margin: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+ .user-info-card-div .user-simple-info {
+    text-align: center;
+}
+
+ .user-info-card-div .user-simple-info .card-title {
+    margin-bottom: 0px;
+}
+
+ .user-info-card-div .user-simple-info .card-text {
+    color: gray;
+    font-size: 0.9rem;
+}
+
+ .user-info-card-div .user-info-management {
+    margin-top: 20px;
+}
+
+ .user-info-card-div .user-info-management button {
+    width: 100%;
+}
+
+ .user-info-card-div .my-menu {
+    min-height: 350px;
+    padding: 20px;
+ }
+
+ .user-info-card-div .my-menu p {
+    color: #ababab;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+ .user-info-card-div .my-menu ul {
+    list-style: none;
+    margin-bottom: 30px;
+    padding-left: 20px;
+}
+
+ .user-info-card-div .my-menu ul li {
+    padding: 3px;
+}
+
+ .user-info-card-div .my-menu ul li a {
+    color: black;
+}
+
+ .user-info-card-div .my-menu ul li a:hover {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+ .user-info-card-div .my-menu ul li .my-board {
+    font-weight: bold;
+ }
+
+ .my-board-wrapper {
+     margin-top: 30px;
+     margin-bottom: 30px;
+     position: relative;
+     padding-left: 30px;
+ }
+
+ .my-board-wrapper .board-title-div {
+     display: inline-block;
+     width: 49%;
+ }
+
+  .my-board-wrapper .board-title-div h5 {
+    font-weight: bold;
+  }
+
+ .my-board-wrapper .board-search {
+     width: 50%;
+     margin-left: auto;
+     margin-right: 10px;
+     display: inline-block;
+ }
+
+ .my-board-wrapper .board-search select {
+     margin-right: 10px;
+     height: 50px;
+ }
+
+ .my-board-wrapper .board-search input {
+     width: 60%;
+     height: 50px;
+ }
+
+ .board-buttons {
+    overflow: hidden;
+ }
+
+ .board-buttons button {
+    border: 1px solid #dddddd;
+    margin-left: 5px;
+    float: right;
+ }
+
+ .board-list-div {
+    margin-top: 16px;
+ }
+
+ .board-list-div .table {
+     text-align: center;
+ }
+
+ .board-list-div .table th {
+     border-bottom: none;
+ }
+
+ .board-list-div .table tr:last-child {
+     border-bottom: 1px solid #dee2e6;
+ }
+
+ .board-list-div .table tbody .board-tr:hover {
+     cursor: pointer;
+     background-color: #f9f9f9;
+     font-weight: bold;
+ }
+
+  .board-list-div .table input[type='checkbox'] {
+     cursor: pointer;
+  }
+
+ .board-list-div .table img {
+     width: 30px;
+     border-radius: 50%;
+ }
+
+ .board-list-div .table span {
+     vertical-align: middle;
+ }
+
+ .board-list-div .table .board-type
+  , .board-list-div .table .board-status {
+     padding: 5px 20px;
+     font-size: 0.9rem;
+     font-weight: bold;
+     border-radius: 5px;
+ }
+
+ .board-list-div .table .normal
+  , .board-list-div .table .temporary-n {
+     color: white;
+     background-color: #343a40;
+ }
+
+ .board-list-div .table .qa {
+     color: white;
+     background-color: #007bff;
+ }
+
+ .board-list-div .table .pr {
+     color: white;
+     background-color: #ff5a5a;
+ }
+
+ .board-list-div .table .temporary-y {
+     color: white;
+     background-color: #27c558;
+ }
+
+ .board-list-div .table .empty-board-desc-td {
+    height: 658px;
+ }
+
+ .board-list-div .table .empty-board-desc {
+      position: relative;
+      top: 45%;
+      color: gray;
+  }
+
+  /* 게시글 - [삭제] - 경고 modal */
+  #response-modal {
+      background-color:rgba(0,0,0,.3);
+  }
+
+  #response-modal .modal-body {
+      padding: 30px;
+      text-align: center;
+  }
+
+  .response-modal-desc-div {
+      margin-top: 20px;
+      margin-bottom: 30px;
+  }
+
+  .response-modal-desc-div h3 {
+      font-weight: bold;
+  }
+
+  .response-modal-desc-div p {
+      margin: 0px;
+  }
+
+  .response-modal-btn-div button {
+      width: 100px;
+      height: 45px;
+  }
+
+  .response-modal-btn-div #btn-cancel-response-modal {
+      border-color: #dae0e5;
+  }
