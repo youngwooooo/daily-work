@@ -146,9 +146,45 @@ public class BoardService {
             throw new IllegalArgumentException("해당 게시글이 존재하지 않습니다. 게시글번호 : " + boardSeq);
         }
 
-        findBoard.get().deleteBoard("Y");
+        findBoard.get().deleteBoard();
 
         return ReturnResult.SUCCESS.getValue();
     }
 
+    /**
+     * 마이페이지 - 최근 작성한 게시글 10개 조회
+     * @param userId
+     * @return
+     */
+    @Transactional
+    public List<ResponseBoardDto> findBoardCountTen(String userId){
+        return boardRepository.findBoardCountTen(userId);
+    }
+
+    /**
+     * 마이페이지 - 나의 게시글 - 나의 게시글 전체 조회
+     * @param pageable
+     * @param search
+     * @param category
+     * @param userId
+     * @return
+     */
+    public Page<ResponseBoardDto> findAllMyBoard(Pageable pageable, String search, String category, String userId) {
+        return boardRepository.findAllMyBoard(pageable, search, category, userId);
+    }
+
+    /**
+     * 마이페이지 - 나의 게시글 - 게시글 삭제
+     * @param boardSeqList
+     * @return
+     */
+    @Transactional
+    public String deleteMultiple(List<Long> boardSeqList){
+        List<Board> findAllById = boardRepository.findAllById(boardSeqList);
+        for(Board b : findAllById){
+            b.deleteBoard();
+        }
+
+        return ReturnResult.SUCCESS.getValue();
+    }
 }
