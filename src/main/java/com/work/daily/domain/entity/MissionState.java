@@ -65,8 +65,8 @@ public class MissionState {
     private String rejectionDesc;
 
     // 승인여부 N -> Y 수정
-    public void modifyMissionStateApprovalYn(String approvalYn, LocalDateTime approvalDt){
-        this.approvalYn = approvalYn;
+    public void modifyMissionStateApprovalYn(LocalDateTime approvalDt){
+        this.approvalYn = "Y";
         this.approvalDt = approvalDt;
     }
 

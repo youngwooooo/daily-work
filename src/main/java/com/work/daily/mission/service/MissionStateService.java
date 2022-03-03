@@ -143,7 +143,7 @@ public class MissionStateService {
             throw new IllegalArgumentException("해당 미션 현황이 존재하지 않습니다. 미션현황번호 : " + requestMissionStateDto.getMissionStateSeq());
         }
 
-        findMissionState.get().modifyMissionStateApprovalYn(requestMissionStateDto.getApprovalYn(), requestMissionStateDto.getApprovalDt());
+        findMissionState.get().modifyMissionStateApprovalYn(requestMissionStateDto.getApprovalDt());
 
         return ReturnResult.SUCCESS.getValue();
     }
