@@ -60,8 +60,8 @@ public class Board extends BaseTime{
     }
 
     // 게시글 삭제여부 N으로 변경
-    public void deleteBoard(String delYn){
-        this.delYn = delYn;
+    public void deleteBoard(){
+        this.delYn = "Y";
     }
 
     // 게시글 수정
@@ -69,5 +69,9 @@ public class Board extends BaseTime{
         this.boardNm = requestBoardDto.getBoardNm();
         this.boardDesc = requestBoardDto.getBoardDesc();
         this.boardType = requestBoardDto.getBoardType();
+
+        if("Y".equals(requestBoardDto.getTemporaryYn())){
+            this.temporaryYn = "N";
+        }
     }
 }
