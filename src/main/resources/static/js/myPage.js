@@ -10,4 +10,8 @@ $(function(){
         location.href="/mission/" + missionSeq;
     });
 
+    $(".table .board-tr").on("click", function(){
+        var boardSeq = $(this).find("input[name=boardSeq]").val();
+        location.href = "/board/" + boardSeq;
+    });
 });

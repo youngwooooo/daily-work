@@ -194,9 +194,42 @@
     white-space: nowrap;
 }
 
-.mission-info-card-div .col-sm-12 .table tbody tr td:nth-child(2):hover {
+.mission-info-card-div .col-sm-12 .table tbody .board-tr:hover {
     cursor: pointer;
     background-color: #f9f9f9;
     font-weight: bold;
 }
+
+.mission-info-card-div .col-sm-12 .table .empty-board-desc-td {
+    height: 316px;
+}
+
+.mission-info-card-div .col-sm-12 .table .empty-board-desc {
+    position: relative;
+    top: 45%;
+    color: gray;
+}
+
+.mission-info-card-div .col-sm-12 .table .board-type {
+    padding: 5px 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.mission-info-card-div .col-sm-12 .table .normal {
+    color: white;
+    background-color: #343a40;
+}
+
+.mission-info-card-div .col-sm-12 .table .qa {
+    color: white;
+    background-color: #007bff;
+}
+
+.mission-info-card-div .col-sm-12 .table .pr {
+    color: white;
+    background-color: #ff5a5a;
+}
+
 

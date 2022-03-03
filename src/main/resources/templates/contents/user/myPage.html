@@ -63,21 +63,11 @@
                     <p>커뮤니티</p>
                     <ul>
                         <li>
-                            <a href="#">
+                            <a class="my-board" href="/user/mypage/my-board">
                                 <span>나의 게시글</span>
                             </a>
                         </li>
                     </ul>
-                </div>
-                <div class="my-mission-rating">
-                    <div class="mission-rate-info">
-                        <h4 class="card-title">미션 달성률</h4>
-                        <p>미션 달성률을 확인할 수 있어요!</p>
-                        <h4>50%</h4>
-                        <div class="mission-all-rating">
-                            <div class="mission-complete-rating"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- .user-info-card-div end -->
@@ -148,26 +138,39 @@
                     <div class="col-sm-12">
                         <table class="table">
                             <colgroup>
-                                <col width="100px;">
-                                <col width="auto;">
-                                <col width="200px;">
-                                <col width="100px;">
+                                <col width="100px">
+                                <col width="150px">
+                                <col width="auto">
+                                <col width="150px">
+                                <col width="150px">
                             </colgroup>
                             <thead>
                                 <tr>
                                     <th>번호</th>
+                                    <th>분류</th>
                                     <th>제목</th>
                                     <th>작성일</th>
-                                    <th>댓글</th>
+                                    <th>조회</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="num : ${#numbers.sequence(1, 10)}">
-                                <td th:text="${num}"></td>
-                                <td>안녕하세요. 미션 홍보합니다~</td>
-                                <td>2022-02-14</td>
-                                <td>20</td>
-                            </tr>
+                            <th:block th:if="${#lists.size(board) > 0}">
+                                <tr class="board-tr" th:each="b : ${board}">
+                                    <input type="hidden" name="boardSeq" th:value="${b.boardSeq}">
+                                    <td th:text="${b.boardSeq}">번호</td>
+                                    <td>
+                                        <span class="board-type" th:classappend="${b.boardType}" th:text="${b.boardTypeNm}">분류</span>
+                                    </td>
+                                    <td th:text="${b.boardNm}">제목</td>
+                                    <td th:text="${#temporals.format(b.insDtm, 'yyyy-MM-dd')}">작성일</td>
+                                    <td th:text="${b.viewCount}">조회</td>
+                                </tr>
+                            </th:block>
+                            <th:blcok th:unless="${#lists.size(board) > 0}">
+                                <td class="empty-board-desc-td" colspan="5">
+                                    <p class="empty-board-desc">최근에 작성한 게시글이 존재하지 않습니다.</p>
+                                </td>
+                            </th:blcok>
                             </tbody>
                         </table>
                     </div>
