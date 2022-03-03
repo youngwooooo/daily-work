@@ -2,6 +2,9 @@
     padding-right: 30px;
 }
 
+.row-wrapper {
+    min-height: 850px;
+}
 
  .user-info-card-div {
     border-right: 1px solid #dddddd;
@@ -141,8 +144,28 @@
 }
 
 .mission-info-card-div .col-sm-3 .mission {
+    position: relative;
     max-height: 316px;
     min-height: 316px;
+}
+
+.mission-info-card-div .col-sm-3 .mission .close-mission-div {
+    background: #343a40;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.mission-info-card-div .col-sm-3 .mission .close-mission-div p {
+    position: relative;
+    top: 40%;
+    text-align: center;
+    color: white;
+    background-color: #000000;
+    padding: 20px;
+    font-weight: bold;
+    margin: 0px;
 }
 
 .mission-info-card-div .col-sm-3 .mission:hover {

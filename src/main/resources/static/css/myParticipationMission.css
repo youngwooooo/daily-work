@@ -2,6 +2,9 @@
     padding-right: 30px;
 }
 
+.row-wrapper {
+    min-height: 850px;
+}
 
  .user-info-card-div {
     border-right: 1px solid #dddddd;
