@@ -19,6 +19,7 @@
         <input type="hidden" id="missionSeq" th:value="${mission.missionSeq}">
         <input type="hidden" id="autoAccessYn" th:value="${mission.autoAccessYn}">
         <input type="hidden" id="missionCreatedUserId" th:value="${mission.user.userId}">
+        <input type="hidden" id="closeYn" th:value="${mission.closeYn}">
 
         <div class="col-sm-3">
             <img id="mission-image" th:src="${mission.missionImage}">
@@ -34,16 +35,19 @@
                       th:text="${#temporals.format(mission.missionEndDt, 'yyyy-MM-dd HH:mm')}"></span>
                 <div class="mission-desc-div" th:utext="${mission.missionDesc}"></div>
                 <div style="display: flex">
-                    <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
-                    <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
-                    <button type="button" class="btn btn-light" id="btn-participants-management-modal"
-                            data-toggle="tooltip" title="미션 참여자 관리"><i class="fas fa-user-cog fa-2x"></i></button>
-                    <button type="button" class="btn btn-light" id="btn-modify-mission-form" data-toggle="tooltip"
-                            title="미션 수정"><i class="fas fa-edit fa-2x"></i></button>
+                    <th:block th:if="${#strings.equals(mission.closeYn, 'N')}">
+                        <button type="button" class="btn btn-primary" id="btn-join-mission-modal">미션 참여하기</button>
+                        <button type="button" class="btn btn-success" id="btn-secession-mission-modal">미션 탈퇴하기</button>
+                        <button type="button" class="btn btn-light" id="btn-participants-management-modal"
+                                data-toggle="tooltip" title="미션 참여자 관리"><i class="fas fa-user-cog fa-2x"></i></button>
+                        <button type="button" class="btn btn-light" id="btn-modify-mission-form" data-toggle="tooltip"
+                                title="미션 수정"><i class="fas fa-edit fa-2x"></i></button>
+                    </th:block>
                     <button type="button" class="btn btn-light" id="btn-delete-mission-modal" data-toggle="tooltip"
                             title="미션 삭제"><i class="fas fa-trash-alt fa-2x"></i></button>
                 </div>
             </div>
+
         </div>
 
     </div>
@@ -72,9 +76,11 @@
                     <span><i class="fas fa-check-circle" style="color: #00c700;"></i>&nbsp;승인</span>
                 </div>
                 <h4>미션 현황</h4>
-                <div class="mission-submit-btn-div">
-                    <button type="button" class="btn btn-primary" id="btn-mission-submit-modal">미션 제출</button>
-                </div>
+                <th:block th:if="${#strings.equals(mission.closeYn, 'N')}">
+                    <div class="mission-submit-btn-div">
+                        <button type="button" class="btn btn-primary" id="btn-mission-submit-modal">미션 제출</button>
+                    </div>
+                </th:block>
             </div>
 
             <br/>
@@ -504,7 +510,7 @@
         </div>
     </div>
 
-    <!-- 나의 미션 현황 상세 modal -->
+    <!-- 나의 제출 미션 상세 modal -->
     <div class="modal" id="my-submit-mission-modal">
         <input type="hidden" id="my-submittedMissionSeq">
         <input type="hidden" id="my-submittedMissionWeek">
@@ -528,7 +534,9 @@
                         <input type="text" class="form-control" id="my-rejectionDesc" readonly="readonly">
                     </div>
                     <div>
-                        <button type="button" class="btn btn-primary" id="btn-modify-my-submit-mission">수정</button>
+                        <th:block th:if="${#strings.equals(mission.closeYn, 'N')}">
+                            <button type="button" class="btn btn-primary" id="btn-modify-my-submit-mission">수정</button>
+                        </th:block>
                         <button type="button" class="btn btn-light" id="btn-cancel-my-submit-mission">닫기</button>
                     </div>
                 </div>

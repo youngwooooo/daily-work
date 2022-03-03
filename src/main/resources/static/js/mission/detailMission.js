@@ -698,10 +698,12 @@ $(function(){
                     $("#my-submit-mission-modal #my-submittedMissionNm").val(result.data.submittedMissionNm);
                     $("#my-submit-mission-modal #my-submittedMissionDesc").val(result.data.submittedMissionDesc);
                     $("#my-submit-mission-modal #my-submit-mission-image").attr("src", result.data.submittedMissionImage);
+                    $("#my-submit-mission-modal #my-closeYn").val(result.data.closeYn);
 
                     if(result.data.approvalYn == "Y"){
                         $("#my-submit-mission-modal #btn-modify-my-submit-mission").css("display", "none");
-                        $("#my-submit-mission-modal .my-submit-mission-image-div").css("cursor", "default");
+                        $("#my-submit-mission-modal #my-submittedMissionNm").attr("readonly", true);
+                        $("#my-submit-mission-modal #my-submittedMissionDesc").attr("readonly", true);
                     }
 
                     if(result.data.rejectionYn == "Y" && result.data.rejectionDesc != null){
@@ -722,9 +724,20 @@ $(function(){
 
     // 나의 제출 미션 modal - div 클릭 시
     $(".my-submit-mission-image-div").on("click", function(){
-        if($(this).parents("#my-submit-mission-modal").find("#my-approvalYn").val() != 'Y'){
-            $("#my-file").click();
+        if($("#closeYn").val() == 'N'){
+            if($(this).parents("#my-submit-mission-modal").find("#my-approvalYn").val() == 'N'){
+                $("#my-file").click();
+            }else {
+                var openImage = $(this).find("#my-submit-mission-image").attr("src");
+                $("#open-image-modal img").attr("src", openImage);
+                $("#open-image-modal").show();
+            }
+        }else {
+            var openImage = $(this).find("#my-submit-mission-image").attr("src");
+            $("#open-image-modal img").attr("src", openImage);
+            $("#open-image-modal").show();
         }
+
     });
 
     // 나의 제출 미션 modal -  미션 제출 이미지 변경 시 미리보기
