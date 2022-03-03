@@ -129,11 +129,13 @@ function modifyBoard(fileArr, fileSeqList){
     var boardNm = $("#boardNm").val();
     var boardDesc = CKEDITOR.instances.boardDesc.getData();
     var boardType = $(".table select").val();
+    var temporaryYn = $("#temporaryYn").val();
 
     var data = {
                      "boardNm" : boardNm
                     , "boardDesc" : boardDesc
                     , "boardType" : boardType
+                    , "temporaryYn" : temporaryYn
                 };
 
     var formData = new FormData();
