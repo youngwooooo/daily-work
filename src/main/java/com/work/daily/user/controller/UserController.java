@@ -1,5 +1,9 @@
 package com.work.daily.user.controller;
 
+import com.work.daily.board.dto.BoardTypeDto;
+import com.work.daily.board.dto.ResponseBoardDto;
+import com.work.daily.board.service.BoardService;
+import com.work.daily.board.service.BoardTypeService;
 import com.work.daily.login.auth.CustomUserDetails;
 import com.work.daily.mission.dto.ResponseMissionDto;
 import com.work.daily.mission.dto.ResponseMissionStateDto;
@@ -25,6 +29,8 @@ public class UserController {
 
     private final MissionService missionService;
     private final MissionStateService missionStateService;
+    private final BoardService boardService;
+    private final BoardTypeService boardTypeService;
 
     /**
      * 마이페이지 화면
@@ -39,9 +45,11 @@ public class UserController {
         // 최근 작성한 미션
         List<ResponseMissionDto> findLatelyCreatedMission = missionService.findLatelyCreatedMission(userId);
         // 최근 작성한 게시글
+        List<ResponseBoardDto> findBoardCountTen = boardService.findBoardCountTen(userId);
 
         model.addAttribute("participationMission", findLatelyParticipationMission);
         model.addAttribute("createdMission", findLatelyCreatedMission);
+        model.addAttribute("board", findBoardCountTen);
 
         return "contents/user/myPage";
     }
@@ -131,6 +139,48 @@ public class UserController {
         model.addAttribute("search", search);
 
         return "contents/user/myMissionState";
+    }
+
+    /**
+     * 마이페이지 - 나의 게시글
+     * @param customUserDetails
+     * @param pageable
+     * @param search
+     * @param category
+     * @param model
+     * @return
+     */
+    @GetMapping("/user/mypage/my-board")
+    public String myBoard(@AuthenticationPrincipal CustomUserDetails customUserDetails
+                            , @PageableDefault(size = 10) Pageable pageable
+                            , @RequestParam(required = false, defaultValue = "") String search
+                            , @RequestParam(required = false, defaultValue = "") String category
+                            ,Model model)
+    {
+        String userId = customUserDetails.getLoginUserDto().getUserId();
+
+        Page<ResponseBoardDto> findAllMyBoard = boardService.findAllMyBoard(pageable, search, category, userId);
+        List<BoardTypeDto> findAllBoardType = boardTypeService.findAllBoardType();
+
+        int firstPage = 1;  // 첫번째 페이지
+        int lastPage = findAllMyBoard.getTotalPages(); // 마지막 페이지(게시글 전체 개수)
+        int startPage = Math.max(firstPage + 1, findAllMyBoard.getPageable().getPageNumber() - 2); // 시작 페이지
+        int endPage = Math.min(lastPage - 1, findAllMyBoard.getPageable().getPageNumber() + 4);    // 끝 페이지
+        long totalCount = findAllMyBoard.getTotalElements();
+
+        model.addAttribute("board", findAllMyBoard);
+        model.addAttribute("boardType", findAllBoardType);
+
+        model.addAttribute("search", search);
+        model.addAttribute("category", category);
+
+        model.addAttribute("firstPage", firstPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("totalCount", totalCount);
+
+        return "contents/user/myBoard";
     }
 
     /**
