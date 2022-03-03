@@ -2,6 +2,10 @@ package com.work.daily.apiserver.mission;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
+import com.work.daily.domain.entity.Mission;
+import com.work.daily.domain.entity.MissionState;
+import com.work.daily.domain.repository.MissionRepository;
+import com.work.daily.domain.repository.MissionStateRepository;
 import com.work.daily.mission.dto.*;
 import com.work.daily.mission.service.MissionParticipantsService;
 import com.work.daily.mission.service.MissionService;
@@ -20,7 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -31,6 +38,9 @@ public class MissionApiController {
     private final MissionService missionService;
     private final MissionParticipantsService missionParticipantsService;
     private final MissionStateService missionStateService;
+
+    private final MissionRepository missionRepository;
+    private final MissionStateRepository missionStateRepository;
 
     /**
      * 전체 MISSION - 미션 만들기 - [등록]
@@ -319,10 +329,4 @@ public class MissionApiController {
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("제출 미션 수정이 완료되었습니다.").build(), HttpStatus.OK);
     }
 
-    // 테스트 용 api
-    @GetMapping("/mission/test")
-    public Page<ResponseMissionStateDto> test(@PageableDefault(size = 9) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search){
-        String userId = "googleUser0";
-        return missionStateService.findAllMyMissionState(userId, pageable, search);
-    }
 }

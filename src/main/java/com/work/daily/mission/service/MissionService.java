@@ -2,8 +2,10 @@ package com.work.daily.mission.service;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.domain.entity.Mission;
+import com.work.daily.domain.entity.MissionState;
 import com.work.daily.domain.repository.MissionParticipantsRepository;
 import com.work.daily.domain.repository.MissionRepository;
+import com.work.daily.domain.repository.MissionStateRepository;
 import com.work.daily.mission.dto.RequestMissionDto;
 import com.work.daily.mission.dto.RequestMissionParticipantsDto;
 import com.work.daily.mission.dto.ResponseMissionDto;
@@ -12,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +36,7 @@ public class MissionService {
 
     private final MissionRepository missionRepository;
     private final MissionParticipantsRepository missionParticipantsRepository;
+    private final MissionStateRepository missionStateRepository;
 
     @Value("${custom.path.mission-image}")
     private String missionUploadPath;
@@ -78,6 +80,7 @@ public class MissionService {
                                                 .temporaryYn(findMission.get().getTemporaryYn())
                                                 .reviewGrade(findMission.get().getReviewGrade())
                                                 .missionImage(findMission.get().getMissionImage())
+                                                .closeYn(findMission.get().getCloseYn())
                                                 .build();
 
         return findMissionToDto;
@@ -338,17 +341,26 @@ public class MissionService {
     }
 
     /**
-     * 마감여부 N -> Y로 변경
-     * @param now
+     * 미션 마감여부 N -> Y로 변경 후, 미션 현황 승인여부 N -> Y로 변경
+     * @param now : 스케쥴러의 실행 시간
      */
     @Transactional
-    public void closeMission(LocalDateTime now){
+    public void closeMissionAndMissionState(LocalDateTime now){
         List<Mission> findAllMissionForClose = missionRepository.findAllMissionForClose(now);
+        List<MissionState> findAllMissionStateForClose = null;
 
         if(findAllMissionForClose.size() > 0){
             for(Mission m : findAllMissionForClose){
                 m.modifyCloseYn();
+
+                findAllMissionStateForClose = missionStateRepository.findAllMissionStateForClose(m.getMissionSeq(), now);
+                if(findAllMissionStateForClose.size() > 0){
+                    for(MissionState ms : findAllMissionStateForClose){
+                        ms.modifyMissionStateApprovalYn(now);
+                    }
+                }
             }
         }
+
     }
 }
