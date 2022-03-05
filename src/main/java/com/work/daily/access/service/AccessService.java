@@ -32,10 +32,9 @@ public class AccessService {
 
         // userDto.getId()로 회원 찾기
         Optional<User> findUser = userRepository.findByUserId(joinUserDto.getUserId());
-
-        // 회원이 존재할 때
-        if(findUser.isPresent())
+        if(findUser.isPresent()){
             return ReturnResult.FAIL.getValue();
+        }
 
         joinUserDto.setUserPw(bCryptPasswordEncoder.encode(joinUserDto.getUserPw()));
         joinUserDto.setRole(UserRole.USER);
