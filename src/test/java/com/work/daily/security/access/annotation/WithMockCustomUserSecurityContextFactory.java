@@ -1,4 +1,4 @@
-package com.work.daily.access.security;
+package com.work.daily.security.access.annotation;
 
 import com.work.daily.login.auth.CustomUserDetails;
 import com.work.daily.login.dto.LoginUserDto;

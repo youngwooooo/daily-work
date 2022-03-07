@@ -1,4 +1,4 @@
-package com.work.daily.access.security;
+package com.work.daily.security.access.annotation;
 
 import com.work.daily.domain.UserRole;
 import org.springframework.security.test.context.support.WithSecurityContext;
