@@ -1,4 +1,4 @@
-package com.work.daily.access.controller;
+package com.work.daily.security.access.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.daily.access.ReturnResult;
@@ -6,9 +6,12 @@ import com.work.daily.access.dto.JoinUserDto;
 import com.work.daily.access.service.AccessService;
 import com.work.daily.apiserver.access.AccessApiController;
 import com.work.daily.config.SecurityConfig;
+import com.work.daily.domain.UserRole;
+import com.work.daily.domain.entity.User;
+import com.work.daily.domain.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,19 +19,26 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.AuthenticatedMatcher;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * AccessApiController 테스트
+ * @description @WebMvcTest 활용하여 AccessApiController의 return 값을 확인한다.
+ */
 @WebMvcTest(controllers = AccessApiController.class // 단순한 Controller 테스트를 위함
             , excludeFilters = {
                     @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)}) // Spring security 설정 제회
@@ -47,8 +57,8 @@ public class AccessApiControllerTest {
      * @throws Exception
      */
     @Test
-    @WithMockUser // Spring Security 권한 설정 : 302 에러를 막기 위함
-    @DisplayName("join() :: 회원가입")
+    @WithMockUser
+    @DisplayName("join() - 회원가입 Controller")
     public void join() throws Exception {
         /**
          * given
@@ -88,6 +98,5 @@ public class AccessApiControllerTest {
         verify(accessService).save(any(JoinUserDto.class));
 
     }
-
 
 }

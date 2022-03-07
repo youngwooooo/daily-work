@@ -1,7 +1,8 @@
-package com.work.daily.access.service;
+package com.work.daily.security.access.service;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.JoinUserDto;
+import com.work.daily.access.service.AccessService;
 import com.work.daily.domain.entity.User;
 import com.work.daily.domain.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +38,7 @@ public class AccessServiceTest {
      * @description save()의 로직 실행 후, 리턴받는 String 확인
      */
     @Test
-    @DisplayName("save() :: 회원가입")
+    @DisplayName("save() - 회원가입 Service")
     public void save(){
         // given
         JoinUserDto joinUserDto = JoinUserDto.builder()
