@@ -39,9 +39,6 @@ public class MissionApiController {
     private final MissionParticipantsService missionParticipantsService;
     private final MissionStateService missionStateService;
 
-    private final MissionRepository missionRepository;
-    private final MissionStateRepository missionStateRepository;
-
     /**
      * 전체 MISSION - 미션 만들기 - [등록]
      * @description 미션 생성

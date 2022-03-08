@@ -145,8 +145,6 @@ public class UserService {
         // 비밀번호 변경
         findUser.get().modifyPassword(hashPassword);
 
-        log.info("수정 시간 : " + findUser.get().getUpdDtm());
-
         return ReturnResult.SUCCESS.getValue();
     }
 

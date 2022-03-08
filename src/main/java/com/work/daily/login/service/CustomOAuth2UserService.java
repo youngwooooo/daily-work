@@ -34,6 +34,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     // google 로그인 시 받은 userRequest를 활용하여 강제 회원가입 처리
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        log.info("엑세스 토큰 : " + userRequest.getAccessToken().getTokenValue());
         log.info("로그인 진행 중인 서비스 정보 : " + userRequest.getClientRegistration());
         log.info("로그인한 사용자의 정보 : " + super.loadUser(userRequest).getAttributes());
 
