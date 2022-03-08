@@ -1,15 +1,15 @@
 package com.work.daily.user.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
+@Builder
 public class ModifyUserInfoDto {
 
     @NotBlank

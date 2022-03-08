@@ -1,17 +1,16 @@
 package com.work.daily.user.dto;
 
 import com.work.daily.domain.entity.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
+@Builder
 public class ModifyPasswordDto {
 
     @NotBlank
