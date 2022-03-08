@@ -29,6 +29,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -72,6 +73,10 @@ class UserControllerTest {
         mockMvc.perform(get("/user/mypage"))
                 .andExpect(status().isOk())
                 .andDo(print());
+
+        verify(missionService).findLatelyParticipationMission(anyString());
+        verify(missionService).findLatelyCreatedMission(anyString());
+        verify(boardService).findBoardCountTen(anyString());
     }
 
     @Test
@@ -89,6 +94,8 @@ class UserControllerTest {
         mockMvc.perform(get("/user/mypage/my-participation-mission"))
                 .andExpect(status().isOk())
                 .andDo(print());
+
+        verify(missionService).findAllLatelyParticipationMission(anyString(), eq(pageable), anyString());
     }
 
     @Test
@@ -108,6 +115,8 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
 
+        verify(missionService).findAllLatelyCreatedMission(anyString(), eq(pageable), anyString());
+
     }
 
     @Test
@@ -126,6 +135,8 @@ class UserControllerTest {
         mockMvc.perform(get("/user/mypage/my-mission-state"))
                 .andExpect(status().isOk())
                 .andDo(print());
+
+        verify(missionStateService).findAllMyMissionState(anyString(), eq(pageable), anyString());
     }
 
     @Test
@@ -153,6 +164,9 @@ class UserControllerTest {
         mockMvc.perform(get("/user/mypage/my-board"))
                 .andExpect(status().isOk())
                 .andDo(print());
+
+        verify(boardTypeService).findAllBoardType();
+        verify(boardService).findAllMyBoard(eq(pageable), anyString(), anyString(), anyString());
     }
 
     @Test
