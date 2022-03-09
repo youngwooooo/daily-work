@@ -2,19 +2,12 @@ package com.work.daily.apiserver.mission;
 
 import com.work.daily.access.ReturnResult;
 import com.work.daily.access.dto.ResponseDto;
-import com.work.daily.domain.entity.Mission;
-import com.work.daily.domain.entity.MissionState;
-import com.work.daily.domain.repository.MissionRepository;
-import com.work.daily.domain.repository.MissionStateRepository;
 import com.work.daily.mission.dto.*;
 import com.work.daily.mission.service.MissionParticipantsService;
 import com.work.daily.mission.service.MissionService;
 import com.work.daily.mission.service.MissionStateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -24,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
