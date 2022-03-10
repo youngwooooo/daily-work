@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -41,34 +42,27 @@ public class MissionRepositoryTest {
     @Autowired
     private MissionParticipantsRepository missionParticipantsRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @BeforeEach
     public void setup(){
-        // user
-        List<User> userList = new ArrayList<>();
-        for(long i=1; i<=2; i++){
-            User user = User.builder()
-                        .userId("user" + i)
-                        .userPw("user1234!")
-                        .userNm("유저" + i)
-                        .userEmail("master@gmail.com")
-                        .profileImage("profileImage" + i + ".png")
-                        .role(UserRole.USER)
-                        .build();
-
-            userList.add(user);
-        }
-        userRepository.saveAll(userList);
-        userRepository.flush();
+        User user1 = User.builder().userId("user1").userPw("user11234!").userNm("유저1").role(UserRole.USER).build();
+        User user2 = User.builder().userId("user2").userPw("user21234!").userNm("유저2").role(UserRole.USER).build();
+        User savedUser1 = userRepository.save(user1);
+        User savedUser2 = userRepository.save(user2);
 
         List<Mission> missionList = new ArrayList<>();
-        for(long i=1; i<=10; i++){
+        List<MissionParticipants> missionParticipantsList = new ArrayList<>();
+
+        for(int i=0; i<10; i++){
             Mission mission = Mission.builder()
-                    .missionNm(i + "번 미션")
-                    .missionDesc(i + "번 미션 내용")
-                    .user(User.builder().userSeq(1).userId("user1").userNm("유저1").build())
+                    .missionNm((i+1) + "번 미션")
+                    .missionDesc((i+1) + "번 미션 내용")
+                    .user(savedUser1)
                     .missionStDt(LocalDateTime.now().minusMonths(1))
                     .missionEndDt(LocalDateTime.now().minusDays(1))
-                    .missionImage("missionImage" + i + ".png")
+                    .missionImage("missionImage" + (i+1) + ".png")
                     .masterYn("Y")
                     .releaseYn("Y")
                     .autoAccessYn("Y")
@@ -78,23 +72,40 @@ public class MissionRepositoryTest {
                     .build();
 
             missionList.add(mission);
-        }
-        missionRepository.saveAll(missionList);
 
-        List<MissionParticipants> missionParticipantsList = new ArrayList<>();
-        for(long i=1; i<=10; i++){
+        }
+        List<Mission> savedMissions = missionRepository.saveAll(missionList);
+
+        for(int i=0; i<10; i++){
             MissionParticipants missionParticipants = MissionParticipants.builder()
-                                                        .missionSeq(i)
-                                                        .userSeq(2)
-                                                        .userId("user2")
-                                                        .missionJoinYn("Y")
-                                                        .missionJoinApprovalDt(LocalDateTime.now())
-                                                        .build();
+                    .missionSeq(savedMissions.get(i).getMissionSeq())
+                    .userSeq(savedUser2.getUserSeq())
+                    .userId(savedUser2.getUserId())
+                    .missionJoinYn("Y")
+                    .missionJoinApprovalDt(LocalDateTime.now())
+                    .user(user2)
+                    .build();
 
             missionParticipantsList.add(missionParticipants);
         }
 
-        missionParticipantsRepository.saveAll(missionParticipantsList);
+        List<MissionParticipants> savedParticipants =  missionParticipantsRepository.saveAll(missionParticipantsList);
+
+    }
+
+    /*
+        @DataJpaTest는 자동 트렌젝션 롤백이 된다.
+        하지만, User와 Mission의 @Id는 자동 증가 방식이 Sequence이기 때문에 1로 초기화 되지 않는다.
+        initSequence() : User, Mission의 Sequence를 롤백 시 1로 초기화
+     */
+    @AfterEach
+    public void initSequence(){
+        entityManager
+                .createNativeQuery("ALTER SEQUENCE USER_SEQ_INCREASE RESTART WITH 1")
+                .executeUpdate();
+        entityManager
+            .createNativeQuery("ALTER SEQUENCE MISSION_SEQ_INCREASE RESTART WITH 1")
+            .executeUpdate();
 
     }
 
@@ -116,16 +127,17 @@ public class MissionRepositoryTest {
 
     @Test
     @Order(2)
-    @DisplayName("미션 법호에 따른 미션 단건 조회")
+    @DisplayName("미션 법호에 따른 미션 단건(상세) 조회")
     public void findMission(){
         // given
-        Long missionSeq = 1L;
+        System.out.println("미션 개수 : " + missionRepository.findAll().size());
+        long missionSeq = 1;
 
         // when
         Optional<Mission> findMission = missionRepository.findMission(missionSeq);
 
         // then
-        assertThat(missionSeq).isEqualTo(findMission.get().getMissionSeq());
+        assertThat(findMission.get().getMissionSeq()).isEqualTo(missionSeq);
     }
 
     @Test
@@ -164,6 +176,10 @@ public class MissionRepositoryTest {
     @DisplayName("최근 작성한 미션 4건 조회")
     public void findLatelyCreatedMission(){
         // given
+        for(int i=0; i<missionRepository.findAll().size(); i++) {
+            System.out.println("미션번호 : " + missionRepository.findAll().get(i).getMissionSeq());
+        }
+
         String userId = "user1";
 
         // when
@@ -204,6 +220,5 @@ public class MissionRepositoryTest {
         // then
         assertThat(findAllMissionForClose.size()).isEqualTo(10);
     }
-
 
 }
