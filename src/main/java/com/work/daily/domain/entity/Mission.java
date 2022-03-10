@@ -28,7 +28,7 @@ public class Mission extends BaseTime {
     @Column(columnDefinition = "varchar(20) comment '미션번호'")
     private Long missionSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumns({
             @JoinColumn(name = "USER_SEQ"),
             @JoinColumn(name = "USER_ID")

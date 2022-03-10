@@ -25,7 +25,7 @@ public class MissionParticipants {
     @Id
     private long missionSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "missionSeq", insertable = false, updatable = false)
     @JsonBackReference
     private Mission mission;
@@ -36,7 +36,7 @@ public class MissionParticipants {
     @Id
     private String userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumns({
             @JoinColumn(name = "userSeq", insertable = false, updatable = false),
             @JoinColumn(name = "userId", insertable = false, updatable = false)
