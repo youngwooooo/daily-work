@@ -2,15 +2,14 @@ package com.work.daily.board.dto;
 
 import com.work.daily.domain.entity.Board;
 import com.work.daily.domain.entity.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RequestBoardDto {
 
     private User user;
