@@ -104,12 +104,12 @@ public class MissionService {
         // 미션종료일
         LocalDate missionEndDt = LocalDate.from(findMission.get().getMissionEndDt());
         // 총 미션 일수
-        long totalDateCont = ChronoUnit.DAYS.between(missionStDt, missionEndDt);
+        long totalDateCount = ChronoUnit.DAYS.between(missionStDt, missionEndDt);
 
         // 미션시작일 ~ 미션종료일 사이의 모든 날짜를 담을 Array
         List<LocalDate> allDateList = new ArrayList<>();
         // 미션시작일 ~ 미션종료일 사이의 모든 날짜 allDateList에 담기
-        for(int i = 0; i <= totalDateCont; i++){
+        for(int i = 0; i < totalDateCount; i++){
             // 날짜
             LocalDate date = missionStDt.plusDays(i);
             allDateList.add(date);
@@ -158,6 +158,7 @@ public class MissionService {
      */
     @Transactional
     public String save(RequestMissionDto requestMissionDto, MultipartFile file) throws IOException {
+        log.info("dto : " + requestMissionDto.toString());
         // 대표 이미지가 존재하지 않을 때
         if(file == null){
             requestMissionDto.setMissionImage("/img/common/basic_mission.jpg");
@@ -185,7 +186,6 @@ public class MissionService {
 
         // 생성된 미션 번호
         Long missionSeq = savedMission.getMissionSeq();
-        log.info("생성 후 조회한 미션 번호 : " + missionSeq);
 
         // 업로드될 폴더 생성
         File uploadFolder = new File(missionUploadPath + missionSeq);
