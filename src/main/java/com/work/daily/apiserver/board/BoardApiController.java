@@ -89,6 +89,23 @@ public class BoardApiController {
     }
 
     /**
+     * 마이페이지 - 나의 게시글 - 게시글 삭제
+     * @description 선택된 게시글들의 삭제여부를 N으로 변경
+     * @param boardSeqList
+     * @return
+     */
+    @DeleteMapping("/board")
+    public ResponseEntity<ResponseDto> deleteMultipleBoard(@RequestBody List<Long> boardSeqList){
+        String result = boardService.deleteMultiple(boardSeqList);
+
+        if(!ReturnResult.SUCCESS.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message(boardSeqList.size() + "건의 게시글 삭제가 완료되었습니다.").build(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message(boardSeqList.size() + "건의 게시글 삭제가 완료되었습니다.").build(), HttpStatus.OK);
+    }
+
+    /**
      * 댓글/답글 등록
      * @param requestBoardCommentDto
      * @return
@@ -138,20 +155,4 @@ public class BoardApiController {
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message("댓글/답글 삭제가 완료되었습니다.").build(), HttpStatus.OK);
     }
 
-    /**
-     * 마이페이지 - 나의 게시글 - 게시글 삭제
-     * @description 선택된 게시글들의 삭제여부를 N으로 변경
-     * @param boardSeqList
-     * @return
-     */
-    @DeleteMapping("/board")
-    public ResponseEntity<ResponseDto> deleteMultipleBoard(@RequestBody List<Long> boardSeqList){
-        String result = boardService.deleteMultiple(boardSeqList);
-
-        if(!ReturnResult.SUCCESS.getValue().equals(result)){
-            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message(boardSeqList.size() + "건의 게시글 삭제가 완료되었습니다.").build(), HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.OK.value()).data(result).message(boardSeqList.size() + "건의 게시글 삭제가 완료되었습니다.").build(), HttpStatus.OK);
-    }
 }
