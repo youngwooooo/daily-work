@@ -58,62 +58,24 @@ class MissionApiControllerTest {
     @MockBean
     private MissionStateService missionStateService;
 
-    private static RequestMissionDto requestMissionDto;
-    private static RequestMissionParticipantsDto requestMissionParticipantsDto;
-    private static ResponseMissionParticipantsDto responseMissionParticipantsDto;
-    private static ResponseMissionStateDto responseMissionStateDto;
-
-    @BeforeAll
-    public static void setup(){
-        requestMissionDto = RequestMissionDto.builder()
-                                .user(User.builder().userSeq(1L).userId("writeUser").userNm("작성자").build())
-                                .missionNm("미션제목")
-                                .missionDesc("미션내용")
-                                .missionStDt(LocalDateTime.now())
-                                .missionEndDt(LocalDateTime.now().plusMonths(1))
-                                .releaseYn("Y")
-                                .autoAccessYn("Y")
-                                .masterYn("Y")
-                                .delYn("N")
-                                .temporaryYn("N")
-                                .build();
-
-        requestMissionParticipantsDto = RequestMissionParticipantsDto.builder()
-                                        .missionSeq(1L)
-                                        .userSeq(1L)
-                                        .userId("testUser")
-                                        .build();
-
-        responseMissionParticipantsDto = ResponseMissionParticipantsDto.builder()
-                                            .missionSeq(1L)
-                                            .user(User.builder().userSeq(1L).userId("testUser").userNm("작성자").build())
-                                            .missionJoinDt(LocalDateTime.now())
-                                            .missionJoinYn("Y")
-                                            .missionJoinApprovalDt(LocalDateTime.now())
-                                            .build();
-
-        responseMissionStateDto = ResponseMissionStateDto.builder()
-                                    .missionStateSeq(1L)
-                                    .missionStateWeek(1L)
-                                    .missionSeq(1L)
-                                    .userSeq(1L)
-                                    .userId("participantUser")
-                                    .submittedMissionNm("제출미션명")
-                                    .submittedMissionDesc("제출미션설명")
-                                    .submittedMissionImage("submittedMissionImage.png")
-                                    .submittedMissionDt(LocalDateTime.now())
-                                    .approvalYn("Y")
-                                    .approvalDt(LocalDateTime.now().plusDays(1))
-                                    .build();
-
-    }
-
     @Test
     @Order(1)
     @WithMockCustomUser
     @DisplayName("미션 만들기")
     public void createMission() throws Exception {
         // given
+        RequestMissionDto requestMissionDto = RequestMissionDto.builder()
+                                                .user(User.builder().userSeq(1L).userId("writeUser").userNm("작성자").build())
+                                                .missionNm("미션제목")
+                                                .missionDesc("미션내용")
+                                                .missionStDt(LocalDateTime.now())
+                                                .missionEndDt(LocalDateTime.now().plusMonths(1))
+                                                .releaseYn("Y")
+                                                .autoAccessYn("Y")
+                                                .masterYn("Y")
+                                                .delYn("N")
+                                                .temporaryYn("N")
+                                                .build();
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(requestMissionDto);
         MockMultipartFile requestMissionDtoJson = new MockMultipartFile("requestMissionDto", "jsonData", MediaType.APPLICATION_JSON_VALUE, content.getBytes(StandardCharsets.UTF_8));
 
@@ -141,6 +103,18 @@ class MissionApiControllerTest {
     @DisplayName("미션 수정")
     public void modifyMission() throws Exception {
         // given
+        RequestMissionDto requestMissionDto = RequestMissionDto.builder()
+                                                .user(User.builder().userSeq(1L).userId("writeUser").userNm("작성자").build())
+                                                .missionNm("미션제목")
+                                                .missionDesc("미션내용")
+                                                .missionStDt(LocalDateTime.now())
+                                                .missionEndDt(LocalDateTime.now().plusMonths(1))
+                                                .releaseYn("Y")
+                                                .autoAccessYn("Y")
+                                                .masterYn("Y")
+                                                .delYn("N")
+                                                .temporaryYn("N")
+                                                .build();
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(requestMissionDto);
         MockMultipartFile requestMissionDtoJson = new MockMultipartFile("requestMissionDto", "jsonData", MediaType.APPLICATION_JSON_VALUE, content.getBytes(StandardCharsets.UTF_8));
 
@@ -195,6 +169,11 @@ class MissionApiControllerTest {
     @DisplayName("미션 참여")
     public void joinMission() throws Exception {
         // given
+        RequestMissionParticipantsDto requestMissionParticipantsDto = RequestMissionParticipantsDto.builder()
+                                                                        .missionSeq(1L)
+                                                                        .userSeq(1L)
+                                                                        .userId("testUser")
+                                                                        .build();
         String content = new ObjectMapper().writeValueAsString(requestMissionParticipantsDto);
         given(missionParticipantsService.joinMission(any(RequestMissionParticipantsDto.class))).willReturn(ReturnResult.SUCCESS.getValue());
 
@@ -217,6 +196,11 @@ class MissionApiControllerTest {
     @DisplayName("미션 탈퇴")
     public void secessionMission() throws Exception {
         // given
+        RequestMissionParticipantsDto requestMissionParticipantsDto = RequestMissionParticipantsDto.builder()
+                                                                        .missionSeq(1L)
+                                                                        .userSeq(1L)
+                                                                        .userId("testUser")
+                                                                        .build();
         String content = new ObjectMapper().writeValueAsString(requestMissionParticipantsDto);
         given(missionParticipantsService.secessionMission(any(RequestMissionParticipantsDto.class))).willReturn(ReturnResult.SUCCESS.getValue());
 
@@ -238,7 +222,22 @@ class MissionApiControllerTest {
     @DisplayName("미션 참여자 승인")
     public void approveParticipants() throws Exception {
         // given
+        RequestMissionParticipantsDto requestMissionParticipantsDto = RequestMissionParticipantsDto.builder()
+                                                                        .missionSeq(1L)
+                                                                        .userSeq(1L)
+                                                                        .userId("testUser")
+                                                                        .build();
+
         String content = new ObjectMapper().writeValueAsString(requestMissionParticipantsDto);
+
+        ResponseMissionParticipantsDto responseMissionParticipantsDto = ResponseMissionParticipantsDto.builder()
+                                                                            .missionSeq(1L)
+                                                                            .user(User.builder().userSeq(1L).userId("testUser").userNm("작성자").build())
+                                                                            .missionJoinDt(LocalDateTime.now())
+                                                                            .missionJoinYn("Y")
+                                                                            .missionJoinApprovalDt(LocalDateTime.now())
+                                                                            .build();
+
         given(missionParticipantsService.approveParticipants(any(RequestMissionParticipantsDto.class))).willReturn(responseMissionParticipantsDto);
 
         mockMvc.perform(patch("/mission/1/approve-participants")
@@ -260,7 +259,22 @@ class MissionApiControllerTest {
     @DisplayName("미션 참여자 강퇴")
     public void expulsionParticipants() throws Exception {
         // given
+        RequestMissionParticipantsDto requestMissionParticipantsDto = RequestMissionParticipantsDto.builder()
+                                                                            .missionSeq(1L)
+                                                                            .userSeq(1L)
+                                                                            .userId("testUser")
+                                                                            .build();
+
         String content = new ObjectMapper().writeValueAsString(requestMissionParticipantsDto);
+
+        ResponseMissionParticipantsDto responseMissionParticipantsDto = ResponseMissionParticipantsDto.builder()
+                                                                            .missionSeq(1L)
+                                                                            .user(User.builder().userSeq(1L).userId("testUser").userNm("작성자").build())
+                                                                            .missionJoinDt(LocalDateTime.now())
+                                                                            .missionJoinYn("Y")
+                                                                            .missionJoinApprovalDt(LocalDateTime.now())
+                                                                            .build();
+
         given(missionParticipantsService.expulsionParticipants(any(RequestMissionParticipantsDto.class))).willReturn(responseMissionParticipantsDto);
 
         // when & then
@@ -322,6 +336,20 @@ class MissionApiControllerTest {
     @DisplayName("미션 현황(제출 미션) 상세 조회")
     public void detailMissionState() throws Exception {
         // given
+        ResponseMissionStateDto responseMissionStateDto = ResponseMissionStateDto.builder()
+                                                            .missionStateSeq(1L)
+                                                            .missionStateWeek(1L)
+                                                            .missionSeq(1L)
+                                                            .userSeq(1L)
+                                                            .userId("participantUser")
+                                                            .submittedMissionNm("제출미션명")
+                                                            .submittedMissionDesc("제출미션설명")
+                                                            .submittedMissionImage("submittedMissionImage.png")
+                                                            .submittedMissionDt(LocalDateTime.now())
+                                                            .approvalYn("Y")
+                                                            .approvalDt(LocalDateTime.now().plusDays(1))
+                                                            .build();
+
         given(missionStateService.findOneMissionState(anyLong(), anyLong())).willReturn(responseMissionStateDto);
 
         // when & then
