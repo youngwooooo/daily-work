@@ -28,7 +28,7 @@ public class Mission extends BaseTime {
     @Column(columnDefinition = "varchar(20) comment '미션번호'")
     private Long missionSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "USER_SEQ"),
             @JoinColumn(name = "USER_ID")
@@ -61,9 +61,6 @@ public class Mission extends BaseTime {
 
     @Column(columnDefinition = "varchar(10) comment '임시여부'")
     private String temporaryYn;
-
-    @Column(columnDefinition = "varchar(60) comment '미션만족도'")
-    private String reviewGrade;
 
     @Column(columnDefinition = "varchar(200) comment '미션이미지'")
     private String missionImage;

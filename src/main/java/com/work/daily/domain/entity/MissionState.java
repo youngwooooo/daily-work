@@ -27,7 +27,7 @@ public class MissionState {
     @Id
     private long missionStateWeek;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumns({
             @JoinColumn(name = "MISSION_SEQ" , referencedColumnName = "missionSeq"),
