@@ -28,7 +28,6 @@ import java.nio.file.Paths;
 @Slf4j
 public class BoardFileApiController {
 
-    private final ResourceLoader resourceLoader;
     private final BoardFileService boardFileService;
 
     @Value("${custom.path.board-file}")
