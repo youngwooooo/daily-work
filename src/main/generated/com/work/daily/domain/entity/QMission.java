@@ -54,8 +54,6 @@ public class QMission extends EntityPathBase<Mission> {
 
     public final StringPath releaseYn = createString("releaseYn");
 
-    public final StringPath reviewGrade = createString("reviewGrade");
-
     public final StringPath temporaryYn = createString("temporaryYn");
 
     //inherited
