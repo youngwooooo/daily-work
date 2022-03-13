@@ -19,6 +19,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @AutoConfigureTestDatabase(replace = Replace.ANY)
 @Import(TestConfig.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("UserRepository :: 단위 테스트")
 public class UserRepositoryTest {
 
     @Autowired

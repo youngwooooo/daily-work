@@ -40,6 +40,7 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("MissionService :: 단위 테스트")
 public class MissionServiceTest {
     private final Logger log = LoggerFactory.getLogger(MissionServiceTest.class);
 

@@ -22,6 +22,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("AccessService :: 단위 테스트")
 public class AccessServiceTest {
 
     @Mock

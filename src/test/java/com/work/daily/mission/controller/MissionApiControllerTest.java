@@ -44,6 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         , excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 @MockBean(JpaMetamodelMappingContext.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("MissionApiController :: 단위 테스트")
 class MissionApiControllerTest {
 
     @Autowired

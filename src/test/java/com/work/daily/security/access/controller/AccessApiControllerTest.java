@@ -43,6 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             , excludeFilters = {
                     @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)}) // Spring security 설정 제회
 @MockBean(JpaMetamodelMappingContext.class) // @EnableJpaAuditing를 인식하도록 함
+@DisplayName("AccessApiController :: 단위 테스트")
 public class AccessApiControllerTest {
 
     @Autowired

@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
  */
 @SpringBootTest
 @AutoConfigureMockMvc
+@DisplayName("Spring Security Login :: 단위 테스트")
 public class SecurityLoginTest {
 
     @Autowired

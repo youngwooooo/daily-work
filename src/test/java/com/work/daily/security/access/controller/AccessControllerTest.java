@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = AccessController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("AccessController :: 단위 테스트")
 public class AccessControllerTest {
 
     @Autowired

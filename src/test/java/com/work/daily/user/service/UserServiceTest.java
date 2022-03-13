@@ -27,6 +27,7 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("UserService :: 단위 테스트")
 public class UserServiceTest {
 
     @Spy

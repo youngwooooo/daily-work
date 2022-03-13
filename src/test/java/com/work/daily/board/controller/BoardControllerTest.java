@@ -37,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
             , excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class))
 @MockBean(JpaMetamodelMappingContext.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("BoardController :: 단위 테스트")
 public class BoardControllerTest {
 
     @Autowired

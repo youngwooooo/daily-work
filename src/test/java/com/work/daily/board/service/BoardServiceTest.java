@@ -35,6 +35,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("BoardService :: 단위 테스트")
 public class BoardServiceTest {
 
     private final Logger log = LoggerFactory.getLogger(BoardServiceTest.class);
