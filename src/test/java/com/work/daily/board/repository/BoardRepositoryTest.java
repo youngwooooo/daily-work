@@ -104,16 +104,13 @@ public class BoardRepositoryTest {
             boardList.add(board);
         }
         List<Board> savedBoardList = boardRepository.saveAll(boardList);
-        System.out.println("#########################################################");
-        for(int i=0; i<savedBoardList.size(); i++){
-            System.out.println("생성된 게시글 번호 : " + savedBoardList.get(i).getBoardSeq());
-        }
-        System.out.println("#########################################################");
-
     }
 
     @AfterEach
     public void initSequence(){
+        entityManager
+                .createNativeQuery("ALTER SEQUENCE USER_SEQ_INCREASE RESTART WITH 1")
+                .executeUpdate();
         entityManager
                 .createNativeQuery("ALTER SEQUENCE BOARD_SEQ_INCREASE RESTART WITH 1")
                 .executeUpdate();
