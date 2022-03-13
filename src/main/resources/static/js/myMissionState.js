@@ -1,4 +1,7 @@
 $(function(){
+    $("#btn-move-mypage-form").on("click", function(){
+        location.href = "/user/my-account";
+    });
 
     $(".card").on("click", function(){
         var missionStateSeq = $(this).find("input[name='missionStateSeq']").val();

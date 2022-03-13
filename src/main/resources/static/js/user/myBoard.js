@@ -1,4 +1,7 @@
 $(function(){
+    $("#btn-move-mypage-form").on("click", function(){
+        location.href = "/user/my-account";
+    });
 
     // 삭제할 boardSeq를 담을 Array
     var boardSeqArr = new Array();
