@@ -5,9 +5,15 @@ $(function(){
         location.href = "/user/my-account";
     });
 
-    $(".card").on("click", function(){
+    $(".mission-info-card-div .card").on("click", function(){
         var missionSeq = $(this).find("input[name='missionSeq']").val();
-        location.href="/mission/" + missionSeq;
+        var temporaryYn = $(this).find("input[name='temporaryYn']").val();
+
+        if(temporaryYn == "Y"){
+            location.href="/mission/" + missionSeq + "/modify";
+        }else {
+            location.href="/mission/" + missionSeq;
+        }
     });
 
     $(".table .board-tr").on("click", function(){
