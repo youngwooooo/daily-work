@@ -13,12 +13,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@SequenceGenerator(
+        name = "BOARD_COMMENT_SEQ_INCREASE",
+        sequenceName = "BOARD_COMMENT_SEQ_INCREASE", // 시퀸스 명
+        initialValue = 1, // 초기 값
+        allocationSize = 1 // 미리 할당 받을 시퀸스 수
+)
 @Entity
 @Table(name = "TB_BOARD_COMMENT")
 public class BoardComment extends BaseTime {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_COMMENT_SEQ_INCREASE")
     @Column(columnDefinition = "varchar(20) comment '댓글번호'")
     private long commentSeq;
 
