@@ -22,6 +22,7 @@ header #profile-menu {
 
 header .menu-right .nav-item .profile-image-icon img {
     width: 35px;
+    height: 35px;
     border-radius: 50%;
 }
 
@@ -37,6 +38,7 @@ header .menu-right .nav-item #profile-menu .menu-user-info-div {
 
 header .menu-right .nav-item #profile-menu .menu-user-info-div img {
     width: 50px;
+    height: 50px;
     border-radius: 50%;
 }
 
