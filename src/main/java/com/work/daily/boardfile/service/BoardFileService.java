@@ -124,7 +124,6 @@ public class BoardFileService {
             Optional<BoardFile> findBoardFile = boardFileRepository.findById(fileSeqList.get(i));
 
             File file = new File(boardFileUploadPath + findBoardFile.get().getBoard().getBoardSeq() + "/" + findBoardFile.get().getFileServerNm());
-            log.info("삭제될 파일 이름 : " + file.toString());
             if(file.exists()){
                 file.delete();
             }
