@@ -107,7 +107,9 @@ public class MissionRepositoryTest {
         entityManager
             .createNativeQuery("ALTER SEQUENCE MISSION_SEQ_INCREASE RESTART WITH 1")
             .executeUpdate();
-
+        entityManager
+                .createNativeQuery("ALTER SEQUENCE MISSION_STATE_SEQ_INCREASE RESTART WITH 1")
+                .executeUpdate();
     }
 
     @Test
