@@ -78,7 +78,6 @@ public class MissionService {
                                                 .masterYn(findMission.get().getMasterYn())
                                                 .delYn(findMission.get().getDelYn())
                                                 .temporaryYn(findMission.get().getTemporaryYn())
-                                                .reviewGrade(findMission.get().getReviewGrade())
                                                 .missionImage(findMission.get().getMissionImage())
                                                 .closeYn(findMission.get().getCloseYn())
                                                 .build();

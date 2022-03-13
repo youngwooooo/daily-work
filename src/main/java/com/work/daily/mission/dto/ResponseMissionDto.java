@@ -42,7 +42,6 @@ public class ResponseMissionDto {
         this.masterYn = mission.getMasterYn();
         this.delYn = mission.getDelYn();
         this.temporaryYn = mission.getTemporaryYn();
-        this.reviewGrade = mission.getReviewGrade();
         this.missionImage = mission.getMissionImage();
         this.closeYn = mission.getCloseYn();
     }
@@ -60,7 +59,6 @@ public class ResponseMissionDto {
                 .masterYn(mission.getMasterYn())
                 .delYn(mission.getDelYn())
                 .temporaryYn(mission.getTemporaryYn())
-                .reviewGrade(mission.getReviewGrade())
                 .missionImage(mission.getMissionImage())
                 .closeYn(mission.getCloseYn())
                 .build();
