@@ -21,20 +21,15 @@ public class User extends BaseTime  {
     private long userSeq;
 
     @Id
-    @NotNull
     private String userId;
 
-    // @Column(nullable = false)
-    @NotNull
     private String userPw;
 
-    @NotNull
     private String userNm;
 
     private String userEmail;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     private UserRole role;
 
     private String provider;
