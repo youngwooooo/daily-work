@@ -68,7 +68,7 @@ $(function(){
             var autoAccessYn = $("input[name='autoAccessYn']:checked").val();   // 자동참여 여부
             var masterYn = $("#find-masterYn").val(); // 방장 여부
             var delYn = $("#find-delYn").val();    // 삭제 여부
-            var temporaryYn = $("#find-temporaryYn").val();
+            var temporaryYn = "N";
 
             var missionImage = $("#file")[0].files[0];  // 대표 이미지
             var data = null;
