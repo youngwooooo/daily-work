@@ -96,6 +96,7 @@
                         <div class="col-sm-3">
                             <div class="card mission">
                                 <input type="hidden" name="missionSeq" th:value="${cm.missionSeq}">
+                                <input type="hidden" name="temporaryYn" th:value="${cm.temporaryYn}">
                                 <img class="card-img-top" th:src="${cm.missionImage}" alt="mission-image">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${cm.missionNm}">미션 제목</h5>
