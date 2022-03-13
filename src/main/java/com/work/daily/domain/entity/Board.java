@@ -16,6 +16,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@SequenceGenerator(
+        name = "BOARD_SEQ_INCREASE",
+        sequenceName = "BOARD_SEQ_INCREASE", // 시퀸스 명
+        initialValue = 1, // 초기 값
+        allocationSize = 1 // 미리 할당 받을 시퀸스 수
+)
 @Entity
 @Table(name = "TB_BOARD_INFO")
 public class Board extends BaseTime{
