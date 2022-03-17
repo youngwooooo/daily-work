@@ -72,7 +72,7 @@
 
 ---
 
-![4.홈(미션).PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9175e528-6500-446a-ae94-bc8b50097d74/4.홈(미션).png)
+![4 홈(미션)](https://user-images.githubusercontent.com/80368534/158803679-3731f196-b4cc-496c-b4ff-12a3916effbc.PNG)
 
 ---
 
@@ -88,7 +88,7 @@
 
 ---
 
-![미션 등록.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f9bd4f36-2a7d-4211-824f-7758bcc69c35/미션_등록.png)
+![미션 등록](https://user-images.githubusercontent.com/80368534/158803761-9ce8e538-94ae-4b06-a048-92c8ca8af4b7.PNG)
 
 ---
 
@@ -106,18 +106,18 @@
 
 ---
 
-![5.미션상세조회-미션생성자.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8d029f2b-b366-4169-a549-d681b0b62dac/5.미션상세조회-미션생성자.png)
+![5 미션상세조회-미션생성자](https://user-images.githubusercontent.com/80368534/158803803-211e980c-bc4e-434e-a844-5f4f9c9ebbf4.PNG)
 
-![5.미션상세조회-미션생성자-미션참여자관리.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/eff3b919-2567-481a-8d5f-33b0d9326575/5.미션상세조회-미션생성자-미션참여자관리.png)
+![5 미션상세조회-미션생성자-미션참여자관리](https://user-images.githubusercontent.com/80368534/158803849-6b55b8d3-16ce-4626-9674-6073310693d2.PNG)
 
-![5.미션상세조회-미션생성자-미션삭제(복사).PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d296e495-b2fe-4dca-8f78-37cad12d6c70/5.미션상세조회-미션생성자-미션삭제(복사).png)
+![5 미션상세조회-미션생성자-미션삭제](https://user-images.githubusercontent.com/80368534/158803918-f8b8dae3-1e86-4f0a-8c93-858f99d2a9f0.PNG)
 
 > 제출된 미션을 승인 및 반려를 할 수 있습니다.
 > 
 
 ---
 
-![5.미션상세조회-미션생성자-승인대기미션.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fd93a0dc-2fa7-4efd-812a-63393eabf970/5.미션상세조회-미션생성자-승인대기미션.png)
+![5 미션상세조회-미션생성자-승인대기미션](https://user-images.githubusercontent.com/80368534/158803966-72c2539d-889e-4825-b838-59680c142a93.PNG)
 
 ---
 
@@ -134,11 +134,11 @@
 
 ---
 
-![5.미션상세조회-미션현황.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f28794fc-7da3-46a2-9858-63f10810db51/5.미션상세조회-미션현황.png)
+![5 미션상세조회-미션현황](https://user-images.githubusercontent.com/80368534/158804039-6255e526-d802-4319-812e-8d040eb63ead.PNG)
 
-![미션현황3.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/90e5eab8-9294-40ad-a58f-70c6c484c347/미션현황3.png)
+![미션현황3](https://user-images.githubusercontent.com/80368534/158804072-e0ffb662-552e-4183-a7ab-a51c4c8af445.PNG)
 
-![5.미션상세조회-미션현황-2.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b9847b2e-3552-49cf-b893-26238585cc8a/5.미션상세조회-미션현황-2.png)
+![5 미션상세조회-미션현황-2](https://user-images.githubusercontent.com/80368534/158804166-9b3242bc-ec5b-4341-bb03-05c660c7a9ee.PNG)
 
 > 미션현황을 작성할 수 있습니다.
 > 
@@ -148,9 +148,9 @@
 
 ---
 
-![5.미션상세조회-미션제출(복사).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b0fefff3-554c-453e-b2ed-962f77b344e7/5.미션상세조회-미션제출(복사).png)
+![5 미션상세조회-미션제출](https://user-images.githubusercontent.com/80368534/158804264-3f554a89-dd2d-46c6-81a0-1025ebdfd6fb.PNG)
 
-![5.미션상세조회-나의제출미션(복사).PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/275f4b85-16d3-45d7-8757-e521c128cb47/5.미션상세조회-나의제출미션(복사).png)
+![5 미션상세조회-나의제출미션](https://user-images.githubusercontent.com/80368534/158804331-ee3fb47a-edbd-4d23-bfd0-026961bbbc35.PNG)
 
 ---
 
