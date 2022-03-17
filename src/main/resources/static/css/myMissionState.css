@@ -225,6 +225,10 @@
     color: white;
 }
 
+#missionState-modal {
+    background-color:rgba(0,0,0,.3);
+}
+
  #missionState-modal input, #missionState-modal textarea {
     border: none;
     background-color: white;
