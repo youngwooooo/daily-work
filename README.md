@@ -381,7 +381,7 @@ http.authorizeRequests()
 
 ---
 
-![oauth2 인증 과정.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8022b51a-61c0-467e-824e-1426662d3cf8/oauth2_인증_과정.png)
+![oauth2 인증 과정](https://user-images.githubusercontent.com/80368534/158811955-55b8ad84-c6a4-4cc5-879d-11e06ab39e12.PNG)
 
 # 4. Spring Data JPA & QueryDSL
 
