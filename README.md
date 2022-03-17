@@ -178,7 +178,7 @@
 
 ---
 
-![게시글 등록.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1e8862de-74f5-46e7-9ec8-9541cbd9472c/게시글_등록.png)
+![게시글 등록](https://user-images.githubusercontent.com/80368534/158810942-336e4fb2-b4ca-48be-9014-56d3e7d0e840.PNG)
 
 ---
 
@@ -194,7 +194,7 @@
 
 ---
 
-![7.게시글 상세 조회.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d0963edf-3324-4ab3-b958-cade9e07aeb4/7.게시글_상세_조회.png)
+![7 게시글 상세 조회](https://user-images.githubusercontent.com/80368534/158811015-05d61fab-8307-4fd0-b585-2d6d8bdfcaba.PNG)
 
 > **게시글 작성자**는 게시글 수정 및 삭제를 할 수 있습니다.
 > 
@@ -204,9 +204,9 @@
 
 ---
 
-![7.게시글 상세 조회-게시글 삭제.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7b40ba3d-a060-420a-9237-8b99f2ff52ed/7.게시글_상세_조회-게시글_삭제.png)
+![7 게시글 상세 조회-게시글 삭제](https://user-images.githubusercontent.com/80368534/158811045-d7de18be-02f0-4b6b-86bd-a2425f08c80d.PNG)
 
-![7.게시글 상세 조회-댓글 삭제.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f8d895d8-4e35-4c6f-aa5f-a7e86477c116/7.게시글_상세_조회-댓글_삭제.png)
+![7 게시글 상세 조회-댓글 삭제](https://user-images.githubusercontent.com/80368534/158811063-66c23f5c-455b-44e5-b667-275e8a1bd3a8.PNG)
 
 ---
 
@@ -220,7 +220,7 @@
 
 ---
 
-![7.마이페이지.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e0ac33b4-a216-4de2-9aed-9ec01c10f372/7.마이페이지.png)
+![7 마이페이지](https://user-images.githubusercontent.com/80368534/158811147-98ff0514-b668-4f4e-851c-76c4dc618a1c.PNG)
 
 ---
 
@@ -246,9 +246,9 @@
 
 ---
 
-![7.마이페이지-나의미션현황(복사).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/df6a451a-152a-4a0e-b472-24fcafb82210/7.마이페이지-나의미션현황(복사).png)
+![7 마이페이지-나의참여미션](https://user-images.githubusercontent.com/80368534/158811195-d46f4b58-0316-4857-8532-99a753c2561e.PNG)
 
-![7.마이페이지-나의미션현황2(복사).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/55071540-73bc-484f-915b-5cdcb8326df8/7.마이페이지-나의미션현황2(복사).png)
+![7 마이페이지-나의작성미션](https://user-images.githubusercontent.com/80368534/158811206-c854bfc3-2e9e-48dd-9825-b688909feefd.PNG)
 
 ---
 
@@ -260,9 +260,9 @@
 
 ---
 
-![7.마이페이지-나의게시글.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a2f8a004-0974-47ca-914e-45493688af49/7.마이페이지-나의게시글.png)
+![7 마이페이지-나의게시글](https://user-images.githubusercontent.com/80368534/158811352-14874d6f-3838-4b6f-af02-dacfbe3d4a92.PNG)
 
-![7.마이페이지-나의게시글-삭제.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e923ca78-7f26-40f6-830d-9f6353ee188e/7.마이페이지-나의게시글-삭제.png)
+![7 마이페이지-나의게시글-삭제](https://user-images.githubusercontent.com/80368534/158811247-ce6be45e-ffed-4ef6-b192-f27bef731928.PNG)
 
 ---
 
@@ -624,7 +624,7 @@ public class MissionRepositoryTest {
         - Thymeleaf는 많은 뷰 템플릿 엔진 중의 하나이다.
         - 조건문, 반복문, 경로 지정 등 여러 문법에 대한 기초를 배울 수 있었다.
     
-    1. **Junit 테스트 코드**
-    - 테스트 코드를 먼저 작성하면 기능의 추가, 수정, 삭제와 예상치 못한 오류에 대해 유연하게 대처할 수 있다.
-    - 모든 기능을 개발하고 테스트 코드를 작성해서 기존의 개발한 기능만을 테스트한 점이 아쉬웠다.
-    - Controller, Service, Repository 각 Layer에 대한 단위 테스트 코드를 작성할 수 있게 되었다.
+    6. **Junit 테스트 코드**
+    	- 테스트 코드를 먼저 작성하면 기능의 추가, 수정, 삭제와 예상치 못한 오류에 대해 유연하게 대처할 수 있다.
+    	- 모든 기능을 개발하고 테스트 코드를 작성해서 기존의 개발한 기능만을 테스트한 점이 아쉬웠다.
+    	- Controller, Service, Repository 각 Layer에 대한 단위 테스트 코드를 작성할 수 있게 되었다.
