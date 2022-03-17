@@ -232,9 +232,9 @@
 
 ---
 
-![7.마이페이지-나의참여미션.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/02dcb1bd-d43d-439f-9673-02b86ec3bc6f/7.마이페이지-나의참여미션.png)
+![7 마이페이지-나의참여미션](https://user-images.githubusercontent.com/80368534/158812109-e8a09837-9754-4d0e-933a-bde8b8537012.PNG)
 
-![7.마이페이지-나의작성미션.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3f7e191c-d4b3-4e7c-9034-f044e3aa940e/7.마이페이지-나의작성미션.png)
+![7 마이페이지-나의작성미션](https://user-images.githubusercontent.com/80368534/158812170-c8b48cdf-c0d6-4f98-b520-68415c3e7a35.PNG)
 
 ---
 
