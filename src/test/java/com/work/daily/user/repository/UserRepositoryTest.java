@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.ANY)
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 @Import(TestConfig.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("UserRepository :: 단위 테스트")
