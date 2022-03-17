@@ -34,7 +34,7 @@
 
 ---
 
-![1.회원가입.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e9a39f52-15b3-4775-9a5a-378d53fb91b2/1.회원가입.png)
+![1 회원가입](https://user-images.githubusercontent.com/80368534/158803203-3f215570-a296-4e25-ba6a-3db0464b8c50.PNG)
 
 ---
 
