@@ -45,7 +45,7 @@
 
 ---
 
-![2.로그인.PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7a9ac07f-5de1-4cdf-bd90-ee962210d587/2.로그인.png)
+![2 로그인](https://user-images.githubusercontent.com/80368534/158803397-24fd7c0c-5bf6-4731-8569-af6439928e8e.PNG)
 
 ---
 
@@ -56,9 +56,9 @@
 
 ---
 
-![3.계정관리(일반-1).PNG](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/755c4a64-9548-44f0-b79d-959a22f37ee3/3.계정관리(일반-1).png)
+![3 계정관리(일반-1)](https://user-images.githubusercontent.com/80368534/158803522-a19b8b3d-763d-434a-b96f-80833566a562.PNG)
 
-![3.계정관리(일반-2)-복사.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44d3edd1-9a4d-416c-badb-766048825918/3.계정관리(일반-2)-복사.png)
+![3 계정관리(일반-2)](https://user-images.githubusercontent.com/80368534/158803580-e70b145f-d5a4-4372-92de-65e0b21c378f.PNG)
 
 ---
 
