@@ -25,7 +25,7 @@ public class Mission extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MISSION_SEQ_INCREASE")
-    @Column(columnDefinition = "varchar(20) comment '미션번호'")
+    @Column(columnDefinition = "int comment '미션번호'")
     private Long missionSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,10 +41,10 @@ public class Mission extends BaseTime {
     @Column(columnDefinition = "varchar(1000) comment '미션설명'")
     private String missionDesc;
 
-    @Column(columnDefinition = "varchar(60) comment '미션시작일'")
+    @Column(columnDefinition = "datetime comment '미션시작일'")
     private LocalDateTime missionStDt;
 
-    @Column(columnDefinition = "varchar(60) comment '미션종료일'")
+    @Column(columnDefinition = "datetime comment '미션종료일'")
     private LocalDateTime missionEndDt;
 
     @Column(columnDefinition = "varchar(10) comment '공개여부'")
@@ -62,7 +62,7 @@ public class Mission extends BaseTime {
     @Column(columnDefinition = "varchar(10) comment '임시여부'")
     private String temporaryYn;
 
-    @Column(columnDefinition = "varchar(200) comment '미션이미지'")
+    @Column(columnDefinition = "varchar(1000) comment '미션이미지'")
     private String missionImage;
 
     @Column(columnDefinition = "varchar(10) comment '마감여부'")

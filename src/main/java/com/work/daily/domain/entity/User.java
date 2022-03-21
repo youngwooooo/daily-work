@@ -23,19 +23,26 @@ public class User extends BaseTime  {
     @Id
     private String userId;
 
+    @Column(columnDefinition = "varchar(300) comment '비밀번호'")
     private String userPw;
 
+    @Column(columnDefinition = "varchar(20) comment '이름'")
     private String userNm;
 
+    @Column(columnDefinition = "varchar(100) comment '이메일'")
     private String userEmail;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(10) comment '권한'")
     private UserRole role;
 
+    @Column(columnDefinition = "varchar(10) comment '소셜타입'")
     private String provider;
 
+    @Column(columnDefinition = "varchar(255) comment '소셜ID'")
     private String providerId;
 
+    @Column(columnDefinition = "varchar(500) comment '프로필사진'")
     private String profileImage;
 
     // 비밀번호 변경을 위함

@@ -43,7 +43,7 @@ public class MissionState {
     @Column(columnDefinition = "varchar(100) comment '제출미션설명'")
     private String submittedMissionDesc;
 
-    @Column(columnDefinition = "varchar(100) comment '제출미션이미지'")
+    @Column(columnDefinition = "varchar(1000) comment '제출미션이미지'")
     private String submittedMissionImage;
 
     @Column(columnDefinition = "varchar(60) comment '미션제출일'")
