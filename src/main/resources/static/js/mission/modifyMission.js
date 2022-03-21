@@ -126,6 +126,9 @@ $(function(){
                     if(result.status == 200){
                         alert(result.message);
                         location.href = "/mission/" + missionSeq;
+                    }else {
+                        alert(result.message);
+                        location.href = "/missions";
                     }
                 }
                 , error : function(xhr){

@@ -209,7 +209,10 @@ $(function(){
             , contentType: "application/x-www-form-urlencoded; charset=UTF-8;"
             , dataType : "json"
             , success : function(result){
-                if(result.status == "201"){
+                if(result.status == 201){
+                    location.href = "/missions";
+                }else {
+                    alert("존재하지 않는 미션입니다.");
                     location.href = "/missions";
                 }
             }
@@ -469,7 +472,10 @@ $(function(){
                 , contentType: false
                 , enctype: "multipart/form-data"
                 , success : function(result){
-                    if(result.status = "201"){
+                    if(result.status = 201){
+                        location.reload();
+                    }else {
+                        alert(result.message);
                         location.reload();
                     }
                 }
