@@ -47,6 +47,10 @@ public class MissionStateService {
     @Transactional
     public String save(RequestMissionStateDto requestMissionStateDto, MultipartFile file) throws IOException {
 
+        if(file == null){
+            return  ReturnResult.FAIL.getValue();
+        }
+
         // 업로드될 폴더 생성
         File uploadFolder = new File(missionUploadPath + requestMissionStateDto.getMissionParticipants().getMissionSeq() + "/" + requestMissionStateDto.getMissionStateWeek() + "/" + getFolder() + "/" + requestMissionStateDto.getMissionParticipants().getUserId());
         if(!uploadFolder.exists()){

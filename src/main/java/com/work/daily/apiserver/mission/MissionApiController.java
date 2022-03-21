@@ -256,6 +256,9 @@ public class MissionApiController {
 
 
         String result = missionStateService.save(requestMissionStateDto, file);
+        if(ReturnResult.FAIL.getValue().equals(result)){
+            return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.BAD_REQUEST.value()).data(result).message("파일이 존재하지 않습니다.").build(), HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(ResponseDto.builder().status(HttpStatus.CREATED.value()).data(result).message("미션 제출이 완료되었습니다.").build(), HttpStatus.CREATED);
     }
