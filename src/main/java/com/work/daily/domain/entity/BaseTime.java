@@ -18,19 +18,19 @@ import java.time.LocalDateTime;
 public class BaseTime {
 
     @CreatedDate
-    @Column(updatable = false, columnDefinition = "TEXT COMMENT '생성일시'")
+    @Column(updatable = false, columnDefinition = "datetime COMMENT '생성일시'")
     private LocalDateTime insDtm;
 
     @CreatedBy
-    @Column(updatable = false, columnDefinition = "TEXT COMMENT '생성자'")
+    @Column(updatable = false, columnDefinition = "varchar(100) COMMENT '생성자'")
     private String insUser;
 
     @LastModifiedDate
-    @Column(columnDefinition = "TEXT COMMENT '수정일시'")
+    @Column(columnDefinition = "datetime COMMENT '수정일시'")
     private LocalDateTime updDtm;
 
     @LastModifiedBy
-    @Column(columnDefinition = "TEXT COMMENT '수정자'")
+    @Column(columnDefinition = "varchar(100) COMMENT '수정자'")
     private String updUser;
 
 }
