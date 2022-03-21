@@ -16,7 +16,7 @@ public class BoardFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_FILE_SEQ_INCREASE")
-    @Column(columnDefinition = "varchar(20) comment '게시글파일번호'")
+    @Column(columnDefinition = "int comment '게시글파일번호'")
     private long fileSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,7 +30,7 @@ public class BoardFile {
     @Column(columnDefinition = "varchar(300) comment '게시글파일서버파일명'")
     private String fileServerNm;
 
-    @Column(columnDefinition = "varchar(200) comment '게시글파일경로'")
+    @Column(columnDefinition = "varchar(1000) comment '게시글파일경로'")
     private String fileUploadPath;
 
     @Column(columnDefinition = "varchar(100) comment '게시글파일크기'")

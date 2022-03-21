@@ -25,7 +25,7 @@ public class BoardComment extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_COMMENT_SEQ_INCREASE")
-    @Column(columnDefinition = "varchar(20) comment '댓글번호'")
+    @Column(columnDefinition = "int comment '댓글번호'")
     private long commentSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class UserPK implements Serializable {
 
     @Id
-    @Column(columnDefinition = "varchar(30) comment '회원번호'")
+    @Column(columnDefinition = "int comment '회원번호'")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ_INCREASE")
     private long userSeq;
 

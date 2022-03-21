@@ -23,7 +23,7 @@ public class BoardType extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_TYPE_SEQ_INCREASE")
-    @Column(columnDefinition = "varchar(20) comment '게시글분류번호'")
+    @Column(columnDefinition = "int comment '게시글분류번호'")
     private long boardTypeSeq;
 
     @Column(columnDefinition = "varchar(20) comment '게시글분류코드'")

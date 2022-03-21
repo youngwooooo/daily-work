@@ -28,7 +28,7 @@ public class Board extends BaseTime{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOARD_SEQ_INCREASE")
-    @Column(columnDefinition = "varchar(20) comment '게시글번호'")
+    @Column(columnDefinition = "int comment '게시글번호'")
     private long boardSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -22,11 +22,11 @@ public class MissionStatePK implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MISSION_STATE_SEQ_INCREASE")
-    @Column(columnDefinition = "varchar(20) comment '미션현황번호'")
+    @Column(columnDefinition = "int comment '미션현황번호'")
     private long missionStateSeq;
 
     @Id
-    @Column(columnDefinition = "varchar(20) comment '미션주차'")
+    @Column(columnDefinition = "int comment '미션주차'")
     private long missionStateWeek;
 
 }
