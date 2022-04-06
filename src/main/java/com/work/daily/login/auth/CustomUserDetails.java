@@ -15,7 +15,7 @@ import java.util.Map;
 
 @ToString
 @Getter
-@EqualsAndHashCode(of = {"loginUserDto.getUserId()"}) // 중복 로그인 방지를 위한 equal, hashcode 메서드
+@EqualsAndHashCode(of = {"loginUserDto"}) // 중복 로그인 방지를 위한 equal, hashcode 메서드
 public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private LoginUserDto loginUserDto;
