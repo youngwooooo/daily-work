@@ -35,15 +35,15 @@ spring:
           one-indexed-parameters: true
 
   # H2 DB
-  h2:
-    console:
-      enabled: ture
-      path: /h2
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/D:/Projects_DB/daily-work # 수정 DB 접속 URL
-    username: sa
-    password:
+#  h2:
+#    console:
+#      enabled: ture
+#      path: /h2
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/D:/Projects_DB/daily-work # 수정 DB 접속 URL
+#    username: sa
+#    password:
 
   sql:
     init:
