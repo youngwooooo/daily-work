@@ -64,7 +64,7 @@ public class BoardController {
         model.addAttribute("totalCount", totalCount);
 
 
-        return "/contents/board/boards";
+        return "contents/board/boards";
     }
 
     /**
@@ -75,7 +75,7 @@ public class BoardController {
     public String createBoardForm(Model model){
         List<BoardTypeDto> findAllBoardType = boardTypeService.findAllBoardType();
         model.addAttribute("boardType", findAllBoardType);
-        return "/contents/board/createBoard";
+        return "contents/board/createBoard";
     }
 
     /**
@@ -103,7 +103,7 @@ public class BoardController {
 
         model.addAttribute("boardCommentTotalCount", boardCommentTotalCount);
 
-        return "/contents/board/detailBoard";
+        return "contents/board/detailBoard";
     }
 
     /**
@@ -120,6 +120,6 @@ public class BoardController {
         model.addAttribute("boardType", findAllBoardType);
         model.addAttribute("board", findOneBoard);
 
-        return "/contents/board/modifyBoard";
+        return "contents/board/modifyBoard";
     }
 }
