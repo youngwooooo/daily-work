@@ -1,19 +1,19 @@
-drop table if exists tb_board_comment CASCADE;
-drop table if exists tb_board_file CASCADE;
-drop table if exists tb_board_info CASCADE;
-drop table if exists tb_board_type CASCADE;
-drop table if exists tb_mission_info CASCADE;
-drop table if exists tb_mission_participants CASCADE;
-drop table if exists tb_mission_state CASCADE;
-drop table if exists tb_user_info CASCADE;
-
-drop sequence if exists board_comment_seq_increase;
-drop sequence if exists board_file_seq_increase;
-drop sequence if exists board_seq_increase;
-drop sequence if exists board_type_seq_increase;
-drop sequence if exists mission_seq_increase;
-drop sequence if exists mission_state_seq_increase;
-drop sequence if exists user_seq_increase;
+--drop table if exists tb_board_comment CASCADE;
+--drop table if exists tb_board_file CASCADE;
+--drop table if exists tb_board_info CASCADE;
+--drop table if exists tb_board_type CASCADE;
+--drop table if exists tb_mission_info CASCADE;
+--drop table if exists tb_mission_participants CASCADE;
+--drop table if exists tb_mission_state CASCADE;
+--drop table if exists tb_user_info CASCADE;
+--
+--drop sequence if exists board_comment_seq_increase;
+--drop sequence if exists board_file_seq_increase;
+--drop sequence if exists board_seq_increase;
+--drop sequence if exists board_type_seq_increase;
+--drop sequence if exists mission_seq_increase;
+--drop sequence if exists mission_state_seq_increase;
+--drop sequence if exists user_seq_increase;
 
 create sequence board_comment_seq_increase start with 1 increment by 1;
 create sequence board_file_seq_increase start with 1 increment by 50;
